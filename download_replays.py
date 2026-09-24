@@ -30,8 +30,16 @@ def _validate_download_state(state: dict[str, Any]) -> None:
         raise ValueError("download-state downloads must be an object")
 
 
-def _error_text(result: subprocess.CompletedProcess[str]) -> str:
-    text = (result.stderr or result.stdout or f"exit status {result.returncode}").strip()
+def _text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
+
+
+def _error_text(result: subprocess.CompletedProcess[Any]) -> str:
+    text = (_text(result.stderr) or _text(result.stdout) or f"exit status {result.returncode}").strip()
     return text[-2_000:]
 
 
@@ -42,16 +50,29 @@ class Downloader:
         state_path: Path,
         output_dir: Path,
         *,
-        runner: Callable[..., subprocess.CompletedProcess[str]] = subprocess.run,
+        runner: Callable[..., subprocess.CompletedProcess[Any]] = subprocess.run,
+        log: Callable[[str], None] | None = None,
     ) -> None:
         self.manifest_path = manifest_path
         self.state_path = state_path
         self.output_dir = output_dir
         self.runner = runner
+        self.log = log or (lambda message: print(message, file=sys.stderr, flush=True))
         self.state: dict[str, Any] = {}
 
     def _save(self) -> None:
         atomic_write_json(self.state_path, self.state)
+
+    def _move_stale(self, path: Path) -> None:
+        if not path.exists():
+            return
+        stale = path.with_name(path.name + ".stale")
+        suffix = 1
+        while stale.exists():
+            stale = path.with_name(f"{path.name}.stale.{suffix}")
+            suffix += 1
+        path.replace(stale)
+        self.log(f"[Replay state] moved stale file {path} to {stale}")
 
     def _record(self, match_id: int, replay_url: str) -> dict[str, Any]:
         key = str(match_id)
@@ -74,6 +95,21 @@ class Downloader:
             downloads[key] = record
         else:
             # A replay URL may be regenerated with a different salt; use the latest one.
+            previous_url = record.get("replay_url")
+            previous_archive_url = record.get("archive_replay_url")
+            if (previous_url and previous_url != replay_url) or (
+                previous_archive_url and previous_archive_url != replay_url
+            ):
+                self.log(
+                    f"[Replay state] match_id={match_id} replay URL changed; "
+                    "invalidating old archive/output"
+                )
+                self._move_stale(archive)
+                self._move_stale(archive.with_name(archive.name + ".part"))
+                self._move_stale(replay)
+                self._move_stale(replay.with_name(replay.name + ".part"))
+                record["status"] = "pending"
+                record["archive_replay_url"] = None
             record["replay_url"] = replay_url
             record["archive_path"] = str(archive)
             record["replay_path"] = str(replay)
@@ -89,6 +125,10 @@ class Downloader:
         partial = archive.with_name(archive.name + ".part")
         record["download_attempts"] += 1
         self._set_status(record, "downloading")
+        self.log(
+            f"[Replay download] match_id={record['match_id']} GET {record['replay_url']} "
+            f"archive={archive} partial={partial} attempt={record['download_attempts']}"
+        )
         result = self.runner(
             [
                 "curl",
@@ -104,10 +144,22 @@ class Downloader:
             text=True,
             check=False,
         )
+        self.log(
+            f"[Replay download] match_id={record['match_id']} curl_exit={result.returncode} "
+            f"curl_stderr={_text(result.stderr).strip()!r}"
+        )
         if result.returncode != 0:
             self._set_status(record, "error", f"curl failed: {_error_text(result)}")
             return False
+        if not partial.exists():
+            self._set_status(record, "error", "curl returned success but did not create the partial archive")
+            return False
         partial.replace(archive)
+        record["archive_replay_url"] = record["replay_url"]
+        self.log(
+            f"[Replay download] match_id={record['match_id']} archive_complete "
+            f"bytes={archive.stat().st_size} path={archive}"
+        )
         self._set_status(record, "downloaded")
         return True
 
@@ -115,6 +167,10 @@ class Downloader:
         partial = replay.with_name(replay.name + ".part")
         record["decompression_attempts"] += 1
         self._set_status(record, "decompressing")
+        self.log(
+            f"[Replay decompress] match_id={record['match_id']} archive={archive} "
+            f"output={replay} attempt={record['decompression_attempts']}"
+        )
         with partial.open("wb") as output:
             result = self.runner(
                 ["bzip2", "-dc", str(archive)],
@@ -123,11 +179,18 @@ class Downloader:
                 text=False,
                 check=False,
             )
+        self.log(
+            f"[Replay decompress] match_id={record['match_id']} bzip2_exit={result.returncode} "
+            f"bzip2_stderr={_text(result.stderr).strip()!r}"
+        )
         if result.returncode != 0:
-            stderr = (result.stderr or b"bzip2 failed").decode("utf-8", errors="replace")[-2_000:]
-            self._set_status(record, "error", f"bzip2 failed: {stderr.strip()}")
+            self._set_status(record, "error", f"bzip2 failed: {_error_text(result)}")
             return False
         partial.replace(replay)
+        self.log(
+            f"[Replay decompress] match_id={record['match_id']} complete "
+            f"bytes={replay.stat().st_size} path={replay}"
+        )
         self._set_status(record, "complete")
         return True
 
@@ -136,7 +199,15 @@ class Downloader:
         record = self._record(match_id, replay_url)
         archive = self.output_dir / f"{match_id}.dem.bz2"
         replay = self.output_dir / f"{match_id}.dem"
+        self.log(
+            f"[Replay candidate] match_id={match_id} replay_url={replay_url} "
+            f"archive={archive} output={replay} state={record['status']}"
+        )
         if replay.exists() and replay.stat().st_size > 0:
+            self.log(
+                f"[Replay candidate] match_id={match_id} already complete "
+                f"bytes={replay.stat().st_size}"
+            )
             self._set_status(record, "complete")
             return True
         self._save()
@@ -157,6 +228,7 @@ class Downloader:
             if lookup.get("status") == "resolved" and isinstance(replay_url, str) and replay_url:
                 candidates.append((entry["match_id"], replay_url))
         candidates.sort(key=lambda item: item[0])
+        self.log(f"[Replay downloader] resolved candidates={len(candidates)} manifest={self.manifest_path}")
 
         completed = failed = 0
         for match_id, replay_url in candidates:

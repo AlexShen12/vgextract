@@ -66,6 +66,34 @@ def atomic_write_json(path: Path, data: dict[str, Any]) -> None:
         raise
 
 
+def atomic_write_bytes(path: Path, data: bytes) -> None:
+    """Durably replace ``path`` with arbitrary bytes."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temp_name = tempfile.mkstemp(
+        prefix=f".{path.name}.", suffix=".tmp", dir=path.parent
+    )
+    try:
+        with os.fdopen(descriptor, "wb") as handle:
+            handle.write(data)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temp_name, path)
+        try:
+            directory_fd = os.open(path.parent, os.O_RDONLY)
+            try:
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
+        except OSError:
+            pass
+    except BaseException:
+        try:
+            os.unlink(temp_name)
+        except FileNotFoundError:
+            pass
+        raise
+
+
 @contextmanager
 def exclusive_lock(path: Path) -> Iterator[None]:
     """Prevent two instances of the same script from modifying its state."""

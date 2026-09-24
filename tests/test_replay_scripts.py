@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import bz2
+import json
 import subprocess
 import tempfile
 import unittest
@@ -8,8 +9,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
-from collect_pro_replays import API_ROOT, PRO_MATCHES_URL, Collector, empty_manifest
-from download_replays import Downloader
+from collect_pro_replays import API_ROOT, PRO_MATCHES_URL, ApiResponse, Collector, empty_manifest
+from download_replays import Downloader, empty_download_state
 from replay_state import SCHEMA_VERSION, atomic_write_json, load_json, parse_utc
 
 
@@ -27,6 +28,56 @@ class FakeClock:
 
 
 class CollectorTests(unittest.TestCase):
+    def test_realistic_match_response_is_saved_and_resolved(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "pro_replays.json"
+            debug_dir = root / "api_debug"
+            clock = FakeClock()
+            source = ApiResponse(
+                PRO_MATCHES_URL,
+                200,
+                {"Content-Type": "application/json"},
+                b'[{"match_id": 9008635677}]',
+                [{"match_id": 9008635677}],
+            )
+            detail_payload = {
+                "match_id": 9008635677,
+                "replay_url": "http://replay192.valve.net/570/9008635677_1167188064.dem.bz2",
+                "players": [],
+                "radiant_win": True,
+            }
+            detail = ApiResponse(
+                f"{API_ROOT}/matches/9008635677",
+                200,
+                {"Content-Type": "application/json"},
+                json.dumps(detail_payload).encode(),
+                detail_payload,
+            )
+
+            def fetch(url: str):
+                return source if url == PRO_MATCHES_URL else detail
+
+            logs: list[str] = []
+            Collector(
+                manifest_path,
+                debug_dir=debug_dir,
+                fetch=fetch,
+                sleep=clock.sleep,
+                now=clock.now,
+                interval_seconds=60,
+                log=logs.append,
+            ).run()
+
+            manifest = load_json(manifest_path, {})
+            lookup = manifest["matches"]["9008635677"]["lookup"]
+            self.assertEqual(lookup["status"], "resolved")
+            self.assertEqual(lookup["replay_url"], detail_payload["replay_url"])
+            self.assertTrue((debug_dir / "pro_matches.json").exists())
+            self.assertTrue((debug_dir / "match_9008635677_attempt_1.json").exists())
+            self.assertTrue(any("status=200" in line for line in logs))
+            self.assertTrue(any("9008635677" in line for line in logs))
+
     def test_snapshot_ids_are_the_only_new_records_and_are_paced(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             manifest_path = Path(directory) / "pro_replays.json"
@@ -80,6 +131,98 @@ class CollectorTests(unittest.TestCase):
             self.assertEqual(clock.sleeps, [60.0])
             self.assertEqual(lookup["attempts"], 2)
             self.assertEqual(lookup["status"], "resolved")
+
+    def test_unavailable_match_is_retried_when_rediscovered(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            manifest_path = Path(directory) / "pro_replays.json"
+            clock = FakeClock()
+            run_number = 0
+
+            def fetch(url: str):
+                nonlocal run_number
+                if url == PRO_MATCHES_URL:
+                    return [{"match_id": 9008635677}]
+                if run_number == 0:
+                    return {"match_id": 9008635677, "replay_url": None}
+                return {
+                    "match_id": 9008635677,
+                    "replay_url": "http://replay192.valve.net/570/9008635677_1167188064.dem.bz2",
+                }
+
+            Collector(
+                manifest_path, fetch=fetch, sleep=clock.sleep, now=clock.now, interval_seconds=0
+            ).run()
+            self.assertEqual(
+                load_json(manifest_path, {})["matches"]["9008635677"]["lookup"]["status"],
+                "unavailable",
+            )
+            run_number = 1
+            Collector(
+                manifest_path, fetch=fetch, sleep=clock.sleep, now=clock.now, interval_seconds=0
+            ).run()
+            self.assertEqual(
+                load_json(manifest_path, {})["matches"]["9008635677"]["lookup"]["status"],
+                "resolved",
+            )
+
+    def test_http_and_json_failures_are_logged_and_retried(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "pro_replays.json"
+            debug_dir = root / "api_debug"
+            clock = FakeClock()
+            attempts = 0
+            valid_payload = {"match_id": 700, "replay_url": "https://example.test/700.dem.bz2"}
+
+            def fetch(url: str):
+                nonlocal attempts
+                if url == PRO_MATCHES_URL:
+                    return [{"match_id": 700}]
+                attempts += 1
+                if attempts == 1:
+                    return ApiResponse(
+                        url,
+                        502,
+                        {"Content-Type": "application/json"},
+                        b'{"error":"upstream unavailable"}',
+                        {"error": "upstream unavailable"},
+                        request_error="HTTP 502: Bad Gateway",
+                    )
+                if attempts == 2:
+                    return ApiResponse(
+                        url,
+                        200,
+                        {"Content-Type": "text/html"},
+                        b"not-json",
+                        None,
+                        parse_error="JSONDecodeError: invalid JSON",
+                    )
+                return ApiResponse(
+                    url,
+                    200,
+                    {"Content-Type": "application/json"},
+                    json.dumps(valid_payload).encode(),
+                    valid_payload,
+                )
+
+            logs: list[str] = []
+            Collector(
+                manifest_path,
+                debug_dir=debug_dir,
+                fetch=fetch,
+                sleep=clock.sleep,
+                now=clock.now,
+                interval_seconds=60,
+                log=logs.append,
+            ).run()
+            lookup = load_json(manifest_path, {})["matches"]["700"]["lookup"]
+            self.assertEqual(lookup["status"], "resolved")
+            self.assertEqual(lookup["attempts"], 3)
+            self.assertEqual(clock.sleeps, [60.0, 60.0])
+            self.assertTrue((debug_dir / "match_700_attempt_1.json").exists())
+            self.assertTrue((debug_dir / "match_700_attempt_2.json").exists())
+            self.assertIn("HTTP 502", " ".join(logs))
+            self.assertIn("JSONDecodeError", " ".join(logs))
 
     def test_interruption_leaves_pacing_state_for_a_safe_resume(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -149,6 +292,47 @@ class DownloaderTests(unittest.TestCase):
             second_result = Downloader(manifest_path, state_path, output_dir, runner=no_network).run()
             self.assertEqual(second_result, {"candidates": 1, "completed": 1, "failed": 0})
 
+    def test_collector_manifest_feeds_downloader_end_to_end(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "pro_replays.json"
+            state_path = root / "replay_downloads.json"
+            output_dir = root / "replays"
+            clock = FakeClock()
+            replay_url = "http://replay.example/800.dem.bz2"
+
+            def fetch(url: str):
+                if url == PRO_MATCHES_URL:
+                    return [{"match_id": 800}]
+                return {"match_id": 800, "replay_url": replay_url}
+
+            Collector(
+                manifest_path, fetch=fetch, sleep=clock.sleep, now=clock.now, interval_seconds=0
+            ).run()
+            self.assertEqual(
+                load_json(manifest_path, {})["matches"]["800"]["lookup"]["status"],
+                "resolved",
+            )
+
+            compressed = bz2.compress(b"collector-to-downloader replay")
+
+            def runner(command, **kwargs):
+                if command[0] == "curl":
+                    target = Path(command[command.index("--output") + 1])
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(compressed)
+                    return subprocess.CompletedProcess(command, 0, "", "")
+                return subprocess.run(command, **kwargs)
+
+            result = Downloader(manifest_path, state_path, output_dir, runner=runner).run()
+            self.assertEqual(result, {"candidates": 1, "completed": 1, "failed": 0})
+            self.assertEqual(
+                (output_dir / "800.dem").read_bytes(), b"collector-to-downloader replay"
+            )
+            self.assertEqual(
+                load_json(state_path, {})["downloads"]["800"]["status"], "complete"
+            )
+
     def test_failed_download_keeps_partial_file_for_a_later_resume(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -169,6 +353,42 @@ class DownloaderTests(unittest.TestCase):
             state = load_json(state_path, {})
             self.assertEqual(state["downloads"]["600"]["status"], "error")
             self.assertIn("curl failed", state["downloads"]["600"]["last_error"])
+
+    def test_changed_manifest_url_invalidates_stale_downloader_files(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "pro_replays.json"
+            state_path = root / "replay_downloads.json"
+            output_dir = root / "replays"
+            self._manifest(manifest_path, 900, "http://replay.example/new.dem.bz2")
+            output_dir.mkdir()
+            (output_dir / "900.dem.bz2").write_bytes(b"old archive")
+            (output_dir / "900.dem").write_bytes(b"old replay")
+            state = empty_download_state()
+            state["downloads"]["900"] = {
+                "match_id": 900,
+                "replay_url": "http://replay.example/old.dem.bz2",
+                "archive_replay_url": "http://replay.example/old.dem.bz2",
+                "status": "complete",
+                "download_attempts": 1,
+                "decompression_attempts": 1,
+                "last_error": None,
+            }
+            atomic_write_json(state_path, state)
+            compressed = bz2.compress(b"new replay")
+
+            def runner(command, **kwargs):
+                if command[0] == "curl":
+                    target = Path(command[command.index("--output") + 1])
+                    target.write_bytes(compressed)
+                    return subprocess.CompletedProcess(command, 0, "", "")
+                return subprocess.run(command, **kwargs)
+
+            result = Downloader(manifest_path, state_path, output_dir, runner=runner).run()
+            self.assertEqual(result, {"candidates": 1, "completed": 1, "failed": 0})
+            self.assertEqual((output_dir / "900.dem").read_bytes(), b"new replay")
+            self.assertTrue((output_dir / "900.dem.stale").exists())
+            self.assertTrue((output_dir / "900.dem.bz2.stale").exists())
 
 
 if __name__ == "__main__":

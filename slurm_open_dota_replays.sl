@@ -12,7 +12,7 @@
 #SBATCH --output=logs/%x-%j.out
 #SBATCH --error=logs/%x-%j.err
 
-#SBATCH --time=3-00:00:00
+#SBATCH --time=12:00:00
 
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -58,12 +58,13 @@ export PYTHONUNBUFFERED=1
 # exporting the variables before submission.
 export MANIFEST_PATH="${MANIFEST_PATH:-${REPO_ROOT}/data/pro_replays.json}"
 export DOWNLOAD_STATE_PATH="${DOWNLOAD_STATE_PATH:-${REPO_ROOT}/data/replay_downloads.json}"
+export DEBUG_DIR="${DEBUG_DIR:-${REPO_ROOT}/data/api_debug}"
 export REPLAY_OUTPUT_DIR="${REPLAY_OUTPUT_DIR:-${REPO_ROOT}/data/replays}"
 export CYCLE_SLEEP_SECONDS="${CYCLE_SLEEP_SECONDS:-60}"
 
 # SLURM opens --output/--error before the script runs, so this directory must
 # exist in the submitted project checkout.  It is tracked via logs/.gitkeep.
-mkdir -p "${REPO_ROOT}/logs" "${REPO_ROOT}/data" "${REPLAY_OUTPUT_DIR}"
+mkdir -p "${REPO_ROOT}/logs" "${REPO_ROOT}/data" "${DEBUG_DIR}" "${REPLAY_OUTPUT_DIR}"
 
 if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
     echo "ERROR: Python executable not found: ${PYTHON_BIN}" >&2
@@ -87,6 +88,7 @@ echo "============================================"
 echo " REPO_ROOT          : ${REPO_ROOT}"
 echo " MANIFEST_PATH      : ${MANIFEST_PATH}"
 echo " DOWNLOAD_STATE_PATH: ${DOWNLOAD_STATE_PATH}"
+echo " DEBUG_DIR          : ${DEBUG_DIR}"
 echo " REPLAY_OUTPUT_DIR  : ${REPLAY_OUTPUT_DIR}"
 echo " CYCLE_SLEEP_SECONDS: ${CYCLE_SLEEP_SECONDS}"
 echo " PYTHON_BIN         : ${PYTHON_BIN}"
@@ -109,7 +111,8 @@ run_collector() {
     local status=0
     srun --ntasks=1 --cpus-per-task=1 \
         "${PYTHON_BIN}" "${REPO_ROOT}/collect_pro_replays.py" \
-        --manifest "${MANIFEST_PATH}" || status=$?
+        --manifest "${MANIFEST_PATH}" \
+        --debug-dir "${DEBUG_DIR}" || status=$?
     if [[ "${status}" -ne 0 ]]; then
         echo "[$(date)] Collector exited with status ${status}; state is resumable." >&2
     fi
