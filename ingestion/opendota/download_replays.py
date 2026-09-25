@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 from typing import Any, Callable
 
-from replay_state import SCHEMA_VERSION, atomic_write_json, exclusive_lock, load_json, utc_now
+from ingestion.common.replay_state import SCHEMA_VERSION, atomic_write_json, exclusive_lock, load_json, utc_now
 
 
 def empty_download_state() -> dict[str, Any]:

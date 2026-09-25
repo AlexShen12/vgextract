@@ -20,7 +20,7 @@ from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
-from replay_state import (
+from ingestion.common.replay_state import (
     SCHEMA_VERSION,
     atomic_write_bytes,
     atomic_write_json,

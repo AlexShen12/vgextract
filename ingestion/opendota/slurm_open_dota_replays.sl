@@ -2,9 +2,9 @@
 
 # ── Job metadata ─────────────────────────────────────────────────────────────
 # Submit from the videogame project directory with:
-#   sbatch slurm_open_dota_replays.sl
+#   sbatch ingestion/opendota/slurm_open_dota_replays.sl
 # Override the wall time at submission if needed, for example:
-#   sbatch --time=12:00:00 slurm_open_dota_replays.sl
+#   sbatch --time=12:00:00 ingestion/opendota/slurm_open_dota_replays.sl
 #
 # The default is intentionally aligned with the reference Longleaf job.
 # The job uses CPU resources only; no GPU is needed for API calls or bzip2.
@@ -110,7 +110,7 @@ run_collector() {
     echo "[$(date)] Starting OpenDota collector"
     local status=0
     srun --ntasks=1 --cpus-per-task=1 \
-        "${PYTHON_BIN}" "${REPO_ROOT}/collect_pro_replays.py" \
+        "${PYTHON_BIN}" -m ingestion.opendota.collect_pro_replays \
         --manifest "${MANIFEST_PATH}" \
         --debug-dir "${DEBUG_DIR}" || status=$?
     if [[ "${status}" -ne 0 ]]; then
@@ -123,7 +123,7 @@ run_downloader() {
     echo "[$(date)] Starting replay downloader"
     local status=0
     srun --ntasks=1 --cpus-per-task=1 \
-        "${PYTHON_BIN}" "${REPO_ROOT}/download_replays.py" \
+        "${PYTHON_BIN}" -m ingestion.opendota.download_replays \
         --manifest "${MANIFEST_PATH}" \
         --state "${DOWNLOAD_STATE_PATH}" \
         --output-dir "${REPLAY_OUTPUT_DIR}" || status=$?

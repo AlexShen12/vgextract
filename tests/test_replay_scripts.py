@@ -9,9 +9,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import patch
 
-from collect_pro_replays import API_ROOT, PRO_MATCHES_URL, ApiResponse, Collector, empty_manifest
-from download_replays import Downloader, empty_download_state
-from replay_state import SCHEMA_VERSION, atomic_write_json, load_json, parse_utc
+from ingestion.opendota.collect_pro_replays import API_ROOT, PRO_MATCHES_URL, ApiResponse, Collector, empty_manifest
+from ingestion.opendota.download_replays import Downloader, empty_download_state
+from ingestion.common.replay_state import SCHEMA_VERSION, atomic_write_json, load_json, parse_utc
 
 
 class FakeClock:
