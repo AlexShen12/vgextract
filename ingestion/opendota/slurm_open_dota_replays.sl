@@ -78,6 +78,9 @@ if ! command -v bzip2 >/dev/null 2>&1; then
     echo "ERROR: bzip2 is required but was not found on PATH" >&2
     exit 1
 fi
+if ! command -v zstd >/dev/null 2>&1; then
+    echo "WARNING: zstd was not found on PATH; Zstandard replay archives will remain pending." >&2
+fi
 
 # ── Diagnostics ───────────────────────────────────────────────────────────────
 echo "============================================"
@@ -96,6 +99,9 @@ echo "============================================"
 "${PYTHON_BIN}" --version
 curl --version | head -1
 bzip2 --version | head -1
+if command -v zstd >/dev/null 2>&1; then
+    zstd --version | head -1
+fi
 echo ""
 
 # ── Graceful wall-time/cancellation handling ─────────────────────────────────

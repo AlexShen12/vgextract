@@ -43,6 +43,30 @@ def _error_text(result: subprocess.CompletedProcess[Any]) -> str:
     return text[-2_000:]
 
 
+def normalize_replay_url(value: str) -> str:
+    """Accept a plain URL and defensively unwrap a Markdown link if present."""
+    value = value.strip()
+    if value.startswith("[") and "](" in value and value.endswith(")"):
+        label, target = value[1:].split("](", 1)
+        target = target[:-1].strip()
+        if label.strip() == target and target.startswith(("http://", "https://")):
+            return target
+    return value
+
+
+def detect_archive_format(archive: Path) -> tuple[str | None, str]:
+    """Identify the compression from its magic bytes, not its misleading suffix."""
+    with archive.open("rb") as handle:
+        magic = handle.read(4)
+    if magic.startswith(b"BZh"):
+        return "bzip2", magic.hex()
+    if magic == b"\x28\xb5\x2f\xfd":
+        return "zstd", magic.hex()
+    if magic.startswith(b"\x1f\x8b"):
+        return "gzip", magic.hex()
+    return None, magic.hex()
+
+
 class Downloader:
     def __init__(
         self,
@@ -90,6 +114,8 @@ class Downloader:
                 "download_attempts": 0,
                 "decompression_attempts": 0,
                 "last_error": None,
+                "retryable": True,
+                "compression_format": None,
                 "updated_at": utc_now(),
             }
             downloads[key] = record
@@ -110,14 +136,30 @@ class Downloader:
                 self._move_stale(replay.with_name(replay.name + ".part"))
                 record["status"] = "pending"
                 record["archive_replay_url"] = None
+                record["retryable"] = True
+                record["compression_format"] = None
             record["replay_url"] = replay_url
             record["archive_path"] = str(archive)
             record["replay_path"] = str(replay)
+            record.setdefault("retryable", True)
+            record.setdefault("compression_format", None)
+            record.setdefault("download_attempts", 0)
+            record.setdefault("decompression_attempts", 0)
+            record.setdefault("last_error", None)
         return record
 
-    def _set_status(self, record: dict[str, Any], status: str, error: str | None = None) -> None:
+    def _set_status(
+        self,
+        record: dict[str, Any],
+        status: str,
+        error: str | None = None,
+        *,
+        retryable: bool | None = None,
+    ) -> None:
         record["status"] = status
         record["last_error"] = error
+        if retryable is not None:
+            record["retryable"] = retryable
         record["updated_at"] = utc_now()
         self._save()
 
@@ -165,26 +207,61 @@ class Downloader:
 
     def _decompress_archive(self, record: dict[str, Any], archive: Path, replay: Path) -> bool:
         partial = replay.with_name(replay.name + ".part")
+        try:
+            compression_format, magic = detect_archive_format(archive)
+        except OSError as exc:
+            self._set_status(record, "error", f"could not inspect archive: {exc}")
+            return False
+        if compression_format is None:
+            message = f"unsupported archive format (magic={magic or '<empty>'})"
+            self.log(
+                f"[Replay decompress] match_id={record['match_id']} {message}; "
+                "leaving the archive for inspection"
+            )
+            self._set_status(record, "error", message, retryable=False)
+            return False
+
+        command_by_format = {
+            "bzip2": ["bzip2", "-dc", str(archive)],
+            "zstd": ["zstd", "-dc", str(archive)],
+            "gzip": ["gzip", "-dc", str(archive)],
+        }
+        command = command_by_format[compression_format]
+        record["compression_format"] = compression_format
         record["decompression_attempts"] += 1
         self._set_status(record, "decompressing")
         self.log(
             f"[Replay decompress] match_id={record['match_id']} archive={archive} "
-            f"output={replay} attempt={record['decompression_attempts']}"
+            f"output={replay} format={compression_format} magic={magic} "
+            f"command={command[0]} attempt={record['decompression_attempts']}"
         )
-        with partial.open("wb") as output:
-            result = self.runner(
-                ["bzip2", "-dc", str(archive)],
-                stdout=output,
-                stderr=subprocess.PIPE,
-                text=False,
-                check=False,
+        try:
+            with partial.open("wb") as output:
+                result = self.runner(
+                    command,
+                    stdout=output,
+                    stderr=subprocess.PIPE,
+                    text=False,
+                    check=False,
+                )
+        except OSError as exc:
+            self.log(
+                f"[Replay decompress] match_id={record['match_id']} "
+                f"{command[0]} unavailable: {exc}"
             )
+            self._set_status(
+                record,
+                "error",
+                f"{command[0]} decompressor unavailable: {exc}",
+                retryable=False,
+            )
+            return False
         self.log(
-            f"[Replay decompress] match_id={record['match_id']} bzip2_exit={result.returncode} "
-            f"bzip2_stderr={_text(result.stderr).strip()!r}"
+            f"[Replay decompress] match_id={record['match_id']} {command[0]}_exit={result.returncode} "
+            f"{command[0]}_stderr={_text(result.stderr).strip()!r}"
         )
         if result.returncode != 0:
-            self._set_status(record, "error", f"bzip2 failed: {_error_text(result)}")
+            self._set_status(record, "error", f"{command[0]} failed: {_error_text(result)}")
             return False
         partial.replace(replay)
         self.log(
@@ -196,6 +273,7 @@ class Downloader:
 
     def _process_one(self, match_id: int, replay_url: str) -> bool:
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        replay_url = normalize_replay_url(replay_url)
         record = self._record(match_id, replay_url)
         archive = self.output_dir / f"{match_id}.dem.bz2"
         replay = self.output_dir / f"{match_id}.dem"
@@ -210,6 +288,12 @@ class Downloader:
             )
             self._set_status(record, "complete")
             return True
+        if record.get("status") == "error" and record.get("retryable") is False and archive.exists():
+            self.log(
+                f"[Replay candidate] match_id={match_id} skipped non-retryable error: "
+                f"{record.get('last_error')}"
+            )
+            return False
         self._save()
         if not archive.exists() and not self._download_archive(record, archive):
             return False
@@ -226,7 +310,7 @@ class Downloader:
             lookup = entry.get("lookup", {})
             replay_url = lookup.get("replay_url")
             if lookup.get("status") == "resolved" and isinstance(replay_url, str) and replay_url:
-                candidates.append((entry["match_id"], replay_url))
+                candidates.append((entry["match_id"], normalize_replay_url(replay_url)))
         candidates.sort(key=lambda item: item[0])
         self.log(f"[Replay downloader] resolved candidates={len(candidates)} manifest={self.manifest_path}")
 

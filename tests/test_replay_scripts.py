@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import bz2
 import json
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -389,6 +390,58 @@ class DownloaderTests(unittest.TestCase):
             self.assertEqual((output_dir / "900.dem").read_bytes(), b"new replay")
             self.assertTrue((output_dir / "900.dem.stale").exists())
             self.assertTrue((output_dir / "900.dem.bz2.stale").exists())
+
+    def test_detects_zstd_even_when_replay_url_ends_in_bz2(self) -> None:
+        if shutil.which("zstd") is None:
+            self.skipTest("zstd is not installed")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "pro_replays.json"
+            state_path = root / "replay_downloads.json"
+            output_dir = root / "replays"
+            self._manifest(manifest_path, 901, "https://example.test/901.dem.bz2")
+            compressed = subprocess.run(
+                ["zstd", "-q", "-c"], input=b"zstandard replay", stdout=subprocess.PIPE, check=True
+            ).stdout
+
+            def runner(command, **kwargs):
+                if command[0] == "curl":
+                    target = Path(command[command.index("--output") + 1])
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(compressed)
+                    return subprocess.CompletedProcess(command, 0, b"", b"")
+                return subprocess.run(command, **kwargs)
+
+            result = Downloader(manifest_path, state_path, output_dir, runner=runner).run()
+            self.assertEqual(result, {"candidates": 1, "completed": 1, "failed": 0})
+            self.assertEqual((output_dir / "901.dem").read_bytes(), b"zstandard replay")
+            state = load_json(state_path, {})["downloads"]["901"]
+            self.assertEqual(state["compression_format"], "zstd")
+            self.assertEqual(state["status"], "complete")
+
+    def test_unwraps_markdown_wrapped_replay_url_before_curl(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest_path = root / "pro_replays.json"
+            state_path = root / "replay_downloads.json"
+            output_dir = root / "replays"
+            url = "https://example.test/902.dem.bz2"
+            self._manifest(manifest_path, 902, f"[{url}]({url})")
+            compressed = bz2.compress(b"markdown URL replay")
+            curl_urls: list[str] = []
+
+            def runner(command, **kwargs):
+                if command[0] == "curl":
+                    curl_urls.append(command[-1])
+                    target = Path(command[command.index("--output") + 1])
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_bytes(compressed)
+                    return subprocess.CompletedProcess(command, 0, b"", b"")
+                return subprocess.run(command, **kwargs)
+
+            result = Downloader(manifest_path, state_path, output_dir, runner=runner).run()
+            self.assertEqual(result["completed"], 1)
+            self.assertEqual(curl_urls, [url])
 
 
 if __name__ == "__main__":
