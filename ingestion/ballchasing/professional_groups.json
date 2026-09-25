@@ -1,4 +1,23 @@
 {
   "schema_version": 1,
-  "groups": []
+  "groups": [
+    {
+      "group_id": "rlcs-ko12wh0cv9",
+      "event": "RLCS replay collection (2022)",
+      "enabled": true,
+      "source_url": "https://ballchasing.com/group/rlcs-ko12wh0cv9"
+    },
+    {
+      "group_id": "rlcs-2021-22-mena-regional-event-qfq2g09mpi",
+      "event": "RLCS 2021-22 MENA Regional Events",
+      "enabled": true,
+      "source_url": "https://ballchasing.com/group/rlcs-2021-22-mena-regional-event-qfq2g09mpi"
+    },
+    {
+      "group_id": "rlcs-2025-qualifier-4-q8lsnrt9i9",
+      "event": "RLCS 2025 Qualifier 4",
+      "enabled": true,
+      "source_url": "https://ballchasing.com/group/rlcs-2025-qualifier-4-q8lsnrt9i9"
+    }
+  ]
 }

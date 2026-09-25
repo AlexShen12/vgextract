@@ -431,6 +431,11 @@ class Collector:
         _validate_state(self.state)
         self._recover_interrupted()
         seeds = load_catalog(self.catalog_path)
+        if not seeds:
+            raise ConfigurationError(
+                f"catalog {self.catalog_path} has no enabled groups; "
+                "add at least one verified Ballchasing group_id before submitting the job"
+            )
         self.state["source"].update({"catalog": str(self.catalog_path), "last_catalog_sync_at": self._timestamp()})
         for seed in seeds:
             self._upsert_group(seed["group_id"], parent_id=None, event=seed["event"], seed=True)

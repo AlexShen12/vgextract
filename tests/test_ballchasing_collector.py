@@ -6,7 +6,7 @@ import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from ingestion.ballchasing.collect_metadata import API_ROOT, ApiResponse, Collector
+from ingestion.ballchasing.collect_metadata import API_ROOT, ApiResponse, Collector, ConfigurationError
 from ingestion.common.replay_state import atomic_write_json, load_json, parse_utc
 
 
@@ -50,6 +50,20 @@ class BallchasingCollectorTests(unittest.TestCase):
             now=clock.now,
             log=(logs.append if logs is not None else None),
         )
+
+    def test_empty_catalog_fails_before_making_api_requests(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            atomic_write_json(root / "catalog.json", {"schema_version": 1, "groups": []})
+            calls: list[str] = []
+
+            def fetch(url: str, headers: dict[str, str]) -> ApiResponse:
+                calls.append(url)
+                return response(url, {})
+
+            with self.assertRaisesRegex(ConfigurationError, "no enabled groups"):
+                self._collector(root, FakeClock(), fetch).run()
+            self.assertEqual(calls, [])
 
     def test_recurses_groups_deduplicates_replays_and_persists_artifacts(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
