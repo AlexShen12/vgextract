@@ -143,30 +143,32 @@ stops and records the channel and response in `last_run.json`. It does not try
 to evade that check; rerun later when access is available. The channel catalog
 and completed download archives remain resumable.
 
-The Slurm script loads the Anaconda module; it does not create or populate a
-Conda environment. On Longleaf, run this setup from the project root on a login
-node. It creates an environment with Python, `ffmpeg`, and Node.js, then installs
-the Python requirements from this repository:
+The Slurm script loads the Anaconda module and activates
+`/nas/longleaf/home/alshen/.conda/envs/videogame-youtube` by default. It does
+not create or populate that environment. On Longleaf, run this setup from the
+project root on a login node. It creates an environment with Python, `ffmpeg`,
+and Node.js, then installs the Python requirements from this repository:
 
 ```bash
 module purge
 module add anaconda/2024.02
-ENV_PREFIX="${HOME}/.conda/envs/videogame-youtube"
-conda create --yes --prefix "${ENV_PREFIX}" --channel conda-forge python=3.12 pip ffmpeg nodejs
-conda run --prefix "${ENV_PREFIX}" python -m pip install -r ingestion/youtube/requirements.txt
-conda run --prefix "${ENV_PREFIX}" python -m yt_dlp --version
+export CONDA_ENV_PREFIX=/nas/longleaf/home/alshen/.conda/envs/videogame-youtube
+conda create --yes --prefix "${CONDA_ENV_PREFIX}" --channel conda-forge python=3.12 pip ffmpeg nodejs
+conda run --prefix "${CONDA_ENV_PREFIX}" python -m pip install -r ingestion/youtube/requirements.txt
+conda run --prefix "${CONDA_ENV_PREFIX}" python -m yt_dlp --version
 ```
 
-Then submit from the project root, passing that environment's Python and a
-persistent location with enough space for the videos:
+Then submit from the project root, passing a persistent location with enough
+space for the videos:
 
 ```bash
-sbatch --export=ALL,PYTHON_BIN="${ENV_PREFIX}/bin/python",OUTPUT_ROOT=/path/to/persistent/youtube \
+sbatch --export=ALL,OUTPUT_ROOT=/path/to/persistent/youtube \
   ingestion/youtube/slurm_download_league.sl
 ```
 
-The job adds the selected Python environment's `bin` directory to `PATH`, so
-`ffmpeg`, `ffprobe`, and Node.js installed in that Conda environment are found.
+The job activates the selected Conda environment and adds its `bin` directory
+to `PATH`, so `ffmpeg`, `ffprobe`, and Node.js installed there are found. Set
+`CONDA_ENV_PREFIX` when submitting if your environment lives elsewhere.
 The default mode refreshes the first-100 catalogs and downloads missing videos;
 re-submit after the 12-hour allocation to resume. For the default output path:
 

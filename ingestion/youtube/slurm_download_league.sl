@@ -34,6 +34,31 @@ set -uo pipefail
 module purge
 module add anaconda/2024.02
 
+export CONDA_ENV_PREFIX="${CONDA_ENV_PREFIX:-/nas/longleaf/home/alshen/.conda/envs/videogame-youtube}"
+if ! command -v conda >/dev/null 2>&1; then
+    echo "ERROR: conda was not found after loading anaconda/2024.02." >&2
+    exit 1
+fi
+CONDA_BASE="$(conda info --base)" || {
+    echo "ERROR: unable to locate the Conda base installation." >&2
+    exit 1
+}
+if [[ ! -f "${CONDA_BASE}/etc/profile.d/conda.sh" ]]; then
+    echo "ERROR: Conda activation script not found under ${CONDA_BASE}." >&2
+    exit 1
+fi
+# Conda's activation hook can reference unset shell variables; restore nounset
+# checking after activation is complete.
+set +u
+source "${CONDA_BASE}/etc/profile.d/conda.sh"
+conda activate "${CONDA_ENV_PREFIX}"
+activation_status=$?
+set -u
+if [[ "${activation_status}" -ne 0 ]]; then
+    echo "ERROR: could not activate Conda environment ${CONDA_ENV_PREFIX}." >&2
+    exit 1
+fi
+
 # Under sbatch, use the project directory from which the job was submitted.
 if [[ -n "${SLURM_SUBMIT_DIR:-}" ]]; then
     REPO_ROOT="${SLURM_SUBMIT_DIR}"
@@ -43,7 +68,7 @@ else
 fi
 cd "${REPO_ROOT}"
 
-export PYTHON_BIN="${PYTHON_BIN:-python3}"
+export PYTHON_BIN="${PYTHON_BIN:-${CONDA_ENV_PREFIX}/bin/python}"
 export OUTPUT_ROOT="${OUTPUT_ROOT:-${REPO_ROOT}/data/youtube}"
 export MODE="${MODE:-download}"
 export MAX_HEIGHT="${MAX_HEIGHT:-1080}"
@@ -85,6 +110,7 @@ echo " Job ${SLURM_JOB_ID:-local} on $(hostname)"
 echo " Started     : $(date)"
 echo " REPO_ROOT   : ${REPO_ROOT}"
 echo " OUTPUT_ROOT : ${OUTPUT_ROOT}"
+echo " CONDA_ENV   : ${CONDA_ENV_PREFIX}"
 echo " MODE        : ${MODE}"
 echo " MAX_HEIGHT  : ${MAX_HEIGHT}"
 echo " PYTHON_BIN  : ${PYTHON_BIN}"
