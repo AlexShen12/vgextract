@@ -1,0 +1,80 @@
+{
+  "schema_version": "0.1-proposal",
+  "status": "design_only_not_evaluated",
+  "game": "rocket_league",
+  "mechanics_scope": "standard_soccar; detect team size; flag alternate modes and mutators",
+  "source_modalities": ["video", "optional_separately_labeled_audio"],
+  "raw_player_inputs_available": false,
+  "layout_profiles": ["player_pov", "esports_broadcast"],
+  "calibration": {
+    "rocket_league_frame_inspected": false,
+    "coordinate_convention": "normalized x0,y0,x1,y1 relative to detected game viewport",
+    "seed_status": "hypothetical; detect anchors and calibrate per layout span",
+    "required": ["viewport", "hud_anchors", "overlay_masks", "team_identity_mapping", "viewed_player_binding"]
+  },
+  "roles": [
+    {"id": "match_hud", "seed_box": [0.30, 0, 0.70, 0.14], "fields": ["game_clock", "match_score", "team_labels", "overtime_marker", "series_score"], "restriction": "Keep series and match score separate; score delta alone does not identify scorer."},
+    {"id": "player_resources", "pov_boost_seed_box": [0.80, 0.72, 1, 1], "broadcast_policy": "locate sidebars and active-player tag dynamically", "fields": ["viewed_player_id", "player_team", "displayed_boost", "roster_mapping"], "restriction": "Every boost observation belongs to an identified player or unresolved HUD track; rebind after switches."},
+    {"id": "view_state", "ball_cam_indicator_seed_box": [0, 0.84, 0.30, 1], "context": "sparse full-frame", "fields": ["live_replay_menu_training", "view_type", "viewed_player_id", "indicated_ball_cam", "camera_cut", "occlusion"], "restriction": "Absent ball-cam indicator does not establish disabled ball cam; camera motion is not world motion."},
+    {"id": "local_mechanics", "crop_policy": "temporally stable union of relevant car/ball/surface tracks with padding and source transforms", "padding_fraction_pilot": 0.20, "context": "synchronized low-resolution gameplay view", "fields": ["lift_off", "surface_state", "flip_like_motion", "landing", "visible_boost_effect", "ball_contact", "surface_bounce", "bump"], "restriction": "Do not infer exact controls; crop must contain the relationship needed for the claim."},
+    {"id": "interaction_context", "crop_policy": "entire unmasked gameplay viewport at reduced resolution plus detailed active-area crops", "fields": ["visible_participants", "field_landmarks", "coarse_zone", "ball_goal_relation", "challenge_candidate", "shot_candidate", "save_candidate", "local_outcome"], "restriction": "Missing/off-screen players are unknown; do not assume possession or empty goal from absence."},
+    {"id": "messages", "crop_policy": "detected statfeed and banners", "fields": ["goal_notice", "scorer_notice", "credited_save", "credited_assist", "credited_demolition", "replay_marker"], "restriction": "Separate credited events from visually resolved mechanics."}
+  ],
+  "state_families": ["source_view", "global_hud", "car", "ball", "relations", "coarse_field", "derived_tactics"],
+  "epistemic_statuses": ["observed", "inferred", "unknown", "contradicted"],
+  "visibility_states": ["visible", "occluded", "off_camera", "unreadable", "unknown"],
+  "confidence_policy": "Model self-confidence is not calibrated acceptance quality; repeated extraction of the same pixels is not independent evidence.",
+  "unknown_value": null,
+  "identity_fields": ["viewed_player_id", "tracked_actor_id", "controlled_player_id"],
+  "tracks": ["physical", "hud", "interpretation"],
+  "event_levels": [
+    {"level": 0, "name": "observable_transitions", "families": ["boost_value_change", "surface_state_change", "ball_motion_change", "score_change", "clock_change", "hud_identity_switch"]},
+    {"level": 1, "name": "atomic_physical_events", "families": ["ball_touch", "surface_bounce", "lift_off", "landing", "flip_like_rotation", "visible_boost_effect", "boost_pickup", "bump", "demolition"]},
+    {"level": 2, "name": "local_interactions", "families": ["aerial_attempt", "aerial_touch", "challenge", "contested_touch", "fifty_fifty_candidate", "dribble_sequence", "flick_candidate", "shot_candidate", "save_candidate", "deflection", "clear_candidate", "wall_play", "backboard_play", "recovery"]},
+    {"level": 3, "name": "coherent_plays", "families": ["kickoff_sequence", "attacking_sequence", "controlled_possession_candidate", "pass_reception_sequence", "shot_save_rebound_chain", "defensive_sequence", "counterattack_candidate"]},
+    {"level": 4, "name": "match_episodes", "families": ["sustained_pressure_candidate", "attack_defense_transition", "goal_replay_kickoff", "regulation_overtime_transition", "late_game_defense_candidate"]}
+  ],
+  "relations": ["part_of", "precedes", "overlaps", "involves", "supported_by", "followed_by", "replay_of"],
+  "graph_policy": "Overlapping intervals and multiple parents are allowed; temporal adjacency does not establish intent or causality.",
+  "observation_required_fields": ["observation_id", "source_video_id", "video_pts_seconds", "frame_index", "game_id", "view_span_id", "layout_span_id", "crop_box", "crop_to_source_transform", "extractor_version", "entity_id", "field", "value", "visibility", "epistemic_status", "extraction_quality"],
+  "state_required_fields": ["entity_id", "field", "value", "supporting_observation_ids", "last_seen", "freshness", "epistemic_status"],
+  "event_required_fields": ["event_id", "game_id", "view_span_ids", "level", "label", "actor_ids", "onset_bounds_video_seconds", "offset_bounds_video_seconds", "evidence_ids", "epistemic_status", "outcome", "outcome_basis", "coverage", "parent_ids", "related_ids", "replay_instance_id"],
+  "qa_required_fields": ["question_id", "type", "text", "answer", "answer_variants", "event_ids", "evidence_ids", "evidence_times", "evidence_regions", "required_coverage", "observation_cutoff", "uncertainty_flags", "verification_result"],
+  "sampling_pilot_hypotheses": {
+    "hud_hz": 2,
+    "field_discovery_hz": [6, 10],
+    "local_temporal_review_fps": [15, 30],
+    "lead_in_seconds": [2, 4],
+    "follow_through_seconds": [3, 6],
+    "fast_event_policy": "Review native-rate frames around ambiguity or reject precise timing/order; source quality can make events irrecoverable.",
+    "discovery_absence_policy": "Sparse sampling absence never proves an event did not occur."
+  },
+  "trigger_families": ["contact_proximity", "ball_trajectory_change", "lift_off_landing", "resource_delta", "score_delta", "statfeed_appearance", "view_change", "uncertainty"],
+  "protected_chains": [
+    ["approach", "contact", "ball_response"],
+    ["lift_off", "airborne_attempt_or_touch", "landing_or_recovery_when_required"],
+    ["shot", "save_deflection_post_goal_or_miss"],
+    ["opposing_approaches", "challenge", "loose_ball_or_next_resolved_touch"],
+    ["pad_approach", "pickup_evidence", "resource_result_when_visible"],
+    ["goal_evidence", "score_update"]
+  ],
+  "segment_pilot_duration_seconds": {"mechanics": [1, 6], "interactions": [3, 12], "plays": [8, 30]},
+  "segmentation_policy": "Evidence requirements override durations; link longer parent episodes and overlapping children; preserve missing footage and avoid transitive merging.",
+  "question_acceptance_rules": [
+    "Verify every answer claim against timestamped source evidence, independently of captions.",
+    "Resolve necessary identities or phrase questions using supported tracks/teams.",
+    "Bind boost readings to player identity and require freshness.",
+    "Require sufficient setup/contact/outcome context for the question.",
+    "Reject exact chronological order when uncertainty intervals overlap.",
+    "Keep observed touch, credited stat and inferred tactical labels distinct.",
+    "Do not equate last touch or next touch with possession.",
+    "Deduplicate replayed goals/events and split datasets by match.",
+    "Do not assert exact controls, unseen positions/resources, intent, or unsupported causality.",
+    "Qualify claims by visible scope; missing players do not establish negative facts.",
+    "Verify each multiple-choice alternative for ambiguity and label chronology when outcomes are sequential.",
+    "Keep optional audio answers out of a video-only benchmark.",
+    "Withhold future evidence beyond the observation cutoff for prediction tasks.",
+    "Preserve deliberately unanswerable questions and rejected-candidate reasons."
+  ],
+  "artifacts": ["video_manifest.json", "layout_spans.jsonl", "view_spans.jsonl", "observations.jsonl", "state_deltas.jsonl", "events.jsonl", "event_graph.json", "segments.jsonl", "qa_candidates.jsonl", "qa_verified.jsonl", "qa_rejected.jsonl"]
+}

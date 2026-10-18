@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "channels": [
+    {
+      "id": "pro_gameplay_dota2",
+      "name": "Dota 2 Pro Gameplay",
+      "url": "https://www.youtube.com/@ProGameplayDota2",
+      "enabled": true
+    }
+  ]
+}

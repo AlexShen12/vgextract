@@ -1,0 +1,62 @@
+{
+  "schema_version": "0.1-proposal",
+  "status": "design_only_not_evaluated",
+  "source_modalities": ["video", "optional_audio"],
+  "raw_player_inputs_available": false,
+  "coordinate_convention": "normalized x0,y0,x1,y1 relative to detected game viewport; seeds require calibration",
+  "calibration_example": {
+    "video_id": "9eNgCt8mLMI",
+    "video_seconds": 600,
+    "displayed_game_clock": "9:29",
+    "frame_size": [1920, 1080],
+    "scope": "one manually inspected frame; no temporal event labels"
+  },
+  "roles": [
+    {"id": "global_hud", "seed_box": [0.28, 0, 0.73, 0.07], "fields": ["game_clock", "kill_score", "roster", "readable_alive_dead", "readable_portrait_indicators"], "guardrail": "Score changes do not establish event actors."},
+    {"id": "spatial", "seed_box": [0, 0.74, 0.15, 1], "fields": ["icon_tracks", "coarse_map_region", "visible_structure_icons", "pings", "group_convergence"], "guardrail": "Unseen is not dead. Do not extrapolate positions through missing observations."},
+    {"id": "selected_unit", "seed_box": [0.25, 0.82, 0.74, 1], "fields": ["selected_unit_id", "health", "mana", "level", "ability_slots", "item_slots", "readable_cooldowns", "visible_buffs"], "guardrail": "All values belong to the selected unit, which can differ from camera focus and controlled hero."},
+    {"id": "combat", "seed_box": [0.15, 0.07, 1, 0.82], "dynamic_actor_crops": true, "fields": ["visible_participants", "attacks", "casts", "projectiles", "status_effects", "displacements", "local_outcomes"], "guardrail": "Use masks, timestamped sequences and bounded context. Camera motion is not entity movement."},
+    {"id": "event_messages", "seed_box": null, "region_policy": "detect feed and message panels per layout span", "fields": ["death_messages", "buyback_messages", "objective_messages", "item_messages"], "guardrail": "A message can establish an outcome without showing its action sequence."},
+    {"id": "economy", "seed_boxes": [[0, 0.12, 0.15, 0.48], [0.84, 0.9, 1, 1]], "fields": ["panel_type", "displayed_net_worth", "selected_unit_gold", "visible_progression_stats"], "guardrail": "Snapshot changes do not establish purchase time or farming location."}
+  ],
+  "example_occlusions": [
+    {"type": "facecam", "seed_box": [0.9, 0, 1, 0.15]},
+    {"type": "notifications", "seed_box": [0.8, 0.44, 1, 0.6], "route_contents_to": "event_messages"}
+  ],
+  "identity_fields": ["selected_unit_id", "camera_focus_ids", "controlled_hero_id", "perspective_mode", "fog_of_war_mode"],
+  "epistemic_statuses": ["observed", "inferred", "unknown", "contradicted"],
+  "visibility_statuses": ["visible", "occluded", "off_camera", "unreadable", "unknown"],
+  "ontology": [
+    {"level": 0, "name": "state_transition", "families": ["resource_change", "cooldown_change", "inventory_change", "level_change", "selection_change", "death_indicator_change"]},
+    {"level": 1, "name": "atomic_action", "families": ["attack", "cast", "item_activation", "displacement", "teleport_channel_start", "teleport_completion", "teleport_interruption", "ward_placement", "ward_removal", "rune_pickup"]},
+    {"level": 2, "name": "interaction_sequence", "families": ["trade", "chase", "escape", "disable_chain", "spell_combination", "save", "creep_farming", "stack_attempt", "ward_exchange"]},
+    {"level": 3, "name": "engagement", "families": ["gank", "skirmish", "teamfight", "pickoff", "tower_defense", "disengagement"]},
+    {"level": 4, "name": "objective_sequence", "families": ["tower_pressure", "tower_destruction", "roshan_attempt", "roshan_contest", "roshan_kill", "aegis_pickup", "barracks_siege", "base_defense", "versioned_other_objective"]},
+    {"level": 5, "name": "strategic_episode", "families": ["laning", "rotation", "farming_to_fight", "visible_smoke_movement", "split_pressure", "high_ground_siege"]}
+  ],
+  "event_relations": ["precedes", "overlaps", "participates_in", "part_of", "followed_by", "supported_by"],
+  "required_observation_fields": ["observation_id", "source_video_id", "frame_pts", "video_seconds", "game_clock_reading", "game_clock_uncertainty", "layout_span_id", "crop_box", "extractor_version", "entity_or_track_id", "field", "value", "evidence_modality", "extraction_quality", "epistemic_status", "visibility", "last_seen", "freshness"],
+  "required_event_fields": ["event_id", "event_type", "level", "actor_ids_or_tracks", "target_ids_or_tracks", "start_time_bounds", "end_time_bounds", "related_event_ids", "observation_ids", "local_outcome", "coverage", "label_status"],
+  "required_question_fields": ["question_id", "question", "type", "answer", "allowable_variants", "evidence_ids", "evidence_regions", "evidence_times", "required_coverage", "uncertainty_flags", "verification_result"],
+  "sampling_pilot_hypotheses": {
+    "hud_and_minimap_hz": [1, 2],
+    "battlefield_candidate_hz": 1,
+    "combat_review_hz": [8, 15],
+    "lead_in_seconds": [5, 10],
+    "follow_through_seconds": [5, 15],
+    "fast_event_policy": "Inspect native-rate frames around uncertain transitions or reject precise action/order questions. Sampling absence never establishes action absence."
+  },
+  "question_acceptance_rules": [
+    "Resolve entity identity for each required observation.",
+    "Verify answers against source evidence, independently of generated captions.",
+    "Require relevant setup and outcome coverage.",
+    "Reject chronological ordering when event time bounds overlap.",
+    "Qualify assertions by visible clip scope and view perspective.",
+    "Do not treat last-seen values as current without a field validity policy.",
+    "Do not use audio-only answers in a video-only benchmark.",
+    "Do not assert intent, exact controls, hidden vision, or unobserved causal explanations.",
+    "Check all multiple-choice alternatives for ambiguity.",
+    "Separate future target evidence from the observation cutoff for prediction tasks."
+  ],
+  "artifacts": ["video_manifest.json", "layout_spans.jsonl", "observations.jsonl", "state_deltas.jsonl", "events.jsonl", "event_graph.json", "segments.jsonl", "qa_candidates.jsonl", "qa_verified.jsonl"]
+}

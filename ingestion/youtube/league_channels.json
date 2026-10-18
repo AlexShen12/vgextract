@@ -1,0 +1,902 @@
+{
+  "schema_version": 1,
+  "source": "DomisumReplay League champion channels verified as public on 2026-10-14",
+  "verified_channel_count": 144,
+  "unresolved_roster_names": [
+    "Ahri",
+    "Aurelion Sol",
+    "Aurora",
+    "Azir",
+    "Camille",
+    "Cho'Gath",
+    "Darius",
+    "Fiddlesticks",
+    "Fizz",
+    "Gnar",
+    "Hecarim",
+    "K'Sante",
+    "Kennen",
+    "Kled",
+    "Lee Sin",
+    "Neeko",
+    "Pyke",
+    "Qiyana",
+    "Renekton",
+    "Senna",
+    "Sett",
+    "Sion",
+    "Skarner",
+    "Soraka",
+    "Syndra",
+    "Viego",
+    "Warwick",
+    "Yasuo",
+    "Yone"
+  ],
+  "channels": [
+    {
+      "id": "lol_domisum_aatrox",
+      "name": "domisumReplay: Aatrox",
+      "url": "https://www.youtube.com/@domisumReplay-Aatrox/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_akali",
+      "name": "domisumReplay: Akali",
+      "url": "https://www.youtube.com/@domisumReplay-Akali/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_akshan",
+      "name": "domisumReplay: Akshan",
+      "url": "https://www.youtube.com/@domisumReplay-Akshan/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_alistar",
+      "name": "domisumReplay: Alistar",
+      "url": "https://www.youtube.com/@domisumReplay-Alistar/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ambessa",
+      "name": "domisumReplay: Ambessa",
+      "url": "https://www.youtube.com/@domisumReplay-Ambessa/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_amumu",
+      "name": "domisumReplay: Amumu",
+      "url": "https://www.youtube.com/@domisumReplay-Amumu/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_anivia",
+      "name": "domisumReplay: Anivia",
+      "url": "https://www.youtube.com/@domisumReplay-Anivia/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_annie",
+      "name": "domisumReplay: Annie",
+      "url": "https://www.youtube.com/@domisumReplay-Annie/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_aphelios",
+      "name": "domisumReplay: Aphelios",
+      "url": "https://www.youtube.com/@domisumReplay-Aphelios/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ashe",
+      "name": "domisumReplay: Ashe",
+      "url": "https://www.youtube.com/@domisumReplay-Ashe/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_bard",
+      "name": "domisumReplay: Bard",
+      "url": "https://www.youtube.com/@domisumReplay-Bard/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_bel_veth",
+      "name": "domisumReplay: Bel'Veth",
+      "url": "https://www.youtube.com/@domisumReplay-Bel-Veth/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_blitzcrank",
+      "name": "domisumReplay: Blitzcrank",
+      "url": "https://www.youtube.com/@domisumReplay-Blitzcrank/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_brand",
+      "name": "domisumReplay: Brand",
+      "url": "https://www.youtube.com/@domisumReplay-Brand/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_braum",
+      "name": "domisumReplay: Braum",
+      "url": "https://www.youtube.com/@domisumReplay-Braum/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_briar",
+      "name": "domisumReplay: Briar",
+      "url": "https://www.youtube.com/@domisumReplay-Briar/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_caitlyn",
+      "name": "domisumReplay: Caitlyn",
+      "url": "https://www.youtube.com/@domisumReplay-Caitlyn/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_cassiopeia",
+      "name": "domisumReplay: Cassiopeia",
+      "url": "https://www.youtube.com/@domisumReplay-Cassiopeia/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_corki",
+      "name": "domisumReplay: Corki",
+      "url": "https://www.youtube.com/@domisumReplay-Corki/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_diana",
+      "name": "domisumReplay: Diana",
+      "url": "https://www.youtube.com/@domisumReplay-Diana/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_dr_mundo",
+      "name": "domisumReplay: Dr. Mundo",
+      "url": "https://www.youtube.com/@domisumReplay-Dr-Mundo/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_draven",
+      "name": "domisumReplay: Draven",
+      "url": "https://www.youtube.com/@domisumReplay-Draven/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ekko",
+      "name": "domisumReplay: Ekko",
+      "url": "https://www.youtube.com/@domisumReplay-Ekko/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_elise",
+      "name": "domisumReplay: Elise",
+      "url": "https://www.youtube.com/@domisumReplay-Elise/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_evelynn",
+      "name": "domisumReplay: Evelynn",
+      "url": "https://www.youtube.com/@domisumReplay-Evelynn/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ezreal",
+      "name": "domisumReplay: Ezreal",
+      "url": "https://www.youtube.com/@domisumReplay-Ezreal/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_fiora",
+      "name": "domisumReplay: Fiora",
+      "url": "https://www.youtube.com/@domisumReplay-Fiora/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_galio",
+      "name": "domisumReplay: Galio",
+      "url": "https://www.youtube.com/@domisumReplay-Galio/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_gangplank",
+      "name": "domisumReplay: Gangplank",
+      "url": "https://www.youtube.com/@domisumReplay-Gangplank/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_garen",
+      "name": "domisumReplay: Garen",
+      "url": "https://www.youtube.com/@domisumReplay-Garen/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_gragas",
+      "name": "domisumReplay: Gragas",
+      "url": "https://www.youtube.com/@domisumReplay-Gragas/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_graves",
+      "name": "domisumReplay: Graves",
+      "url": "https://www.youtube.com/@domisumReplay-Graves/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_gwen",
+      "name": "domisumReplay: Gwen",
+      "url": "https://www.youtube.com/@domisumReplay-Gwen/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_heimerdinger",
+      "name": "domisumReplay: Heimerdinger",
+      "url": "https://www.youtube.com/@domisumReplay-Heimerdinger/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_hwei",
+      "name": "domisumReplay: Hwei",
+      "url": "https://www.youtube.com/@domisumReplay-Hwei/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_illaoi",
+      "name": "domisumReplay: Illaoi",
+      "url": "https://www.youtube.com/@domisumReplay-Illaoi/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_irelia",
+      "name": "domisumReplay: Irelia",
+      "url": "https://www.youtube.com/@domisumReplay-Irelia/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ivern",
+      "name": "domisumReplay: Ivern",
+      "url": "https://www.youtube.com/@domisumReplay-Ivern/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_janna",
+      "name": "domisumReplay: Janna",
+      "url": "https://www.youtube.com/@domisumReplay-Janna/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_jarvan_iv",
+      "name": "domisumReplay: Jarvan IV",
+      "url": "https://www.youtube.com/@domisumReplay-Jarvan-IV/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_jax",
+      "name": "domisumReplay: Jax",
+      "url": "https://www.youtube.com/@domisumReplay-Jax/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_jayce",
+      "name": "domisumReplay: Jayce",
+      "url": "https://www.youtube.com/@domisumReplay-Jayce/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_jhin",
+      "name": "domisumReplay: Jhin",
+      "url": "https://www.youtube.com/@domisumReplay-Jhin/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_jinx",
+      "name": "domisumReplay: Jinx",
+      "url": "https://www.youtube.com/@domisumReplay-Jinx/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kai_sa",
+      "name": "domisumReplay: Kai'Sa",
+      "url": "https://www.youtube.com/@domisumReplay-Kai-Sa/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kalista",
+      "name": "domisumReplay: Kalista",
+      "url": "https://www.youtube.com/@domisumReplay-Kalista/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_karma",
+      "name": "domisumReplay: Karma",
+      "url": "https://www.youtube.com/@domisumReplay-Karma/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_karthus",
+      "name": "domisumReplay: Karthus",
+      "url": "https://www.youtube.com/@domisumReplay-Karthus/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kassadin",
+      "name": "domisumReplay: Kassadin",
+      "url": "https://www.youtube.com/@domisumReplay-Kassadin/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_katarina",
+      "name": "domisumReplay: Katarina",
+      "url": "https://www.youtube.com/@domisumReplay-Katarina/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kayle",
+      "name": "domisumReplay: Kayle",
+      "url": "https://www.youtube.com/@domisumReplay-Kayle/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kayn",
+      "name": "domisumReplay: Kayn",
+      "url": "https://www.youtube.com/@domisumReplay-Kayn/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kha_zix",
+      "name": "domisumReplay: Kha'Zix",
+      "url": "https://www.youtube.com/@domisumReplay-Kha-Zix/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kindred",
+      "name": "domisumReplay: Kindred",
+      "url": "https://www.youtube.com/@domisumReplay-Kindred/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_kog_maw",
+      "name": "domisumReplay: Kog'Maw",
+      "url": "https://www.youtube.com/@domisumReplay-Kog-Maw/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_leblanc",
+      "name": "domisumReplay: LeBlanc",
+      "url": "https://www.youtube.com/@domisumReplay-LeBlanc/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_leona",
+      "name": "domisumReplay: Leona",
+      "url": "https://www.youtube.com/@domisumReplay-Leona/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_lillia",
+      "name": "domisumReplay: Lillia",
+      "url": "https://www.youtube.com/@domisumReplay-Lillia/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_lissandra",
+      "name": "domisumReplay: Lissandra",
+      "url": "https://www.youtube.com/@domisumReplay-Lissandra/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_locke",
+      "name": "domisumReplay: Locke",
+      "url": "https://www.youtube.com/@domisumReplay-Locke/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_lucian",
+      "name": "domisumReplay: Lucian",
+      "url": "https://www.youtube.com/@domisumReplay-Lucian/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_lulu",
+      "name": "domisumReplay: Lulu",
+      "url": "https://www.youtube.com/@domisumReplay-Lulu/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_lux",
+      "name": "domisumReplay: Lux",
+      "url": "https://www.youtube.com/@domisumReplay-Lux/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_malphite",
+      "name": "domisumReplay: Malphite",
+      "url": "https://www.youtube.com/@domisumReplay-Malphite/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_malzahar",
+      "name": "domisumReplay: Malzahar",
+      "url": "https://www.youtube.com/@domisumReplay-Malzahar/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_maokai",
+      "name": "domisumReplay: Maokai",
+      "url": "https://www.youtube.com/@domisumReplay-Maokai/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_master_yi",
+      "name": "domisumReplay: Master Yi",
+      "url": "https://www.youtube.com/@domisumReplay-Master-Yi/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_mel",
+      "name": "domisumReplay: Mel",
+      "url": "https://www.youtube.com/@domisumReplay-Mel/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_milio",
+      "name": "domisumReplay: Milio",
+      "url": "https://www.youtube.com/@domisumReplay-Milio/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_miss_fortune",
+      "name": "domisumReplay: Miss Fortune",
+      "url": "https://www.youtube.com/@domisumReplay-Miss-Fortune/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_mordekaiser",
+      "name": "domisumReplay: Mordekaiser",
+      "url": "https://www.youtube.com/@domisumReplay-Mordekaiser/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_morgana",
+      "name": "domisumReplay: Morgana",
+      "url": "https://www.youtube.com/@domisumReplay-Morgana/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_naafiri",
+      "name": "domisumReplay: Naafiri",
+      "url": "https://www.youtube.com/@domisumReplay-Naafiri/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nami",
+      "name": "domisumReplay: Nami",
+      "url": "https://www.youtube.com/@domisumReplay-Nami/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nasus",
+      "name": "domisumReplay: Nasus",
+      "url": "https://www.youtube.com/@domisumReplay-Nasus/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nautilus",
+      "name": "domisumReplay: Nautilus",
+      "url": "https://www.youtube.com/@domisumReplay-Nautilus/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nidalee",
+      "name": "domisumReplay: Nidalee",
+      "url": "https://www.youtube.com/@domisumReplay-Nidalee/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nilah",
+      "name": "domisumReplay: Nilah",
+      "url": "https://www.youtube.com/@domisumReplay-Nilah/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nocturne",
+      "name": "domisumReplay: Nocturne",
+      "url": "https://www.youtube.com/@domisumReplay-Nocturne/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_nunu_willump",
+      "name": "domisumReplay: Nunu & Willump",
+      "url": "https://www.youtube.com/@domisumReplay-Nunu-Willump/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_olaf",
+      "name": "domisumReplay: Olaf",
+      "url": "https://www.youtube.com/@domisumReplay-Olaf/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_orianna",
+      "name": "domisumReplay: Orianna",
+      "url": "https://www.youtube.com/@domisumReplay-Orianna/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ornn",
+      "name": "domisumReplay: Ornn",
+      "url": "https://www.youtube.com/@domisumReplay-Ornn/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_pantheon",
+      "name": "domisumReplay: Pantheon",
+      "url": "https://www.youtube.com/@domisumReplay-Pantheon/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_poppy",
+      "name": "domisumReplay: Poppy",
+      "url": "https://www.youtube.com/@domisumReplay-Poppy/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_quinn",
+      "name": "domisumReplay: Quinn",
+      "url": "https://www.youtube.com/@domisumReplay-Quinn/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_rakan",
+      "name": "domisumReplay: Rakan",
+      "url": "https://www.youtube.com/@domisumReplay-Rakan/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_rammus",
+      "name": "domisumReplay: Rammus",
+      "url": "https://www.youtube.com/@domisumReplay-Rammus/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_rek_sai",
+      "name": "domisumReplay: Rek'Sai",
+      "url": "https://www.youtube.com/@domisumReplay-Rek-Sai/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_rell",
+      "name": "domisumReplay: Rell",
+      "url": "https://www.youtube.com/@domisumReplay-Rell/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_renata_glasc",
+      "name": "domisumReplay: Renata Glasc",
+      "url": "https://www.youtube.com/@domisumReplay-Renata-Glasc/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_rengar",
+      "name": "domisumReplay: Rengar",
+      "url": "https://www.youtube.com/@domisumReplay-Rengar/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_riven",
+      "name": "domisumReplay: Riven",
+      "url": "https://www.youtube.com/@domisumReplay-Riven/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_rumble",
+      "name": "domisumReplay: Rumble",
+      "url": "https://www.youtube.com/@domisumReplay-Rumble/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ryze",
+      "name": "domisumReplay: Ryze",
+      "url": "https://www.youtube.com/@domisumReplay-Ryze/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_samira",
+      "name": "domisumReplay: Samira",
+      "url": "https://www.youtube.com/@domisumReplay-Samira/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_sejuani",
+      "name": "domisumReplay: Sejuani",
+      "url": "https://www.youtube.com/@domisumReplay-Sejuani/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_seraphine",
+      "name": "domisumReplay: Seraphine",
+      "url": "https://www.youtube.com/@domisumReplay-Seraphine/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_shaco",
+      "name": "domisumReplay: Shaco",
+      "url": "https://www.youtube.com/@domisumReplay-Shaco/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_shen",
+      "name": "domisumReplay: Shen",
+      "url": "https://www.youtube.com/@domisumReplay-Shen/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_shyvana",
+      "name": "domisumReplay: Shyvana",
+      "url": "https://www.youtube.com/@domisumReplay-Shyvana/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_singed",
+      "name": "domisumReplay: Singed",
+      "url": "https://www.youtube.com/@domisumReplay-Singed/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_sivir",
+      "name": "domisumReplay: Sivir",
+      "url": "https://www.youtube.com/@domisumReplay-Sivir/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_smolder",
+      "name": "domisumReplay: Smolder",
+      "url": "https://www.youtube.com/@domisumReplay-Smolder/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_sona",
+      "name": "domisumReplay: Sona",
+      "url": "https://www.youtube.com/@domisumReplay-Sona/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_swain",
+      "name": "domisumReplay: Swain",
+      "url": "https://www.youtube.com/@domisumReplay-Swain/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_sylas",
+      "name": "domisumReplay: Sylas",
+      "url": "https://www.youtube.com/@domisumReplay-Sylas/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_tahm_kench",
+      "name": "domisumReplay: Tahm Kench",
+      "url": "https://www.youtube.com/@domisumReplay-Tahm-Kench/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_taliyah",
+      "name": "domisumReplay: Taliyah",
+      "url": "https://www.youtube.com/@domisumReplay-Taliyah/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_talon",
+      "name": "domisumReplay: Talon",
+      "url": "https://www.youtube.com/@domisumReplay-Talon/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_taric",
+      "name": "domisumReplay: Taric",
+      "url": "https://www.youtube.com/@domisumReplay-Taric/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_teemo",
+      "name": "domisumReplay: Teemo",
+      "url": "https://www.youtube.com/@domisumReplay-Teemo/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_thresh",
+      "name": "domisumReplay: Thresh",
+      "url": "https://www.youtube.com/@domisumReplay-Thresh/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_tristana",
+      "name": "domisumReplay: Tristana",
+      "url": "https://www.youtube.com/@domisumReplay-Tristana/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_trundle",
+      "name": "domisumReplay: Trundle",
+      "url": "https://www.youtube.com/@domisumReplay-Trundle/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_tryndamere",
+      "name": "domisumReplay: Tryndamere",
+      "url": "https://www.youtube.com/@domisumReplay-Tryndamere/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_twisted_fate",
+      "name": "domisumReplay: Twisted Fate",
+      "url": "https://www.youtube.com/@domisumReplay-Twisted-Fate/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_twitch",
+      "name": "domisumReplay: Twitch",
+      "url": "https://www.youtube.com/@domisumReplay-Twitch/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_udyr",
+      "name": "domisumReplay: Udyr",
+      "url": "https://www.youtube.com/@domisumReplay-Udyr/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_urgot",
+      "name": "domisumReplay: Urgot",
+      "url": "https://www.youtube.com/@domisumReplay-Urgot/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_varus",
+      "name": "domisumReplay: Varus",
+      "url": "https://www.youtube.com/@domisumReplay-Varus/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_vayne",
+      "name": "domisumReplay: Vayne",
+      "url": "https://www.youtube.com/@domisumReplay-Vayne/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_veigar",
+      "name": "domisumReplay: Veigar",
+      "url": "https://www.youtube.com/@domisumReplay-Veigar/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_vel_koz",
+      "name": "domisumReplay: Vel'Koz",
+      "url": "https://www.youtube.com/@domisumReplay-Vel-Koz/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_vex",
+      "name": "domisumReplay: Vex",
+      "url": "https://www.youtube.com/@domisumReplay-Vex/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_vi",
+      "name": "domisumReplay: Vi",
+      "url": "https://www.youtube.com/@domisumReplay-Vi/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_viktor",
+      "name": "domisumReplay: Viktor",
+      "url": "https://www.youtube.com/@domisumReplay-Viktor/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_vladimir",
+      "name": "domisumReplay: Vladimir",
+      "url": "https://www.youtube.com/@domisumReplay-Vladimir/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_volibear",
+      "name": "domisumReplay: Volibear",
+      "url": "https://www.youtube.com/@domisumReplay-Volibear/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_wukong",
+      "name": "domisumReplay: Wukong",
+      "url": "https://www.youtube.com/@domisumReplay-Wukong/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_xayah",
+      "name": "domisumReplay: Xayah",
+      "url": "https://www.youtube.com/@domisumReplay-Xayah/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_xerath",
+      "name": "domisumReplay: Xerath",
+      "url": "https://www.youtube.com/@domisumReplay-Xerath/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_xin_zhao",
+      "name": "domisumReplay: Xin Zhao",
+      "url": "https://www.youtube.com/@domisumReplay-Xin-Zhao/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_yorick",
+      "name": "domisumReplay: Yorick",
+      "url": "https://www.youtube.com/@domisumReplay-Yorick/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_yunara",
+      "name": "domisumReplay: Yunara",
+      "url": "https://www.youtube.com/@domisumReplay-Yunara/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_yuumi",
+      "name": "domisumReplay: Yuumi",
+      "url": "https://www.youtube.com/@domisumReplay-Yuumi/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zaahen",
+      "name": "domisumReplay: Zaahen",
+      "url": "https://www.youtube.com/@domisumReplay-Zaahen/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zac",
+      "name": "domisumReplay: Zac",
+      "url": "https://www.youtube.com/@domisumReplay-Zac/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zed",
+      "name": "domisumReplay: Zed",
+      "url": "https://www.youtube.com/@domisumReplay-Zed/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zeri",
+      "name": "domisumReplay: Zeri",
+      "url": "https://www.youtube.com/@domisumReplay-Zeri/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_ziggs",
+      "name": "domisumReplay: Ziggs",
+      "url": "https://www.youtube.com/@domisumReplay-Ziggs/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zilean",
+      "name": "domisumReplay: Zilean",
+      "url": "https://www.youtube.com/@domisumReplay-Zilean/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zoe",
+      "name": "domisumReplay: Zoe",
+      "url": "https://www.youtube.com/@domisumReplay-Zoe/videos",
+      "enabled": true
+    },
+    {
+      "id": "lol_domisum_zyra",
+      "name": "domisumReplay: Zyra",
+      "url": "https://www.youtube.com/@domisumReplay-Zyra/videos",
+      "enabled": true
+    }
+  ]
+}
