@@ -143,28 +143,40 @@ stops and records the channel and response in `last_run.json`. It does not try
 to evade that check; rerun later when access is available. The channel catalog
 and completed download archives remain resumable.
 
-For UNC Longleaf, install the Python requirements into an environment in your
-persistent storage, and make sure `ffmpeg`, `ffprobe`, and Node.js or Deno are
-available to the job. Then submit from the project root:
+The Slurm script loads the Anaconda module; it does not create or populate a
+Conda environment. On Longleaf, run this setup from the project root on a login
+node. It creates an environment with Python, `ffmpeg`, and Node.js, then installs
+the Python requirements from this repository:
+
+```bash
+module purge
+module add anaconda/2024.02
+ENV_PREFIX="${HOME}/.conda/envs/videogame-youtube"
+conda create --yes --prefix "${ENV_PREFIX}" --channel conda-forge python=3.12 pip ffmpeg nodejs
+conda run --prefix "${ENV_PREFIX}" python -m pip install -r ingestion/youtube/requirements.txt
+conda run --prefix "${ENV_PREFIX}" python -m yt_dlp --version
+```
+
+Then submit from the project root, passing that environment's Python and a
+persistent location with enough space for the videos:
+
+```bash
+sbatch --export=ALL,PYTHON_BIN="${ENV_PREFIX}/bin/python",OUTPUT_ROOT=/path/to/persistent/youtube \
+  ingestion/youtube/slurm_download_league.sl
+```
+
+The job adds the selected Python environment's `bin` directory to `PATH`, so
+`ffmpeg`, `ffprobe`, and Node.js installed in that Conda environment are found.
+The default mode refreshes the first-100 catalogs and downloads missing videos;
+re-submit after the 12-hour allocation to resume. For the default output path:
 
 ```bash
 sbatch ingestion/youtube/slurm_download_league.sl
 ```
 
-The job uses the Longleaf `anaconda/2024.02` module and runs for up to 12 hours.
-Its default mode refreshes the first-100 catalogs and downloads missing videos;
-re-submit the same job to resume after the allocation ends. To set the Python
-environment and output directory explicitly:
-
-```bash
-sbatch --export=ALL,PYTHON_BIN=/path/to/venv/bin/python,OUTPUT_ROOT=/path/to/persistent/youtube \
-  ingestion/youtube/slurm_download_league.sl
-```
-
-Use `--export=ALL,MODE=catalog` for a metadata-only scan, or
-`--export=ALL,MODE=use-catalog` when the first-100 catalogs already exist on
-Longleaf. `MAX_DOWNLOADS=1` can be passed through `--export` for a one-video
-download trial.
+Use `MODE=catalog` for a metadata-only scan, or `MODE=use-catalog` when catalogs
+already exist on Longleaf. Pass `MAX_DOWNLOADS=1` through `--export` for a
+one-video download trial.
 
 ## Single-source previews and downloads
 

@@ -53,6 +53,8 @@ if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
     echo "ERROR: Python executable not found: ${PYTHON_BIN}" >&2
     exit 1
 fi
+PYTHON_DIR="$(dirname "$(command -v "${PYTHON_BIN}")")"
+export PATH="${PYTHON_DIR}:${PATH}"
 if ! "${PYTHON_BIN}" -c 'import yt_dlp' >/dev/null 2>&1; then
     echo "ERROR: yt-dlp is not installed for ${PYTHON_BIN}. Install ingestion/youtube/requirements.txt in this Python environment." >&2
     exit 1
