@@ -1,0 +1,20 @@
+{
+  "patch": {"gameplay_patch": "26.13", "ddragon_version": "16.13.1", "cdragon_version": "16.13", "locale": "en_US"},
+  "models": {
+    "instruct": {"id": "Qwen/Qwen3-VL-8B-Instruct", "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b"},
+    "thinking": {"id": "Qwen/Qwen3-VL-8B-Thinking", "revision": "92f3c4b4feadd3a016ef468d103bb5f58b2a2c6b"}
+  },
+  "routes": [
+    {"name":"selected_hud","box":[0,775,315,965],"model":"instruct","max_pixels":262144,"fields":["identity","health","resource","level","passive","Q","W","E","R","summoner_1","summoner_2","status","selection"]},
+    {"name":"left_sidebar","box":[0,125,115,645],"model":"instruct","fields":["identity","player_name","level","health","resource","summoner_1","summoner_2","ultimate","death_timer","alive"]},
+    {"name":"right_sidebar","box":[1810,125,1920,645],"model":"instruct","fields":["identity","player_name","level","health","resource","summoner_1","summoner_2","ultimate","death_timer","alive"]},
+    {"name":"scoreboard","box":[595,835,1335,1080],"model":"instruct","max_pixels":524288,"fields":["panel_type","identity","player_name","kills","deaths","assists","cs","inventory","displayed_gold","level"]},
+    {"name":"minimap","box":[1650,810,1915,1075],"model":"instruct","fields":["position","structure_status","vision_status","ping","camera"]},
+    {"name":"match_hud","box":[390,0,1545,125],"model":"instruct","fields":["game_clock","kills","displayed_gold","objective_indicator"]},
+    {"name":"objective_panel","box":[1340,895,1645,1080],"model":"instruct","fields":["objective_timer","objective_status"]},
+    {"name":"event_feed","box":[1450,440,1770,810],"model":"instruct","fields":["notice"]},
+    {"name":"central_notice","box":[400,160,1515,310],"model":"instruct","fields":["notice"]},
+    {"name":"gameplay","box":[0,110,1920,835],"model":"thinking","max_pixels":401408,"fields":["identity","position","health","structure_status","vision_status","status","layout_issue"]},
+    {"name":"full_context","box":[0,0,1920,1080],"model":"thinking","max_pixels":200704,"fields":["identity","position","structure_status","layout_issue"]}
+  ]
+}

@@ -2,3 +2,8 @@
 data/ballchasing/
 data/youtube/
 .venv/
+data/league_knowledge/
+__pycache__/
+data/league_runs/
+data/league_models/
+.venv-league/

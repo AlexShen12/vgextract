@@ -143,6 +143,29 @@ stops and records the channel and response in `last_run.json`. It does not try
 to evade that check; rerun later when access is available. The channel catalog
 and completed download archives remain resumable.
 
+## Local one-video trial on macOS
+
+The local trial script uses the already saved Aatrox catalog and caps the whole
+run at one new video download. It does not scan all 144 League channels first.
+From the project root, prepare the Python environment and macOS tools once:
+
+```bash
+python3 -m venv .venv
+.venv/bin/python -m pip install -r ingestion/youtube/requirements.txt
+brew install ffmpeg node
+```
+
+Then run:
+
+```bash
+bash ingestion/youtube/run_local_trial.sh
+```
+
+It writes under `data/youtube` by default, skips a video already completed in
+the archive, and attempts at most one new download. To use a different output
+location, set `OUTPUT_ROOT=/path/to/storage` before the command. The catalog
+and channel selection are in `ingestion/youtube/local_trial_channels.json`.
+
 The Slurm script loads the Anaconda module and activates
 `/nas/longleaf/home/alshen/.conda/envs/videogame-youtube` by default. It does
 not create or populate that environment. On Longleaf, run this setup from the

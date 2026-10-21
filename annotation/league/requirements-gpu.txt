@@ -1,0 +1,8 @@
+# Reproducible initial reference stack. Validate on the allocated L40 before scaling.
+# The runtime additionally records the actual full environment and model commit SHAs.
+torch==2.8.0
+torchvision==0.23.0
+transformers==4.57.1
+accelerate==1.11.0
+qwen-vl-utils==0.0.14
+Pillow==11.3.0

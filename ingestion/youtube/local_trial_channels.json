@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "channels": [
+    {
+      "id": "lol_domisum_aatrox",
+      "name": "DomisumReplay Aatrox (local trial)",
+      "url": "https://www.youtube.com/@domisumReplay-Aatrox/videos",
+      "enabled": true
+    }
+  ]
+}
