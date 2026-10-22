@@ -81,6 +81,7 @@ Consequently, none of the following has been established:
 
 From an accessible Longleaf session, follow the README to create the environment,
 prepare the source/run, cache weights/references and submit
-`bash annotation/league/submit_longleaf.sh`. The automatic pilot precedes the full
-pass and writes `pilot_report.json`; completed work survives allocation expiry.
+`sbatch --export=ALL annotation/league/slurm_annotate.sl`. The automatic pilot
+precedes the full pass and writes `pilot_report.json`; completed work survives
+allocation expiry.
 Human review remains optional during all of those stages.

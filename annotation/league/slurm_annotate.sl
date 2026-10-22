@@ -2,8 +2,10 @@
 # Submit from the repository root. Override resource directives with sbatch flags.
 # Longleaf GPU examples: https://help.rc.unc.edu/longleaf-slurm-examples/
 #SBATCH --job-name=league_annotation
-#SBATCH --output=logs/%x-%j.out
-#SBATCH --error=logs/%x-%j.err
+# Keep Slurm logs beside the repository so direct `sbatch` submission does not
+# depend on a pre-created logs/ directory.
+#SBATCH --output=%x-%j.out
+#SBATCH --error=%x-%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
@@ -31,6 +33,7 @@ export TOKENIZERS_PARALLELISM=false
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-8}"
 export HF_HUB_OFFLINE=1
 export TRANSFORMERS_OFFLINE=1
+export HF_HOME="${HF_HOME:-/work/users/a/l/alshen/hf-cache}"
 LEAGUE_RUN_DIR="${LEAGUE_RUN_DIR:-data/league_runs/aatrox-26.13}"
 LEAGUE_VIDEO="${LEAGUE_VIDEO:-data/youtube/lol_domisum_aatrox/xICbe-OOPvE.mp4}"
 LEAGUE_STAGE="${LEAGUE_STAGE:-run}"

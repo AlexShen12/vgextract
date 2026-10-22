@@ -54,17 +54,15 @@ caches patch references and both model checkpoints. It runs on a login node and
 does not require a GPU allocation:
 
 ```bash
-cd /path/to/vgextract/vgextract
-export LEAGUE_ENV=/work/users/a/l/alshen/conda_envs/videogame-league
-export HF_HOME=/path/with/room/for/model-cache
+cd /users/a/l/alshen/vgextract/vgextract
 bash annotation/league/setup_longleaf.sh
 ```
 
-The default environment path matches `slurm_annotate.sl`. Keep `HF_HOME` set to
-the same value when submitting jobs. The lock file pins the tested preprocessing
-and inference stack; the setup script checks exact installed versions and imports
-the Qwen inference APIs. CUDA availability and BF16 support are checked separately
-by the allocated-GPU `preflight` stage.
+The environment and model-cache defaults match `slurm_annotate.sl`; override them
+only if needed. The lock file pins the tested preprocessing and inference stack;
+the setup script checks exact installed versions and imports the Qwen inference
+APIs. CUDA availability and BF16 support are checked separately by the allocated-
+GPU `preflight` stage.
 
 `cache-references` caches the complete static champion roster/details and item
 dictionary, including available same-patch CDragon fallbacks. Unresolvable formula
@@ -92,13 +90,21 @@ python -m annotation.league --offline preflight
 python -m annotation.league --offline run
 ```
 
-For Longleaf, set `LEAGUE_ENV` to your environment path, keep `HF_HOME` consistent
-with the cached models, and submit from the repository root:
+For Longleaf, submit from the repository root. The batch file defaults to the
+environment, model cache, source video and run directory used by setup, so the
+full run takes one command:
 
 ```bash
-export LEAGUE_ENV=/path/to/your/conda/env
-export LEAGUE_RUN_DIR=data/league_runs/aatrox-26.13
-bash annotation/league/submit_longleaf.sh
+sbatch annotation/league/slurm_annotate.sl
+```
+
+To run the GPU preflight first, submit it with a stage override, wait for it to
+finish successfully, then submit the full run:
+
+```bash
+sbatch --export=ALL,LEAGUE_STAGE=preflight annotation/league/slurm_annotate.sl
+# Wait for the preflight job to finish successfully, then:
+sbatch annotation/league/slurm_annotate.sl
 ```
 
 The launcher defaults to `l40-gpu`, `gpu_access`, one GPU, eight CPUs, 64 GB host
@@ -110,7 +116,10 @@ Longleaf's partition may allocate an L40 or L40S; the exact GPU is recorded.
 `LEAGUE_STAGE` can select a single stage; `LEAGUE_VIDEO`, `LEAGUE_CONFIG`,
 `LEAGUE_START` and `LEAGUE_END` select the source/configuration/span. The script
 uses offline model/reference caches, sends no email, and forwards shutdown signals.
-Resubmit to resume. Completed HUD microbatches and observation tasks are retained.
+Submit the batch file from the repository root; Slurm writes `%x-%j.out` and
+`%x-%j.err` there. The `submit_longleaf.sh` wrapper remains available for creating
+`logs/` and overriding the default resource requests. Resubmit to resume. Completed
+HUD microbatches and observation tasks are retained.
 Use `LEAGUE_RETRY_FAILED=1` to retry unresolved/partial tasks after inspecting them.
 
 ## Stages and evidence contracts

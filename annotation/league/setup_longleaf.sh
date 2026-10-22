@@ -1,6 +1,6 @@
 #!/bin/bash
 # One-time interactive setup on a Longleaf login node. Run from any directory.
-# Set HF_HOME to persistent storage with enough room for both model checkpoints.
+# Uses the same model-cache default as slurm_annotate.sl; can be overridden.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,11 +10,8 @@ cd "${REPO_ROOT}"
 LEAGUE_ENV="${LEAGUE_ENV:-/work/users/a/l/alshen/conda_envs/videogame-league}"
 LEAGUE_RUN_DIR="${LEAGUE_RUN_DIR:-${REPO_ROOT}/data/league_runs/aatrox-26.13}"
 LEAGUE_VIDEO="${LEAGUE_VIDEO:-${REPO_ROOT}/data/youtube/lol_domisum_aatrox/xICbe-OOPvE.mp4}"
-if [[ -z "${HF_HOME:-}" ]]; then
-    echo "Set HF_HOME to persistent storage with enough space for both Qwen checkpoints." >&2
-    echo "Example: export HF_HOME=/work/users/a/l/alshen/huggingface" >&2
-    exit 2
-fi
+HF_HOME="${HF_HOME:-/work/users/a/l/alshen/hf-cache}"
+export HF_HOME
 mkdir -p "${HF_HOME}"
 
 if [[ ! -f "${LEAGUE_VIDEO}" ]]; then
@@ -102,12 +99,8 @@ python -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" processor-preview
 
 cat <<EOF
 
-Initial setup is complete. Submit the GPU preflight and run from the repository root:
-  export LEAGUE_ENV=${LEAGUE_ENV}
-  export LEAGUE_RUN_DIR=${LEAGUE_RUN_DIR}
-  export LEAGUE_VIDEO=${LEAGUE_VIDEO}
-  export HF_HOME=${HF_HOME}
-  LEAGUE_STAGE=preflight bash annotation/league/submit_longleaf.sh
+Initial setup is complete. From the repository root, submit the GPU preflight and run:
+  sbatch --export=ALL,LEAGUE_STAGE=preflight annotation/league/slurm_annotate.sl
   # Wait for preflight to finish successfully, then:
-  LEAGUE_STAGE=run bash annotation/league/submit_longleaf.sh
+  sbatch annotation/league/slurm_annotate.sl
 EOF
