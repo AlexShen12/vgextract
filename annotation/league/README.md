@@ -49,9 +49,10 @@ resolved by PyTorch on Linux and recorded by preflight.
 For a one-time interactive setup on Longleaf, transfer the video to the default
 repository path (or set `LEAGUE_VIDEO`) and choose persistent storage for the
 model downloads. The setup script creates/updates the environment, installs and
-checks every pinned Python package, verifies FFmpeg tools, prepares the run and
-caches patch references and both model checkpoints. It runs on a login node and
-does not require a GPU allocation:
+checks every pinned Python package, installs FFmpeg/ffprobe in the Conda
+environment, prepares the run and caches patch references and both model
+checkpoints. Keeping FFmpeg in the environment makes it available after Slurm
+purges modules. Setup runs on a login node and does not require a GPU allocation:
 
 ```bash
 cd /users/a/l/alshen/vgextract/vgextract

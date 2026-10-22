@@ -32,6 +32,9 @@ source "${CONDA_BASE}/etc/profile.d/conda.sh"
 if [[ ! -x "${LEAGUE_ENV}/bin/python" ]]; then
     conda create -p "${LEAGUE_ENV}" python=3.12 -y
 fi
+# Keep media tools inside the environment so they remain available after the
+# Slurm script purges modules and activates this Conda prefix.
+conda install -p "${LEAGUE_ENV}" -c conda-forge ffmpeg -y
 conda activate "${LEAGUE_ENV}"
 export HF_HOME
 

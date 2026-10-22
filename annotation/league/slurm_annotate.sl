@@ -28,6 +28,14 @@ conda activate "${LEAGUE_ENV}"
 set -u
 cd "${SLURM_SUBMIT_DIR:?Submit from the repository root}"
 
+for executable in ffmpeg ffprobe; do
+    command -v "${executable}" >/dev/null 2>&1 || {
+        echo "Required executable not found in the active environment: ${executable}" >&2
+        echo "Run annotation/league/setup_longleaf.sh to install the media tools." >&2
+        exit 2
+    }
+done
+
 export PYTHONUNBUFFERED=1
 export TOKENIZERS_PARALLELISM=false
 export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-8}"
