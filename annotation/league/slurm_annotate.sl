@@ -18,7 +18,7 @@ set -euo pipefail
 module purge
 module add anaconda/2024.02
 
-LEAGUE_ENV="${LEAGUE_ENV:-/nas/longleaf/home/alshen/.conda/envs/videogame-league}"
+LEAGUE_ENV="${LEAGUE_ENV:-/work/users/a/l/alshen/conda_envs/videogame-league}"
 CONDA_BASE="$(conda info --base)"
 set +u
 source "${CONDA_BASE}/etc/profile.d/conda.sh"

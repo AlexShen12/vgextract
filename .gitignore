@@ -7,3 +7,6 @@ __pycache__/
 data/league_runs/
 data/league_models/
 .venv-league/
+data/
+logs/
+*.pyc
