@@ -59,8 +59,12 @@ cd /users/a/l/alshen/vgextract/vgextract
 bash annotation/league/setup_longleaf.sh
 ```
 
-The environment and model-cache defaults match `slurm_annotate.sl`; override them
-only if needed. The lock file pins the tested preprocessing and inference stack;
+The environment default matches `slurm_annotate.sl`; the model cache defaults to
+`~/.cache/huggingface`. Set
+`LEAGUE_ENV` or `LEAGUE_HF_HOME` before setup only if you need different paths.
+The dedicated `LEAGUE_HF_HOME` setting is used by both setup and Slurm, so a stale
+`HF_HOME` value cannot redirect the offline job to a different cache. The lock file
+pins the tested preprocessing and inference stack;
 the setup script checks exact installed versions and imports the Qwen inference
 APIs. CUDA availability and BF16 support are checked separately by the allocated-
 GPU `preflight` stage.

@@ -1,6 +1,6 @@
 #!/bin/bash
 # One-time interactive setup on a Longleaf login node. Run from any directory.
-# Uses the same model-cache default as slurm_annotate.sl; can be overridden.
+# Uses the same dedicated model-cache setting as slurm_annotate.sl.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,8 +10,8 @@ cd "${REPO_ROOT}"
 LEAGUE_ENV="${LEAGUE_ENV:-/work/users/a/l/alshen/conda_envs/videogame-league}"
 LEAGUE_RUN_DIR="${LEAGUE_RUN_DIR:-${REPO_ROOT}/data/league_runs/aatrox-26.13}"
 LEAGUE_VIDEO="${LEAGUE_VIDEO:-${REPO_ROOT}/data/youtube/lol_domisum_aatrox/xICbe-OOPvE.mp4}"
-HF_HOME="${HF_HOME:-/work/users/a/l/alshen/hf-cache}"
-export HF_HOME
+LEAGUE_HF_HOME="${LEAGUE_HF_HOME:-${HOME}/.cache/huggingface}"
+export HF_HOME="${LEAGUE_HF_HOME}"
 mkdir -p "${HF_HOME}"
 
 if [[ ! -f "${LEAGUE_VIDEO}" ]]; then
