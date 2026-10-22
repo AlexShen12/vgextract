@@ -39,7 +39,7 @@ python3 -m annotation.league --run-dir data/league_runs/aatrox-reset prepare \
 
 ## GPU setup and Longleaf
 
-Use a separate GPU environment (Python 3.12 recommended). The initial stack
+Use a separate GPU environment with Python 3.12 for the locked setup. The initial stack
 is pinned in `requirements-gpu.txt`. Its actual CUDA environment is captured at
 runtime; CUDA inference and memory fit must be validated on the allocated L40.
 `inference-environment.lock.txt` freezes the complete set tested for CPU image/video
@@ -68,6 +68,19 @@ pins the tested preprocessing and inference stack;
 the setup script checks exact installed versions and imports the Qwen inference
 APIs. CUDA availability and BF16 support are checked separately by the allocated-
 GPU `preflight` stage.
+
+If setup reports that `av==19.0.1` requires Python >=3.12, the installation is
+using an older Python. Rerun the updated setup script: it requests Python 3.12,
+pip and FFmpeg for existing environments as well as new ones. Before installing
+the lock it prints and checks the exact environment interpreter, Python version,
+prefix, local pip and writable site-packages. A missing local pip or an unwritable
+prefix can otherwise cause pip to fall back to an external or user installation.
+Setup explicitly disables user installs; setup and Slurm both ignore inherited
+`PYTHONHOME`/`PYTHONPATH` and user-site packages. Packages left in `~/.local` by an
+earlier attempt do not need to be deleted. If the prefix is not writable, choose
+a directory you own with `LEAGUE_ENV` and use that setting for both setup and
+Slurm submission. Conda initialization and activation tolerate unset shell
+variables while the rest of each script retains strict shell checks.
 
 `cache-references` caches the complete static champion roster/details and item
 dictionary, including available same-patch CDragon fallbacks. Unresolvable formula

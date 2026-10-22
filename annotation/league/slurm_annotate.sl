@@ -19,6 +19,8 @@
 set -euo pipefail
 module purge
 module add anaconda/2024.02
+unset PYTHONHOME PYTHONPATH
+export PYTHONNOUSERSITE=1
 
 LEAGUE_ENV="${LEAGUE_ENV:-/work/users/a/l/alshen/conda_envs/videogame-league}"
 CONDA_BASE="$(conda info --base)"
@@ -27,6 +29,10 @@ source "${CONDA_BASE}/etc/profile.d/conda.sh"
 conda activate "${LEAGUE_ENV}"
 set -u
 cd "${SLURM_SUBMIT_DIR:?Submit from the repository root}"
+unset PYTHONHOME PYTHONPATH
+export PYTHONNOUSERSITE=1
+LEAGUE_PYTHON="${LEAGUE_ENV}/bin/python"
+"${LEAGUE_PYTHON}" annotation/league/check_environment.py "${LEAGUE_ENV}"
 
 for executable in ffmpeg ffprobe; do
     command -v "${executable}" >/dev/null 2>&1 || {
@@ -62,7 +68,7 @@ fi
 child=""
 stop_child() { if [[ -n "${child}" ]]; then kill -TERM "${child}" 2>/dev/null || true; fi; }
 trap stop_child TERM INT
-python -m annotation.league "${args[@]}" &
+"${LEAGUE_PYTHON}" -m annotation.league "${args[@]}" &
 child=$!
 status=0
 wait "${child}" || status=$?

@@ -1,11 +1,24 @@
 # Validation record
 
+Setup follow-up on 2026-10-21: setup now requests Python 3.12, local pip and
+FFmpeg for both new and existing Conda prefixes. Setup and Slurm use the prefix's
+explicit interpreter, reject a mismatched Python/prefix or missing local pip,
+and exclude inherited Python paths and user-site packages. Setup checks writable
+site-packages and refuses pip user installs. Nine new local regression checks
+exercise those guards and execute both shell entry points with stand-ins for
+Conda, modules and Python, including initialization/activation hooks referencing
+unset variables. These checks do not install the Linux lock or run on Longleaf.
+The full local suite ran 100 tests: 99 passed and the optional review API test
+was skipped because its dependencies are absent in the current interpreter.
+Shell syntax and Git whitespace checks also passed.
+
 Cache-diagnostics follow-up on 2026-10-21: all **91 repository tests** passed,
 including four new checks for malformed JSON filenames, online index-only repair,
 bounded repair attempts, and offline failure without network access. These checks
 use fixture snapshots; the Longleaf cache failure itself has not been reproduced
-locally. Python package and FFmpeg availability on Longleaf were confirmed by the
-user's setup output; full GPU execution remains pending.
+locally. Earlier output indicated Python package and FFmpeg availability on
+Longleaf; the later setup error revealed an incompatible installation interpreter,
+so the corrected cluster environment and full GPU execution remain unverified.
 
 Local validation completed 2026-10-19 (America/New_York), Python 3.12.7 on macOS arm64.
 This records implementation checks, not a completed GPU annotation benchmark.

@@ -26,23 +26,38 @@ if ! command -v module >/dev/null 2>&1; then
 fi
 module add anaconda/2024.02
 command -v conda >/dev/null 2>&1 || { echo "conda not found after loading Anaconda." >&2; exit 2; }
+# Ignore inherited Python paths and user packages, including a failed earlier
+# installation into ~/.local. Apply this to Conda's Python as well.
+unset PYTHONHOME PYTHONPATH
+export PYTHONNOUSERSITE=1
 CONDA_BASE="$(conda info --base)"
+set +u
 source "${CONDA_BASE}/etc/profile.d/conda.sh"
+set -u
 
-if [[ ! -x "${LEAGUE_ENV}/bin/python" ]]; then
-    conda create -p "${LEAGUE_ENV}" python=3.12 -y
-fi
 # Keep media tools inside the environment so they remain available after the
 # Slurm script purges modules and activates this Conda prefix.
-conda install -p "${LEAGUE_ENV}" -c conda-forge ffmpeg -y
+if [[ ! -x "${LEAGUE_ENV}/bin/python" ]]; then
+    conda create -p "${LEAGUE_ENV}" -c conda-forge python=3.12 pip ffmpeg -y
+else
+    # An existing prefix may have an older Python or no local pip. Enforce the
+    # bootstrap requirements on reruns, rather than only installing FFmpeg.
+    conda install -p "${LEAGUE_ENV}" -c conda-forge python=3.12 pip ffmpeg -y
+fi
+set +u
 conda activate "${LEAGUE_ENV}"
-export HF_HOME
+set -u
+unset PYTHONHOME PYTHONPATH
+export HF_HOME PYTHONNOUSERSITE=1
+LEAGUE_PYTHON="${LEAGUE_ENV}/bin/python"
 
-python -m pip install -r annotation/league/inference-environment.lock.txt
-python -m pip check
+"${LEAGUE_PYTHON}" annotation/league/check_environment.py "${LEAGUE_ENV}" --writable
+# Explicitly refuse a user install even if pip configuration requests one.
+"${LEAGUE_PYTHON}" -m pip install --no-user -r annotation/league/inference-environment.lock.txt
+"${LEAGUE_PYTHON}" -m pip check
 
 # Verify every exact pin in the lock file and import the inference stack.
-python - <<'PY'
+"${LEAGUE_PYTHON}" - <<'PY'
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 import os
@@ -98,10 +113,10 @@ for executable in ffmpeg ffprobe; do
     command -v "${executable}"
 done
 
-python -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" prepare --video "${LEAGUE_VIDEO}"
-python -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" cache-references
-python -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" cache-models
-python -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" processor-preview
+"${LEAGUE_PYTHON}" -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" prepare --video "${LEAGUE_VIDEO}"
+"${LEAGUE_PYTHON}" -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" cache-references
+"${LEAGUE_PYTHON}" -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" cache-models
+"${LEAGUE_PYTHON}" -m annotation.league --run-dir "${LEAGUE_RUN_DIR}" processor-preview
 
 cat <<EOF
 
