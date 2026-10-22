@@ -59,8 +59,8 @@ cd /users/a/l/alshen/vgextract/vgextract
 bash annotation/league/setup_longleaf.sh
 ```
 
-The environment default matches `slurm_annotate.sl`; the model cache defaults to
-`~/.cache/huggingface`. Set
+The environment and model-cache defaults match `slurm_annotate.sl`. The model
+cache defaults to `/users/a/l/alshen/hf-cache`. Set
 `LEAGUE_ENV` or `LEAGUE_HF_HOME` before setup only if you need different paths.
 The dedicated `LEAGUE_HF_HOME` setting is used by both setup and Slurm, so a stale
 `HF_HOME` value cannot redirect the offline job to a different cache. The lock file

@@ -10,7 +10,7 @@ cd "${REPO_ROOT}"
 LEAGUE_ENV="${LEAGUE_ENV:-/work/users/a/l/alshen/conda_envs/videogame-league}"
 LEAGUE_RUN_DIR="${LEAGUE_RUN_DIR:-${REPO_ROOT}/data/league_runs/aatrox-26.13}"
 LEAGUE_VIDEO="${LEAGUE_VIDEO:-${REPO_ROOT}/data/youtube/lol_domisum_aatrox/xICbe-OOPvE.mp4}"
-LEAGUE_HF_HOME="${LEAGUE_HF_HOME:-${HOME}/.cache/huggingface}"
+LEAGUE_HF_HOME="${LEAGUE_HF_HOME:-/users/a/l/alshen/hf-cache}"
 export HF_HOME="${LEAGUE_HF_HOME}"
 mkdir -p "${HF_HOME}"
 
