@@ -64,7 +64,11 @@ def atomic_json(path: Path, value: Any) -> None:
 
 
 def read_json(path: Path) -> Any:
-    return json.loads(path.read_text(encoding="utf-8"))
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        raise ValueError(f"Invalid JSON in {path}: {exc.msg} "
+                         f"(line {exc.lineno}, column {exc.colno})") from exc
 
 
 def read_rows(path: Path) -> list[dict]:

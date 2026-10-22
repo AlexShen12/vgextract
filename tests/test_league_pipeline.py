@@ -6,15 +6,17 @@ import io
 import shutil
 import subprocess
 import tempfile
+import sys
+from types import SimpleNamespace
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from annotation.league.core import (CAPABILITIES, Config, Route, StopRequested, Store,
                                     atomic_json, digest, read_json, validate_question)
 from annotation.league.evaluation import (evaluate, exact_answer, report, temporal_metrics,
                                           uniform_times)
-from annotation.league.inference import InputBudgetError, ScopedResolver, parse_output
+from annotation.league.inference import InputBudgetError, ScopedResolver, parse_output, pin_models
 from annotation.league.media import Media, prepare
 from annotation.league.observers import annotate, transition_reason
 from annotation.league.prompts import solver_messages
@@ -115,6 +117,66 @@ class FixtureRunner:
         if self.stop_after and len(self.calls) >= self.stop_after:
             self.store.stopping = True
         return {"status": "ok", "output": output, "metrics": metrics}
+
+
+class CacheRecoveryTests(unittest.TestCase):
+    def test_invalid_json_identifies_source_file(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary)/"broken.json"
+            path.write_text("")
+            with self.assertRaisesRegex(ValueError, r"broken\.json.*line 1, column 1"):
+                read_json(path)
+
+    def test_online_repairs_only_index_and_keeps_downloaded_shards(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            store = init_store(Path(temporary)/"run")
+            snapshot = Path(temporary)/"snapshot"
+            snapshot.mkdir()
+            index = snapshot/"model.safetensors.index.json"
+            index.write_text("")
+            shard = snapshot/"part.safetensors"
+            shard.write_bytes(b"existing weights")
+            cfg = config()
+            cfg.models = {"thinking": {"id": "Qwen/fixture", "revision": "a"*40}}
+            def repair(*args, **kwargs):
+                atomic_json(index, {"weight_map": {"weight": shard.name}})
+                return str(index)
+            hub = SimpleNamespace(HfApi=Mock(), snapshot_download=Mock(return_value=str(snapshot)),
+                                  hf_hub_download=Mock(side_effect=repair))
+            with patch.dict(sys.modules, {"huggingface_hub": hub}):
+                pins = pin_models(store, cfg, download=True)
+            self.assertEqual(pins["thinking"]["snapshot"], str(snapshot))
+            self.assertEqual(shard.read_bytes(), b"existing weights")
+            hub.hf_hub_download.assert_called_once_with("Qwen/fixture", index.name,
+                revision="a"*40, force_download=True, local_files_only=False)
+
+    def test_offline_corrupt_index_reports_path_without_network_repair(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            store = init_store(Path(temporary)/"run")
+            index = Path(temporary)/"model.safetensors.index.json"
+            index.write_text("not json")
+            cfg = config()
+            cfg.models = {"thinking": {"id": "Qwen/fixture", "revision": "a"*40}}
+            hub = SimpleNamespace(HfApi=Mock(), snapshot_download=Mock(return_value=temporary),
+                                  hf_hub_download=Mock())
+            with patch.dict(sys.modules, {"huggingface_hub": hub}):
+                with self.assertRaisesRegex(ValueError, str(index)):
+                    pin_models(store, cfg)
+            hub.hf_hub_download.assert_not_called()
+
+    def test_index_repair_is_bounded_when_download_remains_invalid(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            store = init_store(Path(temporary)/"run")
+            index = Path(temporary)/"model.safetensors.index.json"
+            index.write_text("not json")
+            cfg = config()
+            cfg.models = {"thinking": {"id": "Qwen/fixture", "revision": "a"*40}}
+            hub = SimpleNamespace(HfApi=Mock(), snapshot_download=Mock(return_value=temporary),
+                                  hf_hub_download=Mock(return_value=str(index)))
+            with patch.dict(sys.modules, {"huggingface_hub": hub}):
+                with self.assertRaisesRegex(ValueError, str(index)):
+                    pin_models(store, cfg, download=True)
+            hub.hf_hub_download.assert_called_once()
 
 
 class FusionTests(unittest.TestCase):

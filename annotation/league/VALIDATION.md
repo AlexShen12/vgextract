@@ -1,5 +1,12 @@
 # Validation record
 
+Cache-diagnostics follow-up on 2026-10-21: all **91 repository tests** passed,
+including four new checks for malformed JSON filenames, online index-only repair,
+bounded repair attempts, and offline failure without network access. These checks
+use fixture snapshots; the Longleaf cache failure itself has not been reproduced
+locally. Python package and FFmpeg availability on Longleaf were confirmed by the
+user's setup output; full GPU execution remains pending.
+
 Local validation completed 2026-10-19 (America/New_York), Python 3.12.7 on macOS arm64.
 This records implementation checks, not a completed GPU annotation benchmark.
 

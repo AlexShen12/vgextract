@@ -77,6 +77,21 @@ Missing offline knowledge yields an unresolved lookup rather than remembered kit
 `cache-models` downloads both full checkpoints; do this outside a GPU allocation.
 The Aatrox configuration pins the two model commit SHAs, not moving model branches.
 
+Setup activates Conda inside its own process. For later manual commands, activate
+the environment in your terminal or use its full Python path:
+
+```bash
+HF_HOME=/users/a/l/alshen/hf-cache /work/users/a/l/alshen/conda_envs/videogame-league/bin/python -m annotation.league --debug --run-dir data/league_runs/aatrox-26.13 cache-models
+```
+
+Activate Conda for media stages such as `processor-preview` so the environment's
+FFmpeg/ffprobe executables are also on `PATH`.
+
+`cache-models` reports the actual snapshot paths. If a downloaded weight-index
+JSON is malformed, it fetches that small file again once, retaining the downloaded
+weight shards. Remaining JSON errors identify their source file; `--debug` also
+includes the traceback. The offline GPU job does not attempt repairs or downloads.
+
 Inspect actual processor-resized inputs without loading weights:
 
 ```bash

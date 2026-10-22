@@ -45,9 +45,12 @@ python -m pip check
 python - <<'PY'
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+import os
 import re
 import sys
 
+print(f"Python interpreter: {sys.executable}")
+print(f"Hugging Face cache: {os.environ['HF_HOME']}")
 lock = Path("annotation/league/inference-environment.lock.txt")
 requirements = [line.strip() for line in lock.read_text().splitlines()
                 if line.strip() and not line.lstrip().startswith("#")]
@@ -106,4 +109,7 @@ Initial setup is complete. From the repository root, submit the GPU preflight an
   sbatch --export=ALL,LEAGUE_STAGE=preflight annotation/league/slurm_annotate.sl
   # Wait for preflight to finish successfully, then:
   sbatch annotation/league/slurm_annotate.sl
+
+For manual stages, activate ${LEAGUE_ENV} in your terminal so Python and FFmpeg are on PATH.
+Setup's Conda activation does not persist in the calling terminal.
 EOF

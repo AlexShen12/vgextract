@@ -66,6 +66,7 @@ def parser():
     p.add_argument("--config", type=Path)
     p.add_argument("--cache-dir", type=Path, default=ROOT / "data/league_knowledge")
     p.add_argument("--offline", action="store_true", help="Use cached patch references only")
+    p.add_argument("--debug", action="store_true", help="Include a traceback when a stage fails")
     sub = p.add_subparsers(dest="command", required=True)
     for command in ("prepare", "run"):
         s = sub.add_parser(command)
@@ -163,6 +164,8 @@ def main(argv=None):
         print(str(exc), file=sys.stderr)
         return 130
     except (OSError, ValueError, RuntimeError, ImportError) as exc:
+        if args.debug:
+            logging.exception("Pipeline stage failed")
         print(json.dumps({"status": "error", "error": str(exc)}), file=sys.stderr)
         return 1
     finally:

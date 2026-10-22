@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import gc
 import json
+import logging
 import math
 import re
 import time
@@ -45,7 +46,7 @@ def parse_output(text: str | dict) -> dict:
 
 
 def pin_models(store: Store, config: Config, download=False, processors_only=False) -> dict:
-    from huggingface_hub import HfApi, snapshot_download
+    from huggingface_hub import HfApi, hf_hub_download, snapshot_download
     manifest = read_json(store.path("manifest.json"))
     pins = manifest.setdefault("model_revisions", {})
     for role, model in config.models.items():
@@ -61,15 +62,40 @@ def pin_models(store: Store, config: Config, download=False, processors_only=Fal
         patterns = ["*.json", "*.txt", "*.jinja", "*.model"] if processors_only else None
         snapshot = snapshot_download(model["id"], revision=revision, local_files_only=not download,
                                      allow_patterns=patterns)
+        logging.info("%s model snapshot: %s", role, snapshot)
         if not processors_only:
             index = Path(snapshot) / "model.safetensors.index.json"
-            shards = set(read_json(index)["weight_map"].values()) if index.exists() else {"model.safetensors"}
-            if not all((Path(snapshot)/shard).is_file() for shard in shards):
-                raise RuntimeError("Incomplete model weight cache; run cache-models before the GPU job")
+            if index.exists():
+                try:
+                    shards = model_shards(index)
+                except ValueError:
+                    if not download:
+                        raise
+                    # Repair only the small index; keep already-downloaded weight shards.
+                    logging.warning("Invalid model index at %s; downloading that file again once", index)
+                    repaired = hf_hub_download(model["id"], index.name, revision=revision,
+                                               force_download=True, local_files_only=False)
+                    shards = model_shards(Path(repaired))
+            else:
+                shards = {"model.safetensors"}
+            missing = sorted(shard for shard in shards if not (Path(snapshot)/shard).is_file()
+                             or (Path(snapshot)/shard).stat().st_size == 0)
+            if missing:
+                raise RuntimeError(f"Incomplete model weight cache at {snapshot}: missing or empty {missing}; "
+                                   "run cache-models before the GPU job")
         pins[role] = {**identity, "revision": revision, "snapshot": snapshot}
         atomic_json(store.path("manifest.json"), manifest)
     atomic_json(store.path("environment.lock.json"), {"captured_at": now(), **runtime_info(), "models": pins})
     return pins
+
+
+def model_shards(index: Path) -> set[str]:
+    data = read_json(index)
+    weights = data.get("weight_map") if isinstance(data, dict) else None
+    if not isinstance(weights, dict) or not weights or not all(
+            isinstance(name, str) and name for name in weights.values()):
+        raise ValueError(f"Invalid model weight index {index}: expected a nonempty weight_map")
+    return set(weights.values())
 
 
 def preflight(store: Store, config: Config) -> dict:
