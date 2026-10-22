@@ -46,15 +46,25 @@ runtime; CUDA inference and memory fit must be validated on the allocated L40.
 preprocessing; it requires Python 3.12. The CUDA-specific wheel dependencies are
 resolved by PyTorch on Linux and recorded by preflight.
 
+For a one-time interactive setup on Longleaf, transfer the video to the default
+repository path (or set `LEAGUE_VIDEO`) and choose persistent storage for the
+model downloads. The setup script creates/updates the environment, installs and
+checks every pinned Python package, verifies FFmpeg tools, prepares the run and
+caches patch references and both model checkpoints. It runs on a login node and
+does not require a GPU allocation:
+
 ```bash
-conda create -n videogame-league python=3.12 -y
-conda activate videogame-league
-python -m pip install -r annotation/league/inference-environment.lock.txt
-export HF_HOME=/path/to/your/model-cache
-python -m annotation.league prepare
-python -m annotation.league cache-references
-python -m annotation.league cache-models
+cd /path/to/vgextract/vgextract
+export LEAGUE_ENV=/work/users/a/l/alshen/conda_envs/videogame-league
+export HF_HOME=/path/with/room/for/model-cache
+bash annotation/league/setup_longleaf.sh
 ```
+
+The default environment path matches `slurm_annotate.sl`. Keep `HF_HOME` set to
+the same value when submitting jobs. The lock file pins the tested preprocessing
+and inference stack; the setup script checks exact installed versions and imports
+the Qwen inference APIs. CUDA availability and BF16 support are checked separately
+by the allocated-GPU `preflight` stage.
 
 `cache-references` caches the complete static champion roster/details and item
 dictionary, including available same-patch CDragon fallbacks. Unresolvable formula
