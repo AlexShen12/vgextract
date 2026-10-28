@@ -1,0 +1,3233 @@
+{
+  "schema_version": 2,
+  "id": "domisum-1080p-v1",
+  "revision": 1,
+  "size": [
+    1920,
+    1080
+  ],
+  "required_anchors": 3,
+  "anchors": [
+    {
+      "name": "selected_border",
+      "box": [
+        0,
+        835,
+        301,
+        842
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAAS0AAAAHCAIAAADSwYxdAAAEb0lEQVR4nO1YzW7bRhCeWZJakQzFJHUsqbFjXwq0BYoe+wQF+iS99EGLXtpL0aRukjqOZQdWbUuWRIoUd6bYJSnLtmST/gkKNN+BFuTV/H8zs8Qff/ohnsZ//rW3v79P4IOGDQCCLQBAUFCCwWLmFBsAoADh3sHC/Mmfy4EG+pAQiAwAlnlqi+oA8VwLM5mnYmbienKu2s9cLzK5F4B0WRjzPcm/S6auz4j+noBWnZirFibaZOK83LXVkeEiI5fjswoVhRtoqxCtilHNTwJkxi/BOYht0hY2jJ1NVkJY0mLLEiwSAEjTKAiC1prbbrfXnslOp3tw3H/16uU4+sZx7FhpTiki2yLPVkKxl6rmCcp2uz3NdAQlaSudMnZ5JIhIKUVE1X2tg5t5eDEuhpCma1SSXpYFIi7JVsGEqvleBeKsshztqcDl9hMtl8BFx6kqH8Exn/Mauguu6jV9wcRtafELUaSSTeTLWqdVri1CCMG36yM1eGiOVzuWc6/o1+U8QEN7ASkAHB683N7a/v67rzvdzvNmNI+U4o2dnZ2d3ffxxJq44mxIUgaPw/X9XkREwms2m83xaHReBAKxZdBY4GGj5CGiYKFVP7ZtXccAWEb5Y87DC8dz24yd1bE6r/X67kqravPEqtXX/5s8LJaSVfPQlErJPqoysvDib6ujCslvAWNG7kVWrmN5c2Hb8HDYf5Om6eng1H/k/324N48Uo0qShJmPjo6k+yQIgmbY2NreDp9+efzP8fujD7Msc13XfpqK6Uy0MmhlkKDdshxJZNuWq7Q+x+jIoUz4UqXmn+/dWWN4dR7qQCDpJzFXToBYQci7z0MzGaDePMRinl/2elmx5pOnpnxsLpVfB7kuoxcX9nZzcyHzzfV7aVGyecdEvf/fqBIRc/nlNggPsJcueLfo17X25PlFxHzZVqQytpnIbW0dn03f7J4piNYTLS017u7s/hJHcf80jqJI8dS2/VAEUkrf9dzP5Wb3WRTr4XlhKUrTlEkX9HQ6Q8NDBcncPR0/5hQUMT0gD2t0brOjz4hYj+obT1Nhc74NFvfMxf8vvafVQXHPPJdW+X5SnYe1995ijt2Zh3hVr5kPJmLFEnk9D8u9tPI8FB+PhzfFc3EvLd5TiLJ+hNQTy3GGw+FgMBiPx1+shXMehmEyHAyZudvtvn3bA4Dn1PU8LwyV7TicKc/1pJT2xKapRQpBIViZsokFZSpNR+OBuR/O5qZYZpe2gGxt00NM/3p7aX5SmeyaoVjnvciShed+7of3hflbjduj2Cx0u30Y3MDDO4LynBonqscC61abuW5VqTlGIYQFjaYlLCoHGDGl2RQAPClCXx4PEqd3uoGbQRDknevbrzZC98nPf/y6e9CLG/7vh3Fv0u902luf/dbpdgPfiSaTwUl0+SWBZTbfyr58wif8j8DMlClCIs3KCzRxXXc2myWzLJpEo/FYStmQmt2+77148eIMk3e77z7EliIaj0evX49O9nob/f7mxvoj31dZ9i+V1FO6SnXzJAAAAABJRU5ErkJggg==",
+      "maximum_error": 0.12
+    },
+    {
+      "name": "scoreboard_border",
+      "box": [
+        604,
+        848,
+        1320,
+        853
+      ],
+      "png": "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",
+      "maximum_error": 0.12
+    },
+    {
+      "name": "match_border",
+      "box": [
+        869,
+        58,
+        1052,
+        67
+      ],
+      "png": "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",
+      "maximum_error": 0.12
+    }
+  ],
+  "thresholds": {
+    "number": 0.8,
+    "text": 0.9,
+    "icon": 0.92,
+    "icon_margin": 0.08,
+    "plausibility": 0.5
+  },
+  "thresholds_frozen": false,
+  "thresholds_note": "Initial conservative thresholds; release requires development freeze and held-out benchmark.",
+  "fields": [
+    {
+      "id": "match_hud/match/game_clock",
+      "route": "match_hud",
+      "slot_id": "match",
+      "field": "game_clock",
+      "box": [
+        930,
+        72,
+        1000,
+        102
+      ],
+      "reader": "number",
+      "parser": "clock",
+      "entity": "match"
+    },
+    {
+      "id": "match_hud/team:blue/kills",
+      "route": "match_hud",
+      "slot_id": "team:blue",
+      "field": "kills",
+      "box": [
+        902,
+        15,
+        946,
+        56
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "entity": "team:blue"
+    },
+    {
+      "id": "match_hud/team:blue/displayed_gold",
+      "route": "match_hud",
+      "slot_id": "team:blue",
+      "field": "displayed_gold",
+      "box": [
+        808,
+        15,
+        860,
+        42
+      ],
+      "reader": "number",
+      "parser": "gold",
+      "entity": "team:blue"
+    },
+    {
+      "id": "match_hud/team:red/kills",
+      "route": "match_hud",
+      "slot_id": "team:red",
+      "field": "kills",
+      "box": [
+        986,
+        15,
+        1030,
+        56
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "entity": "team:red"
+    },
+    {
+      "id": "match_hud/team:red/displayed_gold",
+      "route": "match_hud",
+      "slot_id": "team:red",
+      "field": "displayed_gold",
+      "box": [
+        1100,
+        15,
+        1155,
+        42
+      ],
+      "reader": "number",
+      "parser": "gold",
+      "entity": "team:red"
+    },
+    {
+      "id": "selected_hud/selected/identity",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "identity",
+      "box": [
+        13,
+        850,
+        69,
+        906
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "selected_hud/selected/health",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "health",
+      "box": [
+        77,
+        849,
+        160,
+        876
+      ],
+      "reader": "number",
+      "parser": "health"
+    },
+    {
+      "id": "selected_hud/selected/level",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "level",
+      "box": [
+        48,
+        895,
+        75,
+        915
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "selected_hud/selected/health_fraction",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "health_fraction",
+      "box": [
+        76,
+        852,
+        175,
+        855
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "selected_hud/selected/resource_fraction",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "resource_fraction",
+      "box": [
+        76,
+        895,
+        175,
+        899
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "purple"
+    },
+    {
+      "id": "selected_hud/selected/passive.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "passive.icon",
+      "box": [
+        13,
+        918,
+        43,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "passive"
+    },
+    {
+      "id": "selected_hud/selected/passive.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "passive.cooldown",
+      "box": [
+        13,
+        929,
+        43,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "selected_hud/selected/Q.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "Q.icon",
+      "box": [
+        55,
+        918,
+        85,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "selected_hud/selected/Q.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "Q.cooldown",
+      "box": [
+        55,
+        929,
+        85,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "selected_hud/selected/Q.rank",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "Q.rank",
+      "box": [
+        53,
+        944,
+        79,
+        960
+      ],
+      "reader": "number",
+      "parser": "rank"
+    },
+    {
+      "id": "selected_hud/selected/W.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "W.icon",
+      "box": [
+        96,
+        918,
+        126,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "selected_hud/selected/W.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "W.cooldown",
+      "box": [
+        96,
+        929,
+        126,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "selected_hud/selected/W.rank",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "W.rank",
+      "box": [
+        94,
+        944,
+        110,
+        959
+      ],
+      "reader": "number",
+      "parser": "rank"
+    },
+    {
+      "id": "selected_hud/selected/E.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "E.icon",
+      "box": [
+        137,
+        918,
+        167,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "selected_hud/selected/E.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "E.cooldown",
+      "box": [
+        137,
+        929,
+        167,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "selected_hud/selected/E.rank",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "E.rank",
+      "box": [
+        135,
+        944,
+        151,
+        959
+      ],
+      "reader": "number",
+      "parser": "rank"
+    },
+    {
+      "id": "selected_hud/selected/R.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "R.icon",
+      "box": [
+        178,
+        918,
+        208,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "selected_hud/selected/R.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "R.cooldown",
+      "box": [
+        178,
+        929,
+        208,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "selected_hud/selected/R.rank",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "R.rank",
+      "box": [
+        176,
+        944,
+        192,
+        959
+      ],
+      "reader": "number",
+      "parser": "rank"
+    },
+    {
+      "id": "selected_hud/selected/summoner_1.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "summoner_1.icon",
+      "box": [
+        220,
+        918,
+        250,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "selected_hud/selected/summoner_1.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "summoner_1.cooldown",
+      "box": [
+        220,
+        929,
+        250,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "selected_hud/selected/summoner_2.icon",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "summoner_2.icon",
+      "box": [
+        261,
+        918,
+        291,
+        944
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "selected_hud/selected/summoner_2.cooldown",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "summoner_2.cooldown",
+      "box": [
+        261,
+        929,
+        291,
+        944
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row1/identity",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "identity",
+      "box": [
+        32,
+        158,
+        70,
+        196
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "left_sidebar/left:row1/player_name",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "player_name",
+      "box": [
+        0,
+        132,
+        114,
+        151
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "left_sidebar/left:row1/level",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "level",
+      "box": [
+        27,
+        185,
+        46,
+        203
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "left_sidebar/left:row1/health_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "health_fraction",
+      "box": [
+        29,
+        204,
+        72,
+        211
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "left_sidebar/left:row1/resource_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "resource_fraction",
+      "box": [
+        29,
+        214,
+        72,
+        221
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "left_sidebar/left:row1/summoner_1.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "summoner_1.icon",
+      "box": [
+        5,
+        155,
+        26,
+        177
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row1/summoner_1.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "summoner_1.cooldown",
+      "box": [
+        5,
+        155,
+        26,
+        177
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row1/summoner_2.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "summoner_2.icon",
+      "box": [
+        5,
+        180,
+        26,
+        202
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row1/summoner_2.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row1",
+      "field": "summoner_2.cooldown",
+      "box": [
+        5,
+        180,
+        26,
+        202
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row2/identity",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "identity",
+      "box": [
+        32,
+        262,
+        70,
+        300
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "left_sidebar/left:row2/player_name",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "player_name",
+      "box": [
+        0,
+        236,
+        114,
+        255
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "left_sidebar/left:row2/level",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "level",
+      "box": [
+        27,
+        289,
+        46,
+        307
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "left_sidebar/left:row2/health_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "health_fraction",
+      "box": [
+        29,
+        308,
+        72,
+        315
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "left_sidebar/left:row2/resource_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "resource_fraction",
+      "box": [
+        29,
+        318,
+        72,
+        325
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "left_sidebar/left:row2/summoner_1.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "summoner_1.icon",
+      "box": [
+        5,
+        259,
+        26,
+        281
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row2/summoner_1.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "summoner_1.cooldown",
+      "box": [
+        5,
+        259,
+        26,
+        281
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row2/summoner_2.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "summoner_2.icon",
+      "box": [
+        5,
+        284,
+        26,
+        306
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row2/summoner_2.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row2",
+      "field": "summoner_2.cooldown",
+      "box": [
+        5,
+        284,
+        26,
+        306
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row3/identity",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "identity",
+      "box": [
+        32,
+        366,
+        70,
+        404
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "left_sidebar/left:row3/player_name",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "player_name",
+      "box": [
+        0,
+        340,
+        114,
+        359
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "left_sidebar/left:row3/level",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "level",
+      "box": [
+        27,
+        393,
+        46,
+        411
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "left_sidebar/left:row3/health_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "health_fraction",
+      "box": [
+        29,
+        412,
+        72,
+        419
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "left_sidebar/left:row3/resource_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "resource_fraction",
+      "box": [
+        29,
+        422,
+        72,
+        429
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "left_sidebar/left:row3/summoner_1.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "summoner_1.icon",
+      "box": [
+        5,
+        363,
+        26,
+        385
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row3/summoner_1.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "summoner_1.cooldown",
+      "box": [
+        5,
+        363,
+        26,
+        385
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row3/summoner_2.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "summoner_2.icon",
+      "box": [
+        5,
+        388,
+        26,
+        410
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row3/summoner_2.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row3",
+      "field": "summoner_2.cooldown",
+      "box": [
+        5,
+        388,
+        26,
+        410
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row4/identity",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "identity",
+      "box": [
+        32,
+        470,
+        70,
+        508
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "left_sidebar/left:row4/player_name",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "player_name",
+      "box": [
+        0,
+        444,
+        114,
+        463
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "left_sidebar/left:row4/level",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "level",
+      "box": [
+        27,
+        497,
+        46,
+        515
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "left_sidebar/left:row4/health_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "health_fraction",
+      "box": [
+        29,
+        516,
+        72,
+        523
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "left_sidebar/left:row4/resource_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "resource_fraction",
+      "box": [
+        29,
+        526,
+        72,
+        533
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "left_sidebar/left:row4/summoner_1.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "summoner_1.icon",
+      "box": [
+        5,
+        467,
+        26,
+        489
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row4/summoner_1.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "summoner_1.cooldown",
+      "box": [
+        5,
+        467,
+        26,
+        489
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row4/summoner_2.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "summoner_2.icon",
+      "box": [
+        5,
+        492,
+        26,
+        514
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row4/summoner_2.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row4",
+      "field": "summoner_2.cooldown",
+      "box": [
+        5,
+        492,
+        26,
+        514
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row5/identity",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "identity",
+      "box": [
+        32,
+        574,
+        70,
+        612
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "left_sidebar/left:row5/player_name",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "player_name",
+      "box": [
+        0,
+        548,
+        114,
+        567
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "left_sidebar/left:row5/level",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "level",
+      "box": [
+        27,
+        601,
+        46,
+        619
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "left_sidebar/left:row5/health_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "health_fraction",
+      "box": [
+        29,
+        620,
+        72,
+        627
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "left_sidebar/left:row5/resource_fraction",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "resource_fraction",
+      "box": [
+        29,
+        630,
+        72,
+        637
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "left_sidebar/left:row5/summoner_1.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "summoner_1.icon",
+      "box": [
+        5,
+        571,
+        26,
+        593
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row5/summoner_1.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "summoner_1.cooldown",
+      "box": [
+        5,
+        571,
+        26,
+        593
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "left_sidebar/left:row5/summoner_2.icon",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "summoner_2.icon",
+      "box": [
+        5,
+        596,
+        26,
+        618
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "left_sidebar/left:row5/summoner_2.cooldown",
+      "route": "left_sidebar",
+      "slot_id": "left:row5",
+      "field": "summoner_2.cooldown",
+      "box": [
+        5,
+        596,
+        26,
+        618
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row1/identity",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "identity",
+      "box": [
+        1849,
+        158,
+        1887,
+        196
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "right_sidebar/right:row1/player_name",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "player_name",
+      "box": [
+        1810,
+        132,
+        1919,
+        151
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "right_sidebar/right:row1/level",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "level",
+      "box": [
+        1875,
+        185,
+        1894,
+        203
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "right_sidebar/right:row1/health_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "health_fraction",
+      "box": [
+        1848,
+        204,
+        1891,
+        211
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "right_sidebar/right:row1/resource_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "resource_fraction",
+      "box": [
+        1848,
+        214,
+        1891,
+        221
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "right_sidebar/right:row1/summoner_1.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "summoner_1.icon",
+      "box": [
+        1897,
+        155,
+        1918,
+        177
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row1/summoner_1.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "summoner_1.cooldown",
+      "box": [
+        1897,
+        155,
+        1918,
+        177
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row1/summoner_2.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "summoner_2.icon",
+      "box": [
+        1897,
+        180,
+        1918,
+        202
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row1/summoner_2.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row1",
+      "field": "summoner_2.cooldown",
+      "box": [
+        1897,
+        180,
+        1918,
+        202
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row2/identity",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "identity",
+      "box": [
+        1849,
+        262,
+        1887,
+        300
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "right_sidebar/right:row2/player_name",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "player_name",
+      "box": [
+        1810,
+        236,
+        1919,
+        255
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "right_sidebar/right:row2/level",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "level",
+      "box": [
+        1875,
+        289,
+        1894,
+        307
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "right_sidebar/right:row2/health_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "health_fraction",
+      "box": [
+        1848,
+        308,
+        1891,
+        315
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "right_sidebar/right:row2/resource_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "resource_fraction",
+      "box": [
+        1848,
+        318,
+        1891,
+        325
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "right_sidebar/right:row2/summoner_1.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "summoner_1.icon",
+      "box": [
+        1897,
+        259,
+        1918,
+        281
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row2/summoner_1.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "summoner_1.cooldown",
+      "box": [
+        1897,
+        259,
+        1918,
+        281
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row2/summoner_2.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "summoner_2.icon",
+      "box": [
+        1897,
+        284,
+        1918,
+        306
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row2/summoner_2.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row2",
+      "field": "summoner_2.cooldown",
+      "box": [
+        1897,
+        284,
+        1918,
+        306
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row3/identity",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "identity",
+      "box": [
+        1849,
+        366,
+        1887,
+        404
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "right_sidebar/right:row3/player_name",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "player_name",
+      "box": [
+        1810,
+        340,
+        1919,
+        359
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "right_sidebar/right:row3/level",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "level",
+      "box": [
+        1875,
+        393,
+        1894,
+        411
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "right_sidebar/right:row3/health_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "health_fraction",
+      "box": [
+        1848,
+        412,
+        1891,
+        419
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "right_sidebar/right:row3/resource_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "resource_fraction",
+      "box": [
+        1848,
+        422,
+        1891,
+        429
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "right_sidebar/right:row3/summoner_1.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "summoner_1.icon",
+      "box": [
+        1897,
+        363,
+        1918,
+        385
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row3/summoner_1.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "summoner_1.cooldown",
+      "box": [
+        1897,
+        363,
+        1918,
+        385
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row3/summoner_2.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "summoner_2.icon",
+      "box": [
+        1897,
+        388,
+        1918,
+        410
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row3/summoner_2.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row3",
+      "field": "summoner_2.cooldown",
+      "box": [
+        1897,
+        388,
+        1918,
+        410
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row4/identity",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "identity",
+      "box": [
+        1849,
+        470,
+        1887,
+        508
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "right_sidebar/right:row4/player_name",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "player_name",
+      "box": [
+        1810,
+        444,
+        1919,
+        463
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "right_sidebar/right:row4/level",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "level",
+      "box": [
+        1875,
+        497,
+        1894,
+        515
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "right_sidebar/right:row4/health_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "health_fraction",
+      "box": [
+        1848,
+        516,
+        1891,
+        523
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "right_sidebar/right:row4/resource_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "resource_fraction",
+      "box": [
+        1848,
+        526,
+        1891,
+        533
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "right_sidebar/right:row4/summoner_1.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "summoner_1.icon",
+      "box": [
+        1897,
+        467,
+        1918,
+        489
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row4/summoner_1.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "summoner_1.cooldown",
+      "box": [
+        1897,
+        467,
+        1918,
+        489
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row4/summoner_2.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "summoner_2.icon",
+      "box": [
+        1897,
+        492,
+        1918,
+        514
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row4/summoner_2.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row4",
+      "field": "summoner_2.cooldown",
+      "box": [
+        1897,
+        492,
+        1918,
+        514
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row5/identity",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "identity",
+      "box": [
+        1849,
+        574,
+        1887,
+        612
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "right_sidebar/right:row5/player_name",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "player_name",
+      "box": [
+        1810,
+        548,
+        1919,
+        567
+      ],
+      "reader": "text",
+      "parser": "name",
+      "language": "korean"
+    },
+    {
+      "id": "right_sidebar/right:row5/level",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "level",
+      "box": [
+        1875,
+        601,
+        1894,
+        619
+      ],
+      "reader": "number",
+      "parser": "level"
+    },
+    {
+      "id": "right_sidebar/right:row5/health_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "health_fraction",
+      "box": [
+        1848,
+        620,
+        1891,
+        627
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "green"
+    },
+    {
+      "id": "right_sidebar/right:row5/resource_fraction",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "resource_fraction",
+      "box": [
+        1848,
+        630,
+        1891,
+        637
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "color": "resource"
+    },
+    {
+      "id": "right_sidebar/right:row5/summoner_1.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "summoner_1.icon",
+      "box": [
+        1897,
+        571,
+        1918,
+        593
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row5/summoner_1.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "summoner_1.cooldown",
+      "box": [
+        1897,
+        571,
+        1918,
+        593
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "right_sidebar/right:row5/summoner_2.icon",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "summoner_2.icon",
+      "box": [
+        1897,
+        596,
+        1918,
+        618
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "spell"
+    },
+    {
+      "id": "right_sidebar/right:row5/summoner_2.cooldown",
+      "route": "right_sidebar",
+      "slot_id": "right:row5",
+      "field": "summoner_2.cooldown",
+      "box": [
+        1897,
+        596,
+        1918,
+        618
+      ],
+      "reader": "number",
+      "parser": "cooldown"
+    },
+    {
+      "id": "scoreboard/left:row1/identity",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "identity",
+      "box": [
+        924,
+        861,
+        958,
+        895
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row1/kda",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "kda",
+      "box": [
+        810,
+        868,
+        870,
+        885
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/left:row1/cs",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "cs",
+      "box": [
+        876,
+        860,
+        921,
+        889
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.0",
+      "box": [
+        640,
+        862,
+        665,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.1",
+      "box": [
+        667,
+        862,
+        692,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.2",
+      "box": [
+        694,
+        862,
+        719,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.3",
+      "box": [
+        721,
+        862,
+        746,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.4",
+      "box": [
+        748,
+        862,
+        773,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.5",
+      "box": [
+        775,
+        862,
+        800,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row2/identity",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "identity",
+      "box": [
+        924,
+        905,
+        958,
+        939
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row2/kda",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "kda",
+      "box": [
+        810,
+        912,
+        870,
+        929
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/left:row2/cs",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "cs",
+      "box": [
+        876,
+        904,
+        921,
+        933
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.0",
+      "box": [
+        640,
+        906,
+        665,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.1",
+      "box": [
+        667,
+        906,
+        692,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.2",
+      "box": [
+        694,
+        906,
+        719,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.3",
+      "box": [
+        721,
+        906,
+        746,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.4",
+      "box": [
+        748,
+        906,
+        773,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.5",
+      "box": [
+        775,
+        906,
+        800,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row3/identity",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "identity",
+      "box": [
+        924,
+        949,
+        958,
+        983
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row3/kda",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "kda",
+      "box": [
+        810,
+        956,
+        870,
+        973
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/left:row3/cs",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "cs",
+      "box": [
+        876,
+        948,
+        921,
+        977
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.0",
+      "box": [
+        640,
+        950,
+        665,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.1",
+      "box": [
+        667,
+        950,
+        692,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.2",
+      "box": [
+        694,
+        950,
+        719,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.3",
+      "box": [
+        721,
+        950,
+        746,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.4",
+      "box": [
+        748,
+        950,
+        773,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.5",
+      "box": [
+        775,
+        950,
+        800,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row4/identity",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "identity",
+      "box": [
+        924,
+        993,
+        958,
+        1027
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row4/kda",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "kda",
+      "box": [
+        810,
+        1000,
+        870,
+        1017
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/left:row4/cs",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "cs",
+      "box": [
+        876,
+        992,
+        921,
+        1021
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.0",
+      "box": [
+        640,
+        994,
+        665,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.1",
+      "box": [
+        667,
+        994,
+        692,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.2",
+      "box": [
+        694,
+        994,
+        719,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.3",
+      "box": [
+        721,
+        994,
+        746,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.4",
+      "box": [
+        748,
+        994,
+        773,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.5",
+      "box": [
+        775,
+        994,
+        800,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row5/identity",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "identity",
+      "box": [
+        924,
+        1037,
+        958,
+        1071
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row5/kda",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "kda",
+      "box": [
+        810,
+        1044,
+        870,
+        1061
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/left:row5/cs",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "cs",
+      "box": [
+        876,
+        1036,
+        921,
+        1065
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.0",
+      "box": [
+        640,
+        1038,
+        665,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.1",
+      "box": [
+        667,
+        1038,
+        692,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.2",
+      "box": [
+        694,
+        1038,
+        719,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.3",
+      "box": [
+        721,
+        1038,
+        746,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.4",
+      "box": [
+        748,
+        1038,
+        773,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.5",
+      "box": [
+        775,
+        1038,
+        800,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row1/identity",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "identity",
+      "box": [
+        976,
+        861,
+        1010,
+        895
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row1/kda",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "kda",
+      "box": [
+        1067,
+        868,
+        1133,
+        885
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/right:row1/cs",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "cs",
+      "box": [
+        1020,
+        860,
+        1064,
+        889
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.0",
+      "box": [
+        1140,
+        862,
+        1165,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.1",
+      "box": [
+        1167,
+        862,
+        1192,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.2",
+      "box": [
+        1194,
+        862,
+        1219,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.3",
+      "box": [
+        1221,
+        862,
+        1246,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.4",
+      "box": [
+        1248,
+        862,
+        1273,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.5",
+      "box": [
+        1275,
+        862,
+        1300,
+        889
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row2/identity",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "identity",
+      "box": [
+        976,
+        905,
+        1010,
+        939
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row2/kda",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "kda",
+      "box": [
+        1067,
+        912,
+        1133,
+        929
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/right:row2/cs",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "cs",
+      "box": [
+        1020,
+        904,
+        1064,
+        933
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.0",
+      "box": [
+        1140,
+        906,
+        1165,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.1",
+      "box": [
+        1167,
+        906,
+        1192,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.2",
+      "box": [
+        1194,
+        906,
+        1219,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.3",
+      "box": [
+        1221,
+        906,
+        1246,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.4",
+      "box": [
+        1248,
+        906,
+        1273,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.5",
+      "box": [
+        1275,
+        906,
+        1300,
+        933
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row3/identity",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "identity",
+      "box": [
+        976,
+        949,
+        1010,
+        983
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row3/kda",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "kda",
+      "box": [
+        1067,
+        956,
+        1133,
+        973
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/right:row3/cs",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "cs",
+      "box": [
+        1020,
+        948,
+        1064,
+        977
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.0",
+      "box": [
+        1140,
+        950,
+        1165,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.1",
+      "box": [
+        1167,
+        950,
+        1192,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.2",
+      "box": [
+        1194,
+        950,
+        1219,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.3",
+      "box": [
+        1221,
+        950,
+        1246,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.4",
+      "box": [
+        1248,
+        950,
+        1273,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.5",
+      "box": [
+        1275,
+        950,
+        1300,
+        977
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row4/identity",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "identity",
+      "box": [
+        976,
+        993,
+        1010,
+        1027
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row4/kda",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "kda",
+      "box": [
+        1067,
+        1000,
+        1133,
+        1017
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/right:row4/cs",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "cs",
+      "box": [
+        1020,
+        992,
+        1064,
+        1021
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.0",
+      "box": [
+        1140,
+        994,
+        1165,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.1",
+      "box": [
+        1167,
+        994,
+        1192,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.2",
+      "box": [
+        1194,
+        994,
+        1219,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.3",
+      "box": [
+        1221,
+        994,
+        1246,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.4",
+      "box": [
+        1248,
+        994,
+        1273,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.5",
+      "box": [
+        1275,
+        994,
+        1300,
+        1021
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row5/identity",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "identity",
+      "box": [
+        976,
+        1037,
+        1010,
+        1071
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row5/kda",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "kda",
+      "box": [
+        1067,
+        1044,
+        1133,
+        1061
+      ],
+      "reader": "number",
+      "parser": "kda"
+    },
+    {
+      "id": "scoreboard/right:row5/cs",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "cs",
+      "box": [
+        1020,
+        1036,
+        1064,
+        1065
+      ],
+      "reader": "number",
+      "parser": "integer"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.0",
+      "box": [
+        1140,
+        1038,
+        1165,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.1",
+      "box": [
+        1167,
+        1038,
+        1192,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.2",
+      "box": [
+        1194,
+        1038,
+        1219,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.3",
+      "box": [
+        1221,
+        1038,
+        1246,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.4",
+      "box": [
+        1248,
+        1038,
+        1273,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.5",
+      "box": [
+        1275,
+        1038,
+        1300,
+        1065
+      ],
+      "reader": "icon",
+      "parser": "integer",
+      "kind": "item",
+      "empty_allowed": true
+    },
+    {
+      "id": "objective_panel/objective:row1/objective_name",
+      "route": "objective_panel",
+      "slot_id": "objective:row1",
+      "field": "objective_name",
+      "box": [
+        1410,
+        905,
+        1610,
+        941
+      ],
+      "reader": "text",
+      "parser": "objective",
+      "language": "english"
+    },
+    {
+      "id": "objective_panel/objective:row1/objective_timer",
+      "route": "objective_panel",
+      "slot_id": "objective:row1",
+      "field": "objective_timer",
+      "box": [
+        1459,
+        941,
+        1570,
+        977
+      ],
+      "reader": "text",
+      "parser": "timer",
+      "language": "english"
+    },
+    {
+      "id": "objective_panel/objective:row2/objective_name",
+      "route": "objective_panel",
+      "slot_id": "objective:row2",
+      "field": "objective_name",
+      "box": [
+        1400,
+        990,
+        1610,
+        1027
+      ],
+      "reader": "text",
+      "parser": "objective",
+      "language": "english"
+    },
+    {
+      "id": "objective_panel/objective:row2/objective_timer",
+      "route": "objective_panel",
+      "slot_id": "objective:row2",
+      "field": "objective_timer",
+      "box": [
+        1450,
+        1027,
+        1570,
+        1072
+      ],
+      "reader": "text",
+      "parser": "timer",
+      "language": "english"
+    }
+  ]
+}

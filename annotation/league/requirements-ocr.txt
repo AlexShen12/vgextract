@@ -1,0 +1,6 @@
+# Isolated Linux CPU recognition worker; no Paddle/CUDA dependencies in the solver.
+paddleocr==3.7.0
+paddlepaddle==3.3.1
+numpy==2.2.6
+pillow==11.3.0
+av==19.0.2

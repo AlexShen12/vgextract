@@ -5,11 +5,12 @@ import fcntl
 import secrets
 from pathlib import Path
 
-from .core import (EVENTS, STATUSES, Config, Store, atomic_json, finite, now, read_json,
+from .core import (EVENTS, STATUSES, Config, Store, atomic_json, finite, now, read_json, uid,
                    validate_observation, validate_question)
 
 EDITABLE = {
-    "observations": {"entity", "binding", "field", "value", "visibility", "confidence", "identity_evidence"},
+    "observations": {"entity", "binding", "field", "value", "visibility", "confidence", "identity_evidence",
+                     "raw_text", "parsed_value", "acceptance", "acceptance_reason"},
     "events": {"kind", "actor", "target", "object", "location", "start", "end", "detail", "confidence", "evidence_ids", "criteria"},
     "questions": {"prompt", "answer", "answer_type", "interval", "ambiguity_flags", "evidence_ids", "evidence_frame_ids", "evidence_times", "evidence_intervals"},
 }
@@ -23,6 +24,12 @@ def add_correction(store: Store, target: str, record_id: str, changes: dict, sta
     records = {r["id"]: r for r in store.effective(store.rows(target), target)}
     if record_id not in records:
         raise ValueError("Record not found")
+    if target=="observations" and records[record_id].get("schema_version",1)>=2:
+        changes=dict(changes)
+        if "value" in changes and "parsed_value" not in changes:
+            changes["parsed_value"]=changes["value"]
+        if "entity" in changes:
+            changes["resolved_identity"]=None if changes["entity"]=="unknown" else changes["entity"]
     record = {**records[record_id], **changes, "review_status": status}
     if changes.get("evidence_ids"):
         known = {r["id"] for name in ("observations", "states", "events") for r in store.rows(name)}
@@ -52,13 +59,25 @@ def add_correction(store: Store, target: str, record_id: str, changes: dict, sta
                       "review_status": status, "reviewer": str(reviewer)[:120], "created_at": now()}
         atomic_json(store.path(f"corrections/{revision:08d}.json"), correction)
         atomic_json(store.path("invalidated.json"), {"revision": revision,
-                    "stages": ["fuse", "generate-qa", "evaluate", "report"] if target != "questions"
+                    "stages": (["normalize"] if target=="observations" else [])+["fuse", "generate-qa", "evaluate", "report"] if target != "questions"
                     else ["evaluate", "report"], "reason": "Human correction; rerun downstream stages"})
     return correction
 
 
+def layout_frames(store):
+    frames=store.rows("intake_previews")
+    failure=store.path("layout_failure.json")
+    if failure.exists():
+        record=read_json(failure)
+        frames.append({"id":uid("layout-failure",record),"route":"unsupported_layout",
+                       "time":record["time"],"path":record["path"],"anchors":record["anchors"]})
+    return frames
+
+
 def frame_index(store):
     index = {f["id"]: f for f in store.rows("previews")}
+    index.update({f["id"]:f for f in layout_frames(store)})
+    index.update({f["id"]:f for preview in store.rows("intake_previews") for f in preview.get("inputs",[])})
     for path in store.path("tasks").glob("*.json"):
         for frame in read_json(path).get("frames", []):
             index[frame["id"]] = frame
@@ -77,11 +96,11 @@ def create_app(store: Store):
     @app.get("/api/records")
     def records(target: str = "questions", offset: int = 0, limit: int = 200, q: str = ""):
         import json
-        if target not in EDITABLE and target != "previews":
+        if target not in EDITABLE and target not in {"previews","intake_previews"}:
             raise HTTPException(400, "Invalid target")
         if offset < 0 or not 1 <= limit <= 500:
             raise HTTPException(400, "Invalid pagination")
-        rows = store.effective(store.rows(target), target)
+        rows = layout_frames(store) if target=="intake_previews" else store.effective(store.rows(target), target)
         if q:
             rows = [r for r in rows if q.casefold() in json.dumps(r, ensure_ascii=False).casefold()]
         invalidated = read_json(store.path("invalidated.json")) if store.path("invalidated.json").exists() else None
@@ -96,10 +115,11 @@ def create_app(store: Store):
     @app.get("/api/evidence/{record_id}")
     def evidence(record_id: str):
         # Resolve state -> observation -> source frame, without exposing filesystem paths.
-        rows = {r["id"]: r for target in ("questions", "events", "states", "observations", "previews")
+        rows = {r["id"]: r for target in ("questions", "events", "states", "observations", "previews", "intake_previews")
                 for r in store.effective(store.rows(target), target)}
         frames = frame_index(store)
         seen, selected = set(), {}
+        readings=[]
         def visit(key):
             if key in seen:
                 return
@@ -107,12 +127,33 @@ def create_app(store: Store):
             if key in frames:
                 selected[key] = frames[key]
             row = rows.get(key, {})
+            for field in row.get("inputs",[]):
+                visit(field["id"])
+            if row.get("reader_artifact"):
+                artifact=store.path(row["reader_artifact"])
+                if artifact.is_file() and artifact.resolve().is_relative_to(store.root.resolve()):
+                    data = read_json(artifact)
+                    readings.append(data.get(row.get("field_id"), data))
             for child in row.get("evidence_ids", []) + row.get("frame_ids", []) + row.get("evidence_frame_ids", []):
                 visit(child)
             if row.get("frame_id"):
                 visit(row["frame_id"])
         visit(record_id)
         processed = []
+        for preview in store.rows("intake_previews"):
+            processed.extend(p for p in preview.get("processed_inputs",[]) if p["source_frame"] in selected)
+        for reading in readings:
+            attempts = reading.get("attempts", [])
+            if reading.get("processed_path"):
+                attempts = attempts + [{"path": reading["processed_path"]}]
+            for attempt in attempts:
+                if not attempt.get("path"):
+                    continue
+                path=Path(attempt["path"]).resolve()
+                if path.is_file() and path.is_relative_to(store.root.resolve()):
+                    from PIL import Image
+                    with Image.open(path) as image:
+                        processed.append({"path":str(path.relative_to(store.root.resolve())),"size":list(image.size)})
         paths = list(store.path("inference").rglob("input-audit.json")) + list(
             store.path("processor-previews").glob("*/*/input-audit.json"))
         for path in paths:
@@ -120,10 +161,50 @@ def create_app(store: Store):
             processed.extend(p for p in audit.get("processed_inputs", []) if p["source_frame"] in selected)
             if len(processed) >= 24:
                 break
-        return {"frames": sorted(selected.values(), key=lambda f: f["time"]), "processed": processed[:24]}
+        return {"frames": sorted(selected.values(), key=lambda f: f["time"]), "processed": processed[:24], "reader_artifacts": readings}
 
     # Read Request from the global namespace for FastAPI under postponed annotations.
     globals()["Request"] = Request
+    @app.get("/api/layout")
+    def layout():
+        from .intake_profile import load_profile
+        config=Config.load(store.path("config.json"))
+        return {"profile":load_profile(config.layout_profile),"frames":layout_frames(store),
+                "editable":read_json(store.path("manifest.json")).get("schema_version",1)>=2}
+
+    @app.post("/api/layout")
+    async def calibrate(request: Request):
+        origin=request.headers.get("origin")
+        if origin and origin.rstrip("/")!=str(request.base_url).rstrip("/"):
+            raise HTTPException(403,"Calibration must originate from this local app")
+        try:
+            from PIL import Image
+            from .intake_profile import calibrated_profile,load_profile
+            from .intake import require_v2
+            from .core import digest
+            require_v2(store)
+            body=await request.json()
+            frames={f["id"]:f for f in layout_frames(store)}
+            frame=frames[body["frame_id"]]
+            config=Config.load(store.path("config.json"))
+            with Image.open(store.path(frame["path"])) as image:
+                profile=calibrated_profile(load_profile(config.layout_profile),body["fields"],image)
+            profile["thresholds_frozen"]=False
+            profile.pop("development_labels_hash",None)
+            path=store.path("layout_profiles/"+digest(profile)+".json")
+            with store.path(".writer.lock").open("a") as lock:
+                try:
+                    fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+                except BlockingIOError as exc:
+                    raise ValueError("Stop the batch writer before changing layout calibration") from exc
+                atomic_json(path,profile)
+                config.layout_profile=str(path)
+                atomic_json(store.path("config.json"),config.to_dict())
+            return {"revision":profile["revision"],"profile":str(path),
+                    "next":"Rerun processor-preview, benchmark extraction and acceptance before full annotation"}
+        except (KeyError,TypeError,ValueError,OSError) as exc:
+            raise HTTPException(422,str(exc)) from exc
+
     @app.post("/api/corrections")
     async def correct(request: Request):
         origin = request.headers.get("origin")

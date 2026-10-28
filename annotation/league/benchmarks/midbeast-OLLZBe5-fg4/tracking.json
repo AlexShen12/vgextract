@@ -1,0 +1,61 @@
+{
+  "schema_version": 2,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "clips": [
+    {
+      "id": "clip-00",
+      "start": 0,
+      "end": 8,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": [],
+      "prompts": [],
+      "reference_masks": []
+    },
+    {
+      "id": "clip-04",
+      "start": 418,
+      "end": 426,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": [],
+      "prompts": [],
+      "reference_masks": []
+    },
+    {
+      "id": "clip-08",
+      "start": 836,
+      "end": 844,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": [],
+      "prompts": [],
+      "reference_masks": []
+    },
+    {
+      "id": "clip-12",
+      "start": 1254,
+      "end": 1262,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": [],
+      "prompts": [],
+      "reference_masks": []
+    },
+    {
+      "id": "clip-16",
+      "start": 1672,
+      "end": 1680,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": [],
+      "prompts": [],
+      "reference_masks": []
+    }
+  ]
+}

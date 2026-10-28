@@ -1,0 +1,166 @@
+{
+  "patch": {},
+  "routes": [
+    {
+      "name": "selected_hud",
+      "box": [
+        700,
+        980,
+        1200,
+        1080
+      ],
+      "model": "instruct",
+      "max_pixels": 262144,
+      "fields": [
+        "identity",
+        "health",
+        "resource",
+        "level",
+        "passive",
+        "Q",
+        "W",
+        "E",
+        "R",
+        "summoner_1",
+        "summoner_2",
+        "status",
+        "selection"
+      ]
+    },
+    {
+      "name": "scoreboard",
+      "box": [
+        625,
+        275,
+        1520,
+        725
+      ],
+      "model": "instruct",
+      "max_pixels": 524288,
+      "fields": [
+        "panel_type",
+        "identity",
+        "player_name",
+        "kills",
+        "deaths",
+        "assists",
+        "cs",
+        "inventory",
+        "displayed_gold",
+        "level"
+      ]
+    },
+    {
+      "name": "match_hud",
+      "box": [
+        1540,
+        0,
+        1920,
+        28
+      ],
+      "model": "instruct",
+      "fields": [
+        "game_clock",
+        "kills",
+        "displayed_gold",
+        "objective_indicator"
+      ]
+    },
+    {
+      "name": "objective_panel",
+      "box": [
+        885,
+        0,
+        982,
+        28
+      ],
+      "model": "instruct",
+      "fields": [
+        "objective_timer",
+        "objective_status"
+      ]
+    },
+    {
+      "name": "central_notice",
+      "box": [
+        744,
+        66,
+        1238,
+        167
+      ],
+      "model": "instruct",
+      "fields": [
+        "notice"
+      ]
+    },
+    {
+      "name": "gameplay",
+      "box": [
+        0,
+        40,
+        1920,
+        980
+      ],
+      "model": "thinking",
+      "max_pixels": 401408,
+      "fields": [
+        "identity",
+        "position",
+        "health",
+        "structure_status",
+        "vision_status",
+        "status",
+        "layout_issue"
+      ]
+    },
+    {
+      "name": "full_context",
+      "box": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "model": "thinking",
+      "max_pixels": 200704,
+      "fields": [
+        "identity",
+        "position",
+        "structure_status",
+        "layout_issue"
+      ]
+    }
+  ],
+  "layout_profile": "midbeast-1080p-v1",
+  "source_video": "data/youtube/lol_midbeast/OLLZBe5-fg4.mp4",
+  "intake_engine": "hybrid-v1",
+  "evaluation_enabled": false,
+  "mechanics": false,
+  "reader_workers": 4,
+  "models": {
+    "thinking": {
+      "id": "Qwen/Qwen3-VL-8B-Thinking",
+      "revision": "92f3c4b4feadd3a016ef468d103bb5f58b2a2c6b"
+    }
+  },
+  "masks": [
+    [
+      1225,
+      730,
+      1611,
+      1080
+    ],
+    [
+      0,
+      993,
+      465,
+      1080
+    ],
+    [
+      0,
+      0,
+      315,
+      44
+    ]
+  ]
+}

@@ -1,0 +1,3 @@
+# Isolated Linux vLLM worker. Do not install into the legacy QA solver environment.
+vllm==0.32.0
+transformers==5.18.0

@@ -16,7 +16,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-SCHEMA = 1
+SCHEMA = 2
+DEFAULT_RUN = "data/league_runs/midbeast-OLLZBe5-fg4-v2"
 STATUSES = {"unreviewed", "human-verified", "rejected"}
 VISIBILITY = {"visible", "unreadable", "not_shown", "occluded", "unknown"}
 CAPABILITIES = ("episodic_retrieval", "persistent_state", "cumulative_counting",
@@ -136,6 +137,16 @@ class Config:
     knowledge_queries: int = 3
     hud_frames_per_request: int = 2
     masks: list[list[int]] = field(default_factory=list)
+    layout_profile: str = "domisum-1080p-v1"
+    asset_cache: str = "data/league_assets"
+    ocr_python: str | None = None
+    mechanics: bool = False
+    evaluation_enabled: bool = True
+    intake_min_coverage: float = 0.7
+    reader_workers: int = 4
+    source_video: str = "data/youtube/lol_midbeast/OLLZBe5-fg4.mp4"
+    intake_engine: str = "hybrid-v1"
+    vl_python: str | None = None
     models: dict = field(default_factory=lambda: {
         "instruct": {"id": "Qwen/Qwen3-VL-8B-Instruct", "revision": "main"},
         "thinking": {"id": "Qwen/Qwen3-VL-8B-Thinking", "revision": "main"}})
@@ -150,7 +161,10 @@ class Config:
 
     def validate(self) -> None:
         from .knowledge import Patch
-        Patch(**self.patch)
+        if self.patch:
+            Patch(**self.patch)
+        elif self.mechanics:
+            raise ValueError("Mechanics requires an explicitly established patch")
         if not 0 < self.overlap_seconds < self.window_seconds or self.fps <= 0:
             raise ValueError("Require positive FPS and 0 < overlap < window")
         if len(self.review_fps) != 2 or not self.fps < self.review_fps[0] < self.review_fps[1]:
@@ -167,8 +181,12 @@ class Config:
             route.validate(self.width, self.height)
         for mask in self.masks:
             Route("mask", mask, "instruct", []).validate(self.width, self.height)
-        if set(self.models) != {"instruct", "thinking"}:
-            raise ValueError("Both Qwen checkpoint roles are required")
+        if self.evaluation_enabled and "thinking" not in self.models:
+            raise ValueError("A Thinking checkpoint is required for optional solver evaluation")
+        if not 0 < self.intake_min_coverage <= 1:
+            raise ValueError("intake_min_coverage must be in (0, 1]")
+        if type(self.reader_workers) is not int or not 1<=self.reader_workers<=8:
+            raise ValueError("reader_workers must be an integer in [1, 8]")
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -189,6 +207,13 @@ def validate_observation(row: dict) -> dict:
         raise ValueError("Nonvisible values must be null")
     if row["visibility"] == "visible" and row["value"] is None:
         raise ValueError("A null field is unknown/not shown, not a confirmed visible value")
+    if row.get("schema_version", 1) >= 2:
+        if not isinstance(row.get("slot_id"), str) or not row["slot_id"]:
+            raise ValueError("Version-2 observations require a stable slot_id")
+        if row.get("acceptance") not in {"accepted", "unknown", "absent"}:
+            raise ValueError("Invalid intake acceptance")
+        if row["acceptance"] == "accepted" and (row["visibility"] != "visible" or row["value"] is None):
+            raise ValueError("Accepted readings must have a visible value")
     json.dumps(row, allow_nan=False)
     return row
 
@@ -246,7 +271,9 @@ class Store:
         return read_rows(self.path(name + ".jsonl"))
 
     def write(self, name: str, rows: list[dict]) -> None:
-        write_rows(self.path(name + ".jsonl"), rows)
+        manifest = self.path("manifest.json")
+        schema = read_json(manifest).get("schema_version", 1) if manifest.exists() else SCHEMA
+        write_rows(self.path(name + ".jsonl"), [{"schema_version": schema, **row} for row in rows])
 
     def corrections(self) -> list[dict]:
         if self._correction_snapshot is not None:
@@ -279,6 +306,14 @@ class Store:
 
     def fingerprint(self, config: Config) -> str:
         manifest = read_json(self.path("manifest.json"))
+        if manifest.get("schema_version", 1) >= 2:
+            from .intake_profile import load_profile
+            return digest({"source": manifest["source"]["sha256"], "interval": manifest["interval"],
+                "fps": config.fps, "masks": config.masks, "profile": load_profile(config.layout_profile),
+                "engine": config.intake_engine,
+                "readers": read_json(self.path("intake_runtime.json")) if self.path("intake_runtime.json").exists() else None,
+                "implementation": implementation_hash(["intake.py", "hybrid_intake.py", "readers.py", "vl_reader.py", "numeric_reader.py", "playback.py", "intake_profile.py", "local_models.py"]),
+                "schema": SCHEMA})
         observer_config = config.to_dict()
         for key in ("max_questions", "solver_max_frames", "solver_max_pixels"):
             observer_config.pop(key)
@@ -292,14 +327,32 @@ class Store:
 
     def stage_key(self, stage: str, config: Config, dependencies: list[str]) -> str:
         extra = {}
-        if stage == "generate-qa":
-            extra = {"max_questions": config.max_questions, "implementation": implementation_hash(["questions.py"])}
+        if stage == "normalize":
+            extra = {"implementation": implementation_hash(["normalization.py"])}
+        elif stage == "generate-qa":
+            extra = {"max_questions": config.max_questions, "mechanics": config.mechanics,
+                     "mechanics_implementation":implementation_hash(["knowledge.py", "references.py"]) if config.mechanics else None,
+                     "implementation": implementation_hash(["questions.py"])}
+        elif stage == "fuse":
+            extra = {"implementation": implementation_hash(["timeline.py", "normalization.py"])}
         elif stage in {"evaluate", "report"}:
+            manifest = read_json(self.path("manifest.json"))
             extra = {"max_frames": config.solver_max_frames, "max_pixels": config.solver_max_pixels,
-                     "implementation": implementation_hash(["evaluation.py"])}
+                     "output_tokens": config.thinking_output_tokens, "max_context": config.max_context,
+                     "seed":config.seed,"knowledge_queries":config.knowledge_queries,
+                     "evaluation_enabled":config.evaluation_enabled,
+                     "model": config.models.get("thinking"),
+                     "model_pin": manifest.get("model_revisions", {}).get("thinking"),
+                     "runtime": manifest.get("inference_runtime"),
+                     "implementation": implementation_hash(["evaluation.py", "inference.py", "prompts.py"])}
+        corrections=self.corrections()
+        if stage=="normalize":
+            corrections=[c for c in corrections if c["target"]=="observations"]
+        elif stage in {"fuse","generate-qa"}:
+            corrections=[c for c in corrections if c["target"]!="questions"]
         return digest({"stage": stage, "run": self.fingerprint(config), "stage_configuration": extra,
                        "dependencies": {n: digest(self.rows(n)) for n in dependencies},
-                       "corrections": self.corrections()})
+                       "corrections": corrections})
 
     def commit_stage(self, stage: str, key: str, **metadata) -> None:
         atomic_json(self.path(f"stages/{stage}.json"), {"key": key, "completed_at": now(), **metadata})
@@ -309,6 +362,11 @@ def implementation_hash(names=None) -> str:
     root = Path(__file__).parent
     return digest({p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                    for p in sorted(root.glob("*.py")) if names is None or p.name in names})
+
+
+def _asset_signature(cache: str) -> str | None:
+    path = Path(cache)/"manifest.json"
+    return digest(read_json(path)) if path.exists() else None
 
 
 def runtime_info() -> dict:

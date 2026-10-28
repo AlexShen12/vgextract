@@ -1,0 +1,56 @@
+{
+  "schema_version": 2,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "segments": [
+    {
+      "id": "audio-0",
+      "start": 0,
+      "end": 60,
+      "verified": false,
+      "transcript": null,
+      "words": [],
+      "names": [],
+      "no_speech": false
+    },
+    {
+      "id": "audio-1",
+      "start": 418,
+      "end": 478,
+      "verified": false,
+      "transcript": null,
+      "words": [],
+      "names": [],
+      "no_speech": false
+    },
+    {
+      "id": "audio-2",
+      "start": 836,
+      "end": 896,
+      "verified": false,
+      "transcript": null,
+      "words": [],
+      "names": [],
+      "no_speech": false
+    },
+    {
+      "id": "audio-3",
+      "start": 1254,
+      "end": 1314,
+      "verified": false,
+      "transcript": null,
+      "words": [],
+      "names": [],
+      "no_speech": false
+    },
+    {
+      "id": "audio-4",
+      "start": 1672,
+      "end": 1732,
+      "verified": false,
+      "transcript": null,
+      "words": [],
+      "names": [],
+      "no_speech": false
+    }
+  ]
+}

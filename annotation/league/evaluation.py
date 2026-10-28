@@ -5,7 +5,7 @@ import math
 from collections import Counter
 from dataclasses import replace
 
-from .core import Store, atomic_json, digest, finite, read_json, uid, consistent_review, implementation_hash
+from .core import Store, StopRequested, atomic_json, digest, finite, read_json, uid, consistent_review, implementation_hash
 from .inference import InputBudgetError, ScopedResolver, infer_with_knowledge
 from .media import Media
 from .prompts import solver_messages
@@ -100,7 +100,9 @@ def evaluate(store: Store, config, runner, resolver):
                     raise ValueError("Solver evidence outside declared interval")
             prediction.update(status="ok", output=output, metrics=result["metrics"],
                               knowledge_queries=result["knowledge_queries"])
-        except (ValueError, InputBudgetError) as exc:
+        except StopRequested:
+            raise
+        except (ValueError, RuntimeError, OSError) as exc:
             from .observers import _spent
             prediction.update(status="unresolved", error=str(exc), output={"answer": None, "abstain": True, "evidence": []},
                               metrics=_spent(directory))
@@ -236,6 +238,8 @@ def report(store: Store, config, gpu_hour_rate=None):
         store.path("solver-inference/"+p["id"]) for p in predictions.values()]
     audits = [read_json(path) for root in audit_roots for path in root.rglob("input-audit.json")]
     result = {"reference_strata": strata, "correction_revision": len(store.corrections()),
+              "intake": read_json(store.path("intake_report.json")) if store.path("intake_report.json").exists() else None,
+              "question_coverage": read_json(store.path("question_coverage.json")) if store.path("question_coverage.json").exists() else None,
               "interpretation": {"human-verified": "Accuracy against human-verified reference answers",
                                  "unreviewed": "Agreement with provisional automatic references; not benchmark accuracy"},
               "efficiency": {"measured_inference_seconds": wall,

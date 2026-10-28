@@ -1,0 +1,186 @@
+{
+  "schema_version": 2,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "clips": [
+    {
+      "id": "clip-00",
+      "start": 0,
+      "end": 8,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-01",
+      "start": 15,
+      "end": 23,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-02",
+      "start": 30,
+      "end": 38,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-03",
+      "start": 45,
+      "end": 53,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-04",
+      "start": 418,
+      "end": 426,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-05",
+      "start": 433,
+      "end": 441,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-06",
+      "start": 448,
+      "end": 456,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-07",
+      "start": 463,
+      "end": 471,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-08",
+      "start": 836,
+      "end": 844,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-09",
+      "start": 851,
+      "end": 859,
+      "split": "development",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-10",
+      "start": 866,
+      "end": 874,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-11",
+      "start": 881,
+      "end": 889,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-12",
+      "start": 1254,
+      "end": 1262,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-13",
+      "start": 1269,
+      "end": 1277,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-14",
+      "start": 1284,
+      "end": 1292,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-15",
+      "start": 1299,
+      "end": 1307,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-16",
+      "start": 1672,
+      "end": 1680,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-17",
+      "start": 1687,
+      "end": 1695,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-18",
+      "start": 1702,
+      "end": 1710,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    },
+    {
+      "id": "clip-19",
+      "start": 1717,
+      "end": 1725,
+      "split": "held_out",
+      "verified": false,
+      "case_tags": [],
+      "events": []
+    }
+  ]
+}

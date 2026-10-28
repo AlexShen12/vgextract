@@ -1,0 +1,10 @@
+{
+  "schema_version": 2,
+  "models": {
+    "intake": {"id": "Qwen/Qwen3.8-27B-FP8", "revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a", "dtype": "auto", "engine": "vllm"},
+    "event_alternative": {"id": "OpenGVLab/InternVL3_5-14B-HF", "revision": "226b96d5912e69159abc0384cefcbd51487fdce0", "dtype": "bfloat16", "engine": "vllm"},
+    "asr": {"id": "Qwen/Qwen3-ASR-1.7B-hf", "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3", "dtype": "bfloat16", "engine": "transformers"},
+    "aligner": {"id": "Qwen/Qwen3-ForcedAligner-0.6B-hf", "revision": "c07281df297b9905d24a508279258cccf987a064", "dtype": "bfloat16", "engine": "transformers"},
+    "tracking": {"id": "facebook/sam3.1", "revision": "daa63191845a41281374e725f4c9e51c7a824460", "dtype": "bfloat16", "engine": "sam3.1", "code_revision": "f1647e8d0c1d280991f4d1b7d974c2704537fe66"}
+  }
+}

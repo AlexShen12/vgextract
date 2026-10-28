@@ -1,0 +1,406 @@
+{
+  "schema_version": 2,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "frames": [
+    {
+      "time": 0,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000000.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 4,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000004.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 15,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000015.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 19,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000019.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 30,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000030.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 34,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000034.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 45,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000045.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 49,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000049.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 418,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000418.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 422,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000422.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 433,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000433.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 437,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000437.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 448,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000448.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 452,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000452.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 463,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000463.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 467,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000467.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 836,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000836.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 840,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000840.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 851,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000851.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 855,
+      "split": "development",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000855.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 866,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000866.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 870,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000870.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 881,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000881.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 885,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/000885.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1254,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001254.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1258,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001258.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1269,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001269.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1273,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001273.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1284,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001284.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1288,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001288.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1299,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001299.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1303,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001303.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1672,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001672.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1676,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001676.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1687,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001687.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1691,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001691.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1702,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001702.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1706,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001706.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1717,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001717.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    },
+    {
+      "time": 1721,
+      "split": "held_out",
+      "verified": false,
+      "playback_segment_id": null,
+      "case_tags": [],
+      "labels": [],
+      "evidence": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/frames/001721.png",
+      "note": "Independently label source pixels; do not copy reader predictions."
+    }
+  ]
+}

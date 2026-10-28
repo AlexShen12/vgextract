@@ -1,0 +1,6 @@
+# Separate audio worker; GPU models are loaded sequentially.
+torch==2.13.0
+transformers==5.18.0
+silero-vad==6.2.3
+soundfile==0.13.1
+librosa==0.11.0

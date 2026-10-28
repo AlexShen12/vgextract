@@ -1,0 +1,2 @@
+# Optional isolated SAM 3.1 worker; checkpoint access must already be granted.
+git+https://github.com/facebookresearch/sam3.git@f1647e8d0c1d280991f4d1b7d974c2704537fe66

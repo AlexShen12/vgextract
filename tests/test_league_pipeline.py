@@ -329,23 +329,42 @@ class QuestionTests(unittest.TestCase):
 
 
 class EndToEndTests(unittest.TestCase):
+    def test_solver_failure_preserves_intake_and_shutdown_is_not_swallowed(self):
+        for error in (RuntimeError("solver failed"),StopRequested("shutdown")):
+            with self.subTest(error=type(error).__name__),tempfile.TemporaryDirectory() as temporary:
+                store=init_store(temporary);cfg=config()
+                store.write("questions",construct([],[event("e",10)]))
+                store.commit_stage("annotate","completed-intake")
+                committed=store.path("stages/annotate.json").read_bytes()
+                with patch("annotation.league.evaluation.Media",FixtureMedia), \
+                     patch("annotation.league.evaluation.infer_with_knowledge",side_effect=error):
+                    if isinstance(error,StopRequested):
+                        with self.assertRaises(StopRequested):evaluate(store,cfg,Mock(),StaticFixture())
+                        self.assertFalse(store.path("stages/evaluate.json").exists())
+                    else:
+                        self.assertGreater(evaluate(store,cfg,Mock(),StaticFixture())["unresolved"],0)
+                self.assertEqual(store.path("stages/annotate.json").read_bytes(),committed)
+
     def test_interrupt_resume_optional_review_and_independent_evaluation(self):
+        from test_league_intake import intake_fixture, Image
+        if Image is None:
+            self.skipTest("Install requirements-intake.txt for calibrated intake integration")
         with tempfile.TemporaryDirectory() as temporary:
             store = init_store(temporary)
             cfg = config()
             cfg.validate()
-            with patch("annotation.league.observers.Media", FixtureMedia), patch("annotation.league.evaluation.Media", FixtureMedia):
-                first = FixtureRunner(store, stop_after=2)
-                with self.assertRaises(StopRequested):
-                    annotate(store, cfg, first, StaticFixture())
-                committed = list(store.path("inference").glob("*/segment-*.json"))
-                self.assertEqual(len(committed), 2)
+            with patch("annotation.league.evaluation.Media", FixtureMedia):
+                with intake_fixture(store, cfg, stop_after=1), self.assertRaises(StopRequested):
+                    annotate(store, cfg)
+                committed = list(store.path("tasks").glob("*.json"))
+                self.assertEqual(len(committed), 1)
+                committed_bytes = committed[0].read_bytes()
                 store.stopping = False
-                resumed = FixtureRunner(store)
-                summary = annotate(store, cfg, resumed, StaticFixture())
-                self.assertLessEqual(summary["review_visual_tokens"], summary["review_token_allowance"])
-                self.assertNotIn(first.calls[0], resumed.calls)
-                self.assertTrue(any(o["status"] != "ok" for r in store.rows("review_requests") for o in r["outcomes"]))
+                with intake_fixture(store, cfg):
+                    summary = annotate(store, cfg)
+                self.assertTrue(summary["operational_passed"])
+                self.assertEqual(committed[0].read_bytes(), committed_bytes)
+                self.assertTrue(any(r["status"] == "unsupported" for r in store.rows("coverage")))
                 self.assertTrue(any(o["value"] == "한글플레이어" for o in store.rows("observations")))
                 fuse(store, cfg)
                 generate_qa(store, cfg)

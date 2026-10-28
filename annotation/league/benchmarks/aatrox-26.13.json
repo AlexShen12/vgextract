@@ -1,0 +1,3859 @@
+{
+  "schema_version": 2,
+  "source_sha256": "9352784b7d6e9faafc1b3ab57aad0f44849daeb0d64df3096a6cdb73b8994825",
+  "frames": [
+    {
+      "time": 16,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "01:16",
+          "value": {
+            "displayed_text": "01:16",
+            "seconds": 76
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "2.8k",
+          "value": {
+            "displayed_text": "2.8k",
+            "amount": 2800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "2.7k",
+          "value": {
+            "displayed_text": "2.7k",
+            "amount": 2700.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "1",
+          "value": 1
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "810/810",
+          "value": {
+            "displayed_text": "810/810",
+            "current": 810,
+            "maximum": 810
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending.",
+      "case_tags": [
+        "cooldown_rank_distinctions",
+        "absent_panels_or_notices"
+      ]
+    },
+    {
+      "time": 24,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "01:24",
+          "value": {
+            "displayed_text": "01:24",
+            "seconds": 84
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.0k",
+          "value": {
+            "displayed_text": "3.0k",
+            "amount": 3000.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "2.9k",
+          "value": {
+            "displayed_text": "2.9k",
+            "amount": 2900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "1",
+          "value": 1
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "810/810",
+          "value": {
+            "displayed_text": "810/810",
+            "current": 810,
+            "maximum": 810
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 32,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "01:32",
+          "value": {
+            "displayed_text": "01:32",
+            "seconds": 92
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.2k",
+          "value": {
+            "displayed_text": "3.2k",
+            "amount": 3200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.1k",
+          "value": {
+            "displayed_text": "3.1k",
+            "amount": 3100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "1",
+          "value": 1
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "note": "Draft corrected after independent inspection of native source pixels on 2026-10-22; human verification is still pending.",
+          "raw_text": "660/816",
+          "value": {
+            "displayed_text": "660/816",
+            "current": 660,
+            "maximum": 816
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.82,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 40,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "01:40",
+          "value": {
+            "displayed_text": "01:40",
+            "seconds": 100
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.4k",
+          "value": {
+            "displayed_text": "3.4k",
+            "amount": 3400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.4k",
+          "value": {
+            "displayed_text": "3.4k",
+            "amount": 3400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "1",
+          "value": 1
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "665/816",
+          "value": {
+            "displayed_text": "665/816",
+            "current": 665,
+            "maximum": 816
+          },
+          "note": "Draft corrected after independent inspection of native source pixels on 2026-10-22; human verification is still pending."
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.83,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 48,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "01:48",
+          "value": {
+            "displayed_text": "01:48",
+            "seconds": 108
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.6k",
+          "value": {
+            "displayed_text": "3.6k",
+            "amount": 3600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.6k",
+          "value": {
+            "displayed_text": "3.6k",
+            "amount": 3600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "2",
+          "value": 2
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "714/908",
+          "value": {
+            "displayed_text": "714/908",
+            "current": 714,
+            "maximum": 908
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "1",
+          "value": 1
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.8,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 56,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "01:56",
+          "value": {
+            "displayed_text": "01:56",
+            "seconds": 116
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.8k",
+          "value": {
+            "displayed_text": "3.8k",
+            "amount": 3800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.8k",
+          "value": {
+            "displayed_text": "3.8k",
+            "amount": 3800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "2",
+          "value": 2
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "645/911",
+          "value": {
+            "displayed_text": "645/911",
+            "current": 645,
+            "maximum": 911
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "3",
+          "value": 3
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.72,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 64,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "02:04",
+          "value": {
+            "displayed_text": "02:04",
+            "seconds": 124
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "3.9k",
+          "value": {
+            "displayed_text": "3.9k",
+            "amount": 3900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "4.0k",
+          "value": {
+            "displayed_text": "4.0k",
+            "amount": 4000.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "2",
+          "value": 2
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "651/911",
+          "value": {
+            "displayed_text": "651/911",
+            "current": 651,
+            "maximum": 911
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.73,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 72,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "02:12",
+          "value": {
+            "displayed_text": "02:12",
+            "seconds": 132
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "4.1k",
+          "value": {
+            "displayed_text": "4.1k",
+            "amount": 4100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "4.2k",
+          "value": {
+            "displayed_text": "4.2k",
+            "amount": 4200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "0",
+          "value": 0
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "3",
+          "value": 3
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "475/1007",
+          "value": {
+            "displayed_text": "475/1007",
+            "current": 475,
+            "maximum": 1007
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/0",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 0
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.48,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 296,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "05:56",
+          "value": {
+            "displayed_text": "05:56",
+            "seconds": 356
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.1k",
+          "value": {
+            "displayed_text": "11.1k",
+            "amount": 11100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.0k",
+          "value": {
+            "displayed_text": "11.0k",
+            "amount": 11000.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "6",
+          "value": 6
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "787/1369",
+          "value": {
+            "displayed_text": "787/1369",
+            "current": 787,
+            "maximum": 1369
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "31",
+          "value": 31
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/1",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.56,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 304,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:04",
+          "value": {
+            "displayed_text": "06:04",
+            "seconds": 364
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.3k",
+          "value": {
+            "displayed_text": "11.3k",
+            "amount": 11300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.3k",
+          "value": {
+            "displayed_text": "11.3k",
+            "amount": 11300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "6",
+          "value": 6
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "713/1369",
+          "value": {
+            "displayed_text": "713/1369",
+            "current": 713,
+            "maximum": 1369
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "34",
+          "value": 34
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/1",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.53,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 312,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:12",
+          "value": {
+            "displayed_text": "06:12",
+            "seconds": 372
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.5k",
+          "value": {
+            "displayed_text": "11.5k",
+            "amount": 11500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.5k",
+          "value": {
+            "displayed_text": "11.5k",
+            "amount": 11500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "6",
+          "value": 6
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "463/1404",
+          "value": {
+            "displayed_text": "463/1404",
+            "current": 463,
+            "maximum": 1404
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "34",
+          "value": 34
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "0/0/1",
+          "value": {
+            "kills": 0,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.35,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 320,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:20",
+          "value": {
+            "displayed_text": "06:20",
+            "seconds": 380
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "12.0k",
+          "value": {
+            "displayed_text": "12.0k",
+            "amount": 12000.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.7k",
+          "value": {
+            "displayed_text": "11.7k",
+            "amount": 11700.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "6",
+          "value": 6
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "171/1407",
+          "value": {
+            "displayed_text": "171/1407",
+            "current": 171,
+            "maximum": 1407
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "37",
+          "value": 37
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "1/0/1",
+          "value": {
+            "kills": 1,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.12,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 328,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:28",
+          "value": {
+            "displayed_text": "06:28",
+            "seconds": 388
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "12.1k",
+          "value": {
+            "displayed_text": "12.1k",
+            "amount": 12100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.8k",
+          "value": {
+            "displayed_text": "11.8k",
+            "amount": 11800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "6",
+          "value": 6
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "159/1407",
+          "value": {
+            "displayed_text": "159/1407",
+            "current": 159,
+            "maximum": 1407
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "41",
+          "value": 41
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "1/0/1",
+          "value": {
+            "kills": 1,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.11,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 336,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:36",
+          "value": {
+            "displayed_text": "06:36",
+            "seconds": 396
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "12.3k",
+          "value": {
+            "displayed_text": "12.3k",
+            "amount": 12300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "11.9k",
+          "value": {
+            "displayed_text": "11.9k",
+            "amount": 11900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "4",
+          "value": 4
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "7",
+          "value": 7
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "288/1519",
+          "value": {
+            "displayed_text": "288/1519",
+            "current": 288,
+            "maximum": 1519
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "41",
+          "value": 41
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "1/0/1",
+          "value": {
+            "kills": 1,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.19,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 344,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:44",
+          "value": {
+            "displayed_text": "06:44",
+            "seconds": 404
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "12.6k",
+          "value": {
+            "displayed_text": "12.6k",
+            "amount": 12600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "12.6k",
+          "value": {
+            "displayed_text": "12.6k",
+            "amount": 12600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "7",
+          "value": 7
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "300/1522",
+          "value": {
+            "displayed_text": "300/1522",
+            "current": 300,
+            "maximum": 1522
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "46",
+          "value": 46
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "1/0/1",
+          "value": {
+            "kills": 1,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.19,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 352,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "06:52",
+          "value": {
+            "displayed_text": "06:52",
+            "seconds": 412
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "13.2k",
+          "value": {
+            "displayed_text": "13.2k",
+            "amount": 13200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "6",
+          "value": 6
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "12.8k",
+          "value": {
+            "displayed_text": "12.8k",
+            "amount": 12800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "5",
+          "value": 5
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "7",
+          "value": 7
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "685/1522",
+          "value": {
+            "displayed_text": "685/1522",
+            "current": 685,
+            "maximum": 1522
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "46",
+          "value": 46
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "1/0/1",
+          "value": {
+            "kills": 1,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.46,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 760,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "13:40",
+          "value": {
+            "displayed_text": "13:40",
+            "seconds": 820
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "28.0k",
+          "value": {
+            "displayed_text": "28.0k",
+            "amount": 28000.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "25.3k",
+          "value": {
+            "displayed_text": "25.3k",
+            "amount": 25300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1178/2721",
+          "value": {
+            "displayed_text": "1178/2721",
+            "current": 1178,
+            "maximum": 2721
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "107",
+          "value": 107
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.44,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending.",
+      "case_tags": [
+        "cooldown_rank_distinctions"
+      ]
+    },
+    {
+      "time": 768,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "13:48",
+          "value": {
+            "displayed_text": "13:48",
+            "seconds": 828
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "28.3k",
+          "value": {
+            "displayed_text": "28.3k",
+            "amount": 28300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "25.5k",
+          "value": {
+            "displayed_text": "25.5k",
+            "amount": 25500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1242/2724",
+          "value": {
+            "displayed_text": "1242/2724",
+            "current": 1242,
+            "maximum": 2724
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "115",
+          "value": 115
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.47,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 776,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "13:56",
+          "value": {
+            "displayed_text": "13:56",
+            "seconds": 836
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "28.4k",
+          "value": {
+            "displayed_text": "28.4k",
+            "amount": 28400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "25.6k",
+          "value": {
+            "displayed_text": "25.6k",
+            "amount": 25600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1312/2724",
+          "value": {
+            "displayed_text": "1312/2724",
+            "current": 1312,
+            "maximum": 2724
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "115",
+          "value": 115
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.49,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 784,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "14:04",
+          "value": {
+            "displayed_text": "14:04",
+            "seconds": 844
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "28.6k",
+          "value": {
+            "displayed_text": "28.6k",
+            "amount": 28600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "25.8k",
+          "value": {
+            "displayed_text": "25.8k",
+            "amount": 25800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1231/2727",
+          "value": {
+            "displayed_text": "1231/2727",
+            "current": 1231,
+            "maximum": 2727
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "120",
+          "value": 120
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.46,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 792,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "14:12",
+          "value": {
+            "displayed_text": "14:12",
+            "seconds": 852
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "28.8k",
+          "value": {
+            "displayed_text": "28.8k",
+            "amount": 28800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "26.1k",
+          "value": {
+            "displayed_text": "26.1k",
+            "amount": 26100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1235/2727",
+          "value": {
+            "displayed_text": "1235/2727",
+            "current": 1235,
+            "maximum": 2727
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "122",
+          "value": 122
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.46,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 800,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "14:20",
+          "value": {
+            "displayed_text": "14:20",
+            "seconds": 860
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "28.9k",
+          "value": {
+            "displayed_text": "28.9k",
+            "amount": 28900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "26.3k",
+          "value": {
+            "displayed_text": "26.3k",
+            "amount": 26300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "2676/2727",
+          "value": {
+            "displayed_text": "2676/2727",
+            "current": 2676,
+            "maximum": 2727
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "122",
+          "value": 122
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 808,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "14:28",
+          "value": {
+            "displayed_text": "14:28",
+            "seconds": 868
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "29.1k",
+          "value": {
+            "displayed_text": "29.1k",
+            "amount": 29100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "26.5k",
+          "value": {
+            "displayed_text": "26.5k",
+            "amount": 26500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "2727/2727",
+          "value": {
+            "displayed_text": "2727/2727",
+            "current": 2727,
+            "maximum": 2727
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "122",
+          "value": 122
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 816,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "14:36",
+          "value": {
+            "displayed_text": "14:36",
+            "seconds": 876
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "29.2k",
+          "value": {
+            "displayed_text": "29.2k",
+            "amount": 29200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "26.8k",
+          "value": {
+            "displayed_text": "26.8k",
+            "amount": 26800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "11",
+          "value": 11
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "12",
+          "value": 12
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "2727/2727",
+          "value": {
+            "displayed_text": "2727/2727",
+            "current": 2727,
+            "maximum": 2727
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "122",
+          "value": 122
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "4/0/1",
+          "value": {
+            "kills": 4,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1096,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "19:16",
+          "value": {
+            "displayed_text": "19:16",
+            "seconds": 1156
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.4k",
+          "value": {
+            "displayed_text": "39.4k",
+            "amount": 39400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "37.6k",
+          "value": {
+            "displayed_text": "37.6k",
+            "amount": 37600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1225/3631",
+          "value": {
+            "displayed_text": "1225/3631",
+            "current": 1225,
+            "maximum": 3631
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "168",
+          "value": 168
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.35,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending.",
+      "case_tags": [
+        "cooldown_rank_distinctions"
+      ]
+    },
+    {
+      "time": 1104,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "19:24",
+          "value": {
+            "displayed_text": "19:24",
+            "seconds": 1164
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.5k",
+          "value": {
+            "displayed_text": "39.5k",
+            "amount": 39500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "37.7k",
+          "value": {
+            "displayed_text": "37.7k",
+            "amount": 37700.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1307/3631",
+          "value": {
+            "displayed_text": "1307/3631",
+            "current": 1307,
+            "maximum": 3631
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "168",
+          "value": 168
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.36,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1112,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "19:32",
+          "value": {
+            "displayed_text": "19:32",
+            "seconds": 1172
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.7k",
+          "value": {
+            "displayed_text": "39.7k",
+            "amount": 39700.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "38.0k",
+          "value": {
+            "displayed_text": "38.0k",
+            "amount": 38000.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1441/3635",
+          "value": {
+            "displayed_text": "1441/3635",
+            "current": 1441,
+            "maximum": 3635
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "173",
+          "value": 173
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.4,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1120,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "19:40",
+          "value": {
+            "displayed_text": "19:40",
+            "seconds": 1180
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.8k",
+          "value": {
+            "displayed_text": "39.8k",
+            "amount": 39800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "38.4k",
+          "value": {
+            "displayed_text": "38.4k",
+            "amount": 38400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "1475/3635",
+          "value": {
+            "displayed_text": "1475/3635",
+            "current": 1475,
+            "maximum": 3635
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "173",
+          "value": 173
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.41,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1128,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "19:48",
+          "value": {
+            "displayed_text": "19:48",
+            "seconds": 1188
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.9k",
+          "value": {
+            "displayed_text": "39.9k",
+            "amount": 39900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "38.9k",
+          "value": {
+            "displayed_text": "38.9k",
+            "amount": 38900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "3650/3790",
+          "value": {
+            "displayed_text": "3650/3790",
+            "current": 3650,
+            "maximum": 3790
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "173",
+          "value": 173
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.98,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1136,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "19:56",
+          "value": {
+            "displayed_text": "19:56",
+            "seconds": 1196
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "40.1k",
+          "value": {
+            "displayed_text": "40.1k",
+            "amount": 40100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.2k",
+          "value": {
+            "displayed_text": "39.2k",
+            "amount": 39200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "3665/3790",
+          "value": {
+            "displayed_text": "3665/3790",
+            "current": 3665,
+            "maximum": 3790
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "173",
+          "value": 173
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.98,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1144,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "20:04",
+          "value": {
+            "displayed_text": "20:04",
+            "seconds": 1204
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "40.3k",
+          "value": {
+            "displayed_text": "40.3k",
+            "amount": 40300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "39.6k",
+          "value": {
+            "displayed_text": "39.6k",
+            "amount": 39600.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "3681/3790",
+          "value": {
+            "displayed_text": "3681/3790",
+            "current": 3681,
+            "maximum": 3790
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "173",
+          "value": 173
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.99,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1152,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "20:12",
+          "value": {
+            "displayed_text": "20:12",
+            "seconds": 1212
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "40.5k",
+          "value": {
+            "displayed_text": "40.5k",
+            "amount": 40500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "23",
+          "value": 23
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "40.1k",
+          "value": {
+            "displayed_text": "40.1k",
+            "amount": 40100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "17",
+          "value": 17
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "15",
+          "value": 15
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "3582/3790",
+          "value": {
+            "displayed_text": "3582/3790",
+            "current": 3582,
+            "maximum": 3790
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "177",
+          "value": 177
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "6/0/1",
+          "value": {
+            "kills": 6,
+            "deaths": 0,
+            "assists": 1
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.96,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1600,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "27:40",
+          "value": {
+            "displayed_text": "27:40",
+            "seconds": 1660
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "56.5k",
+          "value": {
+            "displayed_text": "56.5k",
+            "amount": 56500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "33",
+          "value": 33
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "57.7k",
+          "value": {
+            "displayed_text": "57.7k",
+            "amount": 57700.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "26",
+          "value": 26
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "18",
+          "value": 18
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4753/4753",
+          "value": {
+            "displayed_text": "4753/4753",
+            "current": 4753,
+            "maximum": 4753
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "225",
+          "value": 225
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "9/1/3",
+          "value": {
+            "kills": 9,
+            "deaths": 1,
+            "assists": 3
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending.",
+      "case_tags": [
+        "cooldown_rank_distinctions"
+      ]
+    },
+    {
+      "time": 1608,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "27:48",
+          "value": {
+            "displayed_text": "27:48",
+            "seconds": 1668
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "57.1k",
+          "value": {
+            "displayed_text": "57.1k",
+            "amount": 57100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "34",
+          "value": 34
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "57.9k",
+          "value": {
+            "displayed_text": "57.9k",
+            "amount": 57900.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "26",
+          "value": 26
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "18",
+          "value": 18
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4756/4756",
+          "value": {
+            "displayed_text": "4756/4756",
+            "current": 4756,
+            "maximum": 4756
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "230",
+          "value": 230
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "9/1/3",
+          "value": {
+            "kills": 9,
+            "deaths": 1,
+            "assists": 3
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1616,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "27:56",
+          "value": {
+            "displayed_text": "27:56",
+            "seconds": 1676
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "57.8k",
+          "value": {
+            "displayed_text": "57.8k",
+            "amount": 57800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "35",
+          "value": 35
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "59.3k",
+          "value": {
+            "displayed_text": "59.3k",
+            "amount": 59300.0
+          },
+          "note": "Draft corrected after independent inspection of native source pixels on 2026-10-22; human verification is still pending."
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "28",
+          "value": 28
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "18",
+          "value": 18
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4906/4906",
+          "value": {
+            "displayed_text": "4906/4906",
+            "current": 4906,
+            "maximum": 4906
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "230",
+          "value": 230
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "9/1/4",
+          "value": {
+            "kills": 9,
+            "deaths": 1,
+            "assists": 4
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1624,
+      "split": "development",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "28:04",
+          "value": {
+            "displayed_text": "28:04",
+            "seconds": 1684
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "58.3k",
+          "value": {
+            "displayed_text": "58.3k",
+            "amount": 58300.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "36",
+          "value": 36
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "59.4k",
+          "value": {
+            "displayed_text": "59.4k",
+            "amount": 59400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "28",
+          "value": 28
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "18",
+          "value": 18
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4027/5062",
+          "value": {
+            "displayed_text": "4027/5062",
+            "current": 4027,
+            "maximum": 5062
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "230",
+          "value": 230
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "9/1/5",
+          "value": {
+            "kills": 9,
+            "deaths": 1,
+            "assists": 5
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 0.81,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1632,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "28:12",
+          "value": {
+            "displayed_text": "28:12",
+            "seconds": 1692
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "58.8k",
+          "value": {
+            "displayed_text": "58.8k",
+            "amount": 58800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "37",
+          "value": 37
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "59.5k",
+          "value": {
+            "displayed_text": "59.5k",
+            "amount": 59500.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "28",
+          "value": 28
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "18",
+          "value": 18
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "unreadable",
+          "note": "Digit uncertain in visual transcription; requires human review"
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "235",
+          "value": 235
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "10/1/5",
+          "value": {
+            "kills": 10,
+            "deaths": 1,
+            "assists": 5
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1640,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "28:20",
+          "value": {
+            "displayed_text": "28:20",
+            "seconds": 1700
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "59.4k",
+          "value": {
+            "displayed_text": "59.4k",
+            "amount": 59400.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "38",
+          "value": 38
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "59.8k",
+          "value": {
+            "displayed_text": "59.8k",
+            "amount": 59800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "28",
+          "value": 28
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "18",
+          "value": 18
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4765/4765",
+          "value": {
+            "displayed_text": "4765/4765",
+            "current": 4765,
+            "maximum": 4765
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "236",
+          "value": 236
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "10/1/5",
+          "value": {
+            "kills": 10,
+            "deaths": 1,
+            "assists": 5
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1648,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "28:28",
+          "value": {
+            "displayed_text": "28:28",
+            "seconds": 1708
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "59.8k",
+          "value": {
+            "displayed_text": "59.8k",
+            "amount": 59800.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "38",
+          "value": 38
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "60.1k",
+          "value": {
+            "displayed_text": "60.1k",
+            "amount": 60100.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "28",
+          "value": 28
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "19",
+          "value": 19
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4930/4950",
+          "value": {
+            "displayed_text": "4930/4950",
+            "current": 4930,
+            "maximum": 4950
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "242",
+          "value": 242
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "10/1/5",
+          "value": {
+            "kills": 10,
+            "deaths": 1,
+            "assists": 5
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    },
+    {
+      "time": 1656,
+      "split": "held_out",
+      "verified": false,
+      "labels": [
+        {
+          "field_id": "match_hud/match/game_clock",
+          "availability": "visible",
+          "raw_text": "28:36",
+          "value": {
+            "displayed_text": "28:36",
+            "seconds": 1716
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/displayed_gold",
+          "availability": "visible",
+          "raw_text": "60.2k",
+          "value": {
+            "displayed_text": "60.2k",
+            "amount": 60200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:blue/kills",
+          "availability": "visible",
+          "raw_text": "38",
+          "value": 38
+        },
+        {
+          "field_id": "match_hud/team:red/displayed_gold",
+          "availability": "visible",
+          "raw_text": "60.2k",
+          "value": {
+            "displayed_text": "60.2k",
+            "amount": 60200.0
+          }
+        },
+        {
+          "field_id": "match_hud/team:red/kills",
+          "availability": "visible",
+          "raw_text": "28",
+          "value": 28
+        },
+        {
+          "field_id": "selected_hud/selected/level",
+          "availability": "visible",
+          "raw_text": "19",
+          "value": 19
+        },
+        {
+          "field_id": "selected_hud/selected/health",
+          "availability": "visible",
+          "raw_text": "4933/4953",
+          "value": {
+            "displayed_text": "4933/4953",
+            "current": 4933,
+            "maximum": 4953
+          }
+        },
+        {
+          "field_id": "scoreboard/left:row1/cs",
+          "availability": "visible",
+          "raw_text": "242",
+          "value": 242
+        },
+        {
+          "field_id": "scoreboard/left:row1/kda",
+          "availability": "visible",
+          "raw_text": "10/1/5",
+          "value": {
+            "kills": 10,
+            "deaths": 1,
+            "assists": 5
+          }
+        },
+        {
+          "field_id": "right_sidebar/right:row1/player_name",
+          "availability": "visible",
+          "raw_text": "BeSensitive",
+          "value": "BeSensitive"
+        },
+        {
+          "field_id": "selected_hud/selected/identity",
+          "availability": "visible",
+          "value": "Aatrox"
+        },
+        {
+          "field_id": "selected_hud/selected/health_fraction",
+          "availability": "visible",
+          "value": 1,
+          "note": "Approximate visual measurement from the native bar contact sheet; human review pending."
+        }
+      ],
+      "verification_note": "Draft transcribed by Codex from native source contact sheets; human verification is pending."
+    }
+  ],
+  "notes": "Draft labels, not release ground truth. Covers numeric counters, one English name, selected portrait and measured health bars. Other promised readers and difficult cases still require labels. No held-out measurements authorize tuning.",
+  "development_audit": "Native-pixel reinspection corrected HP at 32/40 seconds and red gold at 1616 seconds. Held-out labels unchanged. This draft remains incomplete and unverified."
+}

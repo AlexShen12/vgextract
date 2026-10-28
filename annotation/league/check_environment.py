@@ -26,7 +26,9 @@ def check_environment(prefix: Path, *, writable: bool = False) -> None:
         if not packages.resolve().is_relative_to(prefix):
             raise RuntimeError(f"site-packages is outside the requested environment: {packages}")
         try:
-            with tempfile.TemporaryFile(dir=packages):
+            # Close before unlinking: anonymous TemporaryFile can leave transient
+            # .nfs files on Longleaf's shared work filesystem.
+            with tempfile.NamedTemporaryFile(dir=packages, prefix=".league-write-probe-"):
                 pass
         except OSError as exc:
             raise RuntimeError(f"Environment site-packages is not writable: {packages}: {exc}") from exc

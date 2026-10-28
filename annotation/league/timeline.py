@@ -120,21 +120,27 @@ def normalize_output(output: dict, task: dict, route, identities=None) -> tuple[
 def fuse_observations(observations: list[dict]) -> tuple[list, list]:
     grouped = defaultdict(list)
     for row in observations:
-        if row.get("review_status") != "rejected":
-            grouped[(row["entity"], row["field"], round(row["time"], 3))].append(row)
+        if row.get("review_status") != "rejected" and not row.get("experimental") and row.get("evidence_modality", "visual") == "visual":
+            subject = row["entity"] if row["entity"] != "unknown" else row.get("slot_id", "unknown")
+            grouped[(subject, row["field"], round(row["time"], 3), row.get("playback_segment_id"))].append(row)
     states, conflicts = [], []
     previous = {}
-    for (entity, field, time), group in sorted(grouped.items(), key=lambda pair: pair[0][2]):
+    for (subject, field, time, segment), group in sorted(grouped.items(), key=lambda pair: pair[0][2]):
+        entity = group[0]["entity"]
         visible = [r for r in group if r["visibility"] == "visible"
-                   and (r["confidence"] >= .75 or r.get("review_status") == "human-verified")
-                   and entity != "unknown"]
+                   and (r.get("review_status") == "human-verified" or
+                        (r.get("acceptance") == "accepted" if r.get("schema_version", 1) >= 2 else
+                         r["confidence"] >= .75 and entity != "unknown"))]
         verified = [r for r in visible if r.get("review_status") == "human-verified"]
         candidates = verified or visible
         values = {digest(r["value"]) for r in candidates}
         status = "conflict" if len(values) > 1 else "confirmed" if values else "unobserved"
-        key = (entity, field)
-        state = {"id": uid("state", entity, field, time, sorted(r["id"] for r in group)),
+        key = (subject, field, segment)
+        state = {"id": uid("state", subject, field, time, sorted(r["id"] for r in group)),
                  "entity": entity, "field": field, "time": time,
+                 "slot_id": group[0].get("slot_id"),
+                 "playback_segment_id": segment, "evidence_modality": "visual",
+                 "continuity_verified": all(r.get("continuity_verified", True) for r in group),
                  "value": candidates[0]["value"] if status == "confirmed" else None,
                  "status": status, "evidence_ids": [r["id"] for r in group],
                  "frame_ids": sorted({r["frame_id"] for r in group}),
@@ -154,13 +160,13 @@ def fuse_observations(observations: list[dict]) -> tuple[list, list]:
 def fuse_events(events: list[dict]) -> list[dict]:
     fused = []
     for event in sorted(events, key=lambda e: (e["start"], e["id"])):
-        if event.get("review_status") == "rejected":
+        if event.get("review_status") == "rejected" or event.get("experimental") or event.get("evidence_modality", "visual") != "visual":
             continue
         match = None
         for candidate in reversed(fused):
             if event["start"] - candidate["end"] > 3:
                 continue
-            same = all(candidate.get(k) == event.get(k) for k in ("kind", "actor", "target", "object"))
+            same = all(candidate.get(k) == event.get(k) for k in ("kind", "actor", "target", "object", "playback_segment_id"))
             shared = bool(set(candidate["evidence_ids"]) & set(event["evidence_ids"]))
             notice = event["kind"] in {"death", "objective_takedown", "tower_destruction"}
             overlapping = event["start"] <= candidate["end"] and candidate["start"] <= event["end"]
@@ -228,7 +234,8 @@ def _episode(objective, events):
 
 @consistent_review
 def fuse(store: Store, config) -> dict:
-    observations = store.effective(store.rows("observations"), "observations")
+    from .normalization import normalize
+    observations=normalize(store,config)
     states, conflicts = fuse_observations(observations)
     events = fuse_events(store.rows("event_candidates"))
     events = store.effective(events, "events")

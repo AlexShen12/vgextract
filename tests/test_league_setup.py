@@ -46,7 +46,7 @@ class EnvironmentCheckTests(unittest.TestCase):
                  patch("annotation.league.check_environment.sys.version_info", (3, 12)), \
                  patch("annotation.league.check_environment.find_spec", return_value=spec), \
                  patch("annotation.league.check_environment.sysconfig.get_path", return_value=temporary), \
-                 patch("annotation.league.check_environment.tempfile.TemporaryFile",
+                 patch("annotation.league.check_environment.tempfile.NamedTemporaryFile",
                        side_effect=PermissionError("read-only")) as probe, \
                  contextlib.redirect_stdout(io.StringIO()):
                 check_environment(prefix)
@@ -82,11 +82,20 @@ class LongleafShellTests(unittest.TestCase):
         self.stub = self.root/"python-stub"
         self.executable(self.stub, f"#!{sys.executable}\n" + '''
 import json, os, sys
+import pathlib, shutil
 assert os.environ.get("PYTHONNOUSERSITE") == "1"
 assert "PYTHONPATH" not in os.environ
 assert "PYTHONHOME" not in os.environ
+for key in ("TMPDIR", "HF_HOME", "PIP_CACHE_DIR", "CONDA_PKGS_DIRS", "TRITON_CACHE_DIR", "TORCH_HOME", "VLLM_CACHE_ROOT"):
+    assert pathlib.Path(os.environ[key]).is_relative_to(pathlib.Path(os.environ["LEAGUE_WORK_ROOT"]))
+assert os.environ["CONDA_REGISTER_ENVS"] == "false"
+assert os.environ["VLLM_RPC_BASE_PATH"] == os.environ["LEAGUE_WORK_ROOT"] + "/tmp"
 with open(os.environ["CALL_LOG"], "a") as log:
     log.write(json.dumps(["python", *sys.argv[1:]]) + "\\n")
+if sys.argv[1:3] == ["-m", "venv"]:
+    target = pathlib.Path(sys.argv[3]) / "bin/python"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(os.environ["PYTHON_STUB"], target)
 if "annotation/league/check_environment.py" in sys.argv:
     sys.exit(int(os.environ.get("GUARD_STATUS", "0")))
 ''')
@@ -118,13 +127,15 @@ conda() {
     fi
 }
 ''')
-        for name in ("module", "ffmpeg", "ffprobe"):
+        for name in ("module", "ffmpeg", "ffprobe", "tesseract"):
             self.executable(self.bin/name, "#!/bin/bash\nexit 0\n")
         video = self.root/"video.mp4"
         video.touch()
-        self.env = {**os.environ, "PATH": f"{self.bin}:/usr/bin:/bin",
-                    "LEAGUE_ENV": str(self.prefix), "LEAGUE_VIDEO": str(video),
+        self.env = {**{k:v for k,v in os.environ.items() if not k.startswith("BASH_FUNC_") and k not in {"BASH_ENV", "ENV"}}, "PATH": f"{self.bin}:/usr/bin:/bin",
+                    "LEAGUE_ENV": str(self.prefix), "LEAGUE_WITH_EVALUATION": "0", "LEAGUE_VIDEO": str(video),
                     "LEAGUE_HF_HOME": str(self.root/"cache"),
+                    "LEAGUE_WORK_ROOT": str(self.root),
+                    "LEAGUE_ASSET_CACHE": str(self.root/"assets"),
                     "LEAGUE_RUN_DIR": str(self.root/"run"),
                     "FAKE_CONDA_BASE": str(self.root/"conda-base"),
                     "PYTHON_STUB": str(self.stub), "CALL_LOG": str(self.log),
@@ -156,12 +167,12 @@ conda() {
                 self.assertEqual(result.returncode, 0, result.stderr)
                 calls = self.calls()
                 self.assertEqual(calls[0][:2], ["conda", "install" if existing else "create"])
-                for requirement in ("python=3.12", "pip", "ffmpeg"):
+                for requirement in ("python=3.12", "pip", "ffmpeg", "tesseract"):
                     self.assertIn(requirement, calls[0])
                 self.assertEqual(calls[1], ["python", "annotation/league/check_environment.py",
                                             str(self.prefix), "--writable"])
                 self.assertEqual(calls[2], ["python", "-m", "pip", "install", "--no-user", "-r",
-                                            "annotation/league/inference-environment.lock.txt"])
+                                            "annotation/league/requirements-intake.txt"])
                 self.assertEqual(calls[-1][-1], "processor-preview")
 
     def test_setup_stops_before_pip_when_environment_check_fails(self):
@@ -169,6 +180,18 @@ conda() {
         result = self.run_script("setup_longleaf.sh")
         self.assertEqual(result.returncode, 2, result.stderr)
         self.assertEqual(len(self.calls()), 2)
+
+    def test_extraction_only_setup_skips_solver_dependencies_and_checkpoint(self):
+        self.env["LEAGUE_WITH_EVALUATION"]="0"
+        result=self.run_script("setup_longleaf.sh")
+        self.assertEqual(result.returncode,0,result.stderr)
+        calls=self.calls()
+        self.assertEqual(calls[2][-1],"annotation/league/requirements-intake.txt")
+        self.assertTrue(any("cache-models" in call and "--suite" in call for call in calls))
+        self.assertFalse(any("annotation/league/ocr-environment.lock.txt" in call or "cache-assets" in call for call in calls))
+        self.assertTrue(any("annotation/league/requirements-vl.txt" in call for call in calls))
+        prepare=next(call for call in calls if "prepare" in call)
+        self.assertIn("--no-evaluation",prepare)
 
     def test_batch_checks_the_same_prefix_before_running(self):
         self.make_existing_prefix()
@@ -185,6 +208,23 @@ conda() {
         result = self.run_script("slurm_annotate.sl")
         self.assertEqual(result.returncode, 2, result.stderr)
         self.assertEqual(len(self.calls()), 1)
+
+    def test_submit_creates_work_log_directory_before_sbatch(self):
+        # Real sbatch is a native binary; this stand-in needs valid Python paths.
+        self.env.pop("PYTHONHOME", None)
+        self.env.pop("PYTHONPATH", None)
+        self.env["LEAGUE_LOG_DIR"] = str(self.root/"job-logs")
+        self.executable(self.bin/"sbatch", f"#!{sys.executable}\n" + '''
+import json, os, pathlib, sys
+assert pathlib.Path(os.environ["LEAGUE_LOG_DIR"]).is_dir()
+assert "--output=" + os.environ["LEAGUE_LOG_DIR"] + "/%x-%j.out" in sys.argv
+assert "--error=" + os.environ["LEAGUE_LOG_DIR"] + "/%x-%j.err" in sys.argv
+with open(os.environ["CALL_LOG"], "a") as stream:
+    stream.write(json.dumps(["sbatch", *sys.argv[1:]]) + "\\n")
+''')
+        result = self.run_script("submit_longleaf.sh")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls()[0][0], "sbatch")
 
 
 if __name__ == "__main__":

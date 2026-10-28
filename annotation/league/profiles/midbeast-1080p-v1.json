@@ -1,0 +1,487 @@
+{
+  "schema_version": 2,
+  "id": "midbeast-1080p-v1",
+  "revision": 2,
+  "size": [
+    1920,
+    1080
+  ],
+  "calibrated": true,
+  "calibration_source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "calibration_frames": [
+    30,
+    90,
+    180,
+    300,
+    450,
+    600,
+    750,
+    900,
+    1050,
+    1200,
+    1450,
+    1650
+  ],
+  "calibration_note": "Native-frame geometry inspected by Codex; semantic benchmark labels remain unverified.",
+  "anchors": [
+    {
+      "name": "selected-hud-frame",
+      "box": [
+        519,
+        980,
+        527,
+        1002
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAWCAIAAABysUo3AAAAgUlEQVR4nK2RUQrDMAxDJTX9GPvY5XqCnWBHW792tX04dklLWVuSQmEiEJD8bIfw+RrG98fMbvcHfpLQkBq+XyS83Qr1QJcJnAdqErFqG6Te9c2WPfcsNWS5UsyEux/Kd8O3mdH++I7UgQogoABRzuJr2a9CaP1ewQlyZkKdxPqYCQpDKocwAPlRAAAAAElFTkSuQmCC",
+      "maximum_error": 0.12
+    },
+    {
+      "name": "header-clock-icon",
+      "box": [
+        1837,
+        4,
+        1855,
+        25
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAVCAIAAADEqSm4AAADW0lEQVR4nHVUa08bRxS9Mzs7u+v3Azv4ER5NKxOrCag1qYqAiKpSUfJ7kVCTb4kaBVoBggDBNoZaxZRg/Fi8j5nZmco2aaSink9zpXvPPUc6d5CZz8M9IIT+fSul7jfg/9RSDpvUZ8D/gIy5lVKaEiMaBfJuyXgnRvqwlArhOwlyPHZf3uDy6gtxMm2aplQSwRflREOAgQdSICW5EH77VoviydkHSimCwff99qf27Q1EUnrEjNyKoSkNCBk5UEIEzHOA8a+fPpqfn69UKpzzWMQaDJzXv27u7e25rt/v9yUNj+QgZOUmA+4yzwPH//H5sxfrP4fD4ePjY8/zCJamaU4/zDnO4NWr17+9rWZnYoGUzB95k1JCIH765fnK6sr5eWN7e7tarQoxFEkIPC7Nrq2tra+vG4bRuGxzzkFJzDkXXTs/PbO0tHTWONvY2NjbPnG6inNw+uA4cHPT6fV6yWTi5csXU1NTrYtr13WJ8DxzIrG4WBGBePP2TevPbjiJLcvq9QbfLz4ulUqZdDyTyTDGEEIhy0IIhBAEXDcw9Hg81bpoXf19RS1IxGJX191sNrW8vByPx5PJzO7u7sfjarlczmZmLWvHdTgBSnVdRwhxzsexUFIRAvl83jAMz/MODw83NzdbF52JiYnsw6+IRgA4AaQJIZRSLJB8lCwRiMAM7ZzUa5fNudLc2Yej1nk/kkLUIhgEBkE0gYFonHPbthOJRDgcZv4wBJFIVErZuey9e/fetm0AME0zk8nU6/WxSaxbIRXAzv5R2sTfzuQpAeY66Lad0mU8hEMKbjsKTHj0TYlQ82D/0Pe5TgxCKeWMnjUatVqiXC77gh8cfMRKeB4ICToFEoaFhbmFhfl6vT5wBsNwY4wiU9OB5zPGJlPx1dWVB+lYs9k8+vB7q9WSSOZyuaeVH2KxWLPV3trasm1GhqAoVCxiqRhjrHM9WSw+++5JoVCwDOn7vkTSMAyOSK1We//HfvfTtRlNE0I0rCOzWNQQZoxRPTHo9zVdFgqFJ3NFSikgwRg7afx1enoa2DaORk0zMjoucjcmZYAgwjkPxEA6LjEY1jQAIWUglE4NQ9N1SqkQ45PDRCkUDBk0oRxEEdKIZkSRVEEQKOCAQUMKNAKawSVSn/+YfwDyssvpx9fh6AAAAABJRU5ErkJggg==",
+      "maximum_error": 0.12
+    }
+  ],
+  "required_anchors": 2,
+  "fields": [
+    {
+      "id": "match_hud/match/game_clock",
+      "route": "match_hud",
+      "slot_id": "match",
+      "field": "game_clock",
+      "box": [
+        1854,
+        0,
+        1919,
+        26
+      ],
+      "reader": "number",
+      "parser": "clock",
+      "backend": "tesseract",
+      "entity": "match"
+    },
+    {
+      "id": "match_hud/team:red/kills",
+      "route": "match_hud",
+      "slot_id": "team:red",
+      "field": "kills",
+      "box": [
+        1549,
+        0,
+        1579,
+        25
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "backend": "tesseract",
+      "entity": "team:red"
+    },
+    {
+      "id": "match_hud/team:blue/kills",
+      "route": "match_hud",
+      "slot_id": "team:blue",
+      "field": "kills",
+      "box": [
+        1594,
+        0,
+        1625,
+        25
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "backend": "tesseract",
+      "entity": "team:blue"
+    },
+    {
+      "id": "selected_hud/selected/kda",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "kda",
+      "box": [
+        1665,
+        0,
+        1725,
+        25
+      ],
+      "reader": "number",
+      "parser": "kda",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/cs",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "cs",
+      "box": [
+        1775,
+        0,
+        1814,
+        25
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/displayed_gold",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "displayed_gold",
+      "box": [
+        1112,
+        1055,
+        1182,
+        1074
+      ],
+      "reader": "number",
+      "parser": "gold",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/level",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "level",
+      "box": [
+        709,
+        1054,
+        725,
+        1073
+      ],
+      "reader": "number",
+      "parser": "level",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/health",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "health",
+      "box": [
+        867,
+        1041,
+        972,
+        1059
+      ],
+      "reader": "number",
+      "parser": "health",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "selected_hud/selected/health_fraction",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "health_fraction",
+      "box": [
+        756,
+        1044,
+        1057,
+        1045
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "backend": "bar",
+      "color": "green"
+    },
+    {
+      "id": "scoreboard/left:row1/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "player_name",
+      "box": [
+        711,
+        312,
+        950,
+        335
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row2/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "player_name",
+      "box": [
+        711,
+        389,
+        950,
+        412
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row3/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "player_name",
+      "box": [
+        711,
+        466,
+        950,
+        489
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row4/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "player_name",
+      "box": [
+        711,
+        543,
+        950,
+        566
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row5/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "player_name",
+      "box": [
+        711,
+        620,
+        950,
+        643
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row1/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "player_name",
+      "box": [
+        1250,
+        312,
+        1489,
+        335
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row2/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "player_name",
+      "box": [
+        1250,
+        389,
+        1489,
+        412
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row3/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "player_name",
+      "box": [
+        1250,
+        466,
+        1489,
+        489
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row4/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "player_name",
+      "box": [
+        1250,
+        543,
+        1489,
+        566
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row5/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "player_name",
+      "box": [
+        1250,
+        620,
+        1489,
+        643
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "objective_panel/match/objective_timer",
+      "route": "objective_panel",
+      "slot_id": "match",
+      "field": "objective_timer",
+      "box": [
+        906,
+        3,
+        953,
+        23
+      ],
+      "reader": "number",
+      "parser": "timer",
+      "backend": "tesseract",
+      "entity": "match"
+    },
+    {
+      "id": "central_notice/match/notice",
+      "route": "central_notice",
+      "slot_id": "match",
+      "field": "notice",
+      "box": [
+        744,
+        66,
+        1238,
+        167
+      ],
+      "reader": "text",
+      "parser": "notice",
+      "backend": "vl",
+      "entity": "match"
+    }
+  ],
+  "panels": {
+    "scoreboard": {
+      "present_anchors": [
+        {
+          "name": "scoreboard-left-border",
+          "box": [
+            383,
+            260,
+            395,
+            286
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAaCAIAAAAMmCo2AAABIklEQVR4nK2STU7EMAyFnz1pyQxIs0EaFmy4BfdfcQuugGBQfyb2Q/lRRdEsisCtojZ5+fxiR56f8PKK0+PDWULfd/F4r6J77UMI5/c3kslSAACB6u72cIgxzmTyNEyW58l5nrNIiXh3E2P/4ZISpQtml2EYACjc3CyZAhg/p2maSObdeT/dfRzHZPkBUNI53G1RlDHpDsyTJCWTluUa7g1ZQ0R0lvrt2QOUBNmmFgOKDaGDdFcXluwkN5HCZS1zwEAjjU56qTR+kkT1u+VGguZ/LQwHWF6HORylQMpazHV4Lrhnw1kPEiGprw6lUm1lLzWnbKzT8bJBhC2kjv9FUl+d7g+kfbuSaJ0S0dKZ66TaL5F241aiqchImnlVSIlfk74Ao068zo1ktfsAAAAASUVORK5CYII=",
+          "maximum_error": 0.12
+        },
+        {
+          "name": "scoreboard-right-border",
+          "box": [
+            1526,
+            260,
+            1538,
+            286
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAaCAIAAAAMmCo2AAABB0lEQVR4nK2STU7DMBSE500c9QJIkdix4gDcCyQOkbMisWCBWsVp86Z6TugPTWgWjLyI7NG8z+PYw/OLmfWVScrbr7zb4vPj8al5f31rmqbbfbdtSxQZwwSg2mxwI7r8dve3SSUgwooWTYMPSxlm5u6U6xS2pOQeTPNjLsF1L4kxbI0J90TFPK8Qt6dIVQWRxJ7YS1nIU+N/KzFZqisiyjAkluFUgnWx1JlnGrlU9Dlp0AGOpAQ4RGAEYKLDeym7+kWmy3hK8tBVEZJSSsMwvSnL1szfYjb9YcEkWXk6AoJ5kIXcUEd9pyTMMvGC6froUNb4cda6xovvhwkOG2/kUF1OVyf9n+kI7iGLTPb0HWoAAAAASUVORK5CYII=",
+          "maximum_error": 0.12
+        }
+      ],
+      "not_present_means_absent": true
+    },
+    "objective_panel": {
+      "present_anchors": [
+        {
+          "name": "objective-panel-border",
+          "box": [
+            787,
+            1,
+            796,
+            34
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAhCAIAAACEDBYcAAABUElEQVR4nIVS0UoDMRCcSdL24BQpFfRJn/wJv0Lw/x8FBR8KVUR62ZHdtLFarAsXkpvNzsxm+fhwz+FcEmqSlC0BKPKVtzdnT69vJJhJ0rTCPjgr2E79BGjRsTJclItxOY7jh/w86cpXBgZAESYHnRiINBQDt5XbCYZZ/H0HkOKOf1ZrNTNU38t8pe0xwgBNUT8yRCd0Ty26vB6eS0sUG8zQwdi7/78incBK0+budpTNn3YYvLMpRX9bWOMz+63Q9ppLAsiSmcVcq1tOIFX/0yKJSE5ppGjeIjR/gUWHesgfJfrZtZi5Dwsmdn/HoVaz645K1lzjEOs1G8adv8T+Sn0ycqg7xXfyjZwl3By/fpHAFBPeOnCAOvajToqMaEjJPpX7S77ZRkrMWc5/yuH13fj84rO8mGOxKFaHqDmTVFaXl8Mw32w26/X0uZnOlt8UXxVD3J212DWYAAAAAElFTkSuQmCC",
+          "maximum_error": 0.12
+        },
+        {
+          "name": "objective-panel-border-right",
+          "box": [
+            1122,
+            1,
+            1131,
+            34
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAhCAIAAACEDBYcAAABJ0lEQVR4nJ1S0U7DMAz0OVnVraJbkSbxB3wAn8ILr3z/tEpogm1ZbaMkbRnQIuAeIieXs8+J8fz0SANYAxHBDgDKRUBR342ct7iW5SGEcLMECNXIUeIIr2TkmHxz/yCdZMoljnm/3+1EX3wIQVV7WeKKYigBu3Cfa3BESqQLVbZ8+RvA8IB80EgLkLLP64jIX2+ypQ4xgTPnzXRWV8jXnGz9I/if6pl00dgVzBDFhkkdoi+z6HOkcwIxo2SQr31aAg2xN5OhMQI4nXLUaNrMgf/J+c896K91Ijq+C3MM3J/r5ZmKJ2DkZieAiAlOpHc7q2OGZ1LET4mjnQJyBobM18s+Hbrk7VLXtV9Q27Z2dtt6ddts+xlcVdXxdNK383q9VtJNs6lWy3febpMtns0YgAAAAABJRU5ErkJggg==",
+          "maximum_error": 0.12
+        }
+      ],
+      "not_present_means_absent": true
+    }
+  },
+  "thresholds": {
+    "number": 0.85
+  },
+  "thresholds_frozen": false,
+  "capabilities": {
+    "families": [
+      "number",
+      "text",
+      "bar",
+      "presence"
+    ],
+    "field_groups": [
+      "number:clock",
+      "number:gold",
+      "number:integer",
+      "number:kda",
+      "number:level",
+      "number:health",
+      "number:timer",
+      "text:name",
+      "text:notice",
+      "bar",
+      "absence",
+      "english_text",
+      "korean_text"
+    ],
+    "cases": [
+      "hp_changes",
+      "korean_names",
+      "english_names",
+      "hidden_panels",
+      "overlays",
+      "pauses",
+      "rewinds"
+    ]
+  },
+  "deferred": {
+    "icons": "portrait/item/spell matching deferred",
+    "ability_ranks": "deferred",
+    "ability_cooldowns": "deferred",
+    "minimap": "tracking not validated",
+    "gameplay": "event experiments only",
+    "audio": "ASR experiment only",
+    "objective_labels": "No persistent objective-name panel in the selected POV; visible objective notices use the VL notice reader"
+  },
+  "threshold_note": "Unfrozen Midbeast development candidate; no text self-confidence or deferred-icon gates. Freeze requires independently verified Midbeast development labels."
+}

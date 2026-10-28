@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from .core import CAPABILITIES, Store, atomic_json, digest, finite, uid, validate_question, consistent_review
+from .core import CAPABILITIES, Store, atomic_json, digest, finite, uid, validate_question, consistent_review, read_json
 
 
 def stamp(time):
@@ -35,9 +35,10 @@ def _question(capability, prompt, answer, answer_type, evidence, category="visua
 
 def construct(states, events, *, max_questions=60, issues=(), duration=None, resolver=None):
     candidates = defaultdict(list)
-    confirmed = [s for s in states if s["status"] == "confirmed" and s["entity"] != "unknown"
+    confirmed = [s for s in states if not s.get("experimental") and s["status"] == "confirmed" and s["entity"] != "unknown"
+                 and s.get("evidence_modality", "visual") == "visual"
                  and s.get("review_status") != "rejected"]
-    usable_events = [e for e in events if (e["confidence"] >= .75 or e.get("review_status") == "human-verified") and e.get("actor")
+    usable_events = [e for e in events if not e.get("experimental") and e.get("evidence_modality", "visual") == "visual" and (e["confidence"] >= .75 or e.get("review_status") == "human-verified") and e.get("actor")
                      and e["actor"] != "unknown" and e.get("review_status") != "rejected"]
 
     def add(question):
@@ -60,8 +61,8 @@ def construct(states, events, *, max_questions=60, issues=(), duration=None, res
 
     grouped = defaultdict(list)
     for state in confirmed:
-        grouped[state["entity"], state["field"]].append(state)
-    for (entity, field), sequence in grouped.items():
+        grouped[state["entity"], state["field"], state.get("playback_segment_id")].append(state)
+    for (entity, field, segment), sequence in grouped.items():
         sequence.sort(key=lambda s: s["time"])
         # Use separated observations; never turn sparse samples into continuous longevity.
         for first in sequence:
@@ -74,7 +75,7 @@ def construct(states, events, *, max_questions=60, issues=(), duration=None, res
                     f"What was the displayed {field.replace('_',' ')} of {entity} at {first_time} and {last_time}, respectively? "
                     "Report the two observations without assuming visibility between them.",
                     [first["value"], following["value"]], "sequence", [first, following]))
-            if field in {"kills", "deaths", "assists", "cs"} and finite(first["value"]) and finite(following["value"]):
+            if field in {"kills", "deaths", "assists", "cs"} and finite(first["value"]) and finite(following["value"]) and first.get("continuity_verified", True) and following.get("continuity_verified", True):
                 difference = following["value"] - first["value"]
                 if difference >= 0 and int(difference) == difference:
                     add(_question("cumulative_counting",
@@ -198,7 +199,7 @@ def generate_qa(store: Store, config, resolver=None):
     manifest = read_json(store.path("manifest.json"))
     questions = construct(store.rows("states"), store.effective(store.rows("events"), "events"),
                           max_questions=config.max_questions, issues=store.rows("issues"),
-                          duration=manifest["interval"][1], resolver=resolver)
+                          duration=manifest["interval"][1], resolver=resolver if config.mechanics else None)
     for q in questions:
         q["interval"][0] = max(q["interval"][0], manifest["interval"][0])
     store.write("questions", questions)
@@ -207,6 +208,11 @@ def generate_qa(store: Store, config, resolver=None):
                "counts": {c: counts[c] for c in CAPABILITIES},
                "shortfalls": {c: max(0, config.max_questions // len(CAPABILITIES)-counts[c]) for c in CAPABILITIES},
                "note": "Coverage shortfalls are retained; unsupported questions are not manufactured"}
+    if read_json(store.path("manifest.json")).get("schema_version", 1) >= 2:
+        summary["unsupported_capabilities"] = {
+            "episodic_retrieval": "Scene-event reader deferred; static inventory questions require explicit mechanics mode",
+            "event_linking": "Scene-event reader not validated", "trajectory_memory": "Minimap tracking not validated",
+            "recurring_behavior": "Scene-event reader not validated"}
     atomic_json(store.path("question_coverage.json"), summary)
     store.commit_stage("generate-qa", store.stage_key("generate-qa", config, ["states", "events", "issues"]), **summary)
     return summary

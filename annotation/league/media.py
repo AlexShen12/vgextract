@@ -100,23 +100,30 @@ def prepare(store: Store, config: Config, video: Path, start=0.0, end=None) -> d
     source = {"path": str(video), "sha256": file_hash(video), **info}
     manifest = {"schema_version": SCHEMA, "created_at": now(), "source": source,
                 "interval": [start, end], "patch": config.patch,
+                "intake_engine": config.intake_engine,
                 "model_revisions": {}, "editorial_masks": config.masks,
                 "editorial_policy": "Exclude intervals with obscuring/editorial outcome overlays; no audio or source sidecars in model input"}
     previous = store.path("manifest.json")
     if previous.exists():
         old = read_json(previous)
+        if old.get("schema_version", 1) < 2:
+            raise ValueError("Version-1 runs are read-only. Start a new run with --run-dir data/league_runs/midbeast-OLLZBe5-fg4-v2")
+        previous_runtime = store.path("intake_runtime.json")
+        if old.get("intake_engine", config.intake_engine) != config.intake_engine or (previous_runtime.exists() and read_json(previous_runtime).get("engine") != "hybrid-v1"):
+            raise ValueError("Earlier extraction engine is read-only; choose a new Midbeast run directory")
         if old["source"]["sha256"] != source["sha256"] or old["interval"] != [start, end]:
             raise ValueError("Run belongs to another source/interval; choose a new run directory")
         manifest = {**old, "source": source, "patch": config.patch, "editorial_masks": config.masks}
     atomic_json(store.path("config.json"), config.to_dict())
     atomic_json(store.path("manifest.json"), manifest)
     media = Media(store, config)
-    times = sorted(set(max(start, min(t, end - 1 / info["fps"])) for t in (30.0, 780.0, 1620.0)))
+    times = sorted(set(max(start, min(start + (end-start)*fraction, end - 1 / info["fps"])) for fraction in (.05, .45, .85)))
     previews = [media.frame(t, route) for t in times for route in config.routes]
     store.write("previews", previews)
     atomic_json(store.path("layout_validation.json"), {
         "source_geometry_valid": True, "preview_times": times,
         "model_preprocessing_validated": False,
+        "intake_profile_validated": False,
         "hud_legibility": "requires pilot inspection; geometry alone does not establish readability"})
     store.commit_stage("prepare", store.fingerprint(config), preview_count=len(previews))
     return manifest

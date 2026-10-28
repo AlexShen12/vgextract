@@ -1,0 +1,5 @@
+# CPU driver; vLLM and optional audio/tracking run in isolated environments.
+av==19.0.2
+numpy==2.2.6
+pillow==11.3.0
+huggingface-hub==0.36.2

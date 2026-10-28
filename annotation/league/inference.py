@@ -50,6 +50,8 @@ def pin_models(store: Store, config: Config, download=False, processors_only=Fal
     manifest = read_json(store.path("manifest.json"))
     pins = manifest.setdefault("model_revisions", {})
     for role, model in config.models.items():
+        if role != "thinking":
+            continue
         identity = {"id": model["id"], "requested_revision": model["revision"]}
         old = pins.get(role, {})
         if all(old.get(k) == v for k, v in identity.items()):
@@ -127,40 +129,9 @@ def preflight(store: Store, config: Config) -> dict:
 
 
 def processor_preview(store: Store, config: Config) -> dict:
-    """Download processor files only and audit the real source crops without GPU weights."""
-    from transformers import AutoProcessor
-    pins = pin_models(store, config, download=True, processors_only=True)
-    audits = []
-    for role in ("instruct", "thinking"):
-        processor = AutoProcessor.from_pretrained(pins[role]["snapshot"], local_files_only=True)
-        for route in (r for r in config.routes if r.model == role):
-            frames = [f for f in store.rows("previews") if f["route"] == route.name]
-            # Previews are separated source samples, represented as ordered images (not a continuous video).
-            for frame in frames:
-                _, audit = prepare_inputs(store, config, pins, processor,
-                    [{"role": "user", "content": "Inspect this fixed gameplay layout crop."}], [frame], route,
-                    store.path(f"processor-previews/{route.name}/{frame['id']}"))
-                audits.append(audit)
-            if route.name in {"selected_hud", "gameplay", "full_context"}:
-                from .media import Media
-                from .prompts import observer_prompt
-                media = Media(store, config)
-                lower, upper = media.manifest["interval"]
-                begin = max(lower, min(780, upper-config.window_seconds))
-                end = min(upper, begin+config.window_seconds)
-                frames = media.frames(begin, end, config.fps, route)
-                if role == "instruct":
-                    frames = frames[:config.hud_frames_per_request]
-                _, audit = prepare_inputs(store, config, pins, processor,
-                    [{"role": "user", "content": observer_prompt(route, frames, config.fps)}], frames, route,
-                    store.path(f"processor-previews/{route.name}/sequence"), fps=config.fps)
-                audits.append(audit)
-    validation = read_json(store.path("layout_validation.json"))
-    validation.update(model_preprocessing_validated=True, processor_preview_count=len(audits),
-                      preprocessing_key=store.fingerprint(config),
-                      hud_legibility="Inspect actual resized previews; no semantic inference or human verification performed")
-    atomic_json(store.path("layout_validation.json"), validation)
-    return {"audits": len(audits), "models": pins, "model_weights_loaded": False}
+    """Preview the actual calibrated intake regions without loading Qwen."""
+    from .intake import preview
+    return preview(store, config)
 
 
 def prepare_inputs(store, config, pins, processor, messages, frames, route, task_dir, *, fps=1.0, visual_limit=None):
@@ -286,8 +257,12 @@ class QwenRunner:
         try:
             inputs = inputs.to("cuda:0")
             with torch.inference_mode():
+                # Override the checkpoint's sampling defaults when using greedy
+                # Instruct decoding; otherwise Transformers warns about ignored flags.
+                sampling = route.model == "thinking"
                 generated = self.model.generate(**inputs, max_new_tokens=maximum,
-                    do_sample=route.model == "thinking", temperature=1.0, top_p=0.95, top_k=20)
+                    do_sample=sampling, temperature=1.0,
+                    top_p=0.95 if sampling else 1.0, top_k=20 if sampling else 50)
             completion = generated[0, input_tokens:]
             raw = self.processor.decode(completion, skip_special_tokens=True)
             eos = self.model.generation_config.eos_token_id
