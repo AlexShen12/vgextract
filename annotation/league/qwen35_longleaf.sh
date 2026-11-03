@@ -1,7 +1,7 @@
 #!/bin/bash
 # Reuse the established driver/VL installations. All writes stay under the work root.
 set -euo pipefail
-cd "$(dirname "${BASH_SOURCE[0]}")/../.."
+cd "${SLURM_SUBMIT_DIR:-$(dirname "${BASH_SOURCE[0]}")/../..}"
 source annotation/league/longleaf_paths.sh
 league_validation="${LEAGUE_VALIDATION_ROOT:-${LEAGUE_WORK_ROOT}/league-midbeast-validation}"
 league_driver="${LEAGUE_QWEN35_DRIVER:-${league_validation}/env-driver/bin/python}"
