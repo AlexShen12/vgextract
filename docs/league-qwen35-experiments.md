@@ -102,15 +102,11 @@ The suite files use the existing Longleaf run
 (`/work/users/a/l/alshen/league-midbeast-validation/run` by default), labels, and
 asset cache. Keep the same review server command and `/qwen35-labels` URL; the
 batch files and verifier still point to the same study. The run allows one batch
-writer at a time. Submit suites individually after the previous job finishes,
-or queue them with Slurm dependencies to keep separate job IDs and logs:
-
-```bash
-hp_job=$(sbatch --parsable annotation/league/slurm_qwen35_hp_vlm.sl)
-scene_job=$(sbatch --parsable --dependency=afterany:"${hp_job%%;*}" annotation/league/slurm_qwen35_scene_identity.sl)
-ability_job=$(sbatch --parsable --dependency=afterany:"${scene_job%%;*}" annotation/league/slurm_qwen35_ability_alignment.sl)
-sbatch --dependency=afterany:"${ability_job%%;*}" annotation/league/slurm_qwen35_cooldown_identity.sl
-```
+writer per suite, so you can submit all four files above together. Slurm schedules
+each job on its own L40S. They share the source crops and label files, and each suite
+writes its own report, evidence, and worker logs under `experiments/qwen35/`.
+Use `/qwen35` to select the suite's report. The aggregate job and commands that
+initialize, prepare, or freeze the study still need the run to themselves.
 
 The aggregate `sbatch annotation/league/slurm_qwen35.sl` still runs all four
 sequentially in one job and still accepts `[suite] [mode]`.
@@ -128,8 +124,8 @@ development inputs only; `evaluate` still requires frozen, verified labels.
 Overrides: `LEAGUE_QWEN35_DRIVER`, `LEAGUE_QWEN35_PYTHON`, `LEAGUE_QWEN35_RUN`,
 `LEAGUE_QWEN35_ASSETS`, `LEAGUE_LABELS`, `LEAGUE_ICON_REFERENCES`, and the existing
 Slurm resource variables. All installer/model/log/compiler/temp writes use
-`/work/users/a/l/alshen` through `longleaf_paths.sh`. GPU jobs are sequential;
-cache weights on a login node before submitting offline jobs.
+`/work/users/a/l/alshen` through `longleaf_paths.sh`. Models load sequentially
+within each job; cache weights on a login node before submitting offline jobs.
 
 ## Experiment behavior
 

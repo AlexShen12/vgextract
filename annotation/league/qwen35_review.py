@@ -58,8 +58,13 @@ def install_qwen35_routes(app,store):
         if not directory:raise HTTPException(404,'Study not found')
         data=read_json(directory/'study.json')
         # This endpoint never reads prediction files.
-        audits=[read_json(p) for p in (directory/'source').glob('*/audit.json')]
-        data['source_frames']=[f for a in audits if a['recipe']['fps']==4 for f in a['frames']]
+        clips={c['id']:{k:c[k] for k in ('id','start','end','split')} for c in data['clips']}
+        audits={}
+        for path in sorted((directory/'source').glob('*/audit.json'),key=lambda p:(p.stat().st_mtime_ns,p)):
+            audit=read_json(path);recipe=audit['recipe'];clip=recipe.get('clip',{})
+            if recipe['fps']==4 and clips.get(clip.get('id'))==clip:
+                audits[clip['id']]=audit['frames']
+        data['source_frames']=[f for clip_id in clips for f in audits.get(clip_id,[])]
         return data
 
     @app.post('/api/qwen35/labels/{study}/{clip_id}')

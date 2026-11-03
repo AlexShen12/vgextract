@@ -230,6 +230,72 @@ def test_all_suites_run_with_injected_gpu_and_no_production_writes(fixture_study
     assert (Path(report['root'])/'report.md').exists()
 
 
+def test_parallel_suites_keep_separate_reports_and_share_the_verifier(fixture_study):
+    from concurrent.futures import ThreadPoolExecutor
+    from fastapi.testclient import TestClient
+    from annotation.league.__main__ import batch_writer
+    from annotation.league.review import create_app
+
+    store,config,directory,study,frames=fixture_study
+    # Reuse prepared source images so the concurrent jobs only write their own outputs.
+    inputs=frames(store,config,study,study['clips'][0],directory)
+    def run(suite):
+        with batch_writer(store,suite):
+            return experiment_qwen35(store,config,suite,draft=True,runner_factory=FakeRunner)
+    with patch('annotation.league.qwen35_study.source_frames',return_value=inputs):
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            reports=list(pool.map(run,('hp-vlm','scene-identity')))
+    assert len({r['root'] for r in reports})==2
+    for report in reports:
+        root=Path(report['root'])
+        assert read_json(root/'report.json')['suites']==report['suites']
+        assert read_json(root/'label-directory.json')['path']==str(directory)
+    client=TestClient(create_app(store))
+    assert len(client.get('/api/qwen35/experiments').json())==2
+    assert len(client.get('/api/qwen35/studies').json())==1
+
+
+def test_suite_writer_lock_rejects_duplicate_and_run_writers(tmp_path):
+    from annotation.league.__main__ import batch_writer, parallel_suite, parser
+
+    store=Store(tmp_path)
+    args=['experiment','--suite','hp-vlm']
+    assert parallel_suite(parser().parse_args(args+['--draft','--infer']))=='hp-vlm'
+    assert parallel_suite(parser().parse_args(args+['--prepare-only'])) is None
+    with batch_writer(store,'hp-vlm'), batch_writer(store,'ability-alignment'):
+        with pytest.raises(RuntimeError,match='hp-vlm suite'), batch_writer(store,'hp-vlm'):
+            pytest.fail('duplicate suite acquired lock')
+        with pytest.raises(RuntimeError,match='pipeline writer'), batch_writer(store,None):
+            pytest.fail('run writer acquired lock')
+    with batch_writer(store,None):
+        with pytest.raises(RuntimeError,match='pipeline writer'), batch_writer(store,'hp-vlm'):
+            pytest.fail('suite acquired lock during a run-wide operation')
+
+
+def test_shared_source_is_prepared_once(fixture_study):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+    from annotation.league.qwen35_study import source_frames
+
+    store,config,directory,study,_=fixture_study
+    entered,release=Event(),Event()
+    def prepare(store,config,study,clip,root,recipe,*,dense):
+        entered.set()
+        assert release.wait(5)
+        frames=[{'files':{},'id':'prepared'}]
+        atomic_json(root/'audit.json',{'recipe':recipe,'frames':frames})
+        return frames
+    args=(store,config,study,study['clips'][0],directory)
+    with patch('annotation.league.qwen35_study.prepare_source_frames',side_effect=prepare) as build:
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            first=pool.submit(source_frames,*args)
+            assert entered.wait(5)
+            second=pool.submit(source_frames,*args)
+            release.set()
+            assert first.result(5)==second.result(5)
+    assert build.call_count==1
+
+
 def test_interrupted_gpu_preserves_partial_results(fixture_study):
     store,config,directory,study,frames=fixture_study
     with patch('annotation.league.qwen35_study.source_frames',side_effect=frames):

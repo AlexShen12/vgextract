@@ -77,7 +77,8 @@ class Requests:
             python = os.environ.get('LEAGUE_QWEN35_PYTHON')
             if not python:
                 raise ValueError('Set LEAGUE_QWEN35_PYTHON to the separate qualified Qwen3.5 environment')
-            self.runner = LocalVLRunner(store, python, config.asset_cache, role=role, image_limit=8)
+            self.runner = LocalVLRunner(store, python, config.asset_cache, role=role, image_limit=8,
+                                        log_dir=self.root/'workers')
             self.runtime = cache_runtime(self.runner.identity)
         else:
             candidates = [runtime_file] + sorted(store.path('experiments/qwen35').glob('*/runtimes/'+role+'.json'),
@@ -120,7 +121,6 @@ class Requests:
                 response = self.runner.complete([{'role': 'user', 'content': content}], schema,
                                                 max_tokens=max_tokens, timeout=600)
                 atomic_json(response_path, response)
-                atomic_json(shared, response)
             else:
                 raise ValueError('missing_cached_response; use --infer for GPU requests')
             if response.get('finish_reason') != 'stop':
@@ -129,6 +129,10 @@ class Requests:
             validate_shape(value, schema)
             if validate:
                 validate(value)
+            if not shared.exists():
+                # Concurrent suites may publish the same content key. Only validated
+                # responses enter this shared cache, and each publication is atomic.
+                atomic_json(shared, response)
             atomic_json(directory/'parsed.json', value)
             record = {'id': key, 'task': task, 'role': self.role, 'status': 'ok', 'cache_reused': cached,
                       'wall_seconds': response.get('wall_seconds', time.monotonic()-started),

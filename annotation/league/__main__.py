@@ -8,12 +8,42 @@ import logging
 import os
 import sys
 import time
+from contextlib import ExitStack, contextmanager
 from pathlib import Path
 
 from .core import Config, DEFAULT_RUN, StopRequested, Store, atomic_json, now, read_json, consistent_review
 from .knowledge import JsonCache, Patch, Resolver
 
 ROOT = Path(__file__).resolve().parents[2]
+QWEN35_SUITES = ("hp-vlm", "scene-identity", "ability-alignment", "cooldown-identity")
+
+
+def parallel_suite(args):
+    if (args.command == "experiment" and args.suite in QWEN35_SUITES
+            and not (args.initialize or args.prepare_only or args.freeze)
+            and args.mechanics is None and args.evaluation is None):
+        return args.suite
+    return None
+
+
+@contextmanager
+def batch_writer(store, suite):
+    """Allow separate Qwen3.5 suites to share the run without sharing a writer."""
+    with ExitStack() as stack:
+        lock = stack.enter_context(store.path(".writer.lock").open("a+"))
+        try:
+            fcntl.flock(lock, (fcntl.LOCK_SH if suite else fcntl.LOCK_EX) | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise RuntimeError("Another pipeline writer owns this run directory") from exc
+        if suite:
+            path = store.path(f"experiments/qwen35/.locks/{suite}.lock")
+            path.parent.mkdir(parents=True, exist_ok=True)
+            lock = stack.enter_context(path.open("a"))
+            try:
+                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError as exc:
+                raise RuntimeError(f"Another writer is already running the {suite} suite in this run directory") from exc
+        yield
 
 
 def fresh(store, name, key):
@@ -100,7 +130,7 @@ def parser():
     s.add_argument("--solver", action="store_true")
     s.add_argument("--tracking", action="store_true", help="Also cache the gated SAM 3.1 tracking checkpoint")
     s = sub.add_parser("experiment")
-    s.add_argument("--suite", choices=("crops", "events", "audio", "actions", "captions", "all", "hp-vlm", "scene-identity", "ability-alignment", "cooldown-identity", "qwen35"), required=True)
+    s.add_argument("--suite", choices=("crops", "events", "audio", "actions", "captions", "all", *QWEN35_SUITES, "qwen35"), required=True)
     s.add_argument("--labels", type=Path, help="Directory containing the independent experiment label manifests")
     s.add_argument("--initialize", action="store_true", help="Save source evidence and unverified label templates without loading GPU models")
     s.add_argument("--draft", action="store_true", help="Diagnostic predictions only; never release acceptance")
@@ -173,12 +203,8 @@ def main(argv=None):
             import uvicorn
             uvicorn.run(create_app(store), host="127.0.0.1", port=args.port)
             return 0
-        # Do not allow two batch writers to reuse the same run directory concurrently.
-        with store.path(".writer.lock").open("a") as lock:
-            try:
-                fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-            except BlockingIOError as exc:
-                raise RuntimeError("Another pipeline writer owns this run directory") from exc
+        suite_writer = parallel_suite(args)
+        with batch_writer(store, suite_writer):
             started = time.monotonic()
             command = args.command
             result = {}
@@ -225,7 +251,7 @@ def main(argv=None):
                 from .qwen35_references import cache_references
                 result = cache_references(config.asset_cache, args.reference_version, offline=args.offline)
             if command == "experiment":
-                if args.suite in {"hp-vlm", "scene-identity", "ability-alignment", "cooldown-identity", "qwen35"}:
+                if args.suite in (*QWEN35_SUITES, "qwen35"):
                     from .qwen35_study import experiment_qwen35
                     if args.assistance:
                         raise ValueError("Qwen3.5 studies do not accept identity assistance")
@@ -303,7 +329,8 @@ def main(argv=None):
                     atomic_json(store.path("timings/run.json"), {"wall_seconds": time.monotonic()-started,
                                 "completed_at": now(), "command": command})
                 result = perform_report(store, config, getattr(args, "gpu_hour_rate", None))
-            atomic_json(store.path(f"timings/{command}.json"), {"wall_seconds": time.monotonic()-started,
+            timing_key = f"qwen35/{suite_writer}" if suite_writer else command
+            atomic_json(store.path(f"timings/{timing_key}.json"), {"wall_seconds": time.monotonic()-started,
                        "completed_at": now(), "command": command})
             print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
             return 2 if ((command == "experiment" and result.get("experimental", True)) or

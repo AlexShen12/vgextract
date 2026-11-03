@@ -3,7 +3,9 @@ from __future__ import annotations
 
 from collections import defaultdict
 import copy
+import fcntl
 import json
+import time
 from pathlib import Path
 
 from .core import atomic_json, digest, implementation_hash, read_json, read_rows, uid, write_rows
@@ -82,23 +84,43 @@ def initialize(store, config, directory, profile):
 
 
 def source_frames(store,config,study,clip,directory,*,dense=False):
-    from PIL import Image, ImageDraw, ImageOps
-    import numpy as np
-    from .readers import measure_bar, parse_text
-    from .numeric_reader import numeric_preprocess
-    from .readers import tesseract
-    profile=study['profile'];anchors=load_profile(profile['anchor_profile'])
+    profile=study['profile']
     fps=POLICY['hud_fps'] if dense else POLICY['scene_fps']
     recipe={'source':study['source_sha256'],'clip':{k:clip[k] for k in ('id','start','end','split')},
             'profile':profile,'masks':config.masks,'fps':fps,'policy':POLICY,
             'implementation':implementation_hash(COMPONENTS+['playback.py','intake.py'])}
     root=directory/'source'/digest(recipe)
     audit_path=root/'audit.json'
-    if audit_path.exists():
+    def cached_frames():
+        if not audit_path.exists():return None
         audit=read_json(audit_path)
         if all(Path(p).is_file() and file_hash(Path(p))==sha for f in audit['frames'] for p,sha in f['files'].items()):
             return audit['frames']
+        return None
+    frames=cached_frames()
+    if frames is not None:return frames
     root.mkdir(parents=True,exist_ok=True)
+    # The suites share crops. Only one process decodes or repairs a given clip recipe.
+    with (root/'.prepare.lock').open('a') as lock:
+        while True:
+            store.check_stop()
+            try:
+                fcntl.flock(lock,fcntl.LOCK_EX | fcntl.LOCK_NB)
+                break
+            except BlockingIOError:
+                time.sleep(.25)
+        frames=cached_frames()
+        if frames is not None:return frames
+        return prepare_source_frames(store,config,study,clip,root,recipe,dense=dense)
+
+
+def prepare_source_frames(store,config,study,clip,root,recipe,*,dense):
+    from PIL import Image, ImageDraw, ImageOps
+    import numpy as np
+    from .readers import measure_bar, parse_text, tesseract
+    from .numeric_reader import numeric_preprocess
+    profile=study['profile'];anchors=load_profile(profile['anchor_profile'])
+    fps=recipe['fps']
     tracker=PlaybackTracker(study['source_sha256'],fps,scene_box=profile['scene_box'],masks=config.masks)
     owner=0;prior_portrait=None;last_clock=None;result=[];seen_hp=set()
     for index,(pts,image) in enumerate(sampled_frames(study['source']['path'],clip['start'],clip['end'],fps,store.check_stop)):
@@ -144,7 +166,7 @@ def source_frames(store,config,study,clip,directory,*,dense=False):
         result.append(f)
     expected=round((clip['end']-clip['start'])*fps)
     if len(result)!=expected:raise ValueError(f'Incomplete source decode: {len(result)}/{expected}')
-    atomic_json(audit_path,{'recipe':recipe,'frames':result})
+    atomic_json(root/'audit.json',{'recipe':recipe,'frames':result})
     return result
 
 
@@ -218,14 +240,15 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
             raise ValueError('Frozen development choices/labels changed')
         for split in ('development','held_out'):validate_labels(study,split,suites)
     selected=[c for c in study['clips'] if not draft or c['split']=='development']
-    root=store.path('experiments/qwen35')/digest(recipe);root.mkdir(parents=True,exist_ok=True)
+    mode='preflight' if preflight else 'draft' if draft else 'evaluate'
+    root_key=digest({'choices':recipe,'suite':suite,'mode':mode,'study_directory':str(directory.resolve())})
+    root=store.path('experiments/qwen35')/root_key;root.mkdir(parents=True,exist_ok=True)
     atomic_json(root/'study-snapshot.json',study);atomic_json(root/'recipe.json',recipe)
     atomic_json(root/'label-directory.json',{'path':str(directory.resolve())})
     report={'experimental':True,'production_evidence_modified':False,'root':str(root),'status':'running',
             'suites':list(suites),'inference_splits':sorted({c['split'] for c in selected}),'reference_status':'available' if references else 'missing',
             'quality_metrics':None,'acceptance':False,'requests':[],'results':{},'missing_cases':{}}
     atomic_json(root/'report.json',report)
-    import time
     started=time.monotonic()
     all_frames={};all_predictions={};requests=None
     try:

@@ -233,11 +233,12 @@ def worker_signature(python, cache, role="intake"):
 
 
 class LocalVLRunner:
-    def __init__(self, store, python, cache, role="intake", signature=None, *, image_limit=4):
+    def __init__(self, store, python, cache, role="intake", signature=None, *, image_limit=4, log_dir=None):
         if type(image_limit) is not int or not 1 <= image_limit <= 8:
             raise ValueError("Local VL image limit must be between one and eight")
         self.image_limit = image_limit
         self.store, self.python, self.role = store, python, role
+        self.log_dir = Path(log_dir) if log_dir is not None else store.path("workers")
         self.cache = cache
         self.root, self.identity = (
             worker_signature(python, cache, role) if signature is None else signature
@@ -312,8 +313,8 @@ class LocalVLRunner:
             raise ModelUnavailable(self.failure)
         if self.process is not None:
             return
-        self.store.path("workers").mkdir(parents=True, exist_ok=True)
-        self.log = self.store.path(f"workers/{self.role}-vllm.log").open("a")
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+        self.log = (self.log_dir/f"{self.role}-vllm.log").open("a")
         dtype = self.identity["checkpoint"]["specification"]["dtype"]
         command = [
             self.python,
