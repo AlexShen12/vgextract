@@ -82,6 +82,35 @@ bash annotation/league/submit_qwen35_longleaf.sh preflight
 LEAGUE_SUITE=hp-vlm bash annotation/league/submit_qwen35_longleaf.sh draft
 ```
 
+Direct `sbatch` submission uses `annotation/league/slurm_qwen35.sl`. Run these
+commands from the repository root on Longleaf:
+
+```bash
+# Run all four experiments sequentially, in development/draft mode:
+sbatch annotation/league/slurm_qwen35.sl
+# Or select an experiment:
+sbatch annotation/league/slurm_qwen35.sl hp-vlm
+sbatch annotation/league/slurm_qwen35.sl scene-identity
+sbatch annotation/league/slurm_qwen35.sl ability-alignment
+sbatch annotation/league/slurm_qwen35.sl cooldown-identity
+
+# Optional second argument: preflight or frozen evaluation:
+sbatch annotation/league/slurm_qwen35.sl qwen35 preflight
+sbatch annotation/league/slurm_qwen35.sl hp-vlm evaluate
+# Override standard Slurm resources before the script name:
+sbatch --time=12:00:00 annotation/league/slurm_qwen35.sl scene-identity
+```
+
+The defaults request one L40S, eight CPUs, 96 GB host memory and four hours.
+Direct-submission logs go to `/work/users/a/l/alshen/league_qwen35-<jobid>.out`
+and `.err`; `--output`/`--error` override them. The existing submission helper
+now submits the same `.sl` file and retains its configured `league_logs/` paths.
+The suite and mode can also be set with `LEAGUE_SUITE` and
+`LEAGUE_QWEN35_MODE`; positional arguments take precedence. Slurm's pre-timeout
+TERM signal is forwarded to Python so completed requests can be preserved.
+Initialize labels and cache models/references before submission. Draft jobs use
+development inputs only; `evaluate` still requires frozen, verified labels.
+
 Overrides: `LEAGUE_QWEN35_DRIVER`, `LEAGUE_QWEN35_PYTHON`, `LEAGUE_QWEN35_RUN`,
 `LEAGUE_QWEN35_ASSETS`, `LEAGUE_LABELS`, `LEAGUE_ICON_REFERENCES`, and the existing
 Slurm resource variables. All installer/model/log/compiler/temp writes use

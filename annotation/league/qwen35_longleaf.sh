@@ -33,6 +33,12 @@ case "${mode}" in
 esac
 # Experimental CLI commands conventionally return 2, even on successful completion.
 status=0
-"${league_driver}" -B -m annotation.league "${args[@]}" || status=$?
+child=""
+stop_child() { if [[ -n "${child}" ]]; then kill -TERM "${child}" 2>/dev/null || true; fi; }
+trap stop_child TERM INT
+"${league_driver}" -B -m annotation.league "${args[@]}" &
+child=$!
+wait "${child}" || status=$?
+if kill -0 "${child}" 2>/dev/null; then wait "${child}" || status=$?; fi
 if [[ "${status}" == 2 ]]; then exit 0; fi
 exit "${status}"

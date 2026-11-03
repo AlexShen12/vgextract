@@ -226,6 +226,83 @@ with open(os.environ["CALL_LOG"], "a") as stream:
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.calls()[0][0], "sbatch")
 
+    def test_qwen35_spooled_batch_dispatches_each_suite_and_preserves_failures(self):
+        import shutil
+        spool = self.root/"slurm_script"
+        shutil.copyfile(ROOT/"annotation/league/slurm_qwen35.sl", spool)
+        self.env["LEAGUE_QWEN35_DRIVER"] = str(self.stub)
+        self.stub.write_text(self.stub.read_text() + '\nsys.exit(int(os.environ.get("EXPERIMENT_STATUS", "0")))\n')
+        for suite in ("hp-vlm", "scene-identity", "ability-alignment", "cooldown-identity", "qwen35"):
+            self.env["EXPERIMENT_STATUS"] = "2"
+            result = subprocess.run(["/bin/bash", str(spool), suite], cwd=self.root,
+                                    env=self.env, text=True, capture_output=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            call = self.calls()[-1]
+            self.assertEqual(call[call.index("--suite")+1], suite)
+            self.assertEqual(call[-2:], ["--draft", "--infer"])
+        self.env["EXPERIMENT_STATUS"] = "1"
+        result = subprocess.run(["/bin/bash", str(spool), "hp-vlm", "preflight"],
+                                cwd=self.root, env=self.env, text=True, capture_output=True, timeout=10)
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(self.calls()[-1][-1], "--preflight-only")
+
+    def test_qwen35_batch_defaults_and_frozen_evaluation(self):
+        self.env["LEAGUE_QWEN35_DRIVER"] = str(self.stub)
+        result = self.run_script("slurm_qwen35.sl")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls()[-1][-4:], ["--suite", "qwen35", "--draft", "--infer"])
+        self.env.update(LEAGUE_SUITE="hp-vlm", LEAGUE_QWEN35_MODE="evaluate")
+        result = self.run_script("slurm_qwen35.sl")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls()[-1][-3:], ["--suite", "hp-vlm", "--infer"])
+
+    def test_qwen35_submit_targets_sl_file_with_suite_and_mode(self):
+        self.env.pop("PYTHONHOME", None)
+        self.env.pop("PYTHONPATH", None)
+        self.env["LEAGUE_SUITE"] = "ability-alignment"
+        self.executable(self.bin/"sbatch", f"#!{sys.executable}\n" + '''
+import json, os, sys
+with open(os.environ["CALL_LOG"], "a") as stream:
+    stream.write(json.dumps(sys.argv[1:]) + "\\n")
+''')
+        result = self.run_script("submit_qwen35_longleaf.sh")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls()[-1][-3:],
+                         ["annotation/league/slurm_qwen35.sl", "ability-alignment", "preflight"])
+
+    def test_qwen35_batch_forwards_slurm_term_to_python(self):
+        import signal
+        import time
+        self.env["LEAGUE_QWEN35_DRIVER"] = str(self.stub)
+        self.env["READY_FILE"] = str(self.root/"ready")
+        self.stub.write_text(self.stub.read_text() + '''
+import signal, time
+def stop(signum, frame):
+    with open(os.environ["CALL_LOG"], "a") as log:
+        log.write(json.dumps(["checkpoint-signal", signum]) + "\\n")
+    sys.exit(130)
+signal.signal(signal.SIGTERM, stop)
+pathlib.Path(os.environ["READY_FILE"]).touch()
+while True:
+    time.sleep(.05)
+''')
+        process = subprocess.Popen(["/bin/bash", str(ROOT/"annotation/league/slurm_qwen35.sl")],
+                                   cwd=self.root, env=self.env, stdout=subprocess.PIPE,
+                                   stderr=subprocess.PIPE, text=True, start_new_session=True)
+        try:
+            deadline = time.monotonic()+5
+            while not Path(self.env["READY_FILE"]).exists() and time.monotonic()<deadline:
+                time.sleep(.01)
+            self.assertTrue(Path(self.env["READY_FILE"]).exists())
+            process.send_signal(signal.SIGTERM)
+            process.communicate(timeout=5)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertIn(["checkpoint-signal", signal.SIGTERM], self.calls())
+        finally:
+            if process.poll() is None:
+                os.killpg(process.pid, signal.SIGKILL)
+                process.communicate(timeout=5)
+
 
 if __name__ == "__main__":
     unittest.main()
