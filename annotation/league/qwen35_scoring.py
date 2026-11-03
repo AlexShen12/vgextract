@@ -183,7 +183,13 @@ def score_study(study,selected,frames,predictions,request_records,*,draft):
             refs={category:[dict(r,clip_id=c['id']) for c in clips for r in c.get(category,[])] for category in CATEGORIES[suite]}
             out={};subset=[r for r in rows if r['split']==split]
             if suite=='hp-vlm':
-                for role in sorted({r['role'] for r in subset}):out[role]=hp_metrics(refs['hp'],[r for r in subset if r['role']==role])
+                for role in sorted({r['role'] for r in subset}):
+                    role_rows=[r for r in subset if r['role']==role]
+                    eligible_ids={r['frame_id'] for r in role_rows}
+                    eligible_refs=[r for r in refs['hp'] if r['frame_id'] in eligible_ids]
+                    out[role]=hp_metrics(eligible_refs,role_rows)
+                    out[role]['input_inventory']={'unique_crops':len(eligible_ids),'labeled_eligible_crops':len(eligible_refs),
+                                                  'excluded_duplicate_or_unsampled_references':len(refs['hp'])-len(eligible_refs)}
                 qualifying=[role for role,m in out.items() if m['retry_policy_bar']['qualifies']]
                 speeds={role:resources([r for r in request_records if r['role']==role and r['task'].startswith('hp-')]) for role in out}
                 out['recommendation']=min(qualifying,key=lambda r:speeds[r]['mean_valid_request_latency_seconds'] or float('inf')) if qualifying else 'no qualifying candidate'

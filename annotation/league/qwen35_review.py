@@ -9,6 +9,8 @@ from .qwen35_common import box_ok
 
 def studies(store):
     roots={store.path('benchmarks/qwen35').resolve()}
+    for record in store.path('benchmarks/qwen35-studies').glob('*.json'):
+        roots.add(Path(read_json(record)['path']).resolve())
     for p in store.path('experiments/qwen35').glob('*/label-directory.json'):
         roots.add(Path(read_json(p)['path']).resolve())
     return {digest(str(p)):p for p in roots if (p/'study.json').exists()}

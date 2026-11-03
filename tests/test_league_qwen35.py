@@ -292,3 +292,13 @@ def test_corrections_change_derived_recipe_but_preserve_source_observation(tmp_p
     out=corrected(directory,'detections','hybrid',[raw])
     assert out[0]['name']=='beta' and raw['name']=='alpha'
     assert corrected(directory,'detections','direct',[raw])[0]['name']=='alpha'
+
+
+def test_custom_study_is_registered_for_source_only_labeling(fixture_study):
+    from annotation.league.qwen35_review import studies
+    store,config,directory,study,frames=fixture_study
+    custom=store.root.parent/'custom-labels';custom.mkdir();atomic_json(custom/'study.json',study)
+    with patch('annotation.league.qwen35_study.source_frames',side_effect=frames):
+        report=experiment_qwen35(store,config,'qwen35',labels=custom,prepare_only=True)
+    assert report['status']=='source_prepared'
+    assert custom.resolve() in studies(store).values()

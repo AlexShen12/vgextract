@@ -191,6 +191,8 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
     from .action_state import transitions
     from .qwen35_scoring import score_study, validate_labels, write_report
     directory=study_directory(store,labels);directory.mkdir(parents=True,exist_ok=True)
+    atomic_json(store.path('benchmarks/qwen35-studies')/(digest(str(directory.resolve()))+'.json'),
+                {'path':str(directory.resolve())})
     profile=load_profile(action_profile)
     # Explicit development geometry, shown in the source-only labeling viewer.
     profile={**profile,'scoreboard_portrait_x':{'left':491,'right':1030}}
@@ -227,7 +229,7 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
     started=time.monotonic()
     all_frames={};all_predictions={};requests=None
     try:
-        for clip in selected:
+        for clip in (selected[:1] if preflight else selected):
             frames=source_frames(store,config,study,clip,directory)
             all_frames[clip['id']]=frames
         if preflight:
