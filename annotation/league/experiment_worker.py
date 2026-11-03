@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import gc
 import importlib.metadata
-import json
 from pathlib import Path
 import time
 import wave

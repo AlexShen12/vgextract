@@ -5,22 +5,11 @@ from __future__ import annotations
 import base64
 import json
 from pathlib import Path
-import subprocess
 import time
 
 from .core import atomic_json, digest, StopRequested
 from .local_models import ModelUnavailable
-from .readers import parse_text, preprocess_crop, tesseract, measure_bar
-
-
-def unknown(reason, raw=None, attempts=()):
-    return {
-        "acceptance": "unknown",
-        "reason": reason,
-        "value": None,
-        "raw_text": raw,
-        "attempts": list(attempts),
-    }
+from .readers import parse_text, unknown
 
 
 def transcription_schema(ids):
@@ -115,9 +104,6 @@ def validate_transcriptions(response, fields):
     if set(readings) != set(expected):
         raise IncompleteTranscriptions(readings)
     return readings
-
-
-from .numeric_reader import NumericReader, numeric_preprocess
 
 
 class VLReader:

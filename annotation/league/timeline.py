@@ -98,11 +98,37 @@ def normalize_output(output: dict, task: dict, route, identities=None) -> tuple[
                    "task_ids": [task["id"]], "criteria": item.get("criteria", []),
                    "detail": item.get("detail", ""), "confidence": confidence,
                    "sampling_fps": task["fps"], "review_status": "unreviewed"}
+            for key in ("actor_binding", "target_binding", "visual_evidence", "ability", "playback_segment_id"):
+                if key in item:
+                    row[key] = item[key]
             if identities is not None:
                 from .knowledge import identity_key
                 for key in ("actor", "target"):
                     if row[key]:
-                        row[key] = identities.get(identity_key(str(row[key])), "unknown")
+                        raw = str(row[key])
+                        row[key] = (raw if re.fullmatch(r"(?:minion|monster|structure|ward|objective|team):[\w:.-]+", raw)
+                                    else identities.get(identity_key(raw), "unknown"))
+                        if isinstance(row.get(key + "_binding"), dict):
+                            if row[key + "_binding"].get("entity") != raw:
+                                raise ValueError("Event binding disagrees with its attributed entity")
+                            row[key + "_binding"] = {**row[key + "_binding"], "entity": row[key]}
+            if kind in {"minion_last_hit", "ability_hit"} or any(
+                    key in row for key in ("actor_binding", "target_binding", "visual_evidence")):
+                from .captions import event_grounding
+                # Preserve every cited frame, including bindings, in the event lineage.
+                cited = set(row["evidence_ids"])
+                visual = row.get("visual_evidence", [])
+                if not isinstance(visual, list):
+                    raise ValueError("Invalid visual evidence")
+                for cue in visual:
+                    if not isinstance(cue, dict) or not isinstance(cue.get("frame_ids"), list):
+                        raise ValueError("Invalid visual evidence frames")
+                    cited.update(cue["frame_ids"])
+                for role in ("actor_binding", "target_binding"):
+                    if isinstance(row.get(role), dict):
+                        cited.update(row[role].get("frame_ids", []))
+                row["evidence_ids"] = sorted(cited)
+                event_grounding(row, {key: frame["time"] for key, frame in frames.items()})
             events.append(row)
             if confidence < .75:
                 issues.append({"time": start["time"], "route": route.name,
@@ -117,12 +143,14 @@ def normalize_output(output: dict, task: dict, route, identities=None) -> tuple[
     return observations, events, issues
 
 
-def fuse_observations(observations: list[dict]) -> tuple[list, list]:
+def fuse_observations(observations: list[dict], *, caption_pilot=False) -> tuple[list, list]:
     grouped = defaultdict(list)
     for row in observations:
-        if row.get("review_status") != "rejected" and not row.get("experimental") and row.get("evidence_modality", "visual") == "visual":
+        if (row.get("review_status") != "rejected"
+                and (not row.get("experimental") or (caption_pilot and row.get("caption_pilot") is True))
+                and row.get("evidence_modality", "visual") == "visual"):
             subject = row["entity"] if row["entity"] != "unknown" else row.get("slot_id", "unknown")
-            grouped[(subject, row["field"], round(row["time"], 3), row.get("playback_segment_id"))].append(row)
+            grouped[(subject, row["field"], row["time"], row.get("playback_segment_id"))].append(row)
     states, conflicts = [], []
     previous = {}
     for (subject, field, time, segment), group in sorted(grouped.items(), key=lambda pair: pair[0][2]):
@@ -149,6 +177,8 @@ def fuse_observations(observations: list[dict]) -> tuple[list, list]:
         if status == "confirmed":
             state["last_confirmed_time"] = time
             previous[key] = time
+        if any(r.get("experimental") for r in group):
+            state.update(experimental=True, caption_pilot=True)
         if status == "conflict":
             conflicts.append({"id": uid("conflict", state["id"]), "time": time,
                               "entity": entity, "field": field, "evidence_ids": state["evidence_ids"],
@@ -167,6 +197,9 @@ def fuse_events(events: list[dict]) -> list[dict]:
             if event["start"] - candidate["end"] > 3:
                 continue
             same = all(candidate.get(k) == event.get(k) for k in ("kind", "actor", "target", "object", "playback_segment_id"))
+            # Keep independently grounded actor/target/effect chains intact.
+            same = same and all(candidate.get(k) == event.get(k) for k in
+                                ("actor_binding", "target_binding", "visual_evidence", "ability"))
             shared = bool(set(candidate["evidence_ids"]) & set(event["evidence_ids"]))
             notice = event["kind"] in {"death", "objective_takedown", "tower_destruction"}
             overlapping = event["start"] <= candidate["end"] and candidate["start"] <= event["end"]

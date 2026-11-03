@@ -5,12 +5,10 @@ from __future__ import annotations
 from collections import defaultdict
 import copy
 from itertools import groupby
-import math
 from pathlib import Path
 
 from .core import atomic_json, digest, finite, read_json, implementation_hash
 from .intake_profile import load_profile
-from .readers import parse_text
 
 GATES = {
     "number": (0.99, 0.90),

@@ -216,7 +216,7 @@ def worker_signature(python, cache, role="intake"):
         env=isolated_environment(cache),
     )
     runtime = json.loads(result.stdout)
-    if role == "intake" and runtime["compute_capability"] < [8, 9]:
+    if (role == "intake" or pin["specification"]["id"].endswith("-FP8")) and runtime["compute_capability"] < [8, 9]:
         raise ModelUnavailable(
             "Official FP8 intake requires an FP8-capable GPU (Ada or newer)"
         )
@@ -233,12 +233,17 @@ def worker_signature(python, cache, role="intake"):
 
 
 class LocalVLRunner:
-    def __init__(self, store, python, cache, role="intake", signature=None):
+    def __init__(self, store, python, cache, role="intake", signature=None, *, image_limit=4):
+        if type(image_limit) is not int or not 1 <= image_limit <= 8:
+            raise ValueError("Local VL image limit must be between one and eight")
+        self.image_limit = image_limit
         self.store, self.python, self.role = store, python, role
         self.cache = cache
         self.root, self.identity = (
             worker_signature(python, cache, role) if signature is None else signature
         )
+        if image_limit != 4:
+            self.identity = {**self.identity, "image_limit": image_limit}
         self.process = self.log = None
         self.failure = None
         self.monitor_stop = threading.Event()
@@ -334,7 +339,7 @@ class LocalVLRunner:
             dtype,
             "--enforce-eager",
             "--limit-mm-per-prompt",
-            '{"image":4,"video":1}',
+            json.dumps({"image": self.image_limit, "video": 1}),
             "--media-io-kwargs",
             '{"video":{"num_frames":16,"fps":2}}',
             "--default-chat-template-kwargs",
@@ -371,7 +376,9 @@ class LocalVLRunner:
             self.close()
             raise
 
-    def complete(self, messages, schema=None, *, max_tokens=512, seed=17):
+    def complete(self, messages, schema=None, *, max_tokens=512, seed=17, timeout=180):
+        if not isinstance(timeout, (int, float)) or not 1 <= timeout <= 900:
+            raise ValueError("Local VL request timeout must be 1..900 seconds")
         self.store.check_stop()
         self.start()
         started = time.monotonic()
@@ -397,7 +404,7 @@ class LocalVLRunner:
                 },
             }
         try:
-            response = self._json("/v1/chat/completions", request, timeout=180)
+            response = self._json("/v1/chat/completions", request, timeout=timeout)
             self.memory_sample()
             if self.failure:
                 raise ModelUnavailable(self.failure)

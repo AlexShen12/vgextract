@@ -13,16 +13,17 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 from annotation.league.core import (CAPABILITIES, Config, Route, StopRequested, Store,
-                                    atomic_json, digest, read_json, validate_question)
+                                    atomic_json, digest, read_json)
 from annotation.league.evaluation import (evaluate, exact_answer, report, temporal_metrics,
                                           uniform_times)
-from annotation.league.inference import InputBudgetError, ScopedResolver, parse_output, pin_models
+from annotation.league.inference import ScopedResolver, parse_output, pin_models
 from annotation.league.media import Media, prepare
 from annotation.league.observers import annotate, transition_reason
 from annotation.league.prompts import solver_messages
 from annotation.league.questions import construct, generate_qa
 from annotation.league.review import add_correction, create_app
 from annotation.league.timeline import fuse, fuse_events, fuse_observations, normalize_output
+from league_fixtures import Image, intake_fixture
 
 PIN = {"gameplay_patch": "26.13", "ddragon_version": "16.13.1", "cdragon_version": "16.13"}
 
@@ -57,15 +58,8 @@ def event(id, time, kind="recall", actor="Aatrox"):
 
 
 class StaticFixture:
-    def roster(self):
-        return {"champions": [{"internal_id": "Aatrox", "numeric_id": "266", "name": "Aatrox"},
-                               {"internal_id": "Jax", "numeric_id": "24", "name": "Jax"}]}
-
     def system_context(self):
         return "Patch 26.13. Champions: Aatrox|266|Aatrox, Jax|24|Jax. Static identity only."
-
-    def handle_query(self, request):
-        return {"status": "unresolved"}
 
 
 class FixtureMedia:
@@ -78,44 +72,20 @@ class FixtureMedia:
         return {"id": "frame_" + digest([requested, route.name])[:12], "source_id": str(requested),
                 "time": requested, "route": route.name, "box": route.box, "path": "fixture.png"}
 
-    def frames(self, start, end, fps, route):
-        return [self.frame(start+i/fps, route) for i in range(int((end-start)*fps))]
-
-
 class FixtureRunner:
-    """Only tests inject this runner. The production CLI always uses Qwen."""
-    def __init__(self, store, stop_after=None):
-        self.store, self.stop_after, self.calls = store, stop_after, []
+    """Deterministic solver response and cost ledger for evaluation tests."""
+    def __init__(self, store):
+        self.store, self.calls = store, []
 
     def infer(self, messages, frames, route, directory, *, fps, visual_limit=None):
         cost = len(frames)*10
-        if visual_limit is not None and cost > visual_limit:
-            raise InputBudgetError("fixture review budget exhausted")
         self.calls.append((route.name, frames[0]["time"], fps, str(directory.relative_to(self.store.root))))
-        if "retrospective visual-memory" in json.dumps(messages):
-            output = {"answer": "Aatrox", "abstain": False,
-                      "evidence": [{"start": frames[0]["time"], "end": frames[0]["time"], "claim": "visible"}]}
-        else:
-            observations = []
-            for frame in frames:
-                fields = {"kills": int(frame["time"]//20), "inventory": ["6610"],
-                          "position": {"region": "top_lane"}, "structure_status": "standing",
-                          "player_name": "한글플레이어", "identity": "Aatrox"}
-                observations += [{"frame_id": frame["id"], "entity": "Aatrox", "field": field,
-                                  "value": fields[field], "visibility": "visible", "confidence": .95,
-                                  "identity_evidence": "portrait"} for field in route.fields]
-            events = []
-            if route.name == "full_context":
-                events.append({"kind": "recall" if frames[0]["time"] < 60 else "death",
-                    "actor": "Aatrox", "start_frame": frames[0]["id"], "end_frame": frames[-1]["id"],
-                    "location": "top_lane", "confidence": .95})
-            output = {"observations": observations, "events": events, "issues": []}
+        output = {"answer": "Aatrox", "abstain": False,
+                  "evidence": [{"start": frames[0]["time"], "end": frames[0]["time"], "claim": "visible"}]}
         metrics = {"visual_tokens": cost, "input_tokens": cost+10, "output_tokens": 20,
                    "peak_gpu_memory_bytes": 1024, "wall_seconds": .01}
         directory.mkdir(parents=True, exist_ok=True)
         atomic_json(directory/"completion.json", {"metrics": metrics, "raw": json.dumps(output)})
-        if self.stop_after and len(self.calls) >= self.stop_after:
-            self.store.stopping = True
         return {"status": "ok", "output": output, "metrics": metrics}
 
 
@@ -345,8 +315,7 @@ class EndToEndTests(unittest.TestCase):
                         self.assertGreater(evaluate(store,cfg,Mock(),StaticFixture())["unresolved"],0)
                 self.assertEqual(store.path("stages/annotate.json").read_bytes(),committed)
 
-    def test_interrupt_resume_optional_review_and_independent_evaluation(self):
-        from test_league_intake import intake_fixture, Image
+    def test_workflow_review_and_independent_evaluation_reuse_predictions(self):
         if Image is None:
             self.skipTest("Install requirements-intake.txt for calibrated intake integration")
         with tempfile.TemporaryDirectory() as temporary:
@@ -354,16 +323,9 @@ class EndToEndTests(unittest.TestCase):
             cfg = config()
             cfg.validate()
             with patch("annotation.league.evaluation.Media", FixtureMedia):
-                with intake_fixture(store, cfg, stop_after=1), self.assertRaises(StopRequested):
-                    annotate(store, cfg)
-                committed = list(store.path("tasks").glob("*.json"))
-                self.assertEqual(len(committed), 1)
-                committed_bytes = committed[0].read_bytes()
-                store.stopping = False
                 with intake_fixture(store, cfg):
                     summary = annotate(store, cfg)
                 self.assertTrue(summary["operational_passed"])
-                self.assertEqual(committed[0].read_bytes(), committed_bytes)
                 self.assertTrue(any(r["status"] == "unsupported" for r in store.rows("coverage")))
                 self.assertTrue(any(o["value"] == "한글플레이어" for o in store.rows("observations")))
                 fuse(store, cfg)

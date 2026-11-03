@@ -24,7 +24,8 @@ from .intake import (
 from .intake_profile import load_profile, layout_matches
 from .local_models import LocalVLRunner, worker_signature, LOCK
 from .playback import PlaybackTracker
-from .vl_reader import VLReader, unknown
+from .vl_reader import VLReader
+from .readers import unknown
 from .numeric_reader import NumericReader
 
 DEFERRED = {
@@ -183,68 +184,31 @@ def pilot_windows(start, end):
     ]
 
 
-def annotate(
-    store,
-    config,
-    runner=None,
-    resolver=None,
-    *,
-    retry_failed=False,
-    sample_times=None,
-    pilot=False,
-):
+def _require_release(store, config, profile, signature, key):
     from .intake_benchmark import release_policy
 
-    started = time.monotonic()
-    manifest = require_v2(store)
-    check_engine(store)
-    profile = load_profile(config.layout_profile)
-    if profile.get("calibrated") is False:
-        raise ValueError("Midbeast profile requires native-frame calibration in review")
+    release = release_path(store, config, profile)
+    required = {
+        "runtime": signature,
+        "release_policy": release_policy(),
+        "extraction_key": key,
+    }
+    record = read_json(release) if release.exists() else {}
     if (
-        profile.get("calibration_source_sha256")
-        and profile["calibration_source_sha256"] != manifest["source"]["sha256"]
+        not profile.get("thresholds_frozen")
+        or not record.get("passed")
+        or any(record.get(k) != v for k, v in required.items())
     ):
         raise ValueError(
-            "This calibrated profile belongs to another source; create a new profile revision"
+            "Full intake requires a passing frozen held-out intake-benchmark for this source/profile/runtime"
         )
-    fields = enabled_fields(profile)
-    signature, prepared = runtime(store, config)
-    key = store.fingerprint(config)
-    if pilot:
-        # A different reader/runtime gets a fresh cold pilot cache. Same-key retries
-        # resume the original pilot tasks, retaining their original timing costs.
-        parent = store
-        store = Store(parent.path("pilots/" + key))
-        store.install_signals()
-        for name, data in (
-            ("manifest.json", manifest),
-            ("config.json", config.to_dict()),
-            ("intake_runtime.json", signature),
-        ):
-            atomic_json(store.path(name), data)
-    else:
-        parent = store
-    release = release_path(store, config, profile)
-    if sample_times is None and not pilot:
-        required = {
-            "runtime": signature,
-            "release_policy": release_policy(),
-            "extraction_key": key,
-        }
-        record = read_json(release) if release.exists() else {}
-        if (
-            not profile.get("thresholds_frozen")
-            or not record.get("passed")
-            or any(record.get(k) != v for k, v in required.items())
-        ):
-            raise ValueError(
-                "Full intake requires a passing frozen held-out intake-benchmark for this source/profile/runtime"
-            )
-        pilot_file = release_path(store, config, profile, "-pilot")
-        pilot_record = read_json(pilot_file) if pilot_file.exists() else {}
-        if not pilot_record.get("passed") or pilot_record.get("extraction_key") != key:
-            raise ValueError("Full intake requires a passing five-minute runtime pilot")
+    pilot_file = release_path(store, config, profile, "-pilot")
+    pilot_record = read_json(pilot_file) if pilot_file.exists() else {}
+    if not pilot_record.get("passed") or pilot_record.get("extraction_key") != key:
+        raise ValueError("Full intake requires a passing five-minute runtime pilot")
+
+
+def _sampling_targets(manifest, config, sample_times, pilot):
     start, end = manifest["interval"]
     selected = (
         sorted(set(float(t) for t in sample_times))
@@ -265,6 +229,10 @@ def annotate(
         raise ValueError(
             "Benchmark times must be on the sampling grid inside the run interval"
         )
+    return targets, selected
+
+
+def _resume_tasks(store, key, targets):
     tasks = {}
     for path in store.path("tasks").glob("*.json"):
         task = read_json(path)
@@ -272,291 +240,283 @@ def annotate(
             abs(task["start"] - t) < 0.05 for t in targets
         ):
             tasks[task["id"]] = task
-    tracker = PlaybackTracker(manifest["source"]["sha256"], config.fps)
-    numeric = NumericReader(profile["thresholds"]["number"])
-    worker = runner
-    if worker is None and prepared is not None:
-        worker = LocalVLRunner(
-            store,
-            config.vl_python or os.environ["LEAGUE_VL_PYTHON"],
-            config.asset_cache,
-            signature=prepared,
-        )
-    vl = VLReader(worker, store, config.seed) if worker is not None else None
-    pool = ThreadPoolExecutor(max_workers=config.reader_workers)
-    reported = False
-    try:
-        for sample_time, (timestamp, image) in zip(
-            targets, decoded_frames(store, manifest, config.fps, targets), strict=True
-        ):
-            store.check_stop()
-            task_id = uid("task", key, timestamp)
-            if task_id in tasks and (
-                not retry_failed or tasks[task_id]["status"] == "ok"
-            ):
-                tracker.state = tasks[task_id]["playback_tracker"]
-                continue
-            tick = time.monotonic()
-            token_start = dict(getattr(worker, "tokens", {}))
-            if config.masks:
-                from PIL import ImageDraw
+    return tasks
 
-                draw = ImageDraw.Draw(image)
-                for box in config.masks:
-                    draw.rectangle(box, fill="black")
-            layout_valid, anchors = layout_matches(image, profile)
-            source_id = uid("source", manifest["source"]["sha256"], timestamp)
-            task = {
-                "schema_version": 2,
-                "id": task_id,
-                "run_key": key,
-                "runtime_id": digest(signature),
-                "profile_hash": digest(profile),
-                "route": "intake",
-                "start": timestamp,
-                "sample_time": sample_time,
-                "end": min(timestamp + 1 / config.fps, end),
-                "fps": config.fps,
-                "pass": 0,
-                "frames": [],
-                "observations": [],
-                "issues": [],
-                "layout_valid": layout_valid,
+
+class _IntakeReader:
+    """Per-frame evidence and reporting; the orchestrator owns worker lifetime."""
+
+    def __init__(self, store, config, manifest, profile, signature, key, worker, pool):
+        self.store, self.config, self.manifest = store, config, manifest
+        self.profile, self.signature, self.key = profile, signature, key
+        self.worker, self.pool = worker, pool
+        self.fields = enabled_fields(profile)
+        self.tracker = PlaybackTracker(manifest["source"]["sha256"], config.fps)
+        self.numeric = NumericReader(profile["thresholds"]["number"])
+        self.vl = VLReader(worker, store, config.seed) if worker is not None else None
+
+    def cache_path(self, crop_hash, field):
+        backend = field["backend"]
+        runtime_key = {"vl": "vl", "tesseract": "tesseract", "bar": "driver_packages"}[backend]
+        reader = "vl_reader.py" if backend == "vl" else "numeric_reader.py"
+        cache_key = digest(
+            {
+                "crop": crop_hash,
+                "settings": {k: v for k, v in field.items() if k not in {"box", "slot_id", "route"}},
+                "runtime": self.signature[runtime_key],
+                "implementation": implementation_hash([reader, "readers.py"]),
+                "threshold": self.profile["thresholds"]["number"] if backend == "tesseract" else None,
+                "seed": self.config.seed if backend == "vl" else None,
             }
-            atomic_json(
-                store.path("intake-runtimes/" + digest(signature) + ".json"), signature
-            )
-            atomic_json(
-                store.path("layout_profiles/" + digest(profile) + ".json"), profile
-            )
-            if not layout_valid:
-                _, diagnostic = evidence_crop(store, image)
-                atomic_json(
-                    store.path(f"layout-diagnostics/{task_id}.json"),
-                    {"time": timestamp, "path": diagnostic, "anchors": anchors},
+        )
+        return self.store.path("reader-cache/" + cache_key + "/result.json")
+
+    def read_vl_groups(self, vl_pending):
+        readings, cache_hits = [], 0
+        # Group text separately from HP so changing HP cannot invalidate name requests.
+        groups = defaultdict(list)
+        for entry in vl_pending:
+            groups[entry[0]["parser"]].append(entry)
+        for parser, entries in groups.items():
+            # Longleaf development probes showed grouped names could all
+            # become not_shown despite legible single-crop transcription.
+            group_size = 1 if parser == "name" else 4
+            for offset in range(0, len(entries), group_size):
+                group = entries[offset : offset + group_size]
+                group_key = digest(
+                    [str(entry[3].relative_to(self.store.root)) for entry in group]
                 )
-            readings, vl_pending, futures, cache_hits = [], [], [], 0
-            for field in fields:
-                store.check_stop()
-                crop = image.crop(field["box"])
-                crop_hash, path = evidence_crop(store, crop)
-                frame = {
-                    "id": uid("frame", source_id, field["box"], crop_hash),
-                    "source_id": source_id,
-                    "time": timestamp,
-                    "route": field["route"],
-                    "box": field["box"],
-                    "path": path,
-                }
-                task["frames"].append(frame)
-                state = _panel_state(image, profile, field, layout_valid)
-                if state != "present":
-                    reading = (
-                        unknown("unsupported or occluded layout/panel")
-                        if state == "unknown"
-                        else {
-                            "acceptance": "absent",
-                            "reason": "calibrated absent-panel anchors",
-                            "raw_text": None,
-                            "value": None,
-                        }
+                directory = self.store.path("vl-requests/" + group_key)
+                cached_group = directory / "result.json"
+                if cached_group.exists():
+                    results = read_json(cached_group)
+                    cache_hits += len(group)
+                else:
+                    if self.vl is None:
+                        raise ValueError(
+                            "VL fields require the isolated local Qwen worker"
+                        )
+                    results = self.vl.read_group(
+                        [(f, self.store.path(path)) for f, _, path, _ in group],
+                        directory,
                     )
+                    atomic_json(cached_group, results)
+                for field, frame, path, unused in group:
+                    reading = {
+                        **results[field["id"]],
+                        "cache_path": str(cached_group.relative_to(self.store.root)),
+                    }
                     readings.append((field, reading, frame))
-                    continue
-                settings = {
-                    k: v
-                    for k, v in field.items()
-                    if k not in {"box", "slot_id", "route"}
-                }
-                cache_key = digest(
-                    {
-                        "crop": crop_hash,
-                        "settings": settings,
-                        "runtime": (
-                            signature["vl"]
-                            if field["backend"] == "vl"
-                            else (
-                                signature["tesseract"]
-                                if field["backend"] == "tesseract"
-                                else signature["driver_packages"]
-                            )
-                        ),
-                        "implementation": (
-                            implementation_hash(["vl_reader.py", "readers.py"])
-                            if field["backend"] == "vl"
-                            else implementation_hash(
-                                ["numeric_reader.py", "readers.py"]
-                            )
-                        ),
-                        "threshold": (
-                            profile["thresholds"]["number"]
-                            if field["backend"] == "tesseract"
-                            else None
-                        ),
-                        "seed": config.seed if field["backend"] == "vl" else None,
+        return readings, cache_hits
+
+    def read_fields(self, image, task, source_id):
+        timestamp, layout_valid = task["start"], task["layout_valid"]
+        readings, vl_pending, futures, cache_hits = [], [], [], 0
+        for field in self.fields:
+            self.store.check_stop()
+            crop = image.crop(field["box"])
+            crop_hash, path = evidence_crop(self.store, crop)
+            frame = {
+                "id": uid("frame", source_id, field["box"], crop_hash),
+                "source_id": source_id,
+                "time": timestamp,
+                "route": field["route"],
+                "box": field["box"],
+                "path": path,
+            }
+            task["frames"].append(frame)
+            state = _panel_state(image, self.profile, field, layout_valid)
+            if state != "present":
+                reading = (
+                    unknown("unsupported or occluded layout/panel")
+                    if state == "unknown"
+                    else {
+                        "acceptance": "absent",
+                        "reason": "calibrated absent-panel anchors",
+                        "raw_text": None,
+                        "value": None,
                     }
                 )
-                cached = store.path("reader-cache/" + cache_key + "/result.json")
-                if field["backend"] == "vl":
-                    vl_pending.append((field, frame, path, cached))
-                elif cached.exists():
-                    readings.append(
-                        (
-                            field,
-                            {
-                                **read_json(cached),
-                                "cache_path": str(cached.relative_to(store.root)),
-                            },
-                            frame,
-                        )
-                    )
-                    cache_hits += 1
-                else:
-
-                    def read_one(crop=crop, field=field, cached=cached):
-                        begin = time.monotonic()
-                        result = numeric.read(crop, field, cached.parent)
-                        result["wall_seconds"] = time.monotonic() - begin
-                        atomic_json(cached, result)
-                        return result
-
-                    futures.append((field, frame, cached, pool.submit(read_one)))
-            # Group text separately from HP so changing HP cannot invalidate name requests.
-            groups = defaultdict(list)
-            for entry in vl_pending:
-                groups[entry[0]["parser"]].append(entry)
-            for parser, entries in groups.items():
-                # Longleaf development probes showed grouped names could all
-                # become not_shown despite legible single-crop transcription.
-                group_size = 1 if parser == "name" else 4
-                for offset in range(0, len(entries), group_size):
-                    group = entries[offset : offset + group_size]
-                    group_key = digest(
-                        [str(entry[3].relative_to(store.root)) for entry in group]
-                    )
-                    directory = store.path("vl-requests/" + group_key)
-                    cached_group = directory / "result.json"
-                    if cached_group.exists():
-                        results = read_json(cached_group)
-                        cache_hits += len(group)
-                    else:
-                        if vl is None:
-                            raise ValueError(
-                                "VL fields require the isolated local Qwen worker"
-                            )
-                        results = vl.read_group(
-                            [(f, store.path(path)) for f, _, path, _ in group],
-                            directory,
-                        )
-                        atomic_json(cached_group, results)
-                    for field, frame, path, unused in group:
-                        reading = {
-                            **results[field["id"]],
-                            "cache_path": str(cached_group.relative_to(store.root)),
-                        }
-                        readings.append((field, reading, frame))
-            for field, frame, cached, future in futures:
+                readings.append((field, reading, frame))
+                continue
+            cached = self.cache_path(crop_hash, field)
+            if field["backend"] == "vl":
+                vl_pending.append((field, frame, path, cached))
+            elif cached.exists():
                 readings.append(
                     (
                         field,
                         {
-                            **future.result(),
-                            "cache_path": str(cached.relative_to(store.root)),
+                            **read_json(cached),
+                            "cache_path": str(cached.relative_to(self.store.root)),
                         },
                         frame,
                     )
                 )
-            verify_readings(readings)
-            clock = next(
+                cache_hits += 1
+            else:
+
+                def read_one(crop=crop, field=field, cached=cached):
+                    begin = time.monotonic()
+                    result = self.numeric.read(crop, field, cached.parent)
+                    result["wall_seconds"] = time.monotonic() - begin
+                    atomic_json(cached, result)
+                    return result
+
+                futures.append((field, frame, cached, self.pool.submit(read_one)))
+        vl_readings, vl_hits = self.read_vl_groups(vl_pending)
+        readings.extend(vl_readings)
+        cache_hits += vl_hits
+        for field, frame, cached, future in futures:
+            readings.append(
                 (
-                    r["value"].get("seconds")
-                    for f, r, _ in readings
-                    if f["field"] == "game_clock"
-                    and r["acceptance"] == "accepted"
-                    and isinstance(r.get("value"), dict)
-                ),
-                None,
-            )
-            playback = tracker.update(timestamp, clock, image, layout_valid)
-            identities = {
-                f["slot_id"]: r["value"]
-                for f, r, _ in readings
-                if f["field"] in {"identity", "champion_name", "objective_name"}
-                and r["acceptance"] == "accepted"
-            }
-            for field, reading, frame in readings:
-                row = observation(
-                    task,
-                    frame,
                     field,
-                    reading,
-                    subject(field, identities),
-                    frame["path"],
+                    {
+                        **future.result(),
+                        "cache_path": str(cached.relative_to(self.store.root)),
+                    },
+                    frame,
                 )
-                row.update(
-                    playback,
-                    evidence_modality="visual",
-                    backend=field["backend"],
-                    sample_time=sample_time,
+            )
+        return readings, cache_hits
+
+    def read(self, sample_time, timestamp, image):
+        task_id = uid("task", self.key, timestamp)
+        end = self.manifest["interval"][1]
+        tick = time.monotonic()
+        token_start = dict(getattr(self.worker, "tokens", {}))
+        if self.config.masks:
+            from PIL import ImageDraw
+
+            draw = ImageDraw.Draw(image)
+            for box in self.config.masks:
+                draw.rectangle(box, fill="black")
+        layout_valid, anchors = layout_matches(image, self.profile)
+        source_id = uid("source", self.manifest["source"]["sha256"], timestamp)
+        task = {
+            "schema_version": 2,
+            "id": task_id,
+            "run_key": self.key,
+            "runtime_id": digest(self.signature),
+            "profile_hash": digest(self.profile),
+            "route": "intake",
+            "start": timestamp,
+            "sample_time": sample_time,
+            "end": min(timestamp + 1 / self.config.fps, end),
+            "fps": self.config.fps,
+            "pass": 0,
+            "frames": [],
+            "observations": [],
+            "issues": [],
+            "layout_valid": layout_valid,
+        }
+        atomic_json(
+            self.store.path("intake-runtimes/" + digest(self.signature) + ".json"), self.signature
+        )
+        atomic_json(
+            self.store.path("layout_profiles/" + digest(self.profile) + ".json"), self.profile
+        )
+        if not layout_valid:
+            _, diagnostic = evidence_crop(self.store, image)
+            atomic_json(
+                self.store.path(f"layout-diagnostics/{task_id}.json"),
+                {"time": timestamp, "path": diagnostic, "anchors": anchors},
+            )
+        readings, cache_hits = self.read_fields(image, task, source_id)
+        verify_readings(readings)
+        clock = next(
+            (
+                r["value"].get("seconds")
+                for f, r, _ in readings
+                if f["field"] == "game_clock"
+                and r["acceptance"] == "accepted"
+                and isinstance(r.get("value"), dict)
+            ),
+            None,
+        )
+        playback = self.tracker.update(timestamp, clock, image, layout_valid)
+        identities = {
+            f["slot_id"]: r["value"]
+            for f, r, _ in readings
+            if f["field"] in {"identity", "champion_name", "objective_name"}
+            and r["acceptance"] == "accepted"
+        }
+        for field, reading, frame in readings:
+            row = observation(
+                task,
+                frame,
+                field,
+                reading,
+                subject(field, identities),
+                frame["path"],
+            )
+            row.update(
+                playback,
+                evidence_modality="visual",
+                backend=field["backend"],
+                sample_time=sample_time,
+            )
+            task["observations"].append(row)
+            if row["acceptance"] == "unknown":
+                task["issues"].append(
+                    {
+                        "id": uid("issue", task_id, field["id"]),
+                        "time": timestamp,
+                        "route": field["route"],
+                        "slot_id": field["slot_id"],
+                        "field_id": field["id"],
+                        "kind": "unreadable" if layout_valid else "layout_mismatch",
+                        "detail": reading["reason"],
+                        "frame_id": frame["id"],
+                    }
                 )
-                task["observations"].append(row)
-                if row["acceptance"] == "unknown":
-                    task["issues"].append(
+            if field["field"] == "kda" and row["acceptance"] == "accepted":
+                for name, value in row["value"].items():
+                    task["observations"].append(
                         {
-                            "id": uid("issue", task_id, field["id"]),
-                            "time": timestamp,
-                            "route": field["route"],
-                            "slot_id": field["slot_id"],
-                            "field_id": field["id"],
-                            "kind": "unreadable" if layout_valid else "layout_mismatch",
-                            "detail": reading["reason"],
-                            "frame_id": frame["id"],
+                            **row,
+                            "id": uid("obs", task_id, field["id"], name),
+                            "field_id": field["id"] + "#" + name,
+                            "field": name,
+                            "value": value,
+                            "parsed_value": value,
+                            "derived_from": [row["id"]],
                         }
                     )
-                if field["field"] == "kda" and row["acceptance"] == "accepted":
-                    for name, value in row["value"].items():
-                        task["observations"].append(
-                            {
-                                **row,
-                                "id": uid("obs", task_id, field["id"], name),
-                                "field_id": field["id"] + "#" + name,
-                                "field": name,
-                                "value": value,
-                                "parsed_value": value,
-                                "derived_from": [row["id"]],
-                            }
-                        )
-            task["coverage"] = {
-                "accepted": sum(
-                    r["acceptance"] in {"accepted", "absent"} for _, r, _ in readings
-                ),
-                "expected": len(fields),
-            }
-            task["status"] = "ok" if layout_valid else "unsupported_layout"
-            task["playback_tracker"] = tracker.state.copy()
-            task["metrics"] = {
-                "wall_seconds": time.monotonic() - tick,
-                "reader_cache_hits": cache_hits,
-                "new_reader_calls": len(fields) - cache_hits,
-                "visual_tokens": getattr(worker, "tokens", {}).get("prompt_tokens", 0)
-                - token_start.get("prompt_tokens", 0),
-                "output_tokens": getattr(worker, "tokens", {}).get(
-                    "completion_tokens", 0
-                )
-                - token_start.get("completion_tokens", 0),
-                "peak_gpu_memory_bytes": getattr(worker, "peak_memory_bytes", 0),
-            }
-            atomic_json(store.path("tasks/" + task_id + ".json"), task)
-            tasks[task_id] = task
-            logging.info(
-                "hybrid intake time=%.3f accepted=%d/%d status=%s",
-                timestamp,
-                task["coverage"]["accepted"],
-                len(fields),
-                task["status"],
+        task["coverage"] = {
+            "accepted": sum(
+                r["acceptance"] in {"accepted", "absent"} for _, r, _ in readings
+            ),
+            "expected": len(self.fields),
+        }
+        task["status"] = "ok" if layout_valid else "unsupported_layout"
+        task["playback_tracker"] = self.tracker.state.copy()
+        task["metrics"] = {
+            "wall_seconds": time.monotonic() - tick,
+            "reader_cache_hits": cache_hits,
+            "new_reader_calls": len(self.fields) - cache_hits,
+            "visual_tokens": getattr(self.worker, "tokens", {}).get("prompt_tokens", 0)
+            - token_start.get("prompt_tokens", 0),
+            "output_tokens": getattr(self.worker, "tokens", {}).get(
+                "completion_tokens", 0
             )
+            - token_start.get("completion_tokens", 0),
+            "peak_gpu_memory_bytes": getattr(self.worker, "peak_memory_bytes", 0),
+        }
+        atomic_json(self.store.path("tasks/" + task_id + ".json"), task)
+        logging.info(
+            "hybrid intake time=%.3f accepted=%d/%d status=%s",
+            timestamp,
+            task["coverage"]["accepted"],
+            len(self.fields),
+            task["status"],
+        )
+        return task
+
+    def report(self, tasks, targets, selected, pilot, parent, started):
+        start, end = self.manifest["interval"]
         result = collect(
-            store, sorted(tasks.values(), key=lambda t: t["start"]), config
+            self.store, sorted(tasks.values(), key=lambda t: t["start"]), self.config
         )
         result.update(
             sampling_mode=(
@@ -566,12 +526,12 @@ def annotate(
             expected_frames=len(targets),
             operational_passed=bool(targets) and len(tasks) == len(targets),
             gpu_memory_peak_bytes=max(
-                [getattr(worker, "peak_memory_bytes", 0)]
+                [getattr(self.worker, "peak_memory_bytes", 0)]
                 + [t["metrics"].get("peak_gpu_memory_bytes", 0) for t in tasks.values()]
             ),
         )
         if pilot:
-            sampled = len(tasks) / config.fps
+            sampled = len(tasks) / self.config.fps
             result.update(
                 sampled_seconds=sampled,
                 projected_intake_seconds=max(
@@ -580,10 +540,10 @@ def annotate(
                 / max(sampled, 1)
                 * (end - start),
                 timing_basis="fresh pilot reader cache; resumed tasks retain original per-frame costs",
-                gpu=signature.get("vl", {}).get("runtime", {}).get("gpu"),
+                gpu=self.signature.get("vl", {}).get("runtime", {}).get("gpu"),
             )
             memory_limit = (
-                signature.get("vl", {}).get("runtime", {}).get("total_memory_bytes", 1)
+                self.signature.get("vl", {}).get("runtime", {}).get("total_memory_bytes", 1)
                 * 0.9
             )
             result["target_gpu_met"] = "L40S" in (result.get("gpu") or "").upper()
@@ -594,33 +554,79 @@ def annotate(
                 and result["gpu_memory_peak_bytes"] < memory_limit
             )
             atomic_json(
-                release_path(store, config, profile, "-pilot"),
+                release_path(self.store, self.config, self.profile, "-pilot"),
                 {
                     **result,
-                    "extraction_key": key,
+                    "extraction_key": self.key,
                     "passed": result["runtime_passed"]
                     and result["operational_passed"]
                     and result["quality_benchmark_passed"],
                 },
             )
             atomic_json(parent.path("pilot_report.json"), result)
-        atomic_json(store.path("intake_report.json"), result)
+        atomic_json(self.store.path("intake_report.json"), result)
+        return result
+
+
+def annotate(
+    store,
+    config,
+    runner=None,
+    resolver=None,
+    *,
+    retry_failed=False,
+    sample_times=None,
+    pilot=False,
+):
+    started = time.monotonic()
+    manifest = require_v2(store)
+    check_engine(store)
+    profile = load_profile(config.layout_profile)
+    if profile.get("calibrated") is False:
+        raise ValueError("Midbeast profile requires native-frame calibration in review")
+    if (profile.get("calibration_source_sha256")
+            and profile["calibration_source_sha256"] != manifest["source"]["sha256"]):
+        raise ValueError("This calibrated profile belongs to another source; create a new profile revision")
+    enabled_fields(profile)
+    signature, prepared = runtime(store, config)
+    key = store.fingerprint(config)
+    parent = store
+    if pilot:
+        # Same-key retries retain their original costs; changed readers get a cold pilot.
+        store = Store(parent.path("pilots/" + key))
+        store.install_signals()
+        for name, data in (("manifest.json", manifest), ("config.json", config.to_dict()),
+                           ("intake_runtime.json", signature)):
+            atomic_json(store.path(name), data)
+    elif sample_times is None:
+        _require_release(store, config, profile, signature, key)
+    targets, selected = _sampling_targets(manifest, config, sample_times, pilot)
+    tasks = _resume_tasks(store, key, targets)
+    worker = runner
+    if worker is None and prepared is not None:
+        worker = LocalVLRunner(store, config.vl_python or os.environ["LEAGUE_VL_PYTHON"],
+                               config.asset_cache, signature=prepared)
+    pool = ThreadPoolExecutor(max_workers=config.reader_workers)
+    reported = False
+    try:
+        reader = _IntakeReader(store, config, manifest, profile, signature, key, worker, pool)
+        for sample_time, (timestamp, image) in zip(
+                targets, decoded_frames(store, manifest, config.fps, targets), strict=True):
+            store.check_stop()
+            task_id = uid("task", key, timestamp)
+            if task_id in tasks and (not retry_failed or tasks[task_id]["status"] == "ok"):
+                reader.tracker.state = tasks[task_id]["playback_tracker"]
+                continue
+            task = reader.read(sample_time, timestamp, image)
+            tasks[task_id] = task
+        result = reader.report(tasks, targets, selected, pilot, parent, started)
         reported = True
         if not result["operational_passed"]:
             raise ValueError("Processing incomplete; committed evidence retained")
-        store.commit_stage(
-            (
-                "intake-pilot"
-                if pilot
-                else "intake-benchmark-extract" if selected is not None else "annotate"
-            ),
-            key,
-            **result,
-        )
+        stage = "intake-pilot" if pilot else "intake-benchmark-extract" if selected is not None else "annotate"
+        store.commit_stage(stage, key, **result)
         if pilot and not result["runtime_passed"]:
-            raise ValueError(
-                "Pilot failed the L40S target, memory or four-hour intake budget"
-            )
+            raise ValueError("Pilot failed the L40S target, memory or four-hour intake budget")
         return result
     finally:
         pool.shutdown(wait=True, cancel_futures=True)

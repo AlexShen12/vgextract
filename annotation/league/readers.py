@@ -3,20 +3,22 @@
 from __future__ import annotations
 
 import csv
-import contextlib
-import hashlib
 import io
-import json
 import os
 from pathlib import Path
 import re
-import selectors
 import subprocess
-import sys
-import tempfile
-import threading
 import unicodedata
-from functools import lru_cache
+
+
+def unknown(reason, raw=None, attempts=()):
+    return {
+        "acceptance": "unknown",
+        "reason": reason,
+        "value": None,
+        "raw_text": raw,
+        "attempts": list(attempts),
+    }
 
 
 def parse_text(raw: str, parser: str):
@@ -131,90 +133,6 @@ def tesseract(path: Path, alternate=False, whitelist=None) -> dict:
     }
 
 
-class OCRWorkerError(RuntimeError):
-    """An unhealthy worker aborts intake instead of restarting for every field."""
-
-
-class PaddleWorker:
-    """One isolated, persistent recognition worker; protocol errors fail closed."""
-
-    def __init__(self, python, cache, timeout=40):
-        self.python, self.cache, self.timeout = python, Path(cache), timeout
-        self.process = None
-        self.lock = threading.Lock()
-        self.failure = None
-
-    def request(self, payload):
-        with self.lock:
-            if self.failure:
-                raise OCRWorkerError(self.failure)
-            return self._request(payload)
-
-    def _request(self, payload):
-        if self.process is None:
-            environment = {
-                **os.environ,
-                "PYTHONNOUSERSITE": "1",
-                "PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK": "True",
-            }
-            environment.pop("PYTHONPATH", None)
-            environment.pop("PYTHONHOME", None)
-            self.process = subprocess.Popen(
-                [
-                    self.python,
-                    "-u",
-                    str(Path(__file__).with_name("ocr_worker.py")),
-                    "--cache",
-                    str(self.cache),
-                ],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=None,
-                text=True,
-                env=environment,
-                bufsize=1,
-            )
-        try:
-            self.process.stdin.write(json.dumps(payload) + "\n")
-            self.process.stdin.flush()
-            with selectors.DefaultSelector() as selector:
-                selector.register(self.process.stdout, selectors.EVENT_READ)
-                if not selector.select(self.timeout):
-                    raise RuntimeError("OCR worker timed out")
-            line = self.process.stdout.readline()
-            if not line:
-                raise RuntimeError("OCR worker exited without a response")
-            result = json.loads(line)
-            if result.get("error"):
-                raise RuntimeError(result["error"])
-            return result
-        except (OSError, ValueError, RuntimeError) as exc:
-            self.failure = f"OCR worker failed: {exc}"
-            self.close()
-            raise OCRWorkerError(self.failure) from exc
-
-    def close(self):
-        if self.process is not None:
-            process, self.process = self.process, None
-            if process.stdin:
-                with contextlib.suppress(OSError):
-                    process.stdin.close()
-            try:
-                process.wait(timeout=3)
-            except subprocess.TimeoutExpired:
-                process.kill()
-                process.wait()
-            process.stdout.close()
-
-
-def preprocess_crop(image, alternate=False):
-    from PIL import ImageOps
-
-    scaled = image.resize((image.width * 4, image.height * 4))
-    scaled = ImageOps.expand(scaled, border=12, fill="black")
-    return ImageOps.autocontrast(ImageOps.grayscale(scaled)) if alternate else scaled
-
-
 def measure_bar(image, field):
     import numpy as np
 
@@ -245,114 +163,6 @@ def measure_bar(image, field):
         "value": float(filled.mean()),
         "reader": {"engine": "bar-color-v1"},
     }
-
-
-@lru_cache(maxsize=4)
-def reader_implementation(kind):
-    import inspect
-
-    components = (
-        [measure_bar]
-        if kind == "bar"
-        else (
-            [IconMatcher]
-            if kind == "icon"
-            else [FieldReader.read, preprocess_crop, tesseract, parse_text]
-        )
-    )
-    return hashlib.sha256(
-        "\n".join(inspect.getsource(component) for component in components).encode()
-    ).hexdigest()
-
-
-class FieldReader:
-    def __init__(self, profile, worker=None):
-        self.profile, self.worker = profile, worker
-
-    def read(self, image, field, evidence_dir: Path):
-        thresholds = self.profile["thresholds"]
-        if field["reader"] == "bar":
-            return measure_bar(image, field)
-        attempts = []
-        for number in range(2):
-            scaled = preprocess_crop(image, bool(number))
-            path = evidence_dir / f"attempt-{number}.png"
-            scaled.save(path)
-            result = {}
-            try:
-                if field["reader"] == "text" or number:
-                    if self.worker is None:
-                        raise RuntimeError("Paddle OCR worker is unavailable")
-                    result = self.worker.request(
-                        {
-                            "path": str(path.resolve()),
-                            "language": field.get("language", "english"),
-                        }
-                    )
-                else:
-                    whitelist = {
-                        "gold": "0123456789.kK",
-                        "clock": "0123456789:",
-                        "health": "0123456789/",
-                        "kda": "0123456789/",
-                        "cooldown": "0123456789.",
-                    }.get(field["parser"], "0123456789")
-                    result = tesseract(path, whitelist=whitelist)
-                value = parse_text(result["raw_text"], field["parser"])
-                minimum = thresholds[
-                    "number" if field["reader"] == "number" else "text"
-                ]
-                accepted = result["score"] >= minimum
-                attempts.append(
-                    {**result, "value": value, "accepted": accepted, "path": str(path)}
-                )
-            except OCRWorkerError:
-                raise
-            except (
-                ValueError,
-                RuntimeError,
-                OSError,
-                subprocess.SubprocessError,
-            ) as exc:
-                attempts.append(
-                    {**result, "accepted": False, "error": str(exc), "path": str(path)}
-                )
-            if attempts[-1]["accepted"]:
-                break
-        valid = [a for a in attempts if a.get("value") is not None]
-        plausible = [
-            a for a in valid if a.get("score", 0) >= thresholds.get("plausibility", 0.5)
-        ]
-        if (
-            plausible
-            and len({json.dumps(a["value"], sort_keys=True) for a in plausible}) > 1
-        ):
-            return {
-                "acceptance": "unknown",
-                "reason": "conflicting reader results",
-                "value": None,
-                "raw_text": valid[0]["raw_text"],
-                "attempts": attempts,
-            }
-        accepted = next((a for a in attempts if a["accepted"]), None)
-        return {
-            "acceptance": "accepted" if accepted else "unknown",
-            "reason": (
-                "validated field reading"
-                if accepted
-                else "recognition or grammar rejected"
-            ),
-            "value": accepted["value"] if accepted else None,
-            "raw_text": (accepted or (valid[-1] if valid else attempts[-1])).get(
-                "raw_text"
-            ),
-            "reader": (
-                {k: accepted[k] for k in ("engine", "score") if k in accepted}
-                if accepted
-                else {}
-            ),
-            "attempts": attempts,
-        }
 
 
 class IconMatcher:

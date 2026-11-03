@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 import hashlib
 import json
 from pathlib import Path
@@ -12,12 +11,13 @@ from unittest.mock import Mock, patch
 
 from PIL import Image
 
-from annotation.league.core import Config, Store, StopRequested, atomic_json
+from annotation.league.core import Config, Store, StopRequested, atomic_json, read_json
 from annotation.league.hybrid_intake import enabled_fields, _panel_state, pilot_windows
 from annotation.league.intake_profile import load_profile
 from annotation.league.local_models import ModelUnavailable, checkpoint, LocalVLRunner
 from annotation.league.playback import PlaybackTracker
-from annotation.league.vl_reader import NumericReader, VLReader, validate_transcriptions
+from annotation.league.numeric_reader import NumericReader
+from annotation.league.vl_reader import VLReader, validate_transcriptions
 from annotation.league.experiments import (
     validate_events,
     score_events,
@@ -25,7 +25,6 @@ from annotation.league.experiments import (
     audio_metrics,
     score_tracking,
     event_messages,
-    load_protocol,
 )
 from annotation.league.timeline import fuse_observations
 from annotation.league.questions import construct
@@ -166,34 +165,21 @@ class TranscriptionTests(unittest.TestCase):
                 self.assertEqual(runner.complete.call_count, 1)
                 self.assertFalse(store.path("request/result.json").exists())
 
-    def test_one_numeric_attempt_no_paddle(self):
-        with tempfile.TemporaryDirectory() as temporary, patch(
-            "annotation.league.numeric_reader.tesseract",
-            return_value={"raw_text": "12", "score": 0.99, "engine": "tesseract"},
-        ) as tess, patch(
-            "annotation.league.readers.PaddleWorker",
-            side_effect=AssertionError("Paddle started"),
-        ):
-            reading = NumericReader().read(
-                Image.new("RGB", (12, 12)),
-                {"reader": "number", "parser": "level"},
-                Path(temporary),
-            )
-            self.assertEqual(reading["value"], 12)
-            self.assertEqual(tess.call_count, 1)
-
-    def test_blank_numeric_crop_abstains_without_fallback(self):
-        with tempfile.TemporaryDirectory() as temporary, patch(
-            "annotation.league.numeric_reader.tesseract",
-            return_value={"raw_text": "", "score": 0},
-        ) as tess:
-            result = NumericReader().read(
-                Image.new("RGB", (12, 12)),
-                {"reader": "number", "parser": "integer"},
-                Path(temporary),
-            )
-        self.assertEqual(result["acceptance"], "unknown")
-        self.assertEqual(tess.call_count, 1)
+    def test_numeric_reader_uses_one_attempt_for_success_and_blank_input(self):
+        cases = (
+            ("readable_level", {"raw_text": "12", "score": .99, "engine": "tesseract"}, "level", "accepted", 12),
+            ("blank_integer", {"raw_text": "", "score": 0}, "integer", "unknown", None),
+        )
+        for name, raw, parser, acceptance, value in cases:
+            with self.subTest(case=name), tempfile.TemporaryDirectory() as temporary, patch(
+                "annotation.league.numeric_reader.tesseract", return_value=raw
+            ) as tess:
+                reading = NumericReader().read(
+                    Image.new("RGB", (12, 12)), {"reader": "number", "parser": parser}, Path(temporary)
+                )
+                self.assertEqual(reading["acceptance"], acceptance)
+                self.assertEqual(reading["value"], value)
+                self.assertEqual(tess.call_count, 1)
 
     def test_default_field_assignments_and_deferred_assets(self):
         profile = load_profile("midbeast-1080p-v1")
@@ -349,16 +335,18 @@ class CheckpointTests(unittest.TestCase):
 
 class PlaybackTests(unittest.TestCase):
     def test_rewind_gap_and_pauses_use_source_time_and_new_segments(self):
+        from PIL import Image
+        still = Image.new("RGB", (64, 36), "gray")
         tracker = PlaybackTracker("source")
-        first = tracker.update(0, 100)
-        second = tracker.update(1, 101)
-        rewind = tracker.update(2, 100)
+        first = tracker.update(0, 100, still)
+        second = tracker.update(1, 101, still)
+        rewind = tracker.update(2, 100, still)
         self.assertEqual(first["playback_segment_id"], second["playback_segment_id"])
         self.assertNotEqual(first["playback_segment_id"], rewind["playback_segment_id"])
         self.assertTrue(rewind["revisited_game_clock"])
         self.assertFalse(rewind["continuity_verified"])
-        tracker.update(3, 100)
-        pause = tracker.update(4, 100)
+        tracker.update(3, 100, still)
+        pause = tracker.update(4, 100, still)
         self.assertEqual(pause["playback_state"], "paused")
         gap = tracker.update(20, 101)
         self.assertIn("unsampled_gap", gap["discontinuity_reasons"])
@@ -429,6 +417,66 @@ class PlaybackTests(unittest.TestCase):
 
 
 class ExperimentTests(unittest.TestCase):
+    def experiment_store(self):
+        from annotation.league.media import file_hash
+
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        store = Store(Path(temporary.name))
+        video = store.path('video.mp4')
+        video.write_bytes(b'source fixture')
+        atomic_json(store.path('manifest.json'), {
+            'source': {'path': str(video), 'sha256': file_hash(video), 'width': 1920, 'height': 1080},
+            'interval': [0, 300],
+        })
+        store.write('observations', [{'id': 'preserved', 'value': 9}])
+        return store
+
+    def test_event_failure_continues_other_suites_but_cancellation_preserves_partial_report(self):
+        from annotation.league.experiments import experiment
+
+        for error in (ValueError('bad response'), StopRequested('cancelled')):
+            with self.subTest(error=type(error).__name__):
+                store = self.experiment_store()
+                before = store.path('observations.jsonl').read_bytes()
+                with patch('annotation.league.experiments.load_protocol', return_value={'clips': []}), patch(
+                    'annotation.league.experiments.compare_events', side_effect=[error, {'status': 'completed_experimental'}]
+                ) as compare, patch.dict('os.environ', {'LEAGUE_TRACKING_PYTHON': ''}):
+                    if isinstance(error, StopRequested):
+                        with self.assertRaises(StopRequested):
+                            experiment(store, Config({}, []), 'events', draft=True)
+                    else:
+                        result = experiment(store, Config({}, []), 'events', draft=True)
+                        self.assertEqual(result['status'], 'partial_experimental')
+                        self.assertEqual(result['results']['intake']['status'], 'failed')
+                        self.assertEqual(result['results']['event_alternative']['status'], 'completed_experimental')
+                        self.assertEqual(result['results']['tracking']['status'], 'blocked')
+                saved = read_json(next(store.path('experiments').glob('*/report.json')))
+                self.assertEqual(saved['status'], 'interrupted' if isinstance(error, StopRequested) else 'partial_experimental')
+                self.assertEqual(compare.call_count, 1 if isinstance(error, StopRequested) else 2)
+                self.assertEqual(store.path('observations.jsonl').read_bytes(), before)
+
+    def test_all_suites_continue_without_audio_after_crop_and_audio_failures(self):
+        from annotation.league.experiments import experiment
+
+        store = self.experiment_store()
+        def protocol(store, path, kind, draft):
+            if kind == 'audio':
+                raise ValueError('bad audio labels')
+            return {'clips': []}
+        with patch('annotation.league.intake_benchmark.load_labels', side_effect=ValueError('bad crop labels')), patch(
+            'annotation.league.experiments.load_protocol', side_effect=protocol
+        ), patch('annotation.league.experiments.compare_events', return_value={'status': 'completed_experimental'}) as compare, patch(
+            'annotation.league.experiments.run_worker', return_value={'clips': []}
+        ), patch.dict('os.environ', {'LEAGUE_TRACKING_PYTHON': 'fixture'}):
+            result = experiment(store, Config({}, []), 'all', draft=True)
+        self.assertEqual(result['status'], 'partial_experimental')
+        self.assertEqual(result['results']['crops']['status'], 'failed')
+        self.assertEqual(result['results']['audio']['status'], 'failed')
+        self.assertEqual(compare.call_count, 2)
+        self.assertTrue(all(call.args[-2] is None for call in compare.call_args_list))
+        self.assertEqual(result['results']['tracking']['clips'], [])
+
     def test_events_validate_and_report_one_to_one_matches(self):
         clip = {
             "id": "clip",
@@ -504,98 +552,82 @@ class ExperimentTests(unittest.TestCase):
         from annotation.league.experiments import experiment
         from annotation.league.media import file_hash
 
-        with tempfile.TemporaryDirectory() as temporary:
-            store = Store(Path(temporary))
-            video = store.path("clip.mp4")
-            video.write_bytes(b"local video")
-            atomic_json(
-                store.path("manifest.json"),
-                {
-                    "schema_version": 2,
-                    "source": {
-                        "path": str(video),
-                        "sha256": file_hash(video),
-                        "width": 1920,
-                        "height": 1080,
-                    },
-                    "interval": [0, 300],
-                },
-            )
-            store.write("observations", [{"id": "preserve", "value": 9}])
-            before = store.path("observations.jsonl").read_bytes()
-            config = Config({}, [], evaluation_enabled=False)
-            clips = [
-                {
-                    "id": f"c{i}",
-                    "start": i * 10,
-                    "end": i * 10 + 8,
-                    "split": "development" if i < 10 else "held_out",
-                    "events": [],
-                }
-                for i in range(20)
-            ]
-            tracking = [
-                {**c, "prompts": [{"object_id": 1, "point": [10, 10]}]}
-                for c in clips[:5]
-            ]
-            events = []
-
-            class Worker:
-                def __init__(self, store, python, cache, role):
-                    self.role = role
-                    self.identity = {"role": role}
-                    self.peak_memory_bytes = 1
-                    events.append("load:" + role)
-
-                def complete(self, *args, **kwargs):
-                    return {
-                        "finish_reason": "stop",
-                        "text": json.dumps({"events": [], "abstain": False}),
-                        "wall_seconds": 1,
-                        "peak_memory_bytes": 1,
-                    }
-
-                def close(self):
-                    events.append("close:" + self.role)
-
-            def protocol(store, path, kind, draft):
-                return {"clips": clips if kind == "events" else tracking}
-
-            def tracking_worker(*args):
-                events.append("tracking")
-                return {"clips": [], "experimental": True}
-
-            audit = {
-                "video": str(video),
-                "video_sha256": file_hash(video),
-                "frames_dir": str(store.root),
+        store = self.experiment_store()
+        video = store.path("video.mp4")
+        before = store.path("observations.jsonl").read_bytes()
+        config = Config({}, [], evaluation_enabled=False)
+        clips = [
+            {
+                "id": f"c{i}",
+                "start": i * 10,
+                "end": i * 10 + 8,
+                "split": "development" if i < 10 else "held_out",
+                "events": [],
             }
-            with patch(
-                "annotation.league.experiments.load_protocol", side_effect=protocol
-            ), patch(
-                "annotation.league.experiments.prepare_clip", return_value=audit
-            ), patch(
-                "annotation.league.experiments.LocalVLRunner", Worker
-            ), patch(
-                "annotation.league.experiments.run_worker", side_effect=tracking_worker
-            ), patch.dict(
-                "os.environ", {"LEAGUE_TRACKING_PYTHON": "fixture"}
-            ):
-                result = experiment(store, config, "events", draft=True)
-            self.assertEqual(
-                events,
-                [
-                    "load:intake",
-                    "close:intake",
-                    "load:event_alternative",
-                    "close:event_alternative",
-                    "tracking",
-                ],
-            )
-            self.assertEqual(store.path("observations.jsonl").read_bytes(), before)
-            self.assertTrue(result["experimental"])
-            self.assertFalse(result["production_evidence_modified"])
-            self.assertEqual(store.rows("event_candidates"), [])
+            for i in range(20)
+        ]
+        tracking = [
+            {**c, "prompts": [{"object_id": 1, "point": [10, 10]}]}
+            for c in clips[:5]
+        ]
+        events = []
+
+        class Worker:
+            def __init__(self, store, python, cache, role):
+                self.role = role
+                self.identity = {"role": role}
+                self.peak_memory_bytes = 1
+                events.append("load:" + role)
+
+            def complete(self, *args, **kwargs):
+                return {
+                    "finish_reason": "stop",
+                    "text": json.dumps({"events": [], "abstain": False}),
+                    "wall_seconds": 1,
+                    "peak_memory_bytes": 1,
+                }
+
+            def close(self):
+                events.append("close:" + self.role)
+
+        def protocol(store, path, kind, draft):
+            return {"clips": clips if kind == "events" else tracking}
+
+        def tracking_worker(*args):
+            events.append("tracking")
+            return {"clips": [], "experimental": True}
+
+        audit = {
+            "video": str(video),
+            "video_sha256": file_hash(video),
+            "frames_dir": str(store.root),
+        }
+        with patch(
+            "annotation.league.experiments.load_protocol", side_effect=protocol
+        ), patch(
+            "annotation.league.experiments.prepare_clip", return_value=audit
+        ), patch(
+            "annotation.league.experiments.LocalVLRunner", Worker
+        ), patch(
+            "annotation.league.experiments.run_worker", side_effect=tracking_worker
+        ), patch.dict(
+            "os.environ", {"LEAGUE_TRACKING_PYTHON": "fixture"}
+        ):
+            result = experiment(store, config, "events", draft=True)
+        self.assertEqual(
+            events,
+            [
+                "load:intake",
+                "close:intake",
+                "load:event_alternative",
+                "close:event_alternative",
+                "tracking",
+            ],
+        )
+        self.assertEqual(store.path("observations.jsonl").read_bytes(), before)
+        self.assertTrue(result["experimental"])
+        self.assertFalse(result["production_evidence_modified"])
+        self.assertEqual(store.rows("event_candidates"), [])
 
     def test_tracking_measures_masks_not_game_events(self):
         with tempfile.TemporaryDirectory() as temporary:

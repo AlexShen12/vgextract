@@ -1,6 +1,5 @@
 """Explicit observer and solver contracts. No source metadata is a model input."""
 import json
-from .core import COMPOSITE_CRITERIA, EVENTS
 
 SOLVER = """Answer a retrospective visual-memory question using only this ordered video
 sequence, its source timestamps, and permitted patch-specific static references. Do not

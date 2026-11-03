@@ -2,8 +2,16 @@
 
 The default is a reduced Midbeast intake: native field crops → numeric Tesseract,
 bounded Qwen transcription and direct bar measurement → schema-2 observations →
-fusion → supported visual questions → optional independent solver evaluation.
+fusion → evidence-backed gameplay captions and supported visual questions → optional independent solver evaluation.
 **Release acceptance is pending. Full-video intake remains gated.**
+
+The opt-in `caption-pilot --start <source seconds> --end <source seconds> [--infer]`
+adds selected-player scene proposals and adaptive caption clips in isolated
+`experiments/captions/` artifacts. Review them at `/captions`; independent source
+labels live at `/caption-labels`. `experiment --suite captions` initializes,
+freezes and scores a separate caption benchmark. CPU-only runs reuse compatible
+scene caches and report missing scene evidence. See
+[caption workflow and acceptance](../../docs/league-caption-generation.md).
 
 ## Source and enabled fields
 
@@ -58,7 +66,8 @@ run directory instead of mixing engines.
 | `prepare` | Pin source hash/geometry and save layout previews. |
 | `processor-preview` | Show enabled native crops and preprocessing without GPU inference. |
 | `annotate` | Run the reduced readers, bounded validation and extraction gates. |
-| `run` | Prepare, annotate, fuse, generate supported questions, optionally evaluate, report. |
+| `generate-captions` | Fuse current evidence and write timestamped gameplay captions with structured claims and bindings; no GPU call. |
+| `run` | Prepare, annotate, fuse, generate captions and supported questions, optionally evaluate, report. |
 | `review` | Inspect native/processed evidence, uncertainty, corrections and calibration. |
 | `intake-benchmark --labels …` | Score exact text, parsed numbers, bars and presence separately. |
 | `experiment --suite crops\|events\|audio\|all` | Separate experimental artifacts; no production evidence changes. |
@@ -80,6 +89,29 @@ tokens and latency are retained. Identical compatible crop contents may reuse
 recognition at each sampled timestamp; no continuous visibility is inferred.
 Numeric preprocessing and VL reading have separate cache keys; unrelated mechanics
 or solver changes do not repeat intake. Model manifests verify file SHA256 offline.
+
+## Gameplay captions
+
+```bash
+python -m annotation.league --run-dir data/league_runs/midbeast-OLLZBe5-fg4-v2 generate-captions
+```
+
+Writes `captions.jsonl`, `caption_coverage.json`, `caption_omissions.jsonl`, and a
+resumable `stages/generate-captions.json` marker. Each caption contains source-video
+seconds, the source SHA256, text, typed claims, actor/target bindings and typed
+references to states, normalized observations, events and source frames. The
+review dropdown exposes captions and their source evidence. Correct upstream
+readings/events and rerun `generate-captions` to regenerate wording and claims.
+
+The renderer consumes accepted fusion evidence and uses fixed wording, with zero
+additional VLM output tokens. Unknown champion identities remain HUD slot labels.
+CS comparisons require resolved identity and verified playback continuity; they
+never establish individual last hits. A last hit additionally requires a bound
+minion and linked action/death frames. An ability hit requires a named ability,
+bound target and linked cast/impact frames. Experimental actions remain excluded;
+the production scene reader is still deferred, so current intake normally emits
+displayed-state captions. Generated captions remain unreviewed and do not certify
+their own factual accuracy. See [caption contracts and token budget](../../docs/league-caption-generation.md).
 
 ## Longleaf deployment
 
@@ -157,6 +189,23 @@ separately. Passing code tests cannot substitute for these gates.
 All artifacts live under `experiments/`; failures save partial reports. They never
 overwrite accepted observations or automatically feed question references.
 
+For player actions, `action-window --start 30 --end 38` preserves prepare-only
+behavior. Add `--detect` for CPU color-based player binding, CS/gold observations
+and recall; add `--infer` for anonymous Qwen scene interpretation. Ability icons
+are the sole player identity source. Version-3 action results and independent
+labels remain isolated from production. Cache official descriptions with
+`cache-abilities --reference-version 16.13.1 --champions all`; the reference
+version never establishes the footage patch. The existing review app offers
+`/actions` and a prediction-free `/action-labels` editor. See
+[the action workflow](../../docs/league-champion-action-recognition.md).
+
+New action runs use v3 only. `action_pipeline.py` holds shared frame/HUD helpers;
+`action_benchmark.py` holds shared label/scoring helpers. The original and v2
+execution APIs and the retired Paddle worker/dependency files have been removed.
+Historical v2/v3 artifacts and corrections remain available in review. Existing
+labels and caches are preserved; source-code fingerprints require fresh validation
+after a code change, while compatible v3 model responses can still be reused.
+
 - `crops`: isolated transcription diagnostics against the 40-frame labels.
 - `events`: Qwen and BF16 InternVL3.5-14B-HF sequentially on the same twenty
   eight-second clips at 2 FPS, ten development/ten held-out. Native PNG evidence,
@@ -188,3 +237,11 @@ requirement files. Official implementation references:
 
 See `VALIDATION.md` for measured status and
 `docs/league-intake-implementation-handoff.md` for continuation instructions.
+
+## Qwen3.5 observation experiments
+
+Four isolated suites (`hp-vlm`, `scene-identity`, `ability-alignment`,
+`cooldown-identity`) and the explicit `qwen35` aggregate compare smaller HP readers,
+champion boxes/name memory, HUD-to-scene ability association, and cooldown-resistant
+identity. Existing `all` behavior is preserved. See the
+[commands, labels, Longleaf runtime and evidence rules](../../docs/league-qwen35-experiments.md).

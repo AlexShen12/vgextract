@@ -24,7 +24,7 @@ CAPABILITIES = ("episodic_retrieval", "persistent_state", "cumulative_counting",
                 "event_linking", "trajectory_memory", "recurring_behavior")
 EVENTS = {"attack", "cast", "channel", "movement", "purchase", "death", "recall",
           "state_transition", "encounter", "skirmish", "teamfight", "reset",
-          "objective_contest", "objective_takedown", "tower_destruction"}
+          "objective_contest", "objective_takedown", "tower_destruction", "minion_last_hit", "ability_hit"}
 COMPOSITE_CRITERIA = {
     "encounter": {"opposing_entities_visible"},
     "skirmish": {"opposing_entities_visible", "damage_or_cast_visible"},
@@ -33,6 +33,8 @@ COMPOSITE_CRITERIA = {
     "objective_takedown": {"objective_death_or_notice_visible"},
     "tower_destruction": {"structure_destruction_or_notice_visible"},
     "reset": {"fountain_arrival_visible"},
+    "minion_last_hit": {"minion_death_visible", "actor_action_linked_to_death"},
+    "ability_hit": {"ability_cast_visible", "target_impact_visible", "cast_linked_to_impact"},
 }
 
 
@@ -333,6 +335,8 @@ class Store:
             extra = {"max_questions": config.max_questions, "mechanics": config.mechanics,
                      "mechanics_implementation":implementation_hash(["knowledge.py", "references.py"]) if config.mechanics else None,
                      "implementation": implementation_hash(["questions.py"])}
+        elif stage == "generate-captions":
+            extra = {"implementation": implementation_hash(["captions.py"])}
         elif stage == "fuse":
             extra = {"implementation": implementation_hash(["timeline.py", "normalization.py"])}
         elif stage in {"evaluate", "report"}:
@@ -348,7 +352,7 @@ class Store:
         corrections=self.corrections()
         if stage=="normalize":
             corrections=[c for c in corrections if c["target"]=="observations"]
-        elif stage in {"fuse","generate-qa"}:
+        elif stage in {"fuse","generate-qa","generate-captions"}:
             corrections=[c for c in corrections if c["target"]!="questions"]
         return digest({"stage": stage, "run": self.fingerprint(config), "stage_configuration": extra,
                        "dependencies": {n: digest(self.rows(n)) for n in dependencies},
@@ -362,11 +366,6 @@ def implementation_hash(names=None) -> str:
     root = Path(__file__).parent
     return digest({p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                    for p in sorted(root.glob("*.py")) if names is None or p.name in names})
-
-
-def _asset_signature(cache: str) -> str | None:
-    path = Path(cache)/"manifest.json"
-    return digest(read_json(path)) if path.exists() else None
 
 
 def runtime_info() -> dict:

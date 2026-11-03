@@ -79,6 +79,26 @@ if [[ "${LEAGUE_STAGE}" == experiment ]]; then
     args+=(--suite "${LEAGUE_SUITE:-all}")
     if [[ -n "${LEAGUE_LABELS:-}" ]]; then args+=(--labels "${LEAGUE_LABELS}"); fi
     if [[ "${LEAGUE_DRAFT:-0}" == 1 ]]; then args+=(--draft); fi
+    if [[ "${LEAGUE_FREEZE:-0}" == 1 ]]; then args+=(--freeze); fi
+    if [[ "${LEAGUE_INITIALIZE:-0}" == 1 ]]; then args+=(--initialize); fi
+    if [[ ( "${LEAGUE_SUITE:-all}" == actions || "${LEAGUE_SUITE:-all}" == captions ) && "${LEAGUE_ACTION_INFER:-0}" == 1 ]]; then args+=(--infer); fi
+fi
+
+if [[ "${LEAGUE_STAGE}" == action-window ]]; then
+    args+=(--start "${LEAGUE_START:-30}" --end "${LEAGUE_END:-38}" --fps "${LEAGUE_ACTION_FPS:-4}")
+    if [[ "${LEAGUE_ACTION_INFER:-0}" == 1 ]]; then args+=(--infer); fi
+    if [[ "${LEAGUE_ACTION_DETECT:-0}" == 1 ]]; then args+=(--detect); fi
+fi
+
+if [[ "${LEAGUE_STAGE}" == caption-pilot ]]; then
+    args+=(--start "${LEAGUE_START:-30}" --end "${LEAGUE_END:-60}")
+    if [[ "${LEAGUE_ACTION_INFER:-0}" == 1 ]]; then args+=(--infer); fi
+fi
+
+if [[ "${LEAGUE_STAGE}" == action-window || "${LEAGUE_STAGE}" == caption-pilot || "${LEAGUE_STAGE}" == experiment ]]; then
+    if [[ -n "${LEAGUE_ACTION_PROFILE:-}" ]]; then args+=(--action-profile "${LEAGUE_ACTION_PROFILE}"); fi
+    if [[ -n "${LEAGUE_ICON_REFERENCES:-}" ]]; then args+=(--icon-references "${LEAGUE_ICON_REFERENCES}"); fi
+    if [[ -n "${LEAGUE_ASSISTANCE:-}" && "${LEAGUE_STAGE}" != caption-pilot ]]; then args+=(--assistance "${LEAGUE_ASSISTANCE}"); fi
 fi
 
 # Request the confirmed L40S type explicitly. Preflight still records the actual

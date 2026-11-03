@@ -1,43 +1,24 @@
-"""Default version-2 intake: native field crops, bounded OCR, visual identities."""
+"""Schema-2 intake utilities and entry points for the reduced production readers."""
 
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from concurrent.futures import ThreadPoolExecutor
 import hashlib
-import logging
 import math
 import os
 import re
 from pathlib import Path
 import shutil
 import subprocess
-import sys
-import time
 
 from .core import (
-    StopRequested,
     atomic_json,
     digest,
-    now,
     read_json,
     uid,
     validate_observation,
 )
 from .intake_profile import UNSUPPORTED, layout_matches, load_profile
-from .visual_assets import verify_assets
-
-
-def runtime_signature(metadata, tesseract_version, assets):
-    from importlib.metadata import version
-
-    return {
-        **metadata,
-        "tesseract": tesseract_version,
-        "assets": digest(assets),
-        "driver_packages": {name: version(name) for name in ("numpy", "Pillow")},
-        "decoding_packages": {"av": version("av")},
-    }
 
 
 def tesseract_signature():
@@ -227,20 +208,6 @@ def evidence_crop(store, image):
         image.save(temporary, format="PNG")
         temporary.replace(path)
     return key, relative
-
-
-def read_cached_field(store, cached, crop, field, reader, matcher):
-    store.check_stop()
-    cached.parent.mkdir(parents=True, exist_ok=True)
-    started = time.monotonic()
-    result = (
-        matcher.read(crop, field)
-        if field["reader"] == "icon"
-        else reader.read(crop, field, cached.parent)
-    )
-    result["wall_seconds"] = time.monotonic() - started
-    atomic_json(cached, result)
-    return result
 
 
 def preview(store, config):

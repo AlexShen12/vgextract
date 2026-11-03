@@ -5,8 +5,8 @@ import math
 from collections import Counter
 from dataclasses import replace
 
-from .core import Store, StopRequested, atomic_json, digest, finite, read_json, uid, consistent_review, implementation_hash
-from .inference import InputBudgetError, ScopedResolver, infer_with_knowledge
+from .core import Store, StopRequested, atomic_json, finite, read_json, uid, consistent_review, implementation_hash
+from .inference import ScopedResolver, infer_with_knowledge
 from .media import Media
 from .prompts import solver_messages
 

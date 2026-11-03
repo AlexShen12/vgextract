@@ -1,0 +1,369 @@
+{
+  "schema_version": 2,
+  "id": "midbeast-actions-1080p-v2",
+  "size": [
+    1920,
+    1080
+  ],
+  "anchor_profile": "midbeast-1080p-v1",
+  "scene_box": [
+    0,
+    40,
+    1920,
+    980
+  ],
+  "hud_box": [
+    650,
+    930,
+    1225,
+    1080
+  ],
+  "clock_box": [
+    1854,
+    0,
+    1919,
+    26
+  ],
+  "thresholds": {
+    "ocr_confidence": 0.85,
+    "pixel_change": 0.08,
+    "identity_change": 0.12
+  },
+  "calibration_status": "development_geometry_and_palette_only",
+  "owners": [
+    {
+      "id": "selected",
+      "identity_box": [
+        650,
+        977,
+        738,
+        1080
+      ],
+      "slots": [
+        {
+          "id": "Q",
+          "kind": "ability",
+          "box": [
+            792,
+            982,
+            835,
+            1027
+          ],
+          "countdown_box": [
+            797,
+            996,
+            830,
+            1019
+          ]
+        },
+        {
+          "id": "W",
+          "kind": "ability",
+          "box": [
+            840,
+            982,
+            883,
+            1027
+          ],
+          "countdown_box": [
+            845,
+            996,
+            878,
+            1019
+          ]
+        },
+        {
+          "id": "E",
+          "kind": "ability",
+          "box": [
+            888,
+            982,
+            931,
+            1027
+          ],
+          "countdown_box": [
+            893,
+            996,
+            926,
+            1019
+          ]
+        },
+        {
+          "id": "R",
+          "kind": "ability",
+          "box": [
+            936,
+            982,
+            979,
+            1027
+          ],
+          "countdown_box": [
+            941,
+            996,
+            974,
+            1019
+          ]
+        },
+        {
+          "id": "summoner_1",
+          "kind": "summoner",
+          "box": [
+            985,
+            982,
+            1026,
+            1021
+          ],
+          "countdown_box": [
+            988,
+            995,
+            1024,
+            1019
+          ]
+        },
+        {
+          "id": "summoner_2",
+          "kind": "summoner",
+          "box": [
+            1028,
+            982,
+            1067,
+            1021
+          ],
+          "countdown_box": [
+            1030,
+            995,
+            1065,
+            1019
+          ]
+        },
+        {
+          "id": "item_1",
+          "kind": "item",
+          "box": [
+            1083,
+            982,
+            1115,
+            1015
+          ],
+          "countdown_box": [
+            1085,
+            991,
+            1113,
+            1008
+          ]
+        },
+        {
+          "id": "item_2",
+          "kind": "item",
+          "box": [
+            1119,
+            982,
+            1152,
+            1015
+          ],
+          "countdown_box": [
+            1121,
+            991,
+            1150,
+            1008
+          ]
+        },
+        {
+          "id": "item_3",
+          "kind": "item",
+          "box": [
+            1155,
+            982,
+            1188,
+            1015
+          ],
+          "countdown_box": [
+            1157,
+            991,
+            1186,
+            1008
+          ]
+        },
+        {
+          "id": "item_4",
+          "kind": "item",
+          "box": [
+            1083,
+            1018,
+            1115,
+            1050
+          ],
+          "countdown_box": [
+            1085,
+            1026,
+            1113,
+            1042
+          ]
+        },
+        {
+          "id": "item_5",
+          "kind": "item",
+          "box": [
+            1119,
+            1018,
+            1152,
+            1050
+          ],
+          "countdown_box": [
+            1121,
+            1026,
+            1150,
+            1042
+          ]
+        },
+        {
+          "id": "item_6",
+          "kind": "item",
+          "box": [
+            1155,
+            1018,
+            1188,
+            1050
+          ],
+          "countdown_box": [
+            1157,
+            1026,
+            1186,
+            1042
+          ]
+        },
+        {
+          "id": "trinket",
+          "kind": "item",
+          "box": [
+            1191,
+            982,
+            1224,
+            1015
+          ],
+          "countdown_box": [
+            1193,
+            991,
+            1222,
+            1008
+          ]
+        }
+      ]
+    }
+  ],
+  "body_binder": {
+    "palette": {
+      "color": "green",
+      "min_green": 100,
+      "green_red_gap": 25,
+      "green_blue_gap": 20
+    },
+    "search_box": [
+      0,
+      40,
+      1920,
+      970
+    ],
+    "exclude_boxes": [
+      [
+        0,
+        40,
+        285,
+        120
+      ],
+      [
+        1225,
+        730,
+        1611,
+        1080
+      ],
+      [
+        1605,
+        655,
+        1920,
+        1080
+      ],
+      [
+        500,
+        930,
+        1240,
+        1080
+      ]
+    ],
+    "bar_size": [
+      105,
+      10
+    ],
+    "level_cell": [
+      -25,
+      -7,
+      -3,
+      18
+    ],
+    "minimum_fill_pixels": 5,
+    "minimum_level_white": 0.015,
+    "minimum_level_dark": 0.55,
+    "minimum_border_dark": 0.65,
+    "health_tolerance": 0.18,
+    "maximum_step_pixels": 120,
+    "confirm_samples": 3,
+    "actor_region": [
+      -55,
+      15,
+      145,
+      180
+    ],
+    "hud_health_box": [
+      756,
+      1044,
+      1057,
+      1045
+    ]
+  },
+  "counter_fields": [
+    {
+      "field": "cs",
+      "box": [
+        1775,
+        0,
+        1814,
+        25
+      ],
+      "parser": "integer"
+    },
+    {
+      "field": "displayed_gold",
+      "box": [
+        1112,
+        1055,
+        1182,
+        1074
+      ],
+      "parser": "gold"
+    }
+  ],
+  "recall": {
+    "text_box": [
+      865,
+      762,
+      1030,
+      790
+    ],
+    "progress_box": [
+      755,
+      794,
+      1073,
+      806
+    ],
+    "countdown_box": [
+      878,
+      808,
+      993,
+      838
+    ],
+    "labels": [
+      "recall"
+    ],
+    "confirmation_samples": 2
+  }
+}

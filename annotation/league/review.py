@@ -11,7 +11,8 @@ from .core import (EVENTS, STATUSES, Config, Store, atomic_json, finite, now, re
 EDITABLE = {
     "observations": {"entity", "binding", "field", "value", "visibility", "confidence", "identity_evidence",
                      "raw_text", "parsed_value", "acceptance", "acceptance_reason"},
-    "events": {"kind", "actor", "target", "object", "location", "start", "end", "detail", "confidence", "evidence_ids", "criteria"},
+    "events": {"kind", "actor", "target", "object", "location", "start", "end", "detail", "confidence", "evidence_ids", "criteria",
+               "actor_binding", "target_binding", "visual_evidence", "ability"},
     "questions": {"prompt", "answer", "answer_type", "interval", "ambiguity_flags", "evidence_ids", "evidence_frame_ids", "evidence_times", "evidence_intervals"},
 }
 
@@ -45,6 +46,10 @@ def add_correction(store: Store, target: str, record_id: str, changes: dict, sta
     else:
         if record["kind"] not in EVENTS or not finite(record["start"]) or not finite(record["end"]) or not 0 <= record["start"] <= record["end"]:
             raise ValueError("Invalid event kind/timestamps")
+        if status != "rejected" and (record["kind"] in {"minion_last_hit", "ability_hit"} or any(
+                key in record for key in ("actor_binding", "target_binding", "visual_evidence"))):
+            from .captions import event_grounding
+            event_grounding(record, {key: f["time"] for key, f in frame_index(store).items()})
     manifest = read_json(store.path("manifest.json"))
     interval = record.get("interval", [record.get("start", record.get("time", 0)), record.get("end", record.get("time", 0))])
     if not manifest["interval"][0] <= interval[0] <= interval[1] <= manifest["interval"][1]:
@@ -59,7 +64,7 @@ def add_correction(store: Store, target: str, record_id: str, changes: dict, sta
                       "review_status": status, "reviewer": str(reviewer)[:120], "created_at": now()}
         atomic_json(store.path(f"corrections/{revision:08d}.json"), correction)
         atomic_json(store.path("invalidated.json"), {"revision": revision,
-                    "stages": (["normalize"] if target=="observations" else [])+["fuse", "generate-qa", "evaluate", "report"] if target != "questions"
+                    "stages": (["normalize"] if target=="observations" else [])+["fuse", "generate-captions", "generate-qa", "evaluate", "report"] if target != "questions"
                     else ["evaluate", "report"], "reason": "Human correction; rerun downstream stages"})
     return correction
 
@@ -88,6 +93,12 @@ def create_app(store: Store):
     from fastapi import FastAPI, HTTPException, Request
     from fastapi.responses import FileResponse, HTMLResponse
     app = FastAPI(title="League video evidence review")
+    from .action_review import install_action_routes
+    install_action_routes(app, store)
+    from .caption_review import install_caption_routes
+    install_caption_routes(app, store)
+    from .qwen35_review import install_qwen35_routes
+    install_qwen35_routes(app, store)
 
     @app.get("/", response_class=HTMLResponse)
     def home():
@@ -96,7 +107,7 @@ def create_app(store: Store):
     @app.get("/api/records")
     def records(target: str = "questions", offset: int = 0, limit: int = 200, q: str = ""):
         import json
-        if target not in EDITABLE and target not in {"previews","intake_previews"}:
+        if target not in EDITABLE and target not in {"previews","intake_previews", "captions"}:
             raise HTTPException(400, "Invalid target")
         if offset < 0 or not 1 <= limit <= 500:
             raise HTTPException(400, "Invalid pagination")
@@ -115,7 +126,7 @@ def create_app(store: Store):
     @app.get("/api/evidence/{record_id}")
     def evidence(record_id: str):
         # Resolve state -> observation -> source frame, without exposing filesystem paths.
-        rows = {r["id"]: r for target in ("questions", "events", "states", "observations", "previews", "intake_previews")
+        rows = {r["id"]: r for target in ("questions", "events", "states", "observations", "normalized_observations", "captions", "previews", "intake_previews")
                 for r in store.effective(store.rows(target), target)}
         frames = frame_index(store)
         seen, selected = set(), {}
@@ -134,8 +145,11 @@ def create_app(store: Store):
                 if artifact.is_file() and artifact.resolve().is_relative_to(store.root.resolve()):
                     data = read_json(artifact)
                     readings.append(data.get(row.get("field_id"), data))
-            for child in row.get("evidence_ids", []) + row.get("frame_ids", []) + row.get("evidence_frame_ids", []):
+            for child in (row.get("evidence_ids", []) + row.get("frame_ids", [])
+                          + row.get("evidence_frame_ids", []) + row.get("derived_from", [])):
                 visit(child)
+            for reference in row.get("evidence_refs", []):
+                visit(reference["id"])
             if row.get("frame_id"):
                 visit(row["frame_id"])
         visit(record_id)

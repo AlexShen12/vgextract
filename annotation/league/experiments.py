@@ -19,11 +19,9 @@ from .core import (
     digest,
     finite,
     read_json,
-    uid,
-    write_rows,
     implementation_hash,
 )
-from .hybrid_intake import pilot_windows, enabled_fields
+from .hybrid_intake import pilot_windows
 from .intake_profile import load_profile
 from .local_models import LocalVLRunner, isolated_environment, LOCK
 from .media import file_hash
@@ -699,6 +697,161 @@ def compare_events(store, config, protocol, audits, root, role, audio_result, dr
     return result
 
 
+def _record_experiment(report, name, operation, *args, failure_status="failed"):
+    """Keep isolated failures in the report while allowing cancellation to propagate."""
+    try:
+        result = operation(*args)
+    except StopRequested:
+        raise
+    except (ValueError, OSError, RuntimeError, subprocess.SubprocessError) as exc:
+        report["results"][name] = {"status": failure_status, "reason": str(exc), "experimental": True}
+        return None
+    report["results"][name] = result
+    return result
+
+
+def _crop_experiment(store, config, manifest, directory, draft):
+    from .intake import annotate
+    from .intake_benchmark import benchmark, load_labels
+
+    protocol = load_labels(
+        directory / "crops.json",
+        manifest["source"]["sha256"],
+        load_profile(config.layout_profile),
+        draft=draft,
+    )
+    isolated = Store(store.path("experiment-cache/crops"))
+    isolated.check_stop = store.check_stop
+    atomic_json(isolated.path("manifest.json"), manifest)
+    atomic_json(isolated.path("config.json"), config.to_dict())
+    annotate(
+        isolated,
+        config,
+        sample_times=[r["time"] for r in protocol["frames"]],
+    )
+    # Diagnostic benchmark cannot create a production release from an experiment.
+    result = benchmark(
+        isolated, config, directory / "crops.json", draft=True
+    )
+    result["artifact_directory"] = str(isolated.root)
+    return result
+
+
+def _audio_experiment(store, config, manifest, directory, draft):
+    protocol = load_protocol(
+        store, directory / "audio.json", "audio", draft
+    )
+    audio_key = digest(
+        {
+            "source": manifest["source"]["sha256"],
+            "intervals": [
+                (r["id"], r["start"], r["end"])
+                for r in protocol["segments"]
+            ],
+        }
+    )
+    return audio_experiment(
+        store,
+        config,
+        protocol,
+        store.path("experiment-cache/audio/" + audio_key),
+    )
+
+
+def _tracking_experiment(store, config, manifest, directory, audits, draft):
+    tracking_protocol = load_protocol(
+        store, directory / "tracking.json", "tracking", draft
+    )
+    clips = [
+        {
+            **clip,
+            **audits[clip["id"]],
+            "width": manifest["source"]["width"],
+            "height": manifest["source"]["height"],
+        }
+        for clip in tracking_protocol["clips"]
+    ]
+    python = os.environ.get("LEAGUE_TRACKING_PYTHON")
+    if not python:
+        raise ValueError(
+            "Set LEAGUE_TRACKING_PYTHON for the separate SAM 3.1 subexperiment"
+        )
+    tracking = run_worker(
+        store,
+        python,
+        {
+            "kind": "tracking",
+            "cache": config.asset_cache,
+            "clips": [
+                {
+                    k: v
+                    for k, v in clip.items()
+                    if k
+                    not in {
+                        "events",
+                        "verified",
+                        "reference_masks",
+                        "case_tags",
+                        "split",
+                    }
+                }
+                for clip in clips
+            ],
+        },
+        store.path(
+            "experiment-cache/tracking/"
+            + digest(
+                {
+                    "source": manifest["source"]["sha256"],
+                    "prompts": [clip["prompts"] for clip in clips],
+                    "inputs": [clip["video_sha256"] for clip in clips],
+                }
+            )
+        ),
+    )
+    tracking["metrics"] = (
+        score_tracking(
+            tracking_protocol["clips"], tracking["clips"], directory
+        )
+        if not draft
+        else None
+    )
+    return tracking
+
+
+def _event_experiments(store, config, manifest, directory, root, report, audio_result, draft):
+    protocol = load_protocol(store, directory / "events.json", "events", draft)
+    audits = {
+        clip["id"]: prepare_clip(
+            store,
+            manifest,
+            clip,
+            store.path(
+                "experiment-cache/clips/"
+                + digest(
+                    {
+                        "source": manifest["source"]["sha256"],
+                        "interval": [clip["start"], clip["end"]],
+                        "masks": config.masks,
+                        "decoder": implementation_hash(
+                            ["intake.py", "media.py"]
+                        ),
+                        "recipe": "native-png-masked-jpeg95-mp4-512w-2fps-v1",
+                    }
+                )
+            ),
+            config.masks,
+        )
+        for clip in protocol["clips"]
+    }
+    for role in ("intake", "event_alternative"):
+        _record_experiment(report, role, compare_events,
+                           store, config, protocol, audits, root, role, audio_result, draft)
+        atomic_json(root / "report.json", report)
+    _record_experiment(report, "tracking", _tracking_experiment,
+                       store, config, manifest, directory, audits, draft, failure_status="blocked")
+
+
 def experiment(store, config, suite, *, labels=None, initialize=False, draft=False):
     manifest = read_json(store.path("manifest.json"))
     if file_hash(Path(manifest["source"]["path"])) != manifest["source"]["sha256"]:
@@ -730,194 +883,14 @@ def experiment(store, config, suite, *, labels=None, initialize=False, draft=Fal
     }
     try:
         if suite in {"crops", "all"}:
-            try:
-                from .intake import annotate
-                from .intake_benchmark import benchmark, load_labels
-
-                protocol = load_labels(
-                    directory / "crops.json",
-                    manifest["source"]["sha256"],
-                    load_profile(config.layout_profile),
-                    draft=draft,
-                )
-                isolated = Store(store.path("experiment-cache/crops"))
-                isolated.check_stop = store.check_stop
-                atomic_json(isolated.path("manifest.json"), manifest)
-                atomic_json(isolated.path("config.json"), config.to_dict())
-                annotate(
-                    isolated,
-                    config,
-                    sample_times=[r["time"] for r in protocol["frames"]],
-                )
-                # Diagnostic benchmark cannot create a production release from an experiment.
-                report["results"]["crops"] = benchmark(
-                    isolated, config, directory / "crops.json", draft=True
-                )
-                report["results"]["crops"]["artifact_directory"] = str(isolated.root)
-            except StopRequested:
-                raise
-            except (
-                ValueError,
-                OSError,
-                RuntimeError,
-                subprocess.SubprocessError,
-            ) as exc:
-                report["results"]["crops"] = {
-                    "status": "failed",
-                    "reason": str(exc),
-                    "experimental": True,
-                }
+            _record_experiment(report, "crops", _crop_experiment,
+                               store, config, manifest, directory, draft)
         audio_result = None
         if suite in {"audio", "all"}:
-            try:
-                protocol = load_protocol(
-                    store, directory / "audio.json", "audio", draft
-                )
-                audio_key = digest(
-                    {
-                        "source": manifest["source"]["sha256"],
-                        "intervals": [
-                            (r["id"], r["start"], r["end"])
-                            for r in protocol["segments"]
-                        ],
-                    }
-                )
-                audio_result = audio_experiment(
-                    store,
-                    config,
-                    protocol,
-                    store.path("experiment-cache/audio/" + audio_key),
-                )
-                report["results"]["audio"] = audio_result
-            except StopRequested:
-                raise
-            except (
-                ValueError,
-                OSError,
-                RuntimeError,
-                subprocess.SubprocessError,
-            ) as exc:
-                report["results"]["audio"] = {
-                    "status": "failed",
-                    "reason": str(exc),
-                    "experimental": True,
-                }
+            audio_result = _record_experiment(report, "audio", _audio_experiment,
+                                             store, config, manifest, directory, draft)
         if suite in {"events", "all"}:
-            protocol = load_protocol(store, directory / "events.json", "events", draft)
-            audits = {
-                clip["id"]: prepare_clip(
-                    store,
-                    manifest,
-                    clip,
-                    store.path(
-                        "experiment-cache/clips/"
-                        + digest(
-                            {
-                                "source": manifest["source"]["sha256"],
-                                "interval": [clip["start"], clip["end"]],
-                                "masks": config.masks,
-                                "decoder": implementation_hash(
-                                    ["intake.py", "media.py"]
-                                ),
-                                "recipe": "native-png-masked-jpeg95-mp4-512w-2fps-v1",
-                            }
-                        )
-                    ),
-                    config.masks,
-                )
-                for clip in protocol["clips"]
-            }
-            for role in ("intake", "event_alternative"):
-                try:
-                    report["results"][role] = compare_events(
-                        store, config, protocol, audits, root, role, audio_result, draft
-                    )
-                except StopRequested:
-                    raise
-                except (
-                    ValueError,
-                    OSError,
-                    RuntimeError,
-                    subprocess.SubprocessError,
-                ) as exc:
-                    report["results"][role] = {
-                        "status": "failed",
-                        "reason": str(exc),
-                        "experimental": True,
-                    }
-                atomic_json(root / "report.json", report)
-            try:
-                tracking_protocol = load_protocol(
-                    store, directory / "tracking.json", "tracking", draft
-                )
-                clips = [
-                    {
-                        **clip,
-                        **audits[clip["id"]],
-                        "width": manifest["source"]["width"],
-                        "height": manifest["source"]["height"],
-                    }
-                    for clip in tracking_protocol["clips"]
-                ]
-                python = os.environ.get("LEAGUE_TRACKING_PYTHON")
-                if not python:
-                    raise ValueError(
-                        "Set LEAGUE_TRACKING_PYTHON for the separate SAM 3.1 subexperiment"
-                    )
-                tracking = run_worker(
-                    store,
-                    python,
-                    {
-                        "kind": "tracking",
-                        "cache": config.asset_cache,
-                        "clips": [
-                            {
-                                k: v
-                                for k, v in clip.items()
-                                if k
-                                not in {
-                                    "events",
-                                    "verified",
-                                    "reference_masks",
-                                    "case_tags",
-                                    "split",
-                                }
-                            }
-                            for clip in clips
-                        ],
-                    },
-                    store.path(
-                        "experiment-cache/tracking/"
-                        + digest(
-                            {
-                                "source": manifest["source"]["sha256"],
-                                "prompts": [clip["prompts"] for clip in clips],
-                                "inputs": [clip["video_sha256"] for clip in clips],
-                            }
-                        )
-                    ),
-                )
-                tracking["metrics"] = (
-                    score_tracking(
-                        tracking_protocol["clips"], tracking["clips"], directory
-                    )
-                    if not draft
-                    else None
-                )
-                report["results"]["tracking"] = tracking
-            except StopRequested:
-                raise
-            except (
-                ValueError,
-                OSError,
-                RuntimeError,
-                subprocess.SubprocessError,
-            ) as exc:
-                report["results"]["tracking"] = {
-                    "status": "blocked",
-                    "reason": str(exc),
-                    "experimental": True,
-                }
+            _event_experiments(store, config, manifest, directory, root, report, audio_result, draft)
         report["status"] = (
             "partial_experimental"
             if any(
