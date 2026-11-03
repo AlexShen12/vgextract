@@ -228,3 +228,25 @@ resolution, track loss, fresh activations and competing slots, HP digit validati
 overlay provenance, cache reuse/invalidation, source-only review, and partial GPU failure.
 Frozen real-footage scores still require independently completed labels. All recognition
 reports remain experimental; no automatic production promotion occurs.
+
+## Validation recorded November 3, 2026
+
+- The complete local suite passed **277 tests**, including 23 Qwen3.5 study tests.
+- Source-only preparation completed twenty neighborhoods (ten per split), 640 frames,
+  and 240 candidate HP crops before cross-split deduplication. References are unverified.
+- Browser inspection confirmed source video playback and native-frame, HP-crop and
+  HUD-strip loading in the source-only label viewer.
+- Longleaf job **8019878** completed with exit code `0:0` in **17 minutes 13 seconds**
+  on one actual **NVIDIA L40S**, eight CPUs and 96 GB host memory. All four models
+  completed the image request with normal stopping and valid strict JSON. Their
+  checkpoint files were SHA256-verified before offline execution.
+- Maximum sampled GPU memory was 39,266,025,472 bytes out of 47,667,740,672 bytes
+  (about 82.4%). These measurements include allocator reservations and warm-up;
+  they are not weight-only memory footprints or model-speed comparisons.
+
+The preflight evidence is under the Longleaf run's
+`experiments/qwen35/ac18d3144aa69d1f9f4758fc2b08f44573499e293c1bf4444dfb357eb8d3d306/`.
+Individual `preflight/*.json`, request status/response files, and `report.json` /
+`report.md` retain the runtime evidence. This qualifies image/JSON execution;
+HP, identity, tracking, action and ability-recognition accuracy remain unmeasured
+until independently verified labels are available.
