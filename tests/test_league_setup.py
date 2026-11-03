@@ -229,19 +229,24 @@ with open(os.environ["CALL_LOG"], "a") as stream:
     def test_qwen35_spooled_batch_dispatches_each_suite_and_preserves_failures(self):
         import shutil
         spool = self.root/"slurm_script"
-        shutil.copyfile(ROOT/"annotation/league/slurm_qwen35.sl", spool)
         self.env["LEAGUE_QWEN35_DRIVER"] = str(self.stub)
         self.stub.write_text(self.stub.read_text() + '\nsys.exit(int(os.environ.get("EXPERIMENT_STATUS", "0")))\n')
+        self.env.update(EXPERIMENT_STATUS="2", LEAGUE_SUITE="qwen35")
+        run_dir = str(Path(self.env["LEAGUE_WORK_ROOT"])/"league-midbeast-validation/run")
         for suite in ("hp-vlm", "scene-identity", "ability-alignment", "cooldown-identity", "qwen35"):
-            self.env["EXPERIMENT_STATUS"] = "2"
-            result = subprocess.run(["/bin/bash", str(spool), suite], cwd=self.root,
+            batch = "slurm_qwen35.sl" if suite == "qwen35" else f"slurm_qwen35_{suite.replace('-', '_')}.sl"
+            shutil.copyfile(ROOT/"annotation/league"/batch, spool)
+            result = subprocess.run(["/bin/bash", str(spool)], cwd=self.root,
                                     env=self.env, text=True, capture_output=True, timeout=10)
             self.assertEqual(result.returncode, 0, result.stderr)
             call = self.calls()[-1]
             self.assertEqual(call[call.index("--suite")+1], suite)
+            self.assertEqual(call[call.index("--run-dir")+1], run_dir)
+            self.assertNotIn("--labels", call)
             self.assertEqual(call[-2:], ["--draft", "--infer"])
+        shutil.copyfile(ROOT/"annotation/league/slurm_qwen35_hp_vlm.sl", spool)
         self.env["EXPERIMENT_STATUS"] = "1"
-        result = subprocess.run(["/bin/bash", str(spool), "hp-vlm", "preflight"],
+        result = subprocess.run(["/bin/bash", str(spool), "preflight"],
                                 cwd=self.root, env=self.env, text=True, capture_output=True, timeout=10)
         self.assertEqual(result.returncode, 1)
         self.assertEqual(self.calls()[-1][-1], "--preflight-only")
@@ -267,8 +272,8 @@ with open(os.environ["CALL_LOG"], "a") as stream:
 ''')
         result = self.run_script("submit_qwen35_longleaf.sh")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(self.calls()[-1][-3:],
-                         ["annotation/league/slurm_qwen35.sl", "ability-alignment", "preflight"])
+        self.assertEqual(self.calls()[-1][-2:],
+                         ["annotation/league/slurm_qwen35_ability_alignment.sl", "preflight"])
 
     def test_qwen35_batch_forwards_slurm_term_to_python(self):
         import signal
@@ -286,7 +291,7 @@ pathlib.Path(os.environ["READY_FILE"]).touch()
 while True:
     time.sleep(.05)
 ''')
-        process = subprocess.Popen(["/bin/bash", str(ROOT/"annotation/league/slurm_qwen35.sl")],
+        process = subprocess.Popen(["/bin/bash", str(ROOT/"annotation/league/slurm_qwen35_hp_vlm.sl")],
                                    cwd=self.root, env=self.env, stdout=subprocess.PIPE,
                                    stderr=subprocess.PIPE, text=True, start_new_session=True)
         try:

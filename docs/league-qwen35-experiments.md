@@ -82,31 +82,45 @@ bash annotation/league/submit_qwen35_longleaf.sh preflight
 LEAGUE_SUITE=hp-vlm bash annotation/league/submit_qwen35_longleaf.sh draft
 ```
 
-Direct `sbatch` submission uses `annotation/league/slurm_qwen35.sl`. Run these
-commands from the repository root on Longleaf:
+Each suite has its own Longleaf batch file. Submit the suite you want from the
+repository root:
 
 ```bash
-# Run all four experiments sequentially, in development/draft mode:
-sbatch annotation/league/slurm_qwen35.sl
-# Or select an experiment:
-sbatch annotation/league/slurm_qwen35.sl hp-vlm
-sbatch annotation/league/slurm_qwen35.sl scene-identity
-sbatch annotation/league/slurm_qwen35.sl ability-alignment
-sbatch annotation/league/slurm_qwen35.sl cooldown-identity
+sbatch annotation/league/slurm_qwen35_hp_vlm.sl
+sbatch annotation/league/slurm_qwen35_scene_identity.sl
+sbatch annotation/league/slurm_qwen35_ability_alignment.sl
+sbatch annotation/league/slurm_qwen35_cooldown_identity.sl
 
-# Optional second argument: preflight or frozen evaluation:
-sbatch annotation/league/slurm_qwen35.sl qwen35 preflight
-sbatch annotation/league/slurm_qwen35.sl hp-vlm evaluate
+# Optional mode: preflight or frozen evaluation:
+sbatch annotation/league/slurm_qwen35_hp_vlm.sl preflight
+sbatch annotation/league/slurm_qwen35_hp_vlm.sl evaluate
 # Override standard Slurm resources before the script name:
-sbatch --time=12:00:00 annotation/league/slurm_qwen35.sl scene-identity
+sbatch --time=12:00:00 annotation/league/slurm_qwen35_scene_identity.sl
 ```
 
+The suite files use the existing Longleaf run
+(`/work/users/a/l/alshen/league-midbeast-validation/run` by default), labels, and
+asset cache. Keep the same review server command and `/qwen35-labels` URL; the
+batch files and verifier still point to the same study. The run allows one batch
+writer at a time. Submit suites individually after the previous job finishes,
+or queue them with Slurm dependencies to keep separate job IDs and logs:
+
+```bash
+hp_job=$(sbatch --parsable annotation/league/slurm_qwen35_hp_vlm.sl)
+scene_job=$(sbatch --parsable --dependency=afterany:"${hp_job%%;*}" annotation/league/slurm_qwen35_scene_identity.sl)
+ability_job=$(sbatch --parsable --dependency=afterany:"${scene_job%%;*}" annotation/league/slurm_qwen35_ability_alignment.sl)
+sbatch --dependency=afterany:"${ability_job%%;*}" annotation/league/slurm_qwen35_cooldown_identity.sl
+```
+
+The aggregate `sbatch annotation/league/slurm_qwen35.sl` still runs all four
+sequentially in one job and still accepts `[suite] [mode]`.
+
 The defaults request one L40S, eight CPUs, 96 GB host memory and four hours.
-Direct-submission logs go to `/work/users/a/l/alshen/league_qwen35-<jobid>.out`
-and `.err`; `--output`/`--error` override them. The existing submission helper
-now submits the same `.sl` file and retains its configured `league_logs/` paths.
-The suite and mode can also be set with `LEAGUE_SUITE` and
-`LEAGUE_QWEN35_MODE`; positional arguments take precedence. Slurm's pre-timeout
+Direct submission logs use the job name and ID under `/work/users/a/l/alshen/`;
+`--output`/`--error` override them. The existing submission helper selects
+the batch file through `LEAGUE_SUITE` and retains its configured `league_logs/` paths.
+The suite files accept one positional mode, which takes precedence over
+`LEAGUE_QWEN35_MODE` and defaults to `draft`. Slurm's pre-timeout
 TERM signal is forwarded to Python so completed requests can be preserved.
 Initialize labels and cache models/references before submission. Draft jobs use
 development inputs only; `evaluate` still requires frozen, verified labels.
