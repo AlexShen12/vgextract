@@ -11,9 +11,11 @@ case "${suite}" in
     qwen35) batch=(annotation/league/slurm_qwen35.sl qwen35 "${mode}");;
     *) echo "Expected hp-vlm, scene-identity, ability-alignment, cooldown-identity or qwen35" >&2; exit 1;;
 esac
-sbatch --parsable --job-name="league_qwen35_${mode}" --nodes=1 --ntasks=1 \
+sbatch --parsable --job-name="league_qwen35_${suite//-/_}_${mode}" --nodes=1 --ntasks=1 \
+    --mail-user="${LEAGUE_MAIL_USER:-alshen@unc.edu}" \
+    --mail-type="${LEAGUE_MAIL_TYPE:-BEGIN,END,FAIL,TIME_LIMIT}" \
     --partition="${LEAGUE_PARTITION:-l40-gpu}" --qos="${LEAGUE_QOS:-gpu_access}" \
     --gres="${LEAGUE_GRES:-gpu:nvidia_l40s:1}" --cpus-per-task="${LEAGUE_CPUS:-8}" \
-    --mem="${LEAGUE_MEM:-96g}" --time="${LEAGUE_TIME:-04:00:00}" \
+    --mem="${LEAGUE_MEM:-96g}" --time="${LEAGUE_TIME:-12:00:00}" \
     --output="${LEAGUE_LOG_DIR}/%x-%j.out" --error="${LEAGUE_LOG_DIR}/%x-%j.err" \
     "${batch[@]}"

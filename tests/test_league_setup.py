@@ -274,6 +274,44 @@ with open(os.environ["CALL_LOG"], "a") as stream:
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.calls()[-1][-2:],
                          ["annotation/league/slurm_qwen35_ability_alignment.sl", "preflight"])
+        self.assertIn("--mail-user=alshen@unc.edu", self.calls()[-1])
+        self.assertIn("--mail-type=BEGIN,END,FAIL,TIME_LIMIT", self.calls()[-1])
+
+    def test_parallel_submission_returns_four_job_ids_and_keeps_partial_record(self):
+        self.env.pop("PYTHONHOME", None)
+        self.env.pop("PYTHONPATH", None)
+        self.env.update(LEAGUE_MAIL_USER="reviewer@example.org", LEAGUE_MAIL_TYPE="BEGIN,END")
+        self.executable(self.bin/"sbatch", f"#!{sys.executable}\n" + '''
+import json, os, pathlib, sys
+log = pathlib.Path(os.environ["CALL_LOG"])
+calls = log.read_text().splitlines() if log.exists() else []
+with log.open("a") as stream:
+    stream.write(json.dumps(sys.argv[1:]) + "\\n")
+if os.environ.get("FAIL_SUBMISSION") == str(len(calls)+1):
+    sys.exit(1)
+assert not any(arg.startswith("--dependency") for arg in sys.argv)
+assert "--mail-user=reviewer@example.org" in sys.argv
+assert "--mail-type=BEGIN,END" in sys.argv
+print(str(9000+len(calls)) + ";longleaf")
+''')
+        result = self.run_script("submit_qwen35_parallel_longleaf.sh")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        calls = self.calls()
+        suites = ("hp_vlm", "scene_identity", "ability_alignment", "cooldown_identity")
+        self.assertEqual([c[-2:] for c in calls],
+                         [[f"annotation/league/slurm_qwen35_{s}.sl", "draft"] for s in suites])
+        records = list((self.root/"league_logs").glob("qwen35-submissions-*.tsv"))
+        self.assertEqual(len(records), 1)
+        self.assertEqual(len(records[0].read_text().splitlines()), 5)
+        self.assertIn("hp-vlm\t9000\tdraft", records[0].read_text())
+        self.log.unlink()
+        self.env["FAIL_SUBMISSION"] = "2"
+        result = self.run_script("submit_qwen35_parallel_longleaf.sh")
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(len(self.calls()), 2)
+        records = list((self.root/"league_logs").glob("qwen35-submissions-*.tsv"))
+        self.assertEqual(len(records), 2)
+        self.assertTrue(any(len(p.read_text().splitlines()) == 2 for p in records))
 
     def test_qwen35_batch_forwards_slurm_term_to_python(self):
         import signal

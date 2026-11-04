@@ -242,16 +242,17 @@ def test_parallel_suites_keep_separate_reports_and_share_the_verifier(fixture_st
     def run(suite):
         with batch_writer(store,suite):
             return experiment_qwen35(store,config,suite,draft=True,runner_factory=FakeRunner)
-    with patch('annotation.league.qwen35_study.source_frames',return_value=inputs):
-        with ThreadPoolExecutor(max_workers=2) as pool:
-            reports=list(pool.map(run,('hp-vlm','scene-identity')))
-    assert len({r['root'] for r in reports})==2
+    with patch('annotation.league.qwen35_study.source_frames',return_value=inputs), \
+            patch('annotation.league.qwen35_study.burst_frames',return_value=[]):
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            reports=list(pool.map(run,('hp-vlm','scene-identity','ability-alignment','cooldown-identity')))
+    assert len({r['root'] for r in reports})==4
     for report in reports:
         root=Path(report['root'])
         assert read_json(root/'report.json')['suites']==report['suites']
         assert read_json(root/'label-directory.json')['path']==str(directory)
     client=TestClient(create_app(store))
-    assert len(client.get('/api/qwen35/experiments').json())==2
+    assert len(client.get('/api/qwen35/experiments').json())==4
     assert len(client.get('/api/qwen35/studies').json())==1
 
 

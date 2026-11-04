@@ -86,6 +86,10 @@ Each suite has its own Longleaf batch file. Submit the suite you want from the
 repository root:
 
 ```bash
+# Submit all four as independent jobs and save their IDs, then disconnect:
+bash annotation/league/submit_qwen35_parallel_longleaf.sh
+
+# Or submit one suite:
 sbatch annotation/league/slurm_qwen35_hp_vlm.sl
 sbatch annotation/league/slurm_qwen35_scene_identity.sl
 sbatch annotation/league/slurm_qwen35_ability_alignment.sl
@@ -111,7 +115,7 @@ initialize, prepare, or freeze the study still need the run to themselves.
 The aggregate `sbatch annotation/league/slurm_qwen35.sl` still runs all four
 sequentially in one job and still accepts `[suite] [mode]`.
 
-The defaults request one L40S, eight CPUs, 96 GB host memory and four hours.
+The defaults request one L40S, eight CPUs, 96 GB host memory and twelve hours.
 Direct submission logs use the job name and ID under `/work/users/a/l/alshen/`;
 `--output`/`--error` override them. The existing submission helper selects
 the batch file through `LEAGUE_SUITE` and retains its configured `league_logs/` paths.
@@ -126,6 +130,45 @@ Overrides: `LEAGUE_QWEN35_DRIVER`, `LEAGUE_QWEN35_PYTHON`, `LEAGUE_QWEN35_RUN`,
 Slurm resource variables. All installer/model/log/compiler/temp writes use
 `/work/users/a/l/alshen` through `longleaf_paths.sh`. Models load sequentially
 within each job; cache weights on a login node before submitting offline jobs.
+
+### Remote execution, alerts, and resuming
+
+Use `sbatch` for a suite file or `bash annotation/league/submit_qwen35_parallel_longleaf.sh`
+for all four. The submission command exits after Slurm accepts the jobs, and you
+can close SSH, your terminal, or your laptop. The jobs run on the allocated
+Longleaf compute nodes. Run the submission from a login shell; no interactive
+GPU allocation is needed. Executing a `.sl` file with `bash` runs it in your current
+session; always submit those files with `sbatch`.
+
+Every Qwen3.5 batch file requests scheduler emails to `alshen@unc.edu` with
+`--mail-type=BEGIN,END,FAIL,TIME_LIMIT`. These cover starts, completion/cancellation,
+failures, and reaching the time limit. Slurm sends these alerts even after the
+batch process exits. Delivery depends on Longleaf's configured mail service.
+For helper submissions, override `LEAGUE_MAIL_USER` or `LEAGUE_MAIL_TYPE`; for
+direct submissions, pass `sbatch --mail-user=... --mail-type=... file.sl`.
+Slurm documents these settings in its [sbatch manual](https://slurm.schedmd.com/sbatch.html).
+
+The parallel helper saves accepted job IDs in
+`/work/users/a/l/alshen/league_logs/qwen35-submissions-*.tsv`, including IDs
+submitted before a later submission fails. It submits no job dependencies;
+Slurm may still queue jobs when GPUs or account concurrency limits are reached.
+Reconnect and inspect the saved IDs:
+
+```bash
+squeue -u alshen
+sacct -j JOB_ID --format=JobID,JobName%36,State%30,Reason%30,ExitCode,Elapsed,Timelimit
+tail -f /work/users/a/l/alshen/league_logs/league_qwen35_scene_identity_draft-JOB_ID.err
+```
+
+Job 8057666 ran for 03:58:10 against a 04:00:00 allocation on November 3, 2026
+and returned 130 after the configured `B:TERM@120` signal. This is consistent
+with the pre-timeout checkpoint, rather than evidence of an SSH disconnect.
+The defaults are now twelve hours, with the same two-minute checkpoint warning.
+An interrupted checkpoint can appear as `FAILED` with exit 130 in accounting
+because the script exits before Slurm's time limit. Compatible completed requests
+are cached; rerun the same suite and mode using the same run/labels to resume.
+For a longer allocation, use `LEAGUE_TIME=1-00:00:00` with the helpers or
+`sbatch --time=1-00:00:00 annotation/league/slurm_qwen35_scene_identity.sl`.
 
 ## Experiment behavior
 
