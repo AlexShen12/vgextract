@@ -3,14 +3,16 @@ from __future__ import annotations
 
 import base64
 import json
+import logging
 from pathlib import Path
 import time
 
 from .action_pipeline import validate_shape
 from .action_v3 import cache_runtime
-from .core import atomic_json, digest, finite, read_json
+from .core import atomic_json, digest, finite, read_json, StopRequested
 from .local_models import LocalVLRunner, ModelUnavailable
 from .media import file_hash
+from .qwen35_progress import activity, progress
 
 SUITES = ('hp-vlm', 'scene-identity', 'ability-alignment', 'cooldown-identity')
 ROLES = ('qwen35_2b', 'qwen35_4b', 'qwen35_9b', 'qwen35_27b')
@@ -77,8 +79,9 @@ class Requests:
             python = os.environ.get('LEAGUE_QWEN35_PYTHON')
             if not python:
                 raise ValueError('Set LEAGUE_QWEN35_PYTHON to the separate qualified Qwen3.5 environment')
-            self.runner = LocalVLRunner(store, python, config.asset_cache, role=role, image_limit=8,
-                                        log_dir=self.root/'workers')
+            with activity(self.root, 'model-probe', role=role, worker_log=str(self.root/'workers'/f'{role}-vllm.log')):
+                self.runner = LocalVLRunner(store, python, config.asset_cache, role=role, image_limit=8,
+                                            log_dir=self.root/'workers')
             self.runtime = cache_runtime(self.runner.identity)
         else:
             candidates = [runtime_file] + sorted(store.path('experiments/qwen35').glob('*/runtimes/'+role+'.json'),
@@ -118,8 +121,10 @@ class Requests:
                 for label, path in images:
                     content += [{'type': 'text', 'text': label}, {'type': 'image_url', 'image_url': {
                         'url': 'data:image/png;base64,'+base64.b64encode(Path(path).read_bytes()).decode()}}]
-                response = self.runner.complete([{'role': 'user', 'content': content}], schema,
-                                                max_tokens=max_tokens, timeout=600)
+                with activity(self.root, 'request', role=self.role, task=task, request_id=key,
+                              images=len(images), max_tokens=max_tokens, timeout_seconds=600):
+                    response = self.runner.complete([{'role': 'user', 'content': content}], schema,
+                                                    max_tokens=max_tokens, timeout=600)
                 atomic_json(response_path, response)
             else:
                 raise ValueError('missing_cached_response; use --infer for GPU requests')
@@ -138,8 +143,14 @@ class Requests:
                       'wall_seconds': response.get('wall_seconds', time.monotonic()-started),
                       'usage': response.get('usage', {}), 'peak_memory_bytes': response.get('peak_memory_bytes', 0)}
             return value, key
-        except ModelUnavailable:
-            record = {'id': key, 'task': task, 'role': self.role, 'status': 'worker_failed', 'cache_reused': cached}
+        except StopRequested as exc:
+            record = {'id': key, 'task': task, 'role': self.role, 'status': 'interrupted',
+                      'cache_reused': cached, 'error': str(exc)}
+            raise
+        except ModelUnavailable as exc:
+            record = {'id': key, 'task': task, 'role': self.role, 'status': 'worker_failed',
+                      'cache_reused': cached, 'error': str(exc)}
+            logging.getLogger(__name__).exception('Qwen3.5 worker failed task=%s request=%s root=%s', task, key, self.root)
             raise
         except (ValueError, KeyError, TypeError, OSError) as exc:
             record = {'id': key, 'task': task, 'role': self.role, 'status': 'invalid', 'error': str(exc),
@@ -152,6 +163,13 @@ class Requests:
                 atomic_json(directory/'status.json', record)
                 self.records.append(record)
                 atomic_json(self.root/'progress'/f'{self.role}.json', self.records)
+                progress(self.root, 'request-finished', role=self.role, task=task, request_id=key,
+                         status=record['status'], cache_reused=cached,
+                         elapsed_seconds=round(time.monotonic()-started, 3),
+                         completion_tokens=record.get('usage', {}).get('completion_tokens', 0),
+                         completed_requests=len(self.records), error=record.get('error'))
+                if record['status'] != 'ok':
+                    logging.getLogger(__name__).warning('Qwen3.5 rejected request: %s', record)
 
     def qualify(self, image):
         schema = obj(status=enum('image_received'))

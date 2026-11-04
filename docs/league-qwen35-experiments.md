@@ -149,7 +149,7 @@ direct submissions, pass `sbatch --mail-user=... --mail-type=... file.sl`.
 Slurm documents these settings in its [sbatch manual](https://slurm.schedmd.com/sbatch.html).
 
 The parallel helper saves accepted job IDs in
-`/work/users/a/l/alshen/league_logs/qwen35-submissions-*.tsv`, including IDs
+`/work/users/a/l/alshen/league_logs/qwen35-submissions-*` (tab-separated), including IDs
 submitted before a later submission fails. It submits no job dependencies;
 Slurm may still queue jobs when GPUs or account concurrency limits are reached.
 Reconnect and inspect the saved IDs:
@@ -157,7 +157,7 @@ Reconnect and inspect the saved IDs:
 ```bash
 squeue -u alshen
 sacct -j JOB_ID --format=JobID,JobName%36,State%30,Reason%30,ExitCode,Elapsed,Timelimit
-tail -f /work/users/a/l/alshen/league_logs/league_qwen35_scene_identity_draft-JOB_ID.err
+tail -f /work/users/a/l/alshen/league_logs/league_qwen35_scene_identity_draft-JOB_ID.out
 ```
 
 Job 8057666 ran for 03:58:10 against a 04:00:00 allocation on November 3, 2026
@@ -169,6 +169,27 @@ because the script exits before Slurm's time limit. Compatible completed request
 are cached; rerun the same suite and mode using the same run/labels to resume.
 For a longer allocation, use `LEAGUE_TIME=1-00:00:00` with the helpers or
 `sbatch --time=1-00:00:00 annotation/league/slurm_qwen35_scene_identity.sl`.
+
+### Live progress and error details
+
+The Longleaf driver now writes timestamped progress and Python tracebacks to the
+job's `.out` file; Slurm diagnostics remain in `.err`. It prints the job, node,
+suite, mode, run path, source clip/frame, model, request task/ID, elapsed request
+time, cache reuse, generated tokens, and rejection reasons. Long model probes
+and requests emit a heartbeat every sixty seconds. Heartbeats show that a call
+is still being awaited, rather than proving that the GPU is making progress.
+The current operation is also saved under each experiment's
+`progress/current.json`. Worker failures include the worker log path, process
+status, measured peak GPU memory, and up to twenty recent worker log lines.
+
+The final result JSON appears only when an experiment completes. A blank old
+`.out` file therefore did not imply an idle GPU. Job 8057666's interrupted report
+contains 783 request records: 675 schema-valid readings and 108 rejections
+(107 boxes outside the scene and one incomplete response). These counts are
+request outcomes, not independently measured recognition accuracy. It had
+processed 300 direct-localization frame requests before shutdown; final identity
+and action tables had not been assembled. Raw responses and request status files
+were preserved for compatible cache reuse.
 
 ## Experiment behavior
 

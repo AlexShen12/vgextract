@@ -230,7 +230,7 @@ with open(os.environ["CALL_LOG"], "a") as stream:
         import shutil
         spool = self.root/"slurm_script"
         self.env["LEAGUE_QWEN35_DRIVER"] = str(self.stub)
-        self.stub.write_text(self.stub.read_text() + '\nsys.exit(int(os.environ.get("EXPERIMENT_STATUS", "0")))\n')
+        self.stub.write_text(self.stub.read_text() + '\nprint("driver progress marker", file=sys.stderr)\nsys.exit(int(os.environ.get("EXPERIMENT_STATUS", "0")))\n')
         self.env.update(EXPERIMENT_STATUS="2", LEAGUE_SUITE="qwen35")
         run_dir = str(Path(self.env["LEAGUE_WORK_ROOT"])/"league-midbeast-validation/run")
         for suite in ("hp-vlm", "scene-identity", "ability-alignment", "cooldown-identity", "qwen35"):
@@ -239,6 +239,9 @@ with open(os.environ["CALL_LOG"], "a") as stream:
             result = subprocess.run(["/bin/bash", str(spool)], cwd=self.root,
                                     env=self.env, text=True, capture_output=True, timeout=10)
             self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("driver progress marker", result.stdout)
+            self.assertNotIn("driver progress marker", result.stderr)
+            self.assertIn(f"suite={suite} mode=draft", result.stdout)
             call = self.calls()[-1]
             self.assertEqual(call[call.index("--suite")+1], suite)
             self.assertEqual(call[call.index("--run-dir")+1], run_dir)
@@ -300,7 +303,7 @@ print(str(9000+len(calls)) + ";longleaf")
         suites = ("hp_vlm", "scene_identity", "ability_alignment", "cooldown_identity")
         self.assertEqual([c[-2:] for c in calls],
                          [[f"annotation/league/slurm_qwen35_{s}.sl", "draft"] for s in suites])
-        records = list((self.root/"league_logs").glob("qwen35-submissions-*.tsv"))
+        records = list((self.root/"league_logs").glob("qwen35-submissions-*"))
         self.assertEqual(len(records), 1)
         self.assertEqual(len(records[0].read_text().splitlines()), 5)
         self.assertIn("hp-vlm\t9000\tdraft", records[0].read_text())
@@ -309,7 +312,7 @@ print(str(9000+len(calls)) + ";longleaf")
         result = self.run_script("submit_qwen35_parallel_longleaf.sh")
         self.assertEqual(result.returncode, 1)
         self.assertEqual(len(self.calls()), 2)
-        records = list((self.root/"league_logs").glob("qwen35-submissions-*.tsv"))
+        records = list((self.root/"league_logs").glob("qwen35-submissions-*"))
         self.assertEqual(len(records), 2)
         self.assertTrue(any(len(p.read_text().splitlines()) == 2 for p in records))
 

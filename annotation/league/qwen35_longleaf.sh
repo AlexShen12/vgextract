@@ -19,7 +19,7 @@ if [[ "${mode}" == cache ]]; then
     exit 0
 fi
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1
-args=(--run-dir "${league_run}" --offline experiment --suite "${LEAGUE_SUITE:-qwen35}")
+args=(--run-dir "${league_run}" --debug --offline experiment --suite "${LEAGUE_SUITE:-qwen35}")
 if [[ -n "${LEAGUE_LABELS:-}" ]]; then args+=(--labels "${LEAGUE_LABELS}"); fi
 if [[ -n "${LEAGUE_ICON_REFERENCES:-}" ]]; then args+=(--icon-references "${LEAGUE_ICON_REFERENCES}"); fi
 case "${mode}" in
@@ -34,11 +34,17 @@ esac
 # Experimental CLI commands conventionally return 2, even on successful completion.
 status=0
 child=""
-stop_child() { if [[ -n "${child}" ]]; then kill -TERM "${child}" 2>/dev/null || true; fi; }
+stop_child() {
+    echo "$(date -u +%FT%TZ) Stop signal received; requesting checkpoint. job=${SLURM_JOB_ID:-none} suite=${LEAGUE_SUITE:-qwen35} run=${league_run}" >&2
+    if [[ -n "${child}" ]]; then kill -TERM "${child}" 2>/dev/null || true; fi
+}
 trap stop_child TERM INT
-"${league_driver}" -B -m annotation.league "${args[@]}" &
+echo "$(date -u +%FT%TZ) Starting job=${SLURM_JOB_ID:-none} node=${SLURMD_NODENAME:-unknown} suite=${LEAGUE_SUITE:-qwen35} mode=${mode} run=${league_run}"
+# Merge driver progress and tracebacks into the live .out log; .err retains Slurm diagnostics.
+"${league_driver}" -B -m annotation.league "${args[@]}" 2>&1 &
 child=$!
 wait "${child}" || status=$?
 if kill -0 "${child}" 2>/dev/null; then wait "${child}" || status=$?; fi
+echo "$(date -u +%FT%TZ) Driver exited status=${status} job=${SLURM_JOB_ID:-none} suite=${LEAGUE_SUITE:-qwen35}"
 if [[ "${status}" == 2 ]]; then exit 0; fi
 exit "${status}"

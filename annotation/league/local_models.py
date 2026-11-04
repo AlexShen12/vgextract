@@ -6,6 +6,7 @@ import argparse
 import contextlib
 import hashlib
 import json
+import logging
 import os
 from pathlib import Path
 import re
@@ -315,6 +316,8 @@ class LocalVLRunner:
             return
         self.log_dir.mkdir(parents=True, exist_ok=True)
         self.log = (self.log_dir/f"{self.role}-vllm.log").open("a")
+        logging.getLogger(__name__).info("Starting vLLM role=%s log=%s startup_timeout=600s",
+                                        self.role, self.log.name)
         dtype = self.identity["checkpoint"]["specification"]["dtype"]
         command = [
             self.python,
@@ -369,13 +372,35 @@ class LocalVLRunner:
                 try:
                     self._json("/v1/models")
                     self.memory_sample()
+                    logging.getLogger(__name__).info("vLLM ready role=%s pid=%s gpu_memory_bytes=%s",
+                                                    self.role, self.process.pid, self.peak_memory_bytes)
                     return
                 except (OSError, ValueError, urllib.error.URLError):
                     time.sleep(0.25)
             raise ModelUnavailable("vLLM startup exceeded ten minutes")
+        except ModelUnavailable as exc:
+            details = self.failure_details(str(exc))
+            self.close()
+            raise ModelUnavailable(details) from exc
         except BaseException:
             self.close()
             raise
+
+    def failure_details(self, message):
+        path = self.log_dir/f"{self.role}-vllm.log"
+        process = self.process
+        details = (f"{message}; role={self.role}; pid={getattr(process, 'pid', None)}; "
+                   f"returncode={process.poll() if process is not None else None}; "
+                   f"peak_gpu_memory_bytes={self.peak_memory_bytes}; worker_log={path}")
+        try:
+            with path.open('rb') as source:
+                source.seek(0, 2)
+                source.seek(max(0, source.tell()-8192))
+                tail = source.read().decode('utf-8', errors='replace').splitlines()[-20:]
+            details += "\nWorker log tail:\n" + "\n".join(tail)
+        except OSError:
+            pass
+        return details
 
     def complete(self, messages, schema=None, *, max_tokens=512, seed=17, timeout=180):
         if not isinstance(timeout, (int, float)) or not 1 <= timeout <= 900:
@@ -424,7 +449,7 @@ class LocalVLRunner:
         except StopRequested:
             raise
         except (OSError, ValueError, KeyError, IndexError, ModelUnavailable) as exc:
-            self.failure = f"Local VL worker failed: {exc}"
+            self.failure = self.failure_details(f"Local VL worker failed: {exc}")
             self.close()
             raise ModelUnavailable(self.failure) from exc
 

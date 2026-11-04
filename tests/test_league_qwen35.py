@@ -297,7 +297,9 @@ def test_shared_source_is_prepared_once(fixture_study):
     assert build.call_count==1
 
 
-def test_interrupted_gpu_preserves_partial_results(fixture_study):
+def test_interrupted_gpu_preserves_partial_results(fixture_study,caplog):
+    import logging
+    caplog.set_level(logging.INFO)
     store,config,directory,study,frames=fixture_study
     with patch('annotation.league.qwen35_study.source_frames',side_effect=frames):
         with pytest.raises(ModelUnavailable):
@@ -306,6 +308,25 @@ def test_interrupted_gpu_preserves_partial_results(fixture_study):
     assert read_json(reports[0])['status']=='failed'
     assert list(reports[0].parent.glob('requests/*/response.json'))
     assert list(reports[0].parent.glob('hp-vlm/*/development/*.jsonl'))==[] # interrupted role is not marked complete
+    statuses=[read_json(p) for p in reports[0].parent.glob('requests/*/status.json')]
+    assert any(s['status']=='worker_failed' and s['error']=='injected GPU failure' for s in statuses)
+    assert read_json(reports[0].parent/'progress/current.json')['status']=='failed'
+    assert 'injected GPU failure' in caplog.text and 'request-finished' in caplog.text
+
+
+def test_long_operation_reports_heartbeat_before_it_completes(tmp_path,caplog):
+    import logging
+    import time
+    from annotation.league.qwen35_progress import activity
+    caplog.set_level(logging.INFO)
+    with activity(tmp_path,'request',heartbeat_seconds=.01,task='detect-direct',request_id='example'):
+        deadline=time.monotonic()+2
+        while read_json(tmp_path/'progress/current.json')['event']!='request-waiting':
+            assert time.monotonic()<deadline
+            time.sleep(.005)
+        current=read_json(tmp_path/'progress/current.json')
+        assert current['task']=='detect-direct' and current['request_id']=='example'
+    assert 'request-waiting' in caplog.text
 
 
 def test_frozen_evaluation_requires_independent_labels(fixture_study):

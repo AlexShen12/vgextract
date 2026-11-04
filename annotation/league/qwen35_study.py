@@ -16,6 +16,7 @@ from .playback import PlaybackTracker
 from .qwen35_common import SUITES, ROLES, POLICY, Requests
 from .qwen35_identity import detect_frame, track_detections, resolve_identities, scoreboard_rows, describe_frames
 from .qwen35_sensors import read_hp, read_hud, align_abilities, cooldown_frame, References
+from .qwen35_progress import progress
 
 COMPONENTS = ['qwen35_common.py','qwen35_identity.py','qwen35_sensors.py','qwen35_study.py','qwen35_scoring.py']
 REQUIRED_CASES = {'hp-vlm': {'ordinary_hp','rapid_hp','low_hp','digit_lengths','unreadable_hp'},
@@ -252,9 +253,12 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
     started=time.monotonic()
     all_frames={};all_predictions={};requests=None
     try:
-        for clip in (selected[:1] if preflight else selected):
+        progress(root,'experiment-start',suite=suite,mode=mode,clips=len(selected),labels=str(directory/'study.json'),experiment_root=str(root))
+        for index,clip in enumerate(selected[:1] if preflight else selected,1):
+            progress(root,'prepare-clip',clip=clip['id'],index=index,total=len(selected),start=clip['start'],end=clip['end'])
             frames=source_frames(store,config,study,clip,directory)
             all_frames[clip['id']]=frames
+            progress(root,'clip-prepared',clip=clip['id'],frames=len(frames))
         if preflight:
             for role in ROLES:
                 requests=Requests(store,config,root,role,infer=infer,
@@ -267,6 +271,7 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
             roles=ROLES if current=='hp-vlm' else (ROLES[-1],)
             suite_rows=[]
             for role in roles:
+                progress(root,'model-start',suite=current,role=role,worker_log=str(root/'workers'/f'{role}-vllm.log'))
                 requests=Requests(store,config,root,role,infer=infer,
                                   runner=runner_factory(role) if runner_factory else None)
                 try:
@@ -277,6 +282,7 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
                         clips=[c for c in selected if c['split']==split]
                         if current=='hp-vlm':
                             for clip in clips:
+                                progress(root,'hp-clip',clip=clip['id'],role=role,split=split)
                                 frames=copy.deepcopy(all_frames[clip['id']])
                                 for f in frames:
                                     if f.get('hp_sample'):
@@ -293,8 +299,10 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
                                 detections=[];scores=[];frame_set=[];raw_rows=[]
                                 for clip in clips:
                                     frames=all_frames[clip['id']];raw=[]
-                                    for f in frames:
+                                    for frame_index,f in enumerate(frames,1):
                                         store.check_stop()
+                                        progress(root,'scene-frame',suite=current,clip=clip['id'],arm=arm,split=split,
+                                                 frame=frame_index,total_frames=len(frames),source_time=f['time'])
                                         row=detect_frame(requests,f,study['profile'],arm) if f['layout_valid'] else {
                                             'frame_id':f['id'],'time':f['time'],'segment_id':f['segment_id'],'champions':[]}
                                         raw.append(row);raw_rows.append({**row,'clip_id':clip['id'],'split':split,'arm':arm,'table':'boxes'})
@@ -308,6 +316,7 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
                                     meta={f['id']:f for f in frames}
                                     for d in tracked:d.update(owner_epoch=meta[d['frame_id']]['owner_epoch'],clip_id=clip['id'])
                                     detections+=tracked;frame_set+=frames
+                                progress(root,'identity-resolution',suite=current,arm=arm,split=split,detections=len(detections),scoreboard_rows=len(scores))
                                 resolved,registry,conflicts=resolve_identities(detections,scores)
                                 before,_,_=resolve_identities(detections,scores,two_pass=False)
                                 write_rows(root/current/role/split/arm/'registry.jsonl',registry)
@@ -319,11 +328,13 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
                                         if frame:suite_rows.append({**r,'table':table,'arm':arm,'split':split,'clip_id':frame['clip_id']})
                                 suite_rows+=raw_rows
                                 for clip in clips:
+                                    progress(root,'actions-clip',suite=current,clip=clip['id'],arm=arm,split=split)
                                     frames=all_frames[clip['id']];clip_d=[d for d in resolved if d['clip_id']==clip['id']]
                                     actions=describe_frames(requests,frames,clip_d)
                                     for r in actions:r.update(table='actions',arm=arm,split=split,clip_id=clip['id'])
                                     suite_rows+=actions
                                     if current=='ability-alignment':
+                                        progress(root,'hud-clip',clip=clip['id'],arm=arm,split=split)
                                         dense=source_frames(store,config,study,clip,directory,dense=True)
                                         hud=read_hud(requests,dense);activation=transitions(hud)
                                         # Bind temporal HUD source to this clip's sparse visual track IDs.
@@ -353,6 +364,7 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
                         else:
                             memory={}
                             for clip in clips:
+                                progress(root,'cooldown-clip',clip=clip['id'],split=split)
                                 for f in all_frames[clip['id']]:
                                     if not f['layout_valid']:continue
                                     out=cooldown_frame(requests,f,references,memory)
@@ -372,18 +384,23 @@ def experiment_qwen35(store,config,suite,*,labels=None,initialize_labels=False,d
             all_predictions[current]=suite_rows
             report['results'][current]={'records':len(suite_rows),'path':str(root/current/'predictions.jsonl')}
             atomic_json(root/'report.json',report)
+            progress(root,'suite-finished',suite=current,records=len(suite_rows),requests=len(report['requests']))
         report.update(score_study(study,selected,all_frames,all_predictions,report['requests'],draft=draft))
         report['status']='completed_draft' if draft else 'completed_evaluation'
         return report
     except BaseException as exc:
         report['status']='interrupted' if store.stopping else 'failed'
         report['error']=str(exc)
+        progress(root,'experiment-stopped',suite=suite,status=report['status'],error_type=type(exc).__name__,
+                 error=str(exc),requests=len(report['requests'])+(len(requests.records) if requests else 0),
+                 wall_seconds=round(time.monotonic()-started,1),report=str(root/'report.json'))
         raise
     finally:
         if requests:
             report['requests']+=requests.records;requests.close()
         report['wall_seconds']=time.monotonic()-started
         write_report(root,report)
+        progress(root,'report-saved',suite=suite,status=report['status'],report=str(root/'report.json'))
         for current in suites:
             if current in report['results']:
                 write_report(root/current,{**report,'suites':[current],

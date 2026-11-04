@@ -320,11 +320,15 @@ class CheckpointTests(unittest.TestCase):
             )
             with patch("annotation.league.local_models.socket.socket"):
                 runner = LocalVLRunner(store, "unused", temporary, signature=signature)
+            runner.log_dir.mkdir()
+            (runner.log_dir/"intake-vllm.log").write_text("CUDA failure details from worker\n")
             with patch.object(runner, "start"), patch.object(
                 runner, "_json", side_effect=OSError("OOM")
             ) as request, patch.object(runner, "close"):
-                with self.assertRaises(ModelUnavailable):
+                with self.assertRaises(ModelUnavailable) as failure:
                     runner.complete([])
+                self.assertIn("CUDA failure details from worker", str(failure.exception))
+                self.assertIn("worker_log=", str(failure.exception))
                 payload = request.call_args.args[1]
                 self.assertFalse(payload["chat_template_kwargs"]["enable_thinking"])
                 self.assertEqual(payload["temperature"], 0)
