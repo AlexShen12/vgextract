@@ -155,6 +155,7 @@ def parser():
                    help="Compatibility argument; must match the action profile's HUD box")
     s.add_argument("--infer", action="store_true", help="Run the pinned local GPU model; default only saves inspectable inputs")
     s.add_argument("--detect", action="store_true", help="Run CPU player binding, farming and recall detection without loading Qwen")
+    s.add_argument("--hud-grounded", action="store_true", help="Read Q/W/E/R first and use its cooldown candidates to ground scene review")
     s.add_argument("--action-profile", type=Path)
     s.add_argument("--icon-references", type=Path, help="Versioned Q/W/E/R reference manifest (defaults to asset cache)")
     s.add_argument("--assistance", type=Path, help="Obsolete for actions v3 (rejected); use --icon-references")
@@ -281,7 +282,8 @@ def main(argv=None):
                 from .action_v3 import action_window
                 result = action_window(store, config, args.start, args.end, fps=args.fps,
                                        hud_box=args.hud_box, infer=args.infer, detect=args.detect,
-                                       action_profile=args.action_profile, assistance=args.assistance, icon_references=args.icon_references)
+                                       action_profile=args.action_profile, assistance=args.assistance,
+                                       icon_references=args.icon_references, hud_grounded=args.hud_grounded)
             if command == "caption-pilot":
                 from .caption_pilot import caption_pilot
                 result = caption_pilot(store, config, args.start, args.end, infer=args.infer,

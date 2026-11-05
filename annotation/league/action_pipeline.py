@@ -113,7 +113,7 @@ def prepare_inputs(store, config, start, end, profile, policy, *, cache_identity
     if (not finite(start) or not finite(end) or not lower <= start < end <= upper
             or (max_duration is not None and end-start > max_duration)):
         raise ValueError("Require an in-source interval within the preparation duration limit")
-    if namespace not in {"actions-v3", "captions"}:
+    if namespace not in {"actions-v3", "actions-v3-hud-grounded", "captions"}:
         raise ValueError("Unsupported evidence namespace")
     source = manifest["source"]
     if list((source["width"], source["height"])) != profile["size"] or file_hash(Path(source["path"])) != source["sha256"]:
@@ -122,6 +122,8 @@ def prepare_inputs(store, config, start, end, profile, policy, *, cache_identity
         raise ValueError("Source FPS is below the action HUD sampling rate")
     components = ["action_pipeline.py", "action_state.py", "action_icons.py", "playback.py", "media.py", "readers.py", "numeric_reader.py"]
     components += ["action_v3.py", "action_body.py", "action_events.py"]
+    if namespace == "actions-v3-hud-grounded":
+        components.append("action_hud_replay.py")
     recipe = {"schema_version": 3, "source_sha256": source["sha256"], "interval": [start, end],
               "profile": profile, "policy": policy, "masks": config.masks,
               "implementation": implementation_hash(components)}
