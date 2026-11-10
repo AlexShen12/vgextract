@@ -108,7 +108,7 @@ def prepare(root,metadata,source):
             validate_prepared(prior,pinned)
             reports.append(prior);continue
         audit=prepare_inputs(store,config,clip["start"],clip["end"],study["profile"],
-            {**POLICY,"scene_fps":4,"hud_fps":16},namespace="actions-v3-scene-baseline",
+            {**POLICY,"scene_fps":4,"hud_fps":16},
             cache_identity={"pilot":digest(pinned),"clip_id":clip["id"]})
         body,bindings=bind_frames(audit["frames"],[],study["profile"],store.check_stop)
         hud_profile=copy.deepcopy(study["profile"])
