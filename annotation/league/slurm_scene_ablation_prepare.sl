@@ -24,7 +24,7 @@ export PATH="${media_env}/bin:${PATH}"
 export LD_LIBRARY_PATH="${media_env}/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 scene_comparison="${base}/scene-understanding/v2-pilot/comparison-r1"
 srun --ntasks=1 --cpus-per-task=2 "${base}/env-driver/bin/python" -B -m unittest \
-  tests.test_league_scene_ablation tests.test_league_scene_split tests.test_league_scene_reference tests.test_league_scene_reference_campaign tests.test_league_scene_source_regressions
+  tests.test_league_scene_ablation tests.test_league_scene_split tests.test_league_scene_reference tests.test_league_scene_reference_campaign tests.test_league_scene_source_regressions tests.test_league_scene_reference_audit
 srun --ntasks=1 --cpus-per-task=2 "${base}/env-driver/bin/python" -B -u -m annotation.league.scene_ablation prepare \
   --run-dir "$scene_comparison" --metadata reference_sets/league-scene-understanding/v2-pilot \
   --source "${base}/source-20261028/data/youtube/lol_midbeast/OLLZBe5-fg4.mp4"
