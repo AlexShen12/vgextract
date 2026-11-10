@@ -135,7 +135,7 @@ def prepare_references(reservation_path, source, output):
             atomic_json(path,data)
         rows.append({"id":clip["id"],"source_inputs":str(path.resolve()),"frames":len(data["frames"])})
         print(clip["id"],len(data["frames"]),"source-reference frames",flush=True)
-    atomic_json(output/"reference-input-index.json",{"source":reservation["source"],"clips":rows,
+    atomic_json(output/"reference-input-index.json",{"source":{**reservation["source"],"path":str(Path(source).resolve())},"clips":rows,
         "reservation_sha256":reservation["reservation_sha256"],"recognition_inference":False,
         "purpose":"Blinded source-reference review only; these inputs are not a developer tuning set."})
     return rows
