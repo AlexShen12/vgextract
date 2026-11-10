@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "source": {
+    "path": "/Users/alex/Desktop/Projects/videogame/data/youtube/lol_midbeast/OLLZBe5-fg4.mp4",
+    "sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+    "width": 1920,
+    "height": 1080,
+    "fps": 59.94005994005994,
+    "duration": 1732.765896
+  },
+  "evaluation_scope": "within_recording_temporal_holdout",
+  "cross_match_generalization": false,
+  "guard_seconds": 8,
+  "exposure_sha256": "f3258548b315b7287986d0b27edb90a3018ffc925d1cf90c9989d045e2af7a23",
+  "clips": [
+    {
+      "id": "holdout-00",
+      "split": "held_out",
+      "start": 382.25,
+      "end": 399.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-01",
+      "split": "held_out",
+      "start": 479.25,
+      "end": 493.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-02",
+      "split": "held_out",
+      "start": 724.25,
+      "end": 738.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-03",
+      "split": "held_out",
+      "start": 916.25,
+      "end": 931.5712428,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-04",
+      "split": "held_out",
+      "start": 1431.2627168000001,
+      "end": 1441.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "short_negative_candidate"
+    }
+  ],
+  "known_repeat_policy": "Known reference/experiment clips and their full contexts are excluded; new repeat/continuity ambiguities require independent source review.",
+  "reservation_sha256": "b3bdcba007e0a1186acae65f3ec545a9b82787cc90c12282bb1631c2bc72db11"
+}
