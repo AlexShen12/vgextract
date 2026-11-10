@@ -41,3 +41,9 @@ Activation events match one-to-one within ±0.25 seconds of visible cooldown ons
 ## Validation
 
 Thirty-six focused tests pass locally, including paired image isolation, no HUD observation in scene-only prompts, no world/model access in HUD-only, HUD activation survival through scene abstention, all seven physical categories, duplicate proposals, unknown actors/slots, quiet/partial references, source guards and freeze gates. Longleaf repeats these checks before input preparation. GPU execution remains necessary to validate real-model behavior.
+
+Three additional provenance tests reject a shorter historical export, wrong index/cadence/context and incomplete native HUD coverage. Before freeze, run `annotation.league.scene_reference_audit` against the assigned Longleaf source indexes and sealed references. Store its report hash in the development review receipt. The audit displays only file identity and coverage status, preserving answer sealing; it verifies attestations and context, not label truth.
+
+## Execution record
+
+The first input-preparation attempt (8786793) stopped on an unsupported namespace before inference; its dependent jobs 8786794–8786796 were cancelled. Commit `4209755e06a2e1a01ba15b5ee11859d6d4cc5fb1` uses the existing supported action evidence namespace within the separate comparison run. The corrected CPU attempt (8786907) passed all 36 Longleaf tests and prepared its first development clips. Measured progress indicates approximately 50–55 minutes for all 142 source seconds; the initial 30-minute limit was insufficient. Longleaf did not permit increasing that running allocation, so a new 60-minute CPU request will resume existing hash-validated input caches before the GPU preflights. This changes allocation only, not the inference recipe. Failed and superseded job logs are retained.
