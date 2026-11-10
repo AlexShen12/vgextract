@@ -1,0 +1,822 @@
+{
+  "schema_version": 1,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "original_run_root": "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2",
+  "original_relative_run_root": "data/league_runs/midbeast-OLLZBe5-fg4-v2",
+  "extra_asset_relocations": {},
+  "files": [
+    {
+      "path": "exposure-ledger.json",
+      "sha256": "177e2e1cdd52c5744b13cfbb33c2090c298ebfb0e15824c0206400929b377cd3"
+    },
+    {
+      "path": "negative-candidates.json",
+      "sha256": "e469aa4ee22565a5ffcdb779c19a63256a8368c607da53d65b3dafab3a066f8f"
+    },
+    {
+      "path": "negative-cases.json",
+      "sha256": "a3fe473a1833af53e999d902b220de4c77bda059ac3885fd95a0cdd466e6c2df"
+    },
+    {
+      "path": "negative-labels/negative-00.json",
+      "sha256": "a0faf5e4ac702bbe1e38b4bff7525289344a8acd8509fd12a4c3e31f4a2dccbb"
+    },
+    {
+      "path": "negative-labels/negative-01.json",
+      "sha256": "8587d8bab9b194c39b39a43f25a2af7083da9542e5df6685d67bda59fb816577"
+    },
+    {
+      "path": "negative-labels/negative-02.json",
+      "sha256": "b77a5b40b94b7f8b6602b3c84866823cca40c797f205d7b59a2aa60cd68b4937"
+    },
+    {
+      "path": "negative-labels/negative-03.json",
+      "sha256": "9e420ad0c5dc34792fe8f0a1650597565bd8515666a72cfc8427de65a2a376d0"
+    },
+    {
+      "path": "negative-labels/negative-04.json",
+      "sha256": "c4f3d45b18fbf925a8251923a2fdecdbe8b771572a255f8baae57370cb7c6a81"
+    },
+    {
+      "path": "negative-labels/negative-05.json",
+      "sha256": "c164680528f166c7e7fb2aa790de29ba079b880e99c216cdb00d886ba4318ebc"
+    },
+    {
+      "path": "negative-labels/negative-06.json",
+      "sha256": "fa118e626a0d7f10aab5a2485fe22c1d2cc339845ab62ba592e1b14fb9f269fb"
+    },
+    {
+      "path": "negative-labels/negative-07.json",
+      "sha256": "6387800c2cb82ba0b1d9dd7e2e77fb639a6cdd6b75b26f45ae720a79041ce919"
+    },
+    {
+      "path": "negative-labels/negative-08.json",
+      "sha256": "519b893fc12e2de3cda9e53474d7ef78f9b51d6aac40f7337969fce6c9c6b35c"
+    },
+    {
+      "path": "negative-labels/negative-09.json",
+      "sha256": "f9bb7e5d06ed367269a6c50ecd1af1ea46a5778c99f90af40c7908acd605a875"
+    },
+    {
+      "path": "negative-labels/negative-10.json",
+      "sha256": "e256e87905200572902a7e6da67fd6986557e19c133291c6922111cd851409ff"
+    },
+    {
+      "path": "negative-labels/negative-11.json",
+      "sha256": "279a8e4956a4ed1d9543d805ffd0528adfd91e4421326dc9ebc2e0af64c77a89"
+    },
+    {
+      "path": "negative-labels/negative-12.json",
+      "sha256": "5f2937042caaff6b2102c43a27bc1cb1e5f4f6ccf039975aff968cfc70d6a784"
+    },
+    {
+      "path": "negative-labels/negative-13.json",
+      "sha256": "be5cbbe910b457ed15f569c5eeeb3228c6d0fcb40cabd115f4a5f8b9e2b2929e"
+    },
+    {
+      "path": "negative-labels/negative-14.json",
+      "sha256": "6e469e587d2b790d5b36c7d5bde0091503967371042910bac34b29513faf71e3"
+    },
+    {
+      "path": "negative-labels/negative-15.json",
+      "sha256": "991b46b601ba21443819d2a6068684d1293137602f930cf0b8bbb0dddcd81ea6"
+    },
+    {
+      "path": "negative-labels/negative-16.json",
+      "sha256": "d17c3bef3fae6bdaea3cd13dab07e7469bb22418adcebeb8d0e9507af0763ee1"
+    },
+    {
+      "path": "negative-labels/negative-17.json",
+      "sha256": "b9bc0cf5574e2ae19bcf0cb3fe9074b930d99755eca0530956904f52fe769986"
+    },
+    {
+      "path": "negative-labels/raw-draft/negative-00.json",
+      "sha256": "916edd4e3c36f687b53afff00f4a42d0541801a24a2ecd82e505cef227638792"
+    },
+    {
+      "path": "negative-labels/raw-draft/negative-01.json",
+      "sha256": "ca134f6ddfdd1bfb0379a689294c8ad69e130ab4cd129f8f627d41d7b875e30b"
+    },
+    {
+      "path": "negative-labels/raw-draft/negative-02.json",
+      "sha256": "77f4e72ddc8ad62422ff95130b83ddba250040474aa3066be98e723a695bf227"
+    },
+    {
+      "path": "negative-labels/raw-draft/negative-03.json",
+      "sha256": "0dfa888045391aab99fc666eca33f09e65c316c7f61ce63e213ed1dd6b3f3b65"
+    },
+    {
+      "path": "negative-labels/raw-draft/negative-04.json",
+      "sha256": "99a2672367e1a9a9505c118158c3a2f4ee58517e6aeb6b8bc098be8ea216efa4"
+    },
+    {
+      "path": "negative-labels/raw-draft/negative-05.json",
+      "sha256": "8842028e1125dae21e3ad54068d7e0bef1c5431f41eca077f33d016bff53485b"
+    },
+    {
+      "path": "negative-labels/revision-overview-only/negative-06.json",
+      "sha256": "f8b26ae7089f0464d4cf4ce31f22047ab35a8fa63127252da962698935270747"
+    },
+    {
+      "path": "negative-labels/revision-overview-only/negative-07.json",
+      "sha256": "1db8952754800cf9360faa2939993663fdc4480276d40b0a1604a5b45569167b"
+    },
+    {
+      "path": "negative-labels/revision-overview-only/negative-08.json",
+      "sha256": "ae2e849a343f8b1231da89d34991c3b8d18a572af1095235bbe9e077b6245de1"
+    },
+    {
+      "path": "negative-labels/revision-overview-only/negative-09.json",
+      "sha256": "177f4e6de6ab259cf1a41dc4b16af6961bf6384a1949d6874bfcdc6c46503f3c"
+    },
+    {
+      "path": "negative-labels/revision-overview-only/negative-10.json",
+      "sha256": "ba7740472ab3791f770654f8ea390fa656e66ec78a7fe5673876e8dcece015d2"
+    },
+    {
+      "path": "negative-labels/revision-overview-only/negative-11.json",
+      "sha256": "9e408fb7ae3ea88545b2870bfacef3048b992c66cf98e3798a63819e5725ba4a"
+    },
+    {
+      "path": "negative-labels/revision-pre-timing-correction/negative-10.json",
+      "sha256": "836ec1bcb1285e794e5ece631ac2ce1dd476e45583b79d07c4d5d115e31991c6"
+    },
+    {
+      "path": "negative-labels/revision-pre-timing-correction/negative-11.json",
+      "sha256": "8966ee7b43ce1b1bf6bd5220797ae2fff137c5c98e77baf8ca31e2d85dcd9e17"
+    },
+    {
+      "path": "revision-overview-native/negative-12.json",
+      "sha256": "f70845056c63407b53b7a376bc38f524b3ff1d5480f84afda0fc492f63ff7311"
+    },
+    {
+      "path": "revision-overview-native/negative-13-before-final-terminal-correction.json",
+      "sha256": "a50a2b1e0e5cd84a476c2d818c4eeff1254e34b34e8e29fb34de9ed698b1bfcf"
+    },
+    {
+      "path": "revision-overview-native/negative-13.json",
+      "sha256": "e5af5cba8ce1fd2294fb78380de4456efb5bc6b65c1bb268372d460cbdc17af1"
+    },
+    {
+      "path": "revision-overview-native/negative-14.json",
+      "sha256": "882b0ad70976ed223c0dac4b948c6bdb100ccfc05372cc7965fd61ffd089f586"
+    },
+    {
+      "path": "revision-overview-native/negative-15.json",
+      "sha256": "a8b52ce2b28f5a38837c9e37dc178dc999dfb2136d956618f5796f99afc1b428"
+    },
+    {
+      "path": "revision-overview-native/negative-16.json",
+      "sha256": "01ef7e54f50ed166cf947d0816675cd9f28bd33f90678353f2221b48988c0ba6"
+    },
+    {
+      "path": "revision-overview-native/negative-17.json",
+      "sha256": "578bffe79efbdb3e207bc29bc888d71213eb98f4bb84ad1846dc63a10c30e225"
+    },
+    {
+      "path": "revisions/stage-2-before-evidence-archive/negative-10.json",
+      "sha256": "fda886940a95a10f8596fd26b1fb942ea7f7dfd75cdeecd7b545b661ba471f5e"
+    },
+    {
+      "path": "revisions/stage-2-before-evidence-archive/negative-11.json",
+      "sha256": "ba6ef4058f5ac2de198d047b819b5c65a35486df81283abf9357409fead3510d"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-00.json",
+      "sha256": "a0faf5e4ac702bbe1e38b4bff7525289344a8acd8509fd12a4c3e31f4a2dccbb"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-01.json",
+      "sha256": "924ff6c69ff80a79cbe8cf586afd77aea20d9e664b9e63971d4333b21327fe14"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-02.json",
+      "sha256": "b77a5b40b94b7f8b6602b3c84866823cca40c797f205d7b59a2aa60cd68b4937"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-03.json",
+      "sha256": "9e420ad0c5dc34792fe8f0a1650597565bd8515666a72cfc8427de65a2a376d0"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-04.json",
+      "sha256": "c4f3d45b18fbf925a8251923a2fdecdbe8b771572a255f8baae57370cb7c6a81"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-05.json",
+      "sha256": "c164680528f166c7e7fb2aa790de29ba079b880e99c216cdb00d886ba4318ebc"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-06.json",
+      "sha256": "fa118e626a0d7f10aab5a2485fe22c1d2cc339845ab62ba592e1b14fb9f269fb"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-07.json",
+      "sha256": "6387800c2cb82ba0b1d9dd7e2e77fb639a6cdd6b75b26f45ae720a79041ce919"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-08.json",
+      "sha256": "519b893fc12e2de3cda9e53474d7ef78f9b51d6aac40f7337969fce6c9c6b35c"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-09.json",
+      "sha256": "f9bb7e5d06ed367269a6c50ecd1af1ea46a5778c99f90af40c7908acd605a875"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-10.json",
+      "sha256": "e256e87905200572902a7e6da67fd6986557e19c133291c6922111cd851409ff"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-11.json",
+      "sha256": "279a8e4956a4ed1d9543d805ffd0528adfd91e4421326dc9ebc2e0af64c77a89"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-12.json",
+      "sha256": "8e38058067004f76f020d93a5fa7b0f331368153cdb6b8ce6f4ed9dbe17ceef2"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-13.json",
+      "sha256": "f1eb0525e5dd8e06664995c6f326f43445e9fff0443d82bb05137ec8fa78882b"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-14.json",
+      "sha256": "861aa214cde8deae17192fc81ef54595b54b746595afe4a36aa80a9aa01f7b16"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-15.json",
+      "sha256": "c3d08e280cea524714cb7efa5c64377eb53bb5f6f2d72dfba194827ecd5f0b8b"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-16.json",
+      "sha256": "bc8be259638e28b31490b892ef3f0dd022df53ee2300d081d8fc8bf21e4b520f"
+    },
+    {
+      "path": "revisions/stage-2-source-review/negative-17.json",
+      "sha256": "3b0b88f0f2381685412077764c340a9b5405a11af48991ce6159eada3f9b5bfd"
+    },
+    {
+      "path": "sequence-candidates.json",
+      "sha256": "0f9d7462e5d90d714581b298776fbff0095d77af9c6627cdb7d385b4d7fb5552"
+    },
+    {
+      "path": "sequence-labels/sequence-00.json",
+      "sha256": "f77aecef767e4473e55341936e9d44e15e9d4c69511557fe24a56e2bc04e82f8"
+    },
+    {
+      "path": "sequence-labels/sequence-00.md",
+      "sha256": "ac054c5d9aad789d91c8838b9b95b537526cf6118180039695784925ff51a940"
+    },
+    {
+      "path": "sequence-labels/sequence-01.json",
+      "sha256": "7c5dbdc9a7a84d997d9179d2a757e2fb6615459c6862223920c49db69da8c9bd"
+    },
+    {
+      "path": "sequence-labels/sequence-01.md",
+      "sha256": "1d271c88af3315442a604742a81ad90ee1261f1a5583107d5e1e928c12de27e7"
+    },
+    {
+      "path": "sequence-labels/sequence-02.json",
+      "sha256": "fc3b42c58bf63968ad24756e45c94f4e37f0baa6d82c270a72031b445e5317b3"
+    },
+    {
+      "path": "sequence-labels/sequence-02.md",
+      "sha256": "e2e40dc1486180da4cf90fcfb4300631e3394ffc98c3d016b0fad516f6a4e60f"
+    },
+    {
+      "path": "sequence-labels/sequence-03.json",
+      "sha256": "cb54437ab6c60201852b21b67e07adb4e24cc6bde7b3f302138f771fb7e8a39b"
+    },
+    {
+      "path": "sequence-labels/sequence-03.md",
+      "sha256": "c8995691038231037c4781b363cbdc796abf477cbc6a338e09b53dff08cc1b27"
+    },
+    {
+      "path": "sequence-labels/sequence-04.json",
+      "sha256": "6a4ddf8ed93ee0ae52ffab587abee99a203e1883e415a67a9fc0ec16c24f5941"
+    },
+    {
+      "path": "sequence-labels/sequence-04.md",
+      "sha256": "4cc9f73d6e16c3bdf51225e3d443c9f3c2344c450e278d41e093871819b3f847"
+    },
+    {
+      "path": "sequence-labels/sequence-05.json",
+      "sha256": "1695b9dfbf5ad40e7f9591d4780dd9a097d648e468928a7bd9542735e01c510a"
+    },
+    {
+      "path": "sequence-labels/sequence-05.md",
+      "sha256": "df737bd82fa2112e5cf852418dc1a84c2c21e1dfd765db95494b63487d3a73e6"
+    },
+    {
+      "path": "sequence-labels/sequence-06.json",
+      "sha256": "2eddfecd83f5b7344cf607a92c3fa55174365aa0a541f0f9c41ad026e9c1cab2"
+    },
+    {
+      "path": "sequence-labels/sequence-06.md",
+      "sha256": "d546fa8dceaf9a717cffd771f6698cb6a9981865e0d146e94736252af033be00"
+    },
+    {
+      "path": "sequence-labels/sequence-07.json",
+      "sha256": "e38568e8ec6e9bedd23aa7484b7c96da394d18dd166b0a500d8e1811eb8dabf8"
+    },
+    {
+      "path": "sequence-labels/sequence-07.md",
+      "sha256": "256ad2f50d616b2f8a96b17889c80da88881da54a8932f9bd45205d5cf4a5b11"
+    },
+    {
+      "path": "sequence-labels/sequence-08.json",
+      "sha256": "8eb97fda8b787f5f1fab6840957bd7c42e8d3e65c1d2f8fa1bb6acf794c00048"
+    },
+    {
+      "path": "sequence-labels/sequence-08.md",
+      "sha256": "c0c0c016388e5003b6b95e5d487d969f35091098f8e812ebd0daa7e84defbb27"
+    },
+    {
+      "path": "sequence-labels/sequence-09.json",
+      "sha256": "7f8b7acc942179bb23ed791296d6dccfe5e758e0e680aedfd423ffc1d745b62a"
+    },
+    {
+      "path": "sequence-labels/sequence-09.md",
+      "sha256": "2cfc8a7cb1384294bb98037c845eedd2418b09ba2a058facb18a1c7aaf1cac26"
+    },
+    {
+      "path": "sequence-labels/sequence-10.json",
+      "sha256": "39fb578f1f29ad35ae4f3d5fc0c1a47ff6d94492d4236f0bfc80e580b6fe48bd"
+    },
+    {
+      "path": "sequence-labels/sequence-10.md",
+      "sha256": "60256003078246759b33f4be03b41afc1cd80c1ba5d3d9de79c10b87e75100bf"
+    },
+    {
+      "path": "sequence-labels/sequence-11.json",
+      "sha256": "b35c0d163a2667a0dbb2fd71eb2674a50177a4a628097270e134088a9a528d14"
+    },
+    {
+      "path": "sequence-labels/sequence-11.md",
+      "sha256": "418b07a3fa6c79db4237013351ddeefec9bc1e6e917761a9e927684cd20ad386"
+    },
+    {
+      "path": "source-labeling-instructions.md",
+      "sha256": "f652b858e39266eb9c08671022d872b8ea742e2d696c82b3d25036221181b49f"
+    },
+    {
+      "path": "stage-2-gate.json",
+      "sha256": "6e442a63b9ce39f6535460fe2926fe0a0472d982bc9d01850e66e6af946b6c14"
+    },
+    {
+      "path": "stage-2-report.json",
+      "sha256": "a181a88eae509ad5f2d0fe59fe7e6fb21c976327bfe8c2b67296b0606414ab5f"
+    }
+  ],
+  "assets": [
+    {
+      "path": "supplemental-assets/first-six-hud-review.jpg",
+      "destination": "experiments/scene-understanding/v1/negatives/first-six-hud-review.jpg",
+      "sha256": "247cb2193b83e6927bafa9d5078839ad1b3d32c3d721b5469cf5c08dbef29b05"
+    }
+  ],
+  "review_input_requests": [
+    {
+      "clip_id": "sequence-05",
+      "start": 428,
+      "end": 444,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-05",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-05/inputs"
+    },
+    {
+      "clip_id": "sequence-02",
+      "start": 30,
+      "end": 44,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-02",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-02/inputs"
+    },
+    {
+      "clip_id": "sequence-03",
+      "start": 258,
+      "end": 274,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-03",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-03/inputs"
+    },
+    {
+      "clip_id": "sequence-04",
+      "start": 358,
+      "end": 374,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-04",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-04/inputs"
+    },
+    {
+      "clip_id": "sequence-10",
+      "start": 104,
+      "end": 120,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-10",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-10/inputs"
+    },
+    {
+      "clip_id": "sequence-11",
+      "start": 276,
+      "end": 292,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-11",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-11/inputs"
+    },
+    {
+      "clip_id": "sequence-08",
+      "start": 502,
+      "end": 518,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-08",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-08/inputs"
+    },
+    {
+      "clip_id": "sequence-01",
+      "start": 172,
+      "end": 186,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-01",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-01/inputs"
+    },
+    {
+      "clip_id": "sequence-06",
+      "start": 758,
+      "end": 774,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-06",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-06/inputs"
+    },
+    {
+      "clip_id": "sequence-07",
+      "start": 776,
+      "end": 792,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-07",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-07/inputs"
+    },
+    {
+      "clip_id": "sequence-00",
+      "start": 24,
+      "end": 38,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-00",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-00/inputs"
+    },
+    {
+      "clip_id": "sequence-09",
+      "start": 694,
+      "end": 710,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-09",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-09/inputs"
+    },
+    {
+      "clip_id": "sequence-05",
+      "start": 433.15,
+      "end": 434.35,
+      "sampling_fps": 16,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-05/parent-source-adjudication",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-05/parent-source-adjudication/frames"
+    },
+    {
+      "clip_id": "sequence-05",
+      "start": 432.0,
+      "end": 436.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-05/detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-05/detail-focus"
+    },
+    {
+      "clip_id": "sequence-02",
+      "start": 33.5,
+      "end": 41.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-02/native-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-02/native-focus"
+    },
+    {
+      "clip_id": "sequence-03",
+      "start": 258.5,
+      "end": 263.6,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-03/native-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-03/native-focus"
+    },
+    {
+      "clip_id": "sequence-04",
+      "start": 360.8,
+      "end": 361.8,
+      "sampling_fps": 16,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-04/parent-source-adjudication",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-04/parent-source-adjudication/frames"
+    },
+    {
+      "clip_id": "sequence-04",
+      "start": 359.0,
+      "end": 364.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-04/detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-04/detail-focus"
+    },
+    {
+      "clip_id": "sequence-10",
+      "start": 104.0,
+      "end": 116.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus"
+    },
+    {
+      "clip_id": "sequence-11",
+      "start": 277.5,
+      "end": 289.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-11/native-detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-11/native-detail-focus"
+    },
+    {
+      "clip_id": "sequence-11",
+      "start": 277.5,
+      "end": 289.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-11/native-detail-focus2",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-11/native-detail-focus2"
+    },
+    {
+      "clip_id": "sequence-08",
+      "start": 504.5,
+      "end": 509.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus"
+    },
+    {
+      "clip_id": "sequence-01",
+      "start": 175.5,
+      "end": 178.7,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-01/native-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-01/native-focus"
+    },
+    {
+      "clip_id": "sequence-06",
+      "start": 768.65,
+      "end": 769.85,
+      "sampling_fps": 16,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-06/parent-source-adjudication",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-06/parent-source-adjudication/frames"
+    },
+    {
+      "clip_id": "sequence-06",
+      "start": 767.0,
+      "end": 771.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-06/detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-06/detail-focus"
+    },
+    {
+      "clip_id": "sequence-07",
+      "start": 779.0,
+      "end": 783.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-07/detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-07/detail-focus"
+    },
+    {
+      "clip_id": "sequence-00",
+      "start": 27.0,
+      "end": 30.0,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-00/native-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-00/native-focus"
+    },
+    {
+      "clip_id": "sequence-09",
+      "start": 700.0,
+      "end": 704.5,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus",
+      "image_directory": "experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus"
+    },
+    {
+      "clip_id": "negative-05",
+      "start": 419.2,
+      "end": 427.2,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-05",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-05/inputs"
+    },
+    {
+      "clip_id": "negative-02",
+      "start": 163,
+      "end": 171,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-02",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-02/inputs"
+    },
+    {
+      "clip_id": "negative-03",
+      "start": 256.4,
+      "end": 264.4,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-03",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-03/inputs"
+    },
+    {
+      "clip_id": "negative-04",
+      "start": 348.8,
+      "end": 356.8,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-04",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-04/inputs"
+    },
+    {
+      "clip_id": "negative-17",
+      "start": 785,
+      "end": 793,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-17",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-17/inputs"
+    },
+    {
+      "clip_id": "negative-10",
+      "start": 105,
+      "end": 117,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-10",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-10/inputs"
+    },
+    {
+      "clip_id": "negative-11",
+      "start": 278,
+      "end": 290,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-11",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-11/inputs"
+    },
+    {
+      "clip_id": "negative-16",
+      "start": 10,
+      "end": 18,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-16",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-16/inputs"
+    },
+    {
+      "clip_id": "negative-01",
+      "start": 93,
+      "end": 101,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-01",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-01/inputs"
+    },
+    {
+      "clip_id": "negative-06",
+      "start": 504.65,
+      "end": 512.65,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-06",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-06/inputs"
+    },
+    {
+      "clip_id": "negative-08",
+      "start": 689.55,
+      "end": 697.55,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-08",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-08/inputs"
+    },
+    {
+      "clip_id": "negative-09",
+      "start": 760.95,
+      "end": 768.95,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-09",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-09/inputs"
+    },
+    {
+      "clip_id": "negative-07",
+      "start": 600.1,
+      "end": 608.1,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-07",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-07/inputs"
+    },
+    {
+      "clip_id": "negative-00",
+      "start": 22,
+      "end": 30,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-00",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-00/inputs"
+    },
+    {
+      "clip_id": "negative-13",
+      "start": 747,
+      "end": 759,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-13",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-13/inputs"
+    },
+    {
+      "clip_id": "negative-14",
+      "start": 448,
+      "end": 456,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-14",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-14/inputs"
+    },
+    {
+      "clip_id": "negative-15",
+      "start": 0,
+      "end": 10,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-15",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-15/inputs"
+    },
+    {
+      "clip_id": "negative-12",
+      "start": 509,
+      "end": 521,
+      "sampling_fps": 4.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-12",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-12/inputs"
+    },
+    {
+      "clip_id": "negative-01",
+      "start": 93.3,
+      "end": 94.3,
+      "sampling_fps": 16.0,
+      "directory": "experiments/scene-understanding/v1/negatives/negative-01/parent-native-hud",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-01/parent-native-hud"
+    },
+    {
+      "clip_id": "negative-13",
+      "start": 758.3,
+      "end": 759.0,
+      "sampling_fps": "native",
+      "directory": "experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision"
+    },
+    {
+      "clip_id": "negative-13",
+      "start": 755.9,
+      "end": 756.6,
+      "sampling_fps": "native",
+      "directory": "experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary"
+    },
+    {
+      "clip_id": "negative-13",
+      "start": 747.45,
+      "end": 747.9,
+      "sampling_fps": "native",
+      "directory": "experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset"
+    },
+    {
+      "clip_id": "negative-11",
+      "start": 286.7,
+      "end": 287.3,
+      "sampling_fps": 10.0,
+      "directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-11-tight",
+      "image_directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-11-tight"
+    },
+    {
+      "clip_id": "negative-10",
+      "start": 106.5,
+      "end": 117.0,
+      "sampling_fps": 2.0,
+      "directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-10-detail",
+      "image_directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-10-detail"
+    },
+    {
+      "clip_id": "negative-10",
+      "start": 113.6,
+      "end": 115.0,
+      "sampling_fps": 10.0,
+      "directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-10-tight",
+      "image_directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-10-tight"
+    },
+    {
+      "clip_id": "negative-11",
+      "start": 278.0,
+      "end": 290.0,
+      "sampling_fps": 2.0,
+      "directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-11-detail",
+      "image_directory": "experiments/scene-understanding/v1/negatives/archived-source-review/negative-11-detail"
+    },
+    {
+      "clip_id": "negative-12",
+      "start": 517.7,
+      "end": 518.3,
+      "sampling_fps": "native",
+      "directory": "experiments/scene-understanding/v1/negatives/negative-12/native-detail",
+      "image_directory": "experiments/scene-understanding/v1/negatives/negative-12/native-detail"
+    }
+  ],
+  "review_status": "source_reviewed_model_draft",
+  "human_verified": false,
+  "recognition_inference": false,
+  "scope": "Development stages 2 and 3; unresolved cases retained. No holdout reservation or input-arm comparison performed."
+}

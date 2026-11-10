@@ -1,0 +1,308 @@
+{
+  "clip_id": "negative-13",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every linked overview sheet in order and inspected native-resolution source frames 00000\u201300001, including the opening HUD state. Also inspected native cadence frames 758.3075\u2013758.9916 to confirm the recall terminal transition and base arrival. Native detail of recall onset at 747.45\u2013747.9s and terminal boundary at 755.9\u2013756.6s refined visible onset and completion brackets.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/sheet-006.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/inputs/00001-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00001-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00002-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00003-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00004-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00005-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00006-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00007-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00008-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00009-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00010-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00011-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00012-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00013-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00014-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00015-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00016-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00017-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00018-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00019-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00020-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00021-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00022-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00023-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00024-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00025-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00026-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00027-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00028-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00029-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00030-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00031-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00032-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00033-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00034-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00035-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00036-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00037-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00038-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00039-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00040-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-revision/00041-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00001-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00002-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00003-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00004-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00005-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00006-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00007-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00008-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00009-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00010-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00011-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00012-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00013-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00014-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00015-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00016-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00017-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00018-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00019-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00020-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00021-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00022-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00023-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00024-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00025-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00026-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00027-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00028-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00029-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00030-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00031-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00032-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00033-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00034-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00035-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00036-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00037-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00038-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00039-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00040-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-terminal-boundary/00041-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00001-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00002-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00003-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00004-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00005-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00006-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00007-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00008-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00009-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00010-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00011-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00012-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00013-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00014-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00015-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00016-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00017-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00018-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00019-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00020-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00021-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00022-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00023-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00024-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00025-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-13/native-detail-recall-onset/00026-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "n13-recall",
+      "kind": "recall",
+      "start": 747.713633333,
+      "end": 756.122033,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "terminal_status": "completed",
+      "terminal_status_evidence": [
+        {
+          "time": 756.338917,
+          "cue": "Selected champion is visibly at the fountain and receiving healing after the scene has changed to base."
+        }
+      ],
+      "evidence": [
+        {
+          "time": 747.713633333,
+          "cue": "Last inspected native sample without a Recall bar; selected champion is still interacting with a minion."
+        },
+        {
+          "time": 747.763683333,
+          "cue": "First inspected native sample with the Recall bar visible at approximately eight seconds."
+        },
+        {
+          "time": 755.75,
+          "cue": "Recall countdown is approximately 0.8 seconds."
+        },
+        {
+          "time": 756.0535,
+          "cue": "Last inspected native sample still showing the lane scene; shop overlay obscures the selected player and Recall bar."
+        },
+        {
+          "time": 756.122033,
+          "cue": "First inspected native sample showing the base scene, although the shop overlay still obscures the selected player."
+        },
+        {
+          "time": 756.338917,
+          "cue": "Selected champion becomes visible at the fountain and healing numbers appear, confirming arrival after the transition."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "channeling",
+          "start": 747.763683333,
+          "end": 756.0535
+        },
+        {
+          "phase": "completed",
+          "start": 756.0535,
+          "end": 756.122033
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "onset_bracket": [
+        747.713633333,
+        747.763683333
+      ],
+      "uncertainty": "Recall onset is bracketed between 747.713633333 and 747.763683333. Completion is bracketed between the last lane view at 756.0535 and first base view at 756.122033; the shop overlay obscures the selected player during the decisive transition, so the exact completion frame is uncertain. The champion visible healing at 756.338917 confirms the completed state but is not the completion boundary."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "supported",
+      "start": 747.0129,
+      "end": 747.76,
+      "scope": "Initial Q cooldown state only.",
+      "evidence": [
+        {
+          "time": 747.0129,
+          "cue": "Q slot displays a short countdown."
+        },
+        {
+          "time": 747.76,
+          "cue": "Q appears available while recall begins."
+        }
+      ],
+      "reason": "Q HUD begins with a visible short cooldown and counts down to ready.",
+      "forbidden_claim": "Do not infer a cast from the initial cooldown."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "not_present",
+      "reason": "No centered timer resembling a cooldown is visible; upper slot numerals are costs."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "supported",
+      "start": 747.0,
+      "end": 756.338917,
+      "scope": "The viewport changes from lane to blue base during the recall terminal transition.",
+      "evidence": [
+        {
+          "time": 756.0535,
+          "cue": "Last inspected sample still shows lane scenery."
+        },
+        {
+          "time": 756.122033,
+          "cue": "First inspected sample shows base scenery with shop overlay open."
+        },
+        {
+          "time": 756.338917,
+          "cue": "Selected champion is visible at the fountain."
+        }
+      ],
+      "forbidden_claim": "The viewport change does not establish player motion during unseen frames.",
+      "reason": "The viewport changes within the cited scope; this observation is independent of whether the selected player also moves."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "not_present",
+      "reason": "No other champion cast is visibly established in the overview sheets."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "not_present",
+      "reason": "Recall countdown reaches completion and the selected champion appears at base."
+    },
+    {
+      "tag": "quiet",
+      "status": "not_present",
+      "reason": "A recall attempt is visibly active; no action-free exhaustive scope is asserted."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 747.0129,
+      "end": 747.76,
+      "reason": "A minion wave is present and damage/gold indicators appear, but the specific attacker/target and action cannot be securely linked from overview sampling."
+    }
+  ],
+  "notes": "Source-only visual review. Prior exposure to a general League annotation task is disclosed; no current candidate recognition predictions, detector outputs, caches, other labels, or model outputs were viewed. Candidate-selection neighborhoods may have historical exposure as stated in the instructions. Overview sampling does not prove absence of rapid actions; quiet is left unresolved unless the required complete native review was performed. Native onset detail brackets the Recall bar first appearance at 747.713633333\u2013747.763683333. Native terminal detail brackets the scene transition from lane to base at 756.0535\u2013756.122033; the open shop obscures the selected player at the transition, and visible fountain healing at 756.338917 confirms arrival but is not treated as the exact completion time. Earlier 758.7s base footage is later confirmation only."
+}

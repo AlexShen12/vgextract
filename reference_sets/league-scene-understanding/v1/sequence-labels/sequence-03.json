@@ -1,0 +1,173 @@
+{
+  "clip_id": "sequence-03",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_a",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every supplied overview sheet for this clip and all generated dense native-focus sheets; additionally viewed the listed native-resolution source frames. Prior source-only Stage 2 exposure is disclosed. Candidate focus labels were treated as collection intent, not ground truth.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-014.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/inputs/sheet-015.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-014.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-015.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-016.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-017.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-018.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-019.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/sheet-020.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/00056-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/00068-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/00074-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-03/native-focus/00078-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "sequence-03-auto-01",
+      "kind": "basic_attack",
+      "start": 262.01175,
+      "end": 262.195267,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 262.195267,
+          "cue": "A 104 damage numeral appears over the selected red cannon minion as Darius is in melee range among the enemy wave; the prior native sample at 262.011750 has no such 104 numeral."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "attack",
+          "start": 262.01175,
+          "end": 262.195267
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "onset_bracket": [
+        262.01175,
+        262.078483
+      ],
+      "end_bracket": [
+        262.128533,
+        262.195267
+      ],
+      "uncertainty": "Melee overlap and concurrent minion attacks limit attribution certainty; only this single distinct basic-hit cue is recorded."
+    },
+    {
+      "id": "sequence-03-cast-01",
+      "kind": "ability_cast",
+      "start": 263.129533,
+      "end": 263.396267,
+      "actor": "selected",
+      "slot": "Q",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 263.196267,
+          "cue": "The circular area effect is present around selected Darius, and the Q icon changes from ready to a blue cooldown numeral 7."
+        },
+        {
+          "time": 263.396267,
+          "cue": "Multiple 235 damage numerals appear across nearby minions while the circular area effect remains visible."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "cast",
+          "start": 263.129533,
+          "end": 263.196267
+        },
+        {
+          "phase": "release",
+          "start": 263.196267,
+          "end": 263.396267
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "onset_bracket": [
+        263.129533,
+        263.196267
+      ],
+      "end_bracket": [
+        263.329533,
+        263.396267
+      ],
+      "uncertainty": "Activation lies between sampled ready and cooldown frames. Preparation and recovery are not separately visible; overlapping minions limit damage attribution."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "isolated_ability",
+      "status": "unresolved",
+      "reason": "A circular effect is visible, but preparation and recovery are not separately established."
+    },
+    {
+      "tag": "rapid_attacks",
+      "status": "unresolved",
+      "reason": "Only one distinct selected-player hit cue is separated; the following area effect is an ability and does not count as a second basic attack."
+    },
+    {
+      "tag": "empowered_attack",
+      "status": "unresolved",
+      "reason": "No separately linked empowered-slot activation and physical attack is established."
+    },
+    {
+      "tag": "observable_miss",
+      "status": "unresolved",
+      "reason": "The area effect overlaps multiple minions; geometry does not establish a miss."
+    },
+    {
+      "tag": "obscured_outcome",
+      "status": "unresolved",
+      "reason": "Impacts and units overlap, but no distinct cast with a demonstrably obscured result is isolated."
+    },
+    {
+      "tag": "recall_lifecycle",
+      "status": "not_present",
+      "reason": "The focused interval shows lane combat and no visible recall channel."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Non-exhaustive source review limited to supplied overview samples and focus-detail neighborhood. Prior Stage 2 review exposed source neighborhoods; no prediction outputs were viewed. Unknown target identity, damage attribution, or unobserved phases are retained where cues do not resolve them."
+}

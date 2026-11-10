@@ -1,0 +1,263 @@
+{
+  "clip_id": "sequence-10",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Reviewed every supplied overview sheet and native-resolution detail sheets around focus actions and recall transitions. Prior general Stage 2 source-annotation exposure is disclosed; no current prediction outputs were seen. Candidate focus/pattern informed collection scope only, not event conclusions.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-014.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/inputs/sheet-015.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-020.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-021.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-022.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-023.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-024.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-025.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-026.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-027.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-040.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-041.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-042.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-10/native-detail-focus/sheet-043.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "s10-q-waveclear",
+      "kind": "ability_cast",
+      "start": 105.38,
+      "end": 105.7,
+      "actor": "selected",
+      "slot": "Q",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 105.388167,
+          "cue": "Selected champion winds up with weapon raised while red minions are grouped nearby."
+        },
+        {
+          "time": 105.504,
+          "cue": "Selected champion performs a circular weapon sweep; multiple nearby minions show simultaneous damage values and then gold/experience popups."
+        },
+        {
+          "time": 105.822383,
+          "cue": "The area effect has ended and selected champion is standing beside the cleared wave."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "preparation",
+          "start": 105.38,
+          "end": 105.5
+        },
+        {
+          "phase": "release",
+          "start": 105.5,
+          "end": 105.57
+        },
+        {
+          "phase": "recovery",
+          "start": 105.57,
+          "end": 105.7
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "The scene shows damage and several minion deaths during the area effect; exact attribution of each popup is uncertain.",
+      "onset_bracket": [
+        105.388167,
+        105.504
+      ]
+    },
+    {
+      "id": "s10-recall",
+      "kind": "recall",
+      "start": 105.82,
+      "end": 114.32,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 105.822383,
+          "cue": "Recall progress bar appears beneath the selected champion after the wave clear."
+        },
+        {
+          "time": 106.322883,
+          "cue": "CHANNELING label and Recall progress bar are both visible over the selected champion."
+        },
+        {
+          "time": 114.197417,
+          "cue": "Recall countdown reaches 0.1 while a scoreboard overlay covers much of the scene."
+        },
+        {
+          "time": 114.3142,
+          "cue": "The selected champion is shown at the allied fountain with the channel label gone."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "channeling",
+          "start": 105.82,
+          "end": 114.26
+        },
+        {
+          "phase": "base_arrival",
+          "start": 114.26,
+          "end": 114.32
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "Onset is bounded by first progress bar appearance; completion transition occurs under/near scoreboard overlay, with the first base-arrival image visible immediately afterward.",
+      "onset_bracket": [
+        105.822383,
+        106.322883
+      ],
+      "terminal_status": "completed",
+      "terminal_evidence": [
+        {
+          "time": 114.3142,
+          "cue": "The selected champion is shown at the allied fountain with the channel label gone."
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "tag": "isolated_ability",
+      "status": "supported",
+      "start": 105.38,
+      "end": 105.7,
+      "scope": "One selected-player circular ability directed into the grouped red minion wave.",
+      "evidence": [
+        {
+          "time": 105.504,
+          "cue": "Selected champion executes a circular weapon sweep; several nearby minions display damage numerals."
+        }
+      ],
+      "forbidden_claim": "Do not assign every damage or gold popup to the ability with certainty.",
+      "reason": "Direct source cues support the narrowly scoped event described here."
+    },
+    {
+      "tag": "rapid_attacks",
+      "status": "unresolved",
+      "start": 105.38,
+      "end": 105.7,
+      "scope": "Minion wave clear under allied turret.",
+      "reason": "The nearby wave clear includes several simultaneous minion damage popups, but sampled frames do not establish multiple distinct attack onsets.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "empowered_attack",
+      "status": "unresolved",
+      "start": 105.38,
+      "end": 105.7,
+      "scope": "Selected-player wave clear.",
+      "reason": "No visible empowerment cue is linked to a separate physical basic attack in the reviewed interval.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "observable_miss",
+      "status": "not_present",
+      "start": 105.38,
+      "end": 105.7,
+      "scope": "Selected-player wave clear and recall onset.",
+      "reason": "No isolated aimed ability with visibly excluded contact is shown in the reviewed focus.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "obscured_outcome",
+      "status": "not_present",
+      "start": 105.38,
+      "end": 105.7,
+      "scope": "Selected-player wave clear.",
+      "reason": "The Q-like circular sweep and nearby damage are visible; no separate obscured-target cast is established in the reviewed focus.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "recall_lifecycle",
+      "status": "supported",
+      "start": 105.82,
+      "end": 114.32,
+      "scope": "Selected-player recall from initial progress bar through terminal zero and first visible fountain arrival.",
+      "evidence": [
+        {
+          "time": 105.822383,
+          "cue": "Recall progress bar first appears beneath the selected champion."
+        },
+        {
+          "time": 106.322883,
+          "cue": "CHANNELING label and Recall bar persist."
+        },
+        {
+          "time": 114.26415,
+          "cue": "Recall timer reads 0.0; scoreboard obscures the broader field."
+        },
+        {
+          "time": 114.3142,
+          "cue": "Selected champion is visible on the allied fountain platform with healing numbers soon after."
+        }
+      ],
+      "forbidden_claim": "Do not report an exact completion instant inside the scoreboard-obscured transition.",
+      "reason": "Direct source cues support the narrowly scoped event described here."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 104.0,
+      "end": 105.37,
+      "reason": "Opening lane activity is overview-sampled only; no exhaustive native classification."
+    },
+    {
+      "start": 105.71,
+      "end": 105.81,
+      "reason": "No dense source samples are reviewed between the wave-clear recovery and first recall progress bar."
+    },
+    {
+      "start": 114.33,
+      "end": 120.0,
+      "reason": "Post-arrival scene is not exhaustively reviewed; later healing is confirmation only."
+    }
+  ],
+  "notes": "Source-only draft. No inference across unreviewed spans; visible HUD/camera overlays can obscure scene detail. Exact targets and outcomes remain null unless directly supported."
+}

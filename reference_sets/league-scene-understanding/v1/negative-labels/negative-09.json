@@ -1,0 +1,68 @@
+{
+  "clip_id": "negative-09",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_b",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Reviewed all supplied overview sheets and native source frames 00000 and 00001; inspected additional native source detail at 2 fps for recall lifecycle in negative-10 and negative-11.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/sheet-007.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-09/inputs/00001-source.jpg"
+    ]
+  },
+  "events": [],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "unresolved",
+      "reason": "HUD cooldown digits are visible, but the supplied overview/native source review does not establish a fresh activation versus a continuing cooldown at onset.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "unresolved",
+      "reason": "No clearly supported centered countdown/cost cue was established from overview/native source review sampling.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "unresolved",
+      "reason": "Camera position varies across samples; the samples do not establish camera motion independently of player motion.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "unresolved",
+      "reason": "Visible champion activity does not provide enough source evidence in the reviewed overview/native source review to link a distinct cast to another actor confidently.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "unresolved",
+      "reason": "Recall-like channeling appears in some supplied overview/native source review frames, but interruption is not established; continuing or completed channel remains possible.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "quiet",
+      "status": "unresolved",
+      "reason": "Overview/native sampling cannot establish absence of rapid actions; full native review was not performed.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Source review remains non-exhaustive. All supplied overview sheets and the first two native source frames were inspected; 2 fps native detail was also inspected for recall lifecycle in negative-10 and negative-11. No quiet claim is made."
+}

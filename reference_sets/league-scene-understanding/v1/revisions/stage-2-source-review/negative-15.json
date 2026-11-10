@@ -1,0 +1,121 @@
+{
+  "clip_id": "negative-15",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every linked overview sheet in order and inspected native-resolution source frames 00000–00001, including the opening HUD state.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/sheet-009.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-15/inputs/00001-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "n15-movement",
+      "kind": "movement",
+      "start": 0.25025,
+      "end": 3.75375,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 0.25025,
+          "cue": "Selected champion is visible in river."
+        },
+        {
+          "time": 3.75375,
+          "cue": "Selected champion reaches the river brush edge."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "active",
+          "start": 0.25025,
+          "end": 3.75375
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "The first sample is a black/obscured frame; movement onset precedes the first visible sample by an unknown amount."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "not_present",
+      "reason": "No active cooldown counter is clearly visible in initial HUD; slots show cost or unavailable state."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "not_present",
+      "reason": "Slot numerals are costs; no centered countdown is observed."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "supported",
+      "start": 3.75,
+      "end": 4.25,
+      "scope": "The view changes away from the river to a ward/brush scene while subsequent selected-player views continue at another location; distinguish this view transition from the player moving before it.",
+      "evidence": [
+        {
+          "time": 3.75375,
+          "cue": "Selected champion remains at river brush edge."
+        },
+        {
+          "time": 4.004,
+          "cue": "Overview shows a different area with pings/ward and no selected champion in scene."
+        }
+      ],
+      "forbidden_claim": "The view transition does not prove the selected player was stationary or teleported.",
+      "reason": "The viewport changes within the cited scope; this observation is independent of whether the selected player also moves."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "not_present",
+      "reason": "No other champion cast is established in sampled views."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "not_present",
+      "reason": "No recall bar or attempt is visible."
+    },
+    {
+      "tag": "quiet",
+      "status": "unresolved",
+      "reason": "Only overview sampling was inspected and rapid activity cannot be ruled out; no complete native review of the full scope was performed."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 0.0,
+      "end": 0.25025,
+      "reason": "Opening sample is black/obscured."
+    },
+    {
+      "start": 4.004,
+      "end": 4.25425,
+      "reason": "Selected champion is not visible in the gameplay scene after the view changes; pings and ward area are visible."
+    }
+  ],
+  "notes": "Source-only visual review. Prior exposure to a general League annotation task is disclosed; no current candidate recognition predictions, detector outputs, caches, other labels, or model outputs were viewed. Candidate-selection neighborhoods may have historical exposure as stated in the instructions. Overview sampling does not prove absence of rapid actions; quiet is left unresolved unless the required complete native review was performed."
+}

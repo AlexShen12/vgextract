@@ -1,0 +1,107 @@
+{
+  "clip_id": "negative-00",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_a",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed all supplied overview sheets, enlarged source-pixel HUD review image, and native-resolution first two source frames per clip; 4 fps boundary comparison only.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/sheet-007.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/first-six-hud-review.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/00001-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-00/inputs/00016-source.jpg"
+    ]
+  },
+  "events": [],
+  "cases": [
+    {
+      "tag": "camera_motion",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "quiet",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "supported",
+      "start": 22.005316666666666,
+      "end": 22.255566666666667,
+      "scope": "At the clip opening, distinguish the upper numeric ability mana-cost text from a centered countdown overlay on the icon.",
+      "evidence": [
+        {
+          "time": 22.005316666666666,
+          "cue": "Native HUD displays upper-right costs above Q/W/E/R icons; any countdown numeral is separately centered on a blue cooldown overlay."
+        },
+        {
+          "time": 22.255566666666667,
+          "cue": "Adjacent native frame preserves upper cost numeral position distinct from centered cooldown numeral where present."
+        }
+      ],
+      "reason": "Upper cost numerals (25/30/35/40/70/100) are spatially separate from countdown overlay digits; upper number alone is not countdown.",
+      "forbidden_claim": "Do not read the upper corner cost as an active cooldown timer."
+    },
+    {
+      "tag": "initial_cooldown",
+      "status": "unresolved",
+      "scope": "Opening instant only.",
+      "reason": "Native first two samples show no centered cooldown numeral at clip start; cannot establish an opening cooldown use from these frames.",
+      "forbidden_claim": "Do not infer a fresh cast from static upper mana-cost numerals."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "supported",
+      "start": 22.005316666666666,
+      "end": 26.009316666666667,
+      "scope": "Top-lane view across the opening movement. The terrain/turret view shifts as the camera tracks selected Darius; Darius also changes screen position, consistent with concurrent player movement. Expected decision: do not infer world displacement from screen-coordinate change without accounting for camera motion.",
+      "evidence": [
+        {
+          "time": 22.005316666666666,
+          "cue": "Native opening view shows Darius near allied top turret, with lane edges and turret in the initial composition."
+        },
+        {
+          "time": 26.009316666666667,
+          "cue": "Native later view shows Darius farther along the lane and the turret/terrain composition shifted out of the view, establishing a changed camera view while movement is also visible."
+        }
+      ],
+      "reason": "A camera-tracked view shift is supported alongside visible selected-player movement.",
+      "forbidden_claim": "Do not describe Darius as stationary or attribute all screen displacement solely to camera motion."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Overview samples show selected Darius gameplay with movement/combat context varying by clip. Sampling is 4 fps; intermediate actions and exact onset timing remain unknown. No quiet claim is made. Native opening pair confirms separation of upper mana-cost numerals from centered cooldown timer numerals where shown."
+}

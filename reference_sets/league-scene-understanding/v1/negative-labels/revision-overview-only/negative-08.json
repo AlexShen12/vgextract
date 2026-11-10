@@ -1,0 +1,98 @@
+{
+  "clip_id": "negative-08",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_b",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Reviewed supplied overview sheets; no native-resolution detail frames inspected.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-08/inputs/sheet-007.jpg"
+    ],
+    "inspected_native_frames": []
+  },
+  "events": [
+    {
+      "id": "negative-08-recall-01",
+      "kind": "recall",
+      "start": 694.8,
+      "end": 697.3,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "terminal_status": "ending_unknown",
+      "evidence": [
+        {
+          "time": 694.8,
+          "cue": "Selected champion is visibly channeling recall through the final reviewed overview sample; channel terminal state is outside supplied in-clip evidence."
+        },
+        {
+          "time": 697.1999999999999,
+          "cue": "Selected champion is visibly channeling recall through the final reviewed overview sample; channel terminal state is outside supplied in-clip evidence."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "channeling",
+          "start": 694.8,
+          "end": 697.3
+        }
+      ],
+      "left_censored": true,
+      "right_censored": true,
+      "uncertainty": "Times are approximate from 0.25-second overview sampling; no native detail frames were inspected."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "unresolved",
+      "reason": "HUD cooldown digits are visible, but the supplied overview does not establish a fresh activation versus a continuing cooldown at onset.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "unresolved",
+      "reason": "No clearly supported centered countdown/cost cue was established from overview sampling.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "unresolved",
+      "reason": "Camera position varies across samples; the samples do not establish camera motion independently of player motion.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "unresolved",
+      "reason": "Visible champion activity does not provide enough source evidence in the reviewed overview to link a distinct cast to another actor confidently.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "unresolved",
+      "reason": "Recall-like channeling appears in some supplied overview frames, but interruption is not established; continuing or completed channel remains possible.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    },
+    {
+      "tag": "quiet",
+      "status": "unresolved",
+      "reason": "Overview sampling cannot establish absence of rapid actions; full native review was not performed.",
+      "forbidden_claim": "Do not infer absence or completion from overview sampling alone."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Overview-only source review. Dense/native intervals were not inspected; rapid actions, precise recall terminal status, and absences remain unresolved."
+}

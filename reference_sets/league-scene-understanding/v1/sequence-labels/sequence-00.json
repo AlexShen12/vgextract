@@ -1,0 +1,125 @@
+{
+  "clip_id": "sequence-00",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_a",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every supplied overview sheet for this clip and all generated dense native-focus sheets; additionally viewed the listed native-resolution source frames. Prior source-only Stage 2 exposure is disclosed. Candidate focus labels were treated as collection intent, not ground truth.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/inputs/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/sheet-011.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/00019-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-00/native-focus/00020-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "sequence-00-cast-01",
+      "kind": "ability_cast",
+      "start": 28.511817,
+      "end": 28.8288,
+      "actor": "selected",
+      "slot": "Q",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 28.57855,
+          "cue": "The selected Darius is within the expanding circular effect; the Q icon changes to a blue cooldown numeral 9 while it showed its ready-state icon in the immediately preceding sample."
+        },
+        {
+          "time": 28.695533,
+          "cue": "Circular effect remains centered on the selected Darius and damage numerals appear over the nearby opposing champion and minions."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "cast",
+          "start": 28.511817,
+          "end": 28.57855
+        },
+        {
+          "phase": "release",
+          "start": 28.57855,
+          "end": 28.8288
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "onset_bracket": [
+        28.511817,
+        28.57855
+      ],
+      "end_bracket": [
+        28.762067,
+        28.8288
+      ],
+      "uncertainty": "Preparation before the observed cooldown transition and post-effect recovery are not separately visible in the reviewed interval; targets and causal damage attribution remain uncertain."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "isolated_ability",
+      "status": "unresolved",
+      "reason": "A Q-slot physical effect is visible, but the native interval does not show a distinct preparation and recovery phase around it."
+    },
+    {
+      "tag": "rapid_attacks",
+      "status": "unresolved",
+      "reason": "Multiple damage numbers occur in a crowded wave; separate basic-attack onsets are not established."
+    },
+    {
+      "tag": "empowered_attack",
+      "status": "unresolved",
+      "reason": "No separately linked empowered-slot activation and physical attack is established."
+    },
+    {
+      "tag": "observable_miss",
+      "status": "unresolved",
+      "reason": "The effect overlaps an enemy and minions; available geometry does not establish a miss."
+    },
+    {
+      "tag": "obscured_outcome",
+      "status": "unresolved",
+      "reason": "Effects and minions overlap, but no single physical cast with a clearly obscured outcome is isolated."
+    },
+    {
+      "tag": "recall_lifecycle",
+      "status": "not_present",
+      "reason": "The focused interval shows lane combat and no visible recall channel."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Non-exhaustive source review limited to supplied overview samples and focus-detail neighborhood. Prior Stage 2 review exposed source neighborhoods; no prediction outputs were viewed. Unknown target identity, damage attribution, or unobserved phases are retained where cues do not resolve them."
+}

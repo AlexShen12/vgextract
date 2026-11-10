@@ -1,0 +1,172 @@
+{
+  "clip_id": "sequence-05",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_b",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Reviewed every supplied overview sheet and dense focus detail sheets at 16 fps; precise sheet and native image paths are listed. Prior Stage 2 source exposure on negative-06 through negative-11 in this development source is disclosed. Parent-provided source-review pointers prompted targeted checks of native frames at 433.3\u2013434.3; no clearly visible HUD activation linked to a distinct attack was established.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-014.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/inputs/sheet-015.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/sheet-000.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/sheet-001.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/sheet-002.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/sheet-003.jpg"
+    ],
+    "inspected_native_frames": [
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00000-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00001-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00002-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00003-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00004-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00005-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00006-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00007-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00008-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00009-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00010-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00011-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00012-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00013-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00014-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00015-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00016-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00017-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00018-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00019-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00020-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00021-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00022-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00023-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00024-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00025-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00026-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00027-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00028-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00029-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00030-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00031-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00032-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00033-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00034-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00035-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00036-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00037-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00038-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00039-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00040-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00041-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00042-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00043-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00044-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00045-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00046-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00047-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00048-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00049-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00050-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00051-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00052-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00053-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00054-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00055-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00056-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00057-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00058-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00059-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00060-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00061-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00062-source.jpg",
+      "data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-05/detail-focus/00063-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "seq05-minion-attack",
+      "kind": "basic_attack",
+      "start": 432.019,
+      "end": 432.266,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 432.019,
+          "cue": "Darius is in close range of the red minion wave beneath the allied turret."
+        },
+        {
+          "time": 432.266,
+          "cue": "A 138 damage number appears over the nearby minion after Darius faces it."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "release",
+          "start": 432.019,
+          "end": 432.266
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": null,
+      "onset_bracket": [
+        432.019,
+        432.266
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "tag": "isolated_ability",
+      "status": "not_present",
+      "reason": "No distinct selected champion ability cast appears in the densely sampled 432.0\u2013433.0 focus; the W icon is already counting down."
+    },
+    {
+      "tag": "rapid_attacks",
+      "status": "unresolved",
+      "reason": "One or more minion attack impacts are visible, but the reviewed scope does not establish a rapid chain of separate onsets."
+    },
+    {
+      "tag": "empowered_attack",
+      "status": "unresolved",
+      "reason": "W is already on cooldown at focus entry and no fresh HUD activation is linked to a distinct physical attack."
+    },
+    {
+      "tag": "observable_miss",
+      "status": "unresolved",
+      "reason": "No selected physical cast with exposed effect and target geometry demonstrates a miss."
+    },
+    {
+      "tag": "obscured_outcome",
+      "status": "not_present",
+      "reason": "No selected physical ability cast with an unresolved outcome is established in the inspected focus."
+    },
+    {
+      "tag": "recall_lifecycle",
+      "status": "not_present",
+      "reason": "No recall channel is visible in the reviewed clip overview sheets."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Source-only Stage 3 review. Candidate pattern was treated as collection intent, not accepted ground truth. The earlier Stage 2 review exposed negative-06 through negative-11 from this same development source; no prediction outputs were viewed. Labels remain non-exhaustive and all unobserved combat outcomes/identities are left unknown."
+}

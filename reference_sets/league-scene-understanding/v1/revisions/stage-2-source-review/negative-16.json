@@ -1,0 +1,149 @@
+{
+  "clip_id": "negative-16",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every linked overview sheet in order and inspected native-resolution source frames 00000–00001, including the opening HUD state.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/sheet-007.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-16/inputs/00001-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "n16-movement",
+      "kind": "movement",
+      "start": 10.01,
+      "end": 13.76375,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 10.01,
+          "cue": "Selected champion is visible in top-lane brush."
+        },
+        {
+          "time": 15.26525,
+          "cue": "Selected champion emerges and moves along top lane."
+        },
+        {
+          "time": 17.7506,
+          "cue": "Selected champion continues moving near the lane path."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "active",
+          "start": 10.01,
+          "end": 13.76375
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "Movement is visible in the brush; scoreboard overlay then hides the player until the next visible sample."
+    },
+    {
+      "id": "n16-movement-after-scoreboard",
+      "kind": "movement",
+      "start": 15.26525,
+      "end": 17.7506,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 15.26525,
+          "cue": "Selected champion is visible again at the upper lane edge after scoreboard closes."
+        },
+        {
+          "time": 17.7506,
+          "cue": "Selected champion continues moving across lane."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "active",
+          "start": 15.26525,
+          "end": 17.7506
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "Action during the scoreboard overlay remains unknown."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "not_present",
+      "reason": "Ability icons show costs and no clear active initial cooldown countdown."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "not_present",
+      "reason": "No centered cooldown-like numbers are visible in the sampled HUD."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "supported",
+      "start": 13.76,
+      "end": 15.26525,
+      "scope": "Scoreboard overlay obscures gameplay and the view subsequently shifts along the lane.",
+      "evidence": [
+        {
+          "time": 13.76375,
+          "cue": "Scoreboard overlay covers most of the gameplay view."
+        },
+        {
+          "time": 15.26525,
+          "cue": "Gameplay view is centered on lane as selected champion reappears."
+        }
+      ],
+      "forbidden_claim": "Do not infer stationary player during scoreboard occlusion.",
+      "reason": "The viewport changes within the cited scope; this observation is independent of whether the selected player also moves."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "not_present",
+      "reason": "No other champion cast is visibly established during the sampled scope."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "not_present",
+      "reason": "No recall attempt is visible."
+    },
+    {
+      "tag": "quiet",
+      "status": "unresolved",
+      "reason": "Overview-only samples cannot rule out rapid actions; full native review was not performed."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 13.76375,
+      "end": 15.015,
+      "reason": "Scoreboard overlay obscures selected-player position and actions."
+    }
+  ],
+  "notes": "Source-only visual review. Prior exposure to a general League annotation task is disclosed; no current candidate recognition predictions, detector outputs, caches, other labels, or model outputs were viewed. Candidate-selection neighborhoods may have historical exposure as stated in the instructions. Overview sampling does not prove absence of rapid actions; quiet is left unresolved unless the required complete native review was performed."
+}

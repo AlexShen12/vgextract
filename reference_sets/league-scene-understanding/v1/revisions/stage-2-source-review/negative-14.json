@@ -1,0 +1,150 @@
+{
+  "clip_id": "negative-14",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every linked overview sheet in order and inspected native-resolution source frames 00000–00001, including the opening HUD state.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/sheet-007.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-14/inputs/00001-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "n14-movement",
+      "kind": "movement",
+      "start": 448.0142,
+      "end": 455.7553,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 448.0142,
+          "cue": "Selected Darius stands among minions; successive sampled views show repositioning within the wave."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "active",
+          "start": 448.0142,
+          "end": 455.7553
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "Movement is visible across sampled views, but exact path and continuous timing are not resolved."
+    },
+    {
+      "id": "n14-w-activation",
+      "kind": "hud_activation",
+      "start": 454.2538,
+      "end": 454.5038,
+      "actor": "selected",
+      "slot": "W",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 454.2538,
+          "cue": "W icon changes from available to dark with a 3-second cooldown."
+        },
+        {
+          "time": 454.5038,
+          "cue": "W cooldown remains visible while selected champion is in the minion wave."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "activation_visible",
+          "start": 454.2538,
+          "end": 454.5038
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "HUD supports a W activation, but scene timing does not securely establish target, hit or cause of nearby damage/gold indicators."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "not_present",
+      "start": 452.0016,
+      "end": 452.7523,
+      "scope": "Existing W cooldown countdown followed by ready state.",
+      "evidence": [
+        {
+          "time": 452.0016,
+          "cue": "W shows 0.6."
+        },
+        {
+          "time": 452.5021,
+          "cue": "W shows 0.1."
+        },
+        {
+          "time": 452.7523,
+          "cue": "W icon is lit/available."
+        }
+      ],
+      "reason": "Native opening HUD frames at 448.0142 and 448.2642 show no active Q/W/E/R cooldown countdown. A W timer appears later around 452.0, which is outside clip entry and is preserved separately as contextual evidence; it does not establish an initial cooldown.",
+      "forbidden_claim": "These decrements are not repeated casts."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "not_present",
+      "reason": "Slot cost numerals (40/40/60/100) are shown; no centered ambiguous countdown is visible."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "not_present",
+      "reason": "The gameplay viewport remains on the same top-lane area in the overview sequence."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "not_present",
+      "reason": "No other champion cast is established in the lane scene."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "not_present",
+      "reason": "No recall attempt is visible."
+    },
+    {
+      "tag": "quiet",
+      "status": "not_present",
+      "reason": "Selected champion and minion wave are active throughout the sampled scope."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 454.2538,
+      "end": 454.5038,
+      "reason": "W HUD cooldown change indicates activation, while exact scene action/target is not resolved."
+    },
+    {
+      "start": 454.0,
+      "end": 454.75,
+      "reason": "Damage and +gold/+experience indicators overlap minion activity; exact target and outcome attribution remain uncertain."
+    }
+  ],
+  "notes": "Source-only visual review. Prior exposure to a general League annotation task is disclosed; no current candidate recognition predictions, detector outputs, caches, other labels, or model outputs were viewed. Candidate-selection neighborhoods may have historical exposure as stated in the instructions. Overview sampling does not prove absence of rapid actions; quiet is left unresolved unless the required complete native review was performed. Context: W later shows a pre-existing cooldown counting down from about 0.6 to 0.1 around 452.0–452.5, then clears; this is not an initial-cooldown case."
+}

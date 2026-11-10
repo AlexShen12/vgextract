@@ -1,0 +1,71 @@
+{
+  "clip_id": "negative-03",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_negative_a",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed supplied overview sheets; no native-resolution source detail frames inspected.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-03/inputs/sheet-007.jpg"
+    ],
+    "inspected_native_frames": []
+  },
+  "events": [],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    },
+    {
+      "tag": "quiet",
+      "status": "unresolved",
+      "scope": "The supplied overview sample only; rapid or brief events may fall between 4 fps frames.",
+      "reason": "No decisive supported pattern established from overview sampling alone; native cadence not inspected.",
+      "forbidden_claim": "Do not infer absence or quietness for the full clip from sampled overviews."
+    }
+  ],
+  "unknown_intervals": [],
+  "notes": "Overview samples show selected Darius gameplay with movement/combat context varying by clip. Sampling is 4 fps; intermediate actions and exact onset timing remain unknown. No quiet claim is made."
+}

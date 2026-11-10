@@ -1,0 +1,19 @@
+{
+  "stage": 2,
+  "status": "development_collection_complete_with_gaps",
+  "label_status": "source_reviewed_model_draft",
+  "reviewed_candidates": 18,
+  "recognition_accuracy_measured": false,
+  "human_verified": false,
+  "coverage_report": "stage-2-report.json",
+  "regression_checks": {
+    "tests_passed": 52,
+    "command": "PYTHONPATH=tests:. .venv/bin/python -B -m unittest tests.test_league_scene_reference tests.test_league_scene_source_regressions tests.test_league_adaptive_actions tests.test_league_action_scene_score tests.test_league_caption_occurrences -q"
+  },
+  "gaps": [
+    "No source-supported interrupted recall in reviewed candidates.",
+    "No full-native-reviewed quiet interval.",
+    "One competing-caster clip is below the three-case pilot target."
+  ],
+  "stage_3_may_start": true
+}

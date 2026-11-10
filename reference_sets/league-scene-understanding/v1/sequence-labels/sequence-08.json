@@ -1,0 +1,164 @@
+{
+  "clip_id": "sequence-08",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Reviewed every supplied overview sheet and native-resolution detail sheets around focus actions and recall transitions. Prior general Stage 2 source-annotation exposure is disclosed; no current prediction outputs were seen. Candidate focus/pattern informed collection scope only, not event conclusions.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-014.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/inputs/sheet-015.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-08/native-detail-focus/sheet-007.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "s08-melee-cast",
+      "kind": "ability_cast",
+      "start": 505.5,
+      "end": 506.25,
+      "actor": "selected",
+      "slot": "W",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 505.571733,
+          "cue": "The selected champion and an enemy champion are in close contact at the brush edge; the selected champion has a short weapon-swing animation."
+        },
+        {
+          "time": 506.055,
+          "cue": "The W HUD slot changes from ready artwork to a visible numeric cooldown while damage numerals and overlapping models obscure contact detail."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "preparation",
+          "start": 505.5,
+          "end": 505.57
+        },
+        {
+          "phase": "release",
+          "start": 505.57,
+          "end": 505.9
+        },
+        {
+          "phase": "recovery",
+          "start": 505.9,
+          "end": 506.25
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "Brush-edge overlap and effects prevent reliable target/contact attribution; HUD cooldown supports W activation but not outcome.",
+      "onset_bracket": [
+        505.5,
+        505.57
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "tag": "isolated_ability",
+      "status": "unresolved",
+      "start": 505.5,
+      "end": 507.5,
+      "scope": "Selected champion at top-lane brush edge during the candidate focus.",
+      "reason": "The focus contains a close melee overlap and the observed W-associated activation cannot be isolated from the overlapping combat.",
+      "forbidden_claim": "Do not identify a clean isolated target or hit result."
+    },
+    {
+      "tag": "rapid_attacks",
+      "status": "unresolved",
+      "start": 505.5,
+      "end": 507.5,
+      "scope": "Selected champion and enemy at the brush edge.",
+      "reason": "The visible combat is too overlapped to count distinct selected-player attack onsets reliably.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "empowered_attack",
+      "status": "unresolved",
+      "start": 505.5,
+      "end": 507.5,
+      "scope": "Selected champion at the brush edge.",
+      "reason": "W activation is visible, but no distinct subsequent basic attack can be confidently linked to an empowerment state.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "observable_miss",
+      "status": "unresolved",
+      "start": 505.5,
+      "end": 507.5,
+      "scope": "Close combat at brush edge.",
+      "reason": "The brush and overlapping champions obscure effect geometry; lack of a clearly visible hit is not evidence of a miss.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "obscured_outcome",
+      "status": "supported",
+      "start": 505.55,
+      "end": 506.25,
+      "scope": "One short selected-player melee ability occurrence at the top-lane brush edge; decision is whether a visible activation can be recorded while leaving contact/result unknown.",
+      "evidence": [
+        {
+          "time": 505.571733,
+          "cue": "Selected champion is in close contact with the newly visible enemy, with weapon movement and overlapping effects."
+        },
+        {
+          "time": 506.055,
+          "cue": "W slot shows a fresh cooldown while models/effects overlap at the brush edge."
+        }
+      ],
+      "forbidden_claim": "Do not claim a hit, miss, damage attribution, or target identity.",
+      "reason": "Direct source cues support the narrowly scoped event described here."
+    },
+    {
+      "tag": "recall_lifecycle",
+      "status": "not_present",
+      "reason": "No selected-player recall is visible in the reviewed clip.",
+      "forbidden_claim": "Do not infer recall from immobility."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 502.0,
+      "end": 505.45,
+      "reason": "No dense native review was performed outside the focus interval; intervening action is unclassified."
+    },
+    {
+      "start": 506.3,
+      "end": 518.0,
+      "reason": "No dense native review was performed outside the focus interval; intervening action is unclassified."
+    }
+  ],
+  "notes": "Source-only draft. No inference across unreviewed spans; visible HUD/camera overlays can obscure scene detail. Exact targets and outcomes remain null unless directly supported."
+}

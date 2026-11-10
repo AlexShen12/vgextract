@@ -1,0 +1,168 @@
+{
+  "clip_id": "sequence-09",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Reviewed every supplied overview sheet and native-resolution detail sheets around focus actions and recall transitions. Prior general Stage 2 source-annotation exposure is disclosed; no current prediction outputs were seen. Candidate focus/pattern informed collection scope only, not event conclusions.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-007.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-011.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-012.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-013.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-014.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/inputs/sheet-015.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-008.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-009.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-010.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/sequences/sequence-09/native-detail-focus/sheet-011.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "s09-darius-q",
+      "kind": "ability_cast",
+      "start": 702.7,
+      "end": 702.95,
+      "actor": "selected",
+      "slot": "Q",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 702.702,
+          "cue": "Selected champion stands in the top lane among minions; the view is distinct from the separate jungle fight."
+        },
+        {
+          "time": 702.7525,
+          "cue": "Selected champion performs a circular weapon sweep; a circular ground effect and damage numbers appear around nearby minions."
+        },
+        {
+          "time": 702.85,
+          "cue": "The selected champion is in recovery from the sweep; Q HUD icon shows a fresh cooldown."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "preparation",
+          "start": 702.7,
+          "end": 702.75
+        },
+        {
+          "phase": "release",
+          "start": 702.75,
+          "end": 702.82
+        },
+        {
+          "phase": "recovery",
+          "start": 702.82,
+          "end": 702.95
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "The sampled frames show a clear area cast and nearby minion damage; individual damage attribution to this cast is not independently established.",
+      "onset_bracket": [
+        702.7,
+        702.7525
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "tag": "isolated_ability",
+      "status": "supported",
+      "start": 702.7,
+      "end": 702.95,
+      "scope": "One selected-player circular ability in top lane against the nearby minion wave; decision is whether a single physical cast is visible.",
+      "evidence": [
+        {
+          "time": 702.7525,
+          "cue": "Selected champion performs a circular weapon sweep amid the minion wave."
+        },
+        {
+          "time": 702.85,
+          "cue": "Fresh Q cooldown follows the visible sweep."
+        }
+      ],
+      "forbidden_claim": "Do not claim a specific minion was last-hit by this cast.",
+      "reason": "Direct source cues support the narrowly scoped event described here."
+    },
+    {
+      "tag": "rapid_attacks",
+      "status": "not_present",
+      "start": 702.7,
+      "end": 702.95,
+      "scope": "Selected-player focus around the visible Q sweep.",
+      "reason": "No rapid sequence of distinct selected-player attacks is supported in this short reviewed focus.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "empowered_attack",
+      "status": "unresolved",
+      "start": 702.7,
+      "end": 702.95,
+      "scope": "Selected-player focus around the visible Q sweep.",
+      "reason": "No clear empowerment cue is linked to a separate basic attack in the reviewed focus.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "observable_miss",
+      "status": "unresolved",
+      "start": 702.7,
+      "end": 702.95,
+      "scope": "No separately identifiable projectile/target trajectory in the focus.",
+      "reason": "The frames do not show a discrete aimed effect with geometry sufficient to establish a miss.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "obscured_outcome",
+      "status": "not_present",
+      "start": 702.7,
+      "end": 702.95,
+      "scope": "Selected-player top-lane sweep.",
+      "reason": "Selected-player Q sweep is visually readable and no outcome-obscuring overlap applies to that occurrence.",
+      "forbidden_claim": "Do not extend this label beyond the described interval or infer hidden outcomes."
+    },
+    {
+      "tag": "recall_lifecycle",
+      "status": "not_present",
+      "reason": "No selected-player recall occurs in the reviewed clip; a separate jungle fight contains another champion labeled CHANNELING.",
+      "forbidden_claim": "Do not attribute the separate jungle champion\u2019s channel to the selected player."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 694.0,
+      "end": 702.65,
+      "reason": "Overview sampled; native focus review begins after this interval, so intervening actions are not exhaustively classified."
+    },
+    {
+      "start": 703.0,
+      "end": 710.0,
+      "reason": "Overview sampled; no dense native review after this interval, so intervening actions are not exhaustively classified."
+    }
+  ],
+  "notes": "Source-only draft. No inference across unreviewed spans; visible HUD/camera overlays can obscure scene detail. Exact targets and outcomes remain null unless directly supported."
+}

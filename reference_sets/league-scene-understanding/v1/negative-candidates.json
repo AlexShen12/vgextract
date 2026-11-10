@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "revision": "scene-understanding-v1-development-2026-11-09",
+  "stage": 2,
+  "split": "development",
+  "source": {
+    "path": "/Users/alex/Desktop/Projects/videogame/data/youtube/lol_midbeast/OLLZBe5-fg4.mp4",
+    "sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+    "width": 1920,
+    "height": 1080,
+    "native_fps": "60000/1001"
+  },
+  "held_out_exclusions": [
+    {
+      "id": "event-held_out-00",
+      "start": 61,
+      "end": 77,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-01",
+      "start": 232.0,
+      "end": 248.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-02",
+      "start": 556.0,
+      "end": 580.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-03",
+      "start": 640.0,
+      "end": 664.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-04",
+      "start": 988.0,
+      "end": 1012.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-05",
+      "start": 1168.0,
+      "end": 1192.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-06",
+      "start": 1324.0,
+      "end": 1348.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-07-recall",
+      "start": 1090.5,
+      "end": 1102.5,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-08",
+      "start": 1492.0,
+      "end": 1516.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "event-held_out-09",
+      "start": 1588.0,
+      "end": 1612.0,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/caption-events/v1/events.json"
+    },
+    {
+      "id": "action-clip-10",
+      "start": 860.383,
+      "end": 868.383,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-11",
+      "start": 946.421,
+      "end": 954.421,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-12",
+      "start": 1032.46,
+      "end": 1040.46,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-13",
+      "start": 1118.498,
+      "end": 1126.498,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-14",
+      "start": 1208.536,
+      "end": 1216.536,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-15",
+      "start": 1290.574,
+      "end": 1298.574,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-16",
+      "start": 1376.613,
+      "end": 1384.613,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-17",
+      "start": 1462.651,
+      "end": 1470.651,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-18",
+      "start": 1548.689,
+      "end": 1556.689,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "action-clip-19",
+      "start": 1658.728,
+      "end": 1666.728,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/actions-v3/actions.json"
+    },
+    {
+      "id": "clip-10",
+      "start": 866,
+      "end": 874,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-11",
+      "start": 881,
+      "end": 889,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-12",
+      "start": 1254,
+      "end": 1262,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-13",
+      "start": 1269,
+      "end": 1277,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-14",
+      "start": 1284,
+      "end": 1292,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-15",
+      "start": 1299,
+      "end": 1307,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-16",
+      "start": 1672,
+      "end": 1680,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-17",
+      "start": 1687,
+      "end": 1695,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-18",
+      "start": 1702,
+      "end": 1710,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    },
+    {
+      "id": "clip-19",
+      "start": 1717,
+      "end": 1725,
+      "manifest": "data/league_runs/midbeast-OLLZBe5-fg4-v2/benchmarks/events.json"
+    }
+  ],
+  "guard_seconds": 8,
+  "method": "Development candidates selected using historical development references and unscored source neighborhoods. New labels must inspect source without prediction outputs. Candidate IDs do not imply a positive or negative case.",
+  "clips": [
+    {
+      "id": "negative-00",
+      "start": 22,
+      "end": 30,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-00.json"
+    },
+    {
+      "id": "negative-01",
+      "start": 93,
+      "end": 101,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-01.json"
+    },
+    {
+      "id": "negative-02",
+      "start": 163,
+      "end": 171,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-02.json"
+    },
+    {
+      "id": "negative-03",
+      "start": 256.4,
+      "end": 264.4,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-03.json"
+    },
+    {
+      "id": "negative-04",
+      "start": 348.8,
+      "end": 356.8,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-04.json"
+    },
+    {
+      "id": "negative-05",
+      "start": 419.2,
+      "end": 427.2,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-05.json"
+    },
+    {
+      "id": "negative-06",
+      "start": 504.65,
+      "end": 512.65,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-06.json"
+    },
+    {
+      "id": "negative-07",
+      "start": 600.1,
+      "end": 608.1,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-07.json"
+    },
+    {
+      "id": "negative-08",
+      "start": 689.55,
+      "end": 697.55,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-08.json"
+    },
+    {
+      "id": "negative-09",
+      "start": 760.95,
+      "end": 768.95,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-09.json"
+    },
+    {
+      "id": "negative-10",
+      "start": 105,
+      "end": 117,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-10.json"
+    },
+    {
+      "id": "negative-11",
+      "start": 278,
+      "end": 290,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-11.json"
+    },
+    {
+      "id": "negative-12",
+      "start": 509,
+      "end": 521,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-12.json"
+    },
+    {
+      "id": "negative-13",
+      "start": 747,
+      "end": 759,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-13.json"
+    },
+    {
+      "id": "negative-14",
+      "start": 448,
+      "end": 456,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-14.json"
+    },
+    {
+      "id": "negative-15",
+      "start": 0,
+      "end": 10,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-15.json"
+    },
+    {
+      "id": "negative-16",
+      "start": 10,
+      "end": 18,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-16.json"
+    },
+    {
+      "id": "negative-17",
+      "start": 785,
+      "end": 793,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-17.json"
+    }
+  ]
+}

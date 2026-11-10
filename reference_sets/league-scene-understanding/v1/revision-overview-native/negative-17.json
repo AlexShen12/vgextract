@@ -1,0 +1,188 @@
+{
+  "clip_id": "negative-17",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "review_status": "source_reviewed_model_draft",
+  "exhaustive": false,
+  "review": {
+    "reviewer": "gpt-6-luna:/root/luna_frame_caption",
+    "prediction_outputs_seen": false,
+    "human_reviewed": false,
+    "full_native_review": false,
+    "method": "Viewed every linked overview sheet in order and inspected native-resolution source frames 00000\u201300001, including the opening HUD state.",
+    "inspected_sheets": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-000.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-001.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-002.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-003.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-004.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-005.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-006.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/sheet-007.jpg"
+    ],
+    "inspected_native_frames": [
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/00000-source.jpg",
+      "/Users/alex/Desktop/Projects/videogame/data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/scene-understanding/v1/negatives/negative-17/inputs/00001-source.jpg"
+    ]
+  },
+  "events": [
+    {
+      "id": "n17-fight",
+      "kind": "movement",
+      "start": 785.0009,
+      "end": 792.7586,
+      "actor": "selected",
+      "slot": null,
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 785.0009,
+          "cue": "Selected champion is visible at low health near a wall while multiple other champions and projectile effects are present."
+        },
+        {
+          "time": 786.0019,
+          "cue": "Selected champion moves away from the nearby enemy and turret area."
+        },
+        {
+          "time": 791.7576,
+          "cue": "Selected champion continues moving through jungle-side terrain."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "active",
+          "start": 785.0009,
+          "end": 792.7586
+        }
+      ],
+      "left_censored": true,
+      "right_censored": false,
+      "onset_bracket": [
+        785.0009,
+        785.0009
+      ],
+      "uncertainty": "Combat began before the clip starts; selected-player attack/ability effects are not reliably separable from simultaneous effects."
+    },
+    {
+      "id": "n17-w-activation",
+      "kind": "hud_activation",
+      "start": 787.2531,
+      "end": 787.5034,
+      "actor": "selected",
+      "slot": "Q",
+      "ability_name": null,
+      "target": null,
+      "outcome": null,
+      "evidence": [
+        {
+          "time": 787.2531,
+          "cue": "Q icon changes to blue with a 5-second cooldown."
+        },
+        {
+          "time": 787.5034,
+          "cue": "Q cooldown remains displayed while selected champion is under pressure."
+        }
+      ],
+      "phases": [
+        {
+          "phase": "activation_visible",
+          "start": 787.2531,
+          "end": 787.5034
+        }
+      ],
+      "left_censored": false,
+      "right_censored": false,
+      "uncertainty": "HUD supports Q activation, but scene effects are crowded and target/outcome cannot be assigned."
+    }
+  ],
+  "cases": [
+    {
+      "tag": "initial_cooldown",
+      "status": "supported",
+      "start": 785.0009,
+      "end": 785.2511,
+      "scope": "Initial Q and W cooldown states.",
+      "evidence": [
+        {
+          "time": 785.0009,
+          "cue": "Q shows 1 and W shows 3."
+        },
+        {
+          "time": 785.2511,
+          "cue": "Q transitions to a fractional countdown."
+        }
+      ],
+      "reason": "Q and W display active cooldown values at the first frame.",
+      "forbidden_claim": "Do not call these initial values fresh casts."
+    },
+    {
+      "tag": "cost_countdown_ambiguity",
+      "status": "not_present",
+      "reason": "Cooldown values are on the ability icons; small upper slot numerals are costs."
+    },
+    {
+      "tag": "camera_motion",
+      "status": "supported",
+      "start": 785.0,
+      "end": 792.75,
+      "scope": "View follows the selected player across lane edge and jungle terrain; player movement is also visible.",
+      "evidence": [
+        {
+          "time": 785.0,
+          "cue": "Scene includes low-health selected champion near wall and nearby opponents."
+        },
+        {
+          "time": 789.5,
+          "cue": "View has shifted to jungle path as selected champion retreats."
+        }
+      ],
+      "forbidden_claim": "Camera movement does not establish action or stationary-player status."
+    },
+    {
+      "tag": "competing_caster",
+      "status": "supported",
+      "start": 785.0,
+      "end": 788.5,
+      "scope": "Several other champions and overlapping projectile/ability effects appear during the fight; attribution remains ambiguous.",
+      "evidence": [
+        {
+          "time": 785.0009,
+          "cue": "An enemy champion emits a bright projectile toward the selected champion."
+        },
+        {
+          "time": 786.2521,
+          "cue": "Multiple champions and simultaneous effects are visible around the turret."
+        },
+        {
+          "time": 787.0029,
+          "cue": "A distinct blue ally and red-side champions remain on screen during effects."
+        }
+      ],
+      "forbidden_claim": "Do not attribute overlapping effects to the selected champion without direct evidence."
+    },
+    {
+      "tag": "interrupted_recall",
+      "status": "not_present",
+      "reason": "No recall bar or attempted channel is visible."
+    },
+    {
+      "tag": "quiet",
+      "status": "not_present",
+      "reason": "An active multi-champion fight and selected-player movement are visible."
+    }
+  ],
+  "unknown_intervals": [
+    {
+      "start": 785.0009,
+      "end": 786.2521,
+      "reason": "Fight is already in progress at clip start; preceding action and onset are outside the supplied interval."
+    },
+    {
+      "start": 787.0,
+      "end": 788.5,
+      "reason": "Overlapping champion effects and HUD cooldown changes obscure causal actor, target and outcomes."
+    }
+  ],
+  "notes": "Source-only visual review. Prior exposure to a general League annotation task is disclosed; no current candidate recognition predictions, detector outputs, caches, other labels, or model outputs were viewed. Candidate-selection neighborhoods may have historical exposure as stated in the instructions. Overview sampling does not prove absence of rapid actions; quiet is left unresolved unless the required complete native review was performed."
+}

@@ -44,7 +44,7 @@ def cooldown_candidates(readings, thresholds):
             if len(before) < 3 or any(seconds[i] is not None for i in before):
                 continue
             window = before + after
-            if any(group[i].get("identity_changed") for i in window) or any(
+            if any(group[i].get("identity_changed") or group[i].get("layout_valid") is False for i in window) or any(
                 group[j]["time"] - group[i]["time"] > MAX_OCR_DELAY + 1e-6 for i, j in zip(window, window[1:])
             ):
                 continue
@@ -63,6 +63,32 @@ def cooldown_candidates(readings, thresholds):
                                         "seconds": seconds[i]} for i in observed],
                 "reason": "persistent_cooldown_after_icon_change"})
     return sorted(candidates, key=lambda row: (row["start"], row["slot_id"]))
+
+
+def hud_activation_actions(candidates, reviews, scene):
+    """Emit HUD activations and attach optional scene context by candidate ID."""
+    reviews_by_candidate = {review["hud_candidate_id"]: review for review in reviews}
+    scene_by_candidate = defaultdict(list)
+    for action in scene:
+        scene_by_candidate[action["hud_candidate_id"]].append(action)
+
+    activations = []
+    for candidate in candidates:
+        candidate_id = candidate["id"]
+        review = reviews_by_candidate.get(candidate_id, {})
+        support = scene_by_candidate[candidate_id]
+        frame_ids = candidate["onset_frame_ids"] + [row["frame_id"] for row in candidate["confirmed_readings"]]
+        activations.append({
+            **{key: candidate[key] for key in ("owner_id", "owner_epoch", "segment_id", "slot_id", "start", "end")},
+            "schema_version": 3, "id": uid("hud-activation", candidate_id), "kind": "ability_cast", "mode": "core",
+            "hud_candidate_id": candidate_id, "slot_source": "hud", "precision": "sample_bounded",
+            "frame_ids": list(dict.fromkeys(frame_ids)), "evidence_ids": [candidate_id],
+            "evidence_class": "corroborated" if support else "hud-supported",
+            "actor_track": review.get("actor_track"), "actor_description": "Selected HUD owner",
+            "scene_ids": [row["id"] for row in support], "scene_review_status": review.get("status", "pending_review"),
+            "experimental": True, "review_status": "unreviewed", "outcome": None,
+        })
+    return activations
 
 
 def grounded_scene_frames(candidate, frames, body, bindings):

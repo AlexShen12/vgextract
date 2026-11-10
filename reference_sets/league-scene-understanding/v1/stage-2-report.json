@@ -1,0 +1,314 @@
+{
+  "stage": 2,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "clips": [
+    {
+      "id": "negative-00",
+      "start": 22,
+      "end": 30,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "a0faf5e4ac702bbe1e38b4bff7525289344a8acd8509fd12a4c3e31f4a2dccbb"
+    },
+    {
+      "id": "negative-01",
+      "start": 93,
+      "end": 101,
+      "review_status": "source_reviewed_model_draft",
+      "events": 1,
+      "exhaustive": false,
+      "label_sha256": "8587d8bab9b194c39b39a43f25a2af7083da9542e5df6685d67bda59fb816577"
+    },
+    {
+      "id": "negative-02",
+      "start": 163,
+      "end": 171,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "b77a5b40b94b7f8b6602b3c84866823cca40c797f205d7b59a2aa60cd68b4937"
+    },
+    {
+      "id": "negative-03",
+      "start": 256.4,
+      "end": 264.4,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "9e420ad0c5dc34792fe8f0a1650597565bd8515666a72cfc8427de65a2a376d0"
+    },
+    {
+      "id": "negative-04",
+      "start": 348.8,
+      "end": 356.8,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "c4f3d45b18fbf925a8251923a2fdecdbe8b771572a255f8baae57370cb7c6a81"
+    },
+    {
+      "id": "negative-05",
+      "start": 419.2,
+      "end": 427.2,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "c164680528f166c7e7fb2aa790de29ba079b880e99c216cdb00d886ba4318ebc"
+    },
+    {
+      "id": "negative-06",
+      "start": 504.65,
+      "end": 512.65,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "fa118e626a0d7f10aab5a2485fe22c1d2cc339845ab62ba592e1b14fb9f269fb"
+    },
+    {
+      "id": "negative-07",
+      "start": 600.1,
+      "end": 608.1,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "6387800c2cb82ba0b1d9dd7e2e77fb639a6cdd6b75b26f45ae720a79041ce919"
+    },
+    {
+      "id": "negative-08",
+      "start": 689.55,
+      "end": 697.55,
+      "review_status": "source_reviewed_model_draft",
+      "events": 1,
+      "exhaustive": false,
+      "label_sha256": "519b893fc12e2de3cda9e53474d7ef78f9b51d6aac40f7337969fce6c9c6b35c"
+    },
+    {
+      "id": "negative-09",
+      "start": 760.95,
+      "end": 768.95,
+      "review_status": "source_reviewed_model_draft",
+      "events": 0,
+      "exhaustive": false,
+      "label_sha256": "f9bb7e5d06ed367269a6c50ecd1af1ea46a5778c99f90af40c7908acd605a875"
+    },
+    {
+      "id": "negative-10",
+      "start": 105,
+      "end": 117,
+      "review_status": "source_reviewed_model_draft",
+      "events": 1,
+      "exhaustive": false,
+      "label_sha256": "e256e87905200572902a7e6da67fd6986557e19c133291c6922111cd851409ff"
+    },
+    {
+      "id": "negative-11",
+      "start": 278,
+      "end": 290,
+      "review_status": "source_reviewed_model_draft",
+      "events": 1,
+      "exhaustive": false,
+      "label_sha256": "279a8e4956a4ed1d9543d805ffd0528adfd91e4421326dc9ebc2e0af64c77a89"
+    },
+    {
+      "id": "negative-12",
+      "start": 509,
+      "end": 521,
+      "review_status": "source_reviewed_model_draft",
+      "events": 2,
+      "exhaustive": false,
+      "label_sha256": "5f2937042caaff6b2102c43a27bc1cb1e5f4f6ccf039975aff968cfc70d6a784"
+    },
+    {
+      "id": "negative-13",
+      "start": 747,
+      "end": 759,
+      "review_status": "source_reviewed_model_draft",
+      "events": 1,
+      "exhaustive": false,
+      "label_sha256": "be5cbbe910b457ed15f569c5eeeb3228c6d0fcb40cabd115f4a5f8b9e2b2929e"
+    },
+    {
+      "id": "negative-14",
+      "start": 448,
+      "end": 456,
+      "review_status": "source_reviewed_model_draft",
+      "events": 2,
+      "exhaustive": false,
+      "label_sha256": "6e469e587d2b790d5b36c7d5bde0091503967371042910bac34b29513faf71e3"
+    },
+    {
+      "id": "negative-15",
+      "start": 0,
+      "end": 10,
+      "review_status": "source_reviewed_model_draft",
+      "events": 1,
+      "exhaustive": false,
+      "label_sha256": "991b46b601ba21443819d2a6068684d1293137602f930cf0b8bbb0dddcd81ea6"
+    },
+    {
+      "id": "negative-16",
+      "start": 10,
+      "end": 18,
+      "review_status": "source_reviewed_model_draft",
+      "events": 2,
+      "exhaustive": false,
+      "label_sha256": "d17c3bef3fae6bdaea3cd13dab07e7469bb22418adcebeb8d0e9507af0763ee1"
+    },
+    {
+      "id": "negative-17",
+      "start": 785,
+      "end": 793,
+      "review_status": "source_reviewed_model_draft",
+      "events": 3,
+      "exhaustive": false,
+      "label_sha256": "b9bc0cf5574e2ae19bcf0cb3fe9074b930d99755eca0530956904f52fe769986"
+    }
+  ],
+  "missing_labels": [],
+  "coverage": {
+    "initial_cooldown": {
+      "supported_clips": [
+        "negative-02",
+        "negative-03",
+        "negative-04",
+        "negative-06",
+        "negative-07",
+        "negative-10",
+        "negative-12",
+        "negative-13",
+        "negative-17"
+      ],
+      "unresolved_clips": [
+        "negative-00",
+        "negative-01",
+        "negative-05",
+        "negative-08",
+        "negative-09",
+        "negative-11"
+      ]
+    },
+    "cost_countdown_ambiguity": {
+      "supported_clips": [
+        "negative-00",
+        "negative-01",
+        "negative-02",
+        "negative-03",
+        "negative-04",
+        "negative-05",
+        "negative-06",
+        "negative-07",
+        "negative-10"
+      ],
+      "unresolved_clips": [
+        "negative-08",
+        "negative-09",
+        "negative-11"
+      ]
+    },
+    "camera_motion": {
+      "supported_clips": [
+        "negative-00",
+        "negative-12",
+        "negative-13",
+        "negative-15",
+        "negative-16",
+        "negative-17"
+      ],
+      "unresolved_clips": [
+        "negative-00",
+        "negative-01",
+        "negative-02",
+        "negative-03",
+        "negative-04",
+        "negative-05",
+        "negative-06",
+        "negative-07",
+        "negative-08",
+        "negative-09",
+        "negative-10",
+        "negative-11"
+      ]
+    },
+    "competing_caster": {
+      "supported_clips": [
+        "negative-17"
+      ],
+      "unresolved_clips": [
+        "negative-00",
+        "negative-01",
+        "negative-02",
+        "negative-03",
+        "negative-04",
+        "negative-05",
+        "negative-06",
+        "negative-07",
+        "negative-08",
+        "negative-09",
+        "negative-10",
+        "negative-11"
+      ]
+    },
+    "interrupted_recall": {
+      "supported_clips": [],
+      "unresolved_clips": [
+        "negative-00",
+        "negative-01",
+        "negative-02",
+        "negative-03",
+        "negative-04",
+        "negative-05",
+        "negative-06",
+        "negative-07",
+        "negative-08",
+        "negative-09",
+        "negative-10",
+        "negative-11"
+      ]
+    },
+    "quiet": {
+      "supported_clips": [],
+      "unresolved_clips": [
+        "negative-00",
+        "negative-01",
+        "negative-02",
+        "negative-03",
+        "negative-04",
+        "negative-05",
+        "negative-06",
+        "negative-07",
+        "negative-08",
+        "negative-09",
+        "negative-10",
+        "negative-11",
+        "negative-15",
+        "negative-16"
+      ]
+    },
+    "isolated_ability": {
+      "supported_clips": [],
+      "unresolved_clips": []
+    },
+    "rapid_attacks": {
+      "supported_clips": [],
+      "unresolved_clips": []
+    },
+    "empowered_attack": {
+      "supported_clips": [],
+      "unresolved_clips": []
+    },
+    "observable_miss": {
+      "supported_clips": [],
+      "unresolved_clips": []
+    },
+    "obscured_outcome": {
+      "supported_clips": [],
+      "unresolved_clips": []
+    },
+    "recall_lifecycle": {
+      "supported_clips": [],
+      "unresolved_clips": []
+    }
+  },
+  "limitations": "Model source reviews do not establish human verification, exhaustive action coverage or recognition accuracy."
+}
