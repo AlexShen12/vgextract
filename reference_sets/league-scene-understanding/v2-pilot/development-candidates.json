@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "revision": "scene-understanding-v1-development-2026-11-09",
+  "stage": 3,
+  "split": "development",
+  "source": {
+    "path": "/work/users/a/l/alshen/league-midbeast-validation/source-20261028/data/youtube/lol_midbeast/OLLZBe5-fg4.mp4",
+    "sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+    "width": 1920,
+    "height": 1080,
+    "native_fps": "60000/1001"
+  },
+  "held_out_exclusions": [
+    {
+      "id": "holdout-00",
+      "split": "held_out",
+      "start": 382.25,
+      "end": 399.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-01",
+      "split": "held_out",
+      "start": 479.25,
+      "end": 493.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-02",
+      "split": "held_out",
+      "start": 724.25,
+      "end": 738.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-03",
+      "split": "held_out",
+      "start": 916.25,
+      "end": 931.5712428,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "contextual"
+    },
+    {
+      "id": "holdout-04",
+      "split": "held_out",
+      "start": 1431.2627168000001,
+      "end": 1441.75,
+      "reference_status": "unlabeled",
+      "repeat_group": null,
+      "context_class": "short_negative_candidate"
+    }
+  ],
+  "guard_seconds": 8,
+  "method": "Six already exposed development contexts for the three-arm pilot; source-only reference review.",
+  "clips": [
+    {
+      "id": "negative-00",
+      "start": 22,
+      "end": 30,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-00.json"
+    },
+    {
+      "id": "negative-02",
+      "start": 163,
+      "end": 171,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-02.json"
+    },
+    {
+      "id": "negative-17",
+      "start": 785,
+      "end": 793,
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "development/reference exposure; new boundary context conservatively exposed during preparation",
+      "label_path": "labels/negative-17.json"
+    },
+    {
+      "id": "sequence-02",
+      "start": 30,
+      "end": 44,
+      "focus_interval": [
+        34,
+        40.5
+      ],
+      "candidate_pattern": "rapid_attacks",
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "Previously inspected development neighborhood; candidate pattern is not a verified label.",
+      "label_path": "sequence-labels/sequence-02.json"
+    },
+    {
+      "id": "sequence-08",
+      "start": 502,
+      "end": 518,
+      "focus_interval": [
+        505.5,
+        507.5
+      ],
+      "candidate_pattern": "obscured_outcome",
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "Previously inspected development neighborhood; candidate pattern is not a verified label.",
+      "label_path": "sequence-labels/sequence-08.json"
+    },
+    {
+      "id": "sequence-10",
+      "start": 104,
+      "end": 120,
+      "focus_interval": [
+        105,
+        115
+      ],
+      "candidate_pattern": "recall_lifecycle",
+      "split": "development",
+      "selection_status": "candidate",
+      "historical_exposure": "Previously inspected development neighborhood; candidate pattern is not a verified label.",
+      "label_path": "sequence-labels/sequence-10.json"
+    }
+  ]
+}
