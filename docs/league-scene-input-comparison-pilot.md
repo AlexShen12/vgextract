@@ -1,6 +1,6 @@
 # Five-window Midbeast input comparison
 
-Date: 2026-11-10. Status: implementation and source labeling; no held-out recognition results yet.
+Date: 2026-11-10. Status: preflights and HUD-only development completed; full development GPU inference submitted. No held-out recognition results yet. See [completed preflight results](league-scene-pilot-preflight-results-2026-11-10.md).
 
 The user selected the five-window Midbeast pilot before expanding to another recording. This executes stages 4 and 5 of [the expansion plan](league-scene-evaluation-expansion-plan.md). It tests within-recording temporal generalization only. The five source windows total approximately 72 seconds; they are a pilot, not a cross-match result.
 
