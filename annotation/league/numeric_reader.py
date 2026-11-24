@@ -21,13 +21,15 @@ def numeric_preprocess(image):
 class NumericReader:
     """One Tesseract attempt, one preprocessing recipe, no Paddle fallback."""
 
-    def __init__(self, threshold=0.85):
+    def __init__(self, threshold=0.85, *, preprocess=numeric_preprocess, alternate=False):
         self.threshold = threshold
+        self.preprocess = preprocess
+        self.alternate = alternate
 
     def read(self, image, field, directory):
         directory.mkdir(parents=True, exist_ok=True)
         path = directory / "attempt-0.png"
-        numeric_preprocess(image).save(path)
+        self.preprocess(image).save(path)
         if field["reader"] == "bar":
             return measure_bar(image, field)
         whitelist = {
@@ -35,10 +37,12 @@ class NumericReader:
             "timer": "0123456789:LIVE",
             "gold": "0123456789.kK",
             "kda": "0123456789/",
+            "health": "0123456789/",
+            "resource": "0123456789/",
         }.get(field["parser"], "0123456789")
         result = {}
         try:
-            result = tesseract(path, whitelist=whitelist)
+            result = tesseract(path, whitelist=whitelist, alternate=self.alternate)
             value = parse_text(result["raw_text"], field["parser"])
             attempt = {**result, "value": value, "path": str(path)}
             if result["score"] < self.threshold:

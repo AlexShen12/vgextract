@@ -4,16 +4,31 @@ import io
 from pathlib import Path
 import re
 
-from .core import atomic_json, read_json
+from .core import atomic_json, now, read_json
 from .knowledge import DD, JsonCache, plain_text, resolve_tooltip
-from .visual_assets import download
+from .reference_bundle import download
 
 
-def cache_abilities(cache, reference_version="16.13.1", champions=("all",), *, offline=False):
+def cache_abilities(cache, reference_version="16.22.1", champions=("all",), *, offline=False):
     from PIL import Image
     if not re.fullmatch(r"\d+\.\d+\.\d+", reference_version):
         raise ValueError("Ability reference version must be an explicit Data Dragon build")
     root = Path(cache)/"abilities"/reference_version
+    target = root/"catalog.json"
+    if target.exists():
+        previous = read_json(target)
+        if previous.get("reference_version") != reference_version:
+            raise ValueError("Cached ability catalog version mismatch")
+        requested = set(champions)
+        if previous.get("status") == "complete_all" or requested <= previous.get("champions", {}).keys():
+            for champion in previous["champions"].values():
+                for ability in champion["abilities"]:
+                    path = (root/ability["icon"]["path"]).resolve()
+                    if not path.is_relative_to(root.resolve()) or hashlib.sha256(path.read_bytes()).hexdigest() != ability["icon"]["sha256"]:
+                        raise ValueError("Cached official icon hash mismatch")
+            return {"status": previous["status"], "catalog": str(target), "reference_version": reference_version,
+                    "cached_champions": len(previous["champions"]), "failures": previous.get("failures", {}),
+                    "source_patch": None, "mechanics_enabled": False}
     raw_cache = JsonCache(root/"raw", offline=offline)
     prefix = f"{DD}/cdn/{reference_version}"
     roster, roster_source = raw_cache.get(prefix+"/data/en_US/champion.json")
@@ -25,7 +40,7 @@ def cache_abilities(cache, reference_version="16.13.1", champions=("all",), *, o
     target = root/"catalog.json"
     previous = read_json(target) if target.exists() else {"champions": {}}
     previous_icons = {a["icon"]["path"]: a["icon"]["sha256"] for c in previous["champions"].values() for a in c["abilities"]}
-    catalog = {"schema_version": 1, "reference_version": reference_version, "locale": "en_US",
+    catalog = {"schema_version": 1, "reference_version": reference_version, "locale": "en_US", "created_at": now(),
                "source_patch": None, "mechanics_enabled": False, "roster_provenance": roster_source,
                "champions": dict(previous["champions"]), "failures": dict(previous.get("failures", {})),
                "status": "downloading", "scope": "official_static_descriptions_only"}

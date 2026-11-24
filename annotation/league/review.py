@@ -25,6 +25,10 @@ def add_correction(store: Store, target: str, record_id: str, changes: dict, sta
     records = {r["id"]: r for r in store.effective(store.rows(target), target)}
     if record_id not in records:
         raise ValueError("Record not found")
+    if target == "events":
+        from .killfeed import KIND
+        if records[record_id].get("kind") == KIND:
+            raise ValueError("Killfeed announcements are read-only")
     if target=="observations" and records[record_id].get("schema_version",1)>=2:
         changes=dict(changes)
         if "value" in changes and "parsed_value" not in changes:
@@ -32,6 +36,17 @@ def add_correction(store: Store, target: str, record_id: str, changes: dict, sta
         if "entity" in changes:
             changes["resolved_identity"]=None if changes["entity"]=="unknown" else changes["entity"]
     record = {**records[record_id], **changes, "review_status": status}
+    if target == "observations" and record.get("backend") == "inventory":
+        original = records[record_id]
+        if record["field"] != original["field"] or record.get("binding") != original.get("binding"):
+            raise ValueError("Inventory evidence is bound to its original field and row")
+        if record["visibility"] == "visible" and status != "rejected":
+            if record["panel_state"] != "present":
+                raise ValueError("Inventory identity requires a visible source panel")
+            catalog = read_json(store.path(f"inventory-catalogs/{record['inventory_catalog_id']}/manifest.json"))
+            identifiers = catalog["champions"] if record["field"] == "inventory.champion" else {item["id"] for item in catalog["items"]}
+            if not isinstance(record["value"], str) or record["value"] not in identifiers:
+                raise ValueError("Inventory correction requires an ID from the source reference catalog")
     if changes.get("evidence_ids"):
         known = {r["id"] for name in ("observations", "states", "events") for r in store.rows(name)}
         known.update(frame_index(store))
@@ -86,19 +101,35 @@ def frame_index(store):
     for path in store.path("tasks").glob("*.json"):
         for frame in read_json(path).get("frames", []):
             index[frame["id"]] = frame
+    if store.path("pass1_manifest.json").exists():
+        index.update({r["id"]:r for r in store.rows("evidence_frames")})
+        for row in store.rows("observations"):
+            index[row["frame_id"]] = {"id":row["frame_id"],"time":row["time"],
+                "route":row["route"],"path":row["evidence_path"],"box":row["box"]}
     return index
 
 
-def create_app(store: Store):
+def create_app(store: Store, *, body_campaign=None):
     from fastapi import FastAPI, HTTPException, Request
     from fastapi.responses import FileResponse, HTMLResponse
+    from .killfeed import READINGS, ROSTER, TIMELINE, active_snapshot, snapshot_rows
+    from .minimap import TIMELINE as MINIMAP
     app = FastAPI(title="League video evidence review")
+    from .pass1_review import install_pass1_routes
+    install_pass1_routes(app, store)
     from .action_review import install_action_routes
     install_action_routes(app, store)
     from .caption_review import install_caption_routes
     install_caption_routes(app, store)
     from .qwen35_review import install_qwen35_routes
     install_qwen35_routes(app, store)
+    from .inventory_review import install_inventory_routes
+    install_inventory_routes(app, store)
+    from .cast_bar_review import install_cast_bar_routes
+    install_cast_bar_routes(app, store)
+    if body_campaign is not None:
+        from .body_review import install_body_routes
+        install_body_routes(app, store, body_campaign)
 
     @app.get("/", response_class=HTMLResponse)
     def home():
@@ -107,11 +138,14 @@ def create_app(store: Store):
     @app.get("/api/records")
     def records(target: str = "questions", offset: int = 0, limit: int = 200, q: str = ""):
         import json
-        if target not in EDITABLE and target not in {"previews","intake_previews", "captions"}:
+        if target not in EDITABLE and target not in {"previews", "intake_previews", "captions", TIMELINE, ROSTER, MINIMAP}:
             raise HTTPException(400, "Invalid target")
         if offset < 0 or not 1 <= limit <= 500:
             raise HTTPException(400, "Invalid pagination")
-        rows = layout_frames(store) if target=="intake_previews" else store.effective(store.rows(target), target)
+        if target in {TIMELINE, ROSTER}:
+            rows = snapshot_rows(store, target)
+        else:
+            rows = layout_frames(store) if target=="intake_previews" else store.effective(store.rows(target), target)
         if q:
             rows = [r for r in rows if q.casefold() in json.dumps(r, ensure_ascii=False).casefold()]
         invalidated = read_json(store.path("invalidated.json")) if store.path("invalidated.json").exists() else None
@@ -125,8 +159,35 @@ def create_app(store: Store):
 
     @app.get("/api/evidence/{record_id}")
     def evidence(record_id: str):
+        if record_id.startswith("minimap-sample_"):
+            sample = next((row for row in store.rows(MINIMAP) if row["id"] == record_id), None)
+            if sample is None:
+                raise HTTPException(404, "Minimap sample not found")
+            frame = {key: sample[key] for key in ("time", "route", "path", "box")}
+            frame["id"] = sample["frame_id"]
+            return {"frames": [frame], "processed": [], "reader_artifacts": []}
+        active = active_snapshot(store) if record_id.startswith(("kill-announcement_", "killfeed-roster_")) else None
+        if active is not None:
+            selected_roster = next((row for row in snapshot_rows(store, ROSTER, active)
+                                    if row["id"] == record_id), None) if record_id.startswith("killfeed-roster_") else None
+            announcement_ids = selected_roster["announcement_ids"] if selected_roster else [record_id]
+            selected_event = next((event for event in snapshot_rows(store, TIMELINE, active)
+                                   if event["id"] in announcement_ids), None) if announcement_ids else None
+            ids = set(selected_roster["evidence_ids"]) if selected_roster else set()
+            if selected_event:
+                ids.update({selected_event["onset_evidence_id"], selected_event["evidence_ids"][0],
+                            selected_event["evidence_ids"][-1]})
+                for role in selected_event["roles"].values():
+                    ids.update(role.get("scoreboard_evidence_ids", ()))
+                    if role["confirmation"]:
+                        ids.update(role["confirmation"]["evidence_ids"])
+            if selected_event or selected_roster:
+                readings = [row for row in snapshot_rows(store, READINGS, active) if row["id"] in ids]
+                return {"frames": [{**row, "route": "scoreboard" if row["classification"] == "scoreboard" else "killfeed"}
+                                   for row in sorted(readings, key=lambda r: r["time"])],
+                        "processed": [], "reader_artifacts": readings}
         # Resolve state -> observation -> source frame, without exposing filesystem paths.
-        rows = {r["id"]: r for target in ("questions", "events", "states", "observations", "normalized_observations", "captions", "previews", "intake_previews")
+        rows = {r["id"]: r for target in ("questions", "events", "states", "observations", "normalized_observations", "captions", "previews", "intake_previews", "inventory_snapshots")
                 for r in store.effective(store.rows(target), target)}
         frames = frame_index(store)
         seen, selected = set(), {}
@@ -144,6 +205,14 @@ def create_app(store: Store):
                 artifact=store.path(row["reader_artifact"])
                 if artifact.is_file() and artifact.resolve().is_relative_to(store.root.resolve()):
                     data = read_json(artifact)
+                    if store.path("pass1_manifest.json").exists():
+                        from .pass1 import relocate
+                        relative = artifact.relative_to(store.root)
+                        if len(relative.parts)>2 and relative.parts[0]=="producers":
+                            producer=store.root/Path(*relative.parts[:2])
+                            config=read_json(producer/"config.json") if (producer/"config.json").exists() else {}
+                            original=Path(config["layout_profile"]).parent if config.get("layout_profile") else None
+                            data=relocate(data,producer,Path(*relative.parts[:2]),original_source=original)
                     readings.append(data.get(row.get("field_id"), data))
             for child in (row.get("evidence_ids", []) + row.get("frame_ids", [])
                           + row.get("evidence_frame_ids", []) + row.get("derived_from", [])):
@@ -163,7 +232,9 @@ def create_app(store: Store):
             for attempt in attempts:
                 if not attempt.get("path"):
                     continue
-                path=Path(attempt["path"]).resolve()
+                path=Path(attempt["path"])
+                if not path.is_absolute():path=store.path(str(path))
+                path=path.resolve()
                 if path.is_file() and path.is_relative_to(store.root.resolve()):
                     from PIL import Image
                     with Image.open(path) as image:
@@ -234,6 +305,8 @@ def create_app(store: Store):
     @app.get("/media/source")
     def source():
         video = Path(read_json(store.path("manifest.json"))["source"]["path"])
+        if not video.is_absolute():
+            video = store.path(str(video))
         return FileResponse(video, media_type="video/mp4", filename="source.mp4", content_disposition_type="inline")
 
     @app.get("/media/{relative:path}")

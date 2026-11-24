@@ -1,0 +1,917 @@
+{
+  "job_accounting": [
+    {
+      "job_id": "8830031",
+      "state": "COMPLETED",
+      "elapsed_seconds": 30
+    },
+    {
+      "job_id": "8830032",
+      "state": "COMPLETED",
+      "elapsed_seconds": 23
+    },
+    {
+      "job_id": "8830033",
+      "state": "FAILED",
+      "elapsed_seconds": 9
+    },
+    {
+      "job_id": "8830034",
+      "state": "COMPLETED",
+      "elapsed_seconds": 30
+    }
+  ],
+  "encoder_smoke": {
+    "status": "passed",
+    "encoder_signature": "40abafc2e97206cec69047c628e2e4388ac82f5185700cb3062f3a7a4532c145",
+    "embedding_dimensions": 384,
+    "source_samples": 112,
+    "blender": "Blender 4.5.4 LTS",
+    "seconds": 22.2319574970752,
+    "quality_gate_passed": false
+  },
+  "rendered_models": 3,
+  "render_candidates": 48,
+  "representations": {
+    "box": {
+      "eligible": 28,
+      "available": 28,
+      "missing": 0,
+      "cross_clip_best_similarity_quantiles": [
+        0.6117756640868265,
+        0.6683620075844567,
+        0.7032251054031995,
+        0.7220145873529249,
+        0.7521476379433734
+      ],
+      "similarity_is_probability": false,
+      "precision": null,
+      "coverage_is_extraction_only": true
+    },
+    "oracle-mask": {
+      "eligible": 28,
+      "available": 28,
+      "missing": 0,
+      "cross_clip_best_similarity_quantiles": [
+        0.5564815616063248,
+        0.695912515526184,
+        0.7345453728689249,
+        0.7759060039503285,
+        0.7912839442546062
+      ],
+      "similarity_is_probability": false,
+      "precision": null,
+      "coverage_is_extraction_only": true
+    },
+    "sam-verified": {
+      "eligible": 28,
+      "available": 4,
+      "missing": 24,
+      "cross_clip_best_similarity_quantiles": [
+        0.4998795803464179,
+        0.5631245120868813,
+        0.608117755056368,
+        0.6320293541123669,
+        0.6320293541123669
+      ],
+      "similarity_is_probability": false,
+      "precision": null,
+      "coverage_is_extraction_only": true
+    },
+    "sam-automatic": {
+      "eligible": 28,
+      "available": 2,
+      "missing": 26,
+      "cross_clip_best_similarity_quantiles": [
+        0.7238811039860819,
+        0.7238811039860819,
+        0.7238811039860819,
+        0.7238811039860819,
+        0.7238811039860819
+      ],
+      "similarity_is_probability": false,
+      "precision": null,
+      "coverage_is_extraction_only": true
+    }
+  },
+  "localization": [
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_0fcc82d40bde80537c42",
+      "time": 22.005316666666666,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "available",
+      "iou": 0.8024844720496894,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_0fcc82d40bde80537c42",
+      "time": 22.005316666666666,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_b101381b2dc8f6232e66",
+      "time": 22.505816666666668,
+      "arm": "verified",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_b101381b2dc8f6232e66",
+      "time": 22.505816666666668,
+      "arm": "automatic",
+      "reference_visibility": "occluded",
+      "availability": "unseeded",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_022bcfbd8b83e12e1a5d",
+      "time": 23.006316666666667,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_022bcfbd8b83e12e1a5d",
+      "time": 23.006316666666667,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_02dfb2a4380ac76f5f24",
+      "time": 24.007316666666668,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_02dfb2a4380ac76f5f24",
+      "time": 24.007316666666668,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_a9918455e4f63b2f03d4",
+      "time": 26.009316666666667,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_a9918455e4f63b2f03d4",
+      "time": 26.009316666666667,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_fadf5ffd8039df3e2a54",
+      "time": 28.011316666666666,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_fadf5ffd8039df3e2a54",
+      "time": 28.011316666666666,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_05daee244a6b9202edb2",
+      "time": 30.013316666666668,
+      "arm": "verified",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_05daee244a6b9202edb2",
+      "time": 30.013316666666668,
+      "arm": "automatic",
+      "reference_visibility": "unknown",
+      "availability": "unseeded",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_dfe8291e382e7c848b66",
+      "time": 33.50013333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-00",
+      "frame_id": "action-frame_dfe8291e382e7c848b66",
+      "time": 33.50013333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_59699db7824a85ad847e",
+      "time": 93.00958333333334,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "available",
+      "iou": 0.6605369127516778,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_59699db7824a85ad847e",
+      "time": 93.00958333333334,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "available",
+      "iou": 0.6612859833198816,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_337e1e02bda8dc77b6a1",
+      "time": 93.51008333333333,
+      "arm": "verified",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_337e1e02bda8dc77b6a1",
+      "time": 93.51008333333333,
+      "arm": "automatic",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_35e0a31b155ccba9a454",
+      "time": 94.01058333333333,
+      "arm": "verified",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_35e0a31b155ccba9a454",
+      "time": 94.01058333333333,
+      "arm": "automatic",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_0ce25b33d2815d054e1e",
+      "time": 95.01158333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_0ce25b33d2815d054e1e",
+      "time": 95.01158333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_ff8bcf14cc503a247643",
+      "time": 97.01358333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_ff8bcf14cc503a247643",
+      "time": 97.01358333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_c40ae7cfbf934ec4e707",
+      "time": 99.01558333333334,
+      "arm": "verified",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_c40ae7cfbf934ec4e707",
+      "time": 99.01558333333334,
+      "arm": "automatic",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_e1a9d8bf9b9d5cb75d8a",
+      "time": 101.0009,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_e1a9d8bf9b9d5cb75d8a",
+      "time": 101.0009,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_7ed7a97c2171a7dbd30a",
+      "time": 104.5044,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-01",
+      "frame_id": "action-frame_7ed7a97c2171a7dbd30a",
+      "time": 104.5044,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_2fe4ee7f036acc1e4ddd",
+      "time": 162.87938333333332,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "available",
+      "iou": 0.41732283464566927,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_2fe4ee7f036acc1e4ddd",
+      "time": 162.87938333333332,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "available",
+      "iou": 0.41073731098347205,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_19b2ae557bf58e4c226f",
+      "time": 163.37988333333334,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_19b2ae557bf58e4c226f",
+      "time": 163.37988333333334,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_0b6420d975073dc7b41c",
+      "time": 163.88038333333333,
+      "arm": "verified",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_0b6420d975073dc7b41c",
+      "time": 163.88038333333333,
+      "arm": "automatic",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_48f6dcd78aee8ef24762",
+      "time": 164.88138333333333,
+      "arm": "verified",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_48f6dcd78aee8ef24762",
+      "time": 164.88138333333333,
+      "arm": "automatic",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_6d3abf29c0d6f4c83865",
+      "time": 166.88338333333334,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_6d3abf29c0d6f4c83865",
+      "time": 166.88338333333334,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_75356a8fe1a535f68708",
+      "time": 168.88538333333332,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_75356a8fe1a535f68708",
+      "time": 168.88538333333332,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_3fbdafcbb6fd3507e904",
+      "time": 170.88738333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_3fbdafcbb6fd3507e904",
+      "time": 170.88738333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_e8e11da5d9736e66d458",
+      "time": 174.39088333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-02",
+      "frame_id": "action-frame_e8e11da5d9736e66d458",
+      "time": 174.39088333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_adbb2ece9f7ebfe0bbca",
+      "time": 256.32273333333336,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "available",
+      "iou": 0.12410501193317422,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_adbb2ece9f7ebfe0bbca",
+      "time": 256.32273333333336,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_fe8c789d8c5a46d804f3",
+      "time": 256.82323333333335,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_fe8c789d8c5a46d804f3",
+      "time": 256.82323333333335,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_6c753cbda938dfd86bac",
+      "time": 257.32373333333334,
+      "arm": "verified",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_6c753cbda938dfd86bac",
+      "time": 257.32373333333334,
+      "arm": "automatic",
+      "reference_visibility": "occluded",
+      "availability": "unseeded",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_704c13940797581b378e",
+      "time": 258.3247333333333,
+      "arm": "verified",
+      "reference_visibility": "occluded",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_704c13940797581b378e",
+      "time": 258.3247333333333,
+      "arm": "automatic",
+      "reference_visibility": "occluded",
+      "availability": "unseeded",
+      "iou": null,
+      "false_visible": false
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_8dff6e4fe0c5ceaade2a",
+      "time": 260.3267333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_8dff6e4fe0c5ceaade2a",
+      "time": 260.3267333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_cf4c79c98a0599847a75",
+      "time": 262.32873333333333,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_cf4c79c98a0599847a75",
+      "time": 262.32873333333333,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_1c4b94b671971a0d1273",
+      "time": 264.33073333333334,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_1c4b94b671971a0d1273",
+      "time": 264.33073333333334,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_d3c9f303ec84f0f525f4",
+      "time": 267.81755,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-03",
+      "frame_id": "action-frame_d3c9f303ec84f0f525f4",
+      "time": 267.81755,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "unseeded",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_847e5f70f681f4ab3374",
+      "time": 504.6374666666667,
+      "arm": "verified",
+      "reference_visibility": "unknown",
+      "availability": "available",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_847e5f70f681f4ab3374",
+      "time": 504.6374666666667,
+      "arm": "automatic",
+      "reference_visibility": "unknown",
+      "availability": "available",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_11931c9fea8a6075f1c9",
+      "time": 505.13796666666667,
+      "arm": "verified",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_11931c9fea8a6075f1c9",
+      "time": 505.13796666666667,
+      "arm": "automatic",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_c186909ced15b6e86090",
+      "time": 505.63846666666666,
+      "arm": "verified",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_c186909ced15b6e86090",
+      "time": 505.63846666666666,
+      "arm": "automatic",
+      "reference_visibility": "unknown",
+      "availability": "missing_mask",
+      "iou": null,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_9734976100988e012b14",
+      "time": 506.6394666666667,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_9734976100988e012b14",
+      "time": 506.6394666666667,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_b4851fc1502175a76a5b",
+      "time": 508.64146666666664,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_b4851fc1502175a76a5b",
+      "time": 508.64146666666664,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_27fd15a511cbef3bb6fb",
+      "time": 510.64346666666665,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_27fd15a511cbef3bb6fb",
+      "time": 510.64346666666665,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_55b5b3318d0350c41e22",
+      "time": 512.6454666666667,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_55b5b3318d0350c41e22",
+      "time": 512.6454666666667,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_519209867731af6c4f40",
+      "time": 516.1322833333334,
+      "arm": "verified",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    },
+    {
+      "clip_id": "event-development-06",
+      "frame_id": "action-frame_519209867731af6c4f40",
+      "time": 516.1322833333334,
+      "arm": "automatic",
+      "reference_visibility": "visible",
+      "availability": "missing_mask",
+      "iou": 0,
+      "false_visible": null
+    }
+  ],
+  "comparison_seconds": 27.75015596859157,
+  "gpu_budget": {
+    "ceiling_seconds": 28800,
+    "recovery_reserve_seconds": 3600,
+    "attempts": [
+      {
+        "stage": "body-crop-diagnostic",
+        "reserved_seconds": 900,
+        "created_at": "2026-11-11T07:20:09.129886+00:00",
+        "slurm_job_id": "8830034",
+        "status": "completed",
+        "recovery": false,
+        "attempt": 1,
+        "elapsed_seconds": 27.760524816811085
+      }
+    ]
+  },
+  "release_passed": false
+}

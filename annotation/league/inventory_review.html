@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>League inventory timeline</title>
+<style>
+  :root { color-scheme: dark; font: 15px system-ui; background: #121923; color: #e9edf2; }
+  body { max-width: 1100px; margin: auto; padding: 20px; }
+  a { color: #86e3df; }
+  video { width: 100%; max-height: 55vh; background: #000; }
+  article { border: 1px solid #53647a; border-radius: 6px; padding: 12px; margin: 12px 0; }
+  h2, h3 { margin: 0 0 6px; }
+  ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+  li { background: #202d3e; padding: 8px; }
+  img { width: 32px; height: 32px; vertical-align: middle; margin-right: 5px; }
+  summary { cursor: pointer; }
+  details p { white-space: pre-line; }
+</style>
+<header><a href="/">Evidence review</a><h1>Inventory timeline</h1></header>
+<video id="video" controls preload="metadata" src="/media/source"></video>
+<p id="status" role="status"></p>
+<main id="snapshots"></main>
+<script>
+const video = document.getElementById('video');
+const output = document.getElementById('snapshots');
+const statusLine = document.getElementById('status');
+let sequence = 0;
+let displayedKey;
+
+function element(tag, text) {
+  const node = document.createElement(tag);
+  node.textContent = text;
+  return node;
+}
+
+function mediaLink(path, label) {
+  const link = element('a', label);
+  link.href = '/media/' + path.split('/').map(encodeURIComponent).join('/');
+  return link;
+}
+
+function render(snapshot) {
+  const card = element('article', '');
+  const owner = snapshot.champion_name || 'Champion unresolved';
+  const panel = snapshot.side ? `Scoreboard ${snapshot.slot_id.replace(':row', ' row ')}` : 'Selected HUD';
+  card.append(element('h2', `${owner} · ${panel}`));
+  const time = `${snapshot.time.toFixed(3)}s`;
+  const note = element('p', `${snapshot.last_seen ? 'Last seen' : 'Observed'} at ${time} · Data Dragon ${snapshot.reference_version}`);
+  if (snapshot.player_name) note.append(` · Displayed name ${snapshot.player_name}`);
+  if (snapshot.portrait_crop_path) note.append(' · ', mediaLink(snapshot.portrait_crop_path, 'Portrait crop'));
+  card.append(note);
+  if (snapshot.portrait_alignment_views?.length) {
+    const details = element('details', '');
+    details.append(element('summary', 'Portrait matches by crop position'));
+    const positions = {'0,0': 'Center', '-1,0': 'Left', '1,0': 'Right', '0,-1': 'Up', '0,1': 'Down'};
+    const lines = snapshot.portrait_alignment_views.map(view => {
+      const position = positions[view.offset.join(',')] || view.offset.join(',');
+      const score = view.score == null ? '' : ` · similarity ${view.score.toFixed(3)} · margin ${view.margin?.toFixed(3) ?? '—'}`;
+      return `${position} · ${view.top_id || 'Unknown'}${score} · ${view.eligible ? 'Eligible' : 'Unresolved'}`;
+    });
+    details.append(element('p', lines.join('\n')));
+    card.append(details);
+  }
+  const items = element('ul', '');
+  for (const slot of snapshot.slots) {
+    const item = element('li', '');
+    item.append(element('h3', slot.slot === 'trinket' ? 'Trinket' : `Slot ${Number(slot.slot) + 1}`));
+    if (slot.reference) {
+      const icon = element('img', '');
+      icon.src = mediaLink(slot.reference.icon_path, '').href;
+      icon.alt = '';
+      item.append(icon, slot.reference.name);
+      if (slot.reference.description) {
+        const description = element('details', '');
+        description.append(element('summary', 'Description'), element('p', slot.reference.description));
+        item.append(description);
+      }
+    } else {
+      item.append(slot.status === 'empty' ? 'Empty' : 'Unknown');
+    }
+    if (slot.crop_path) item.append(element('br', ''), mediaLink(slot.crop_path, 'Source crop'));
+    items.append(item);
+  }
+  card.append(items);
+  return card;
+}
+
+async function refresh() {
+  const request = ++sequence;
+  try {
+    const response = await fetch(`/api/inventory?time=${encodeURIComponent(video.currentTime)}`);
+    if (!response.ok) throw new Error('Inventory timeline unavailable');
+    const data = await response.json();
+    if (request !== sequence) return;
+    const key = JSON.stringify([data.status, data.sample_time, data.snapshots.map(row => [row.id, row.slots, row.champion_name, row.player_name, row.portrait_alignment_views])]);
+    if (key === displayedKey) return;
+    displayedKey = key;
+    output.replaceChildren(...data.snapshots.map(render));
+    if (data.status === 'empty') {
+      statusLine.textContent = 'No inventory snapshots yet. Run annotation and fusion for this recording.';
+    } else if (data.status === 'unsampled') {
+      const button = element('button', 'Go to first sample');
+      button.onclick = () => { video.currentTime = data.first_time; };
+      statusLine.replaceChildren('Inventory was not sampled here. ', button);
+    } else {
+      const panel = {present: 'visible', absent: 'closed', unknown: 'visibility unknown'}[data.scoreboard];
+      statusLine.textContent = `Source sample ${data.sample_time.toFixed(3)}s · Scoreboard ${panel}`;
+    }
+  } catch (error) {
+    if (request !== sequence) return;
+    displayedKey = undefined;
+    statusLine.textContent = error.message;
+    output.replaceChildren();
+  }
+}
+
+video.addEventListener('timeupdate', refresh);
+video.addEventListener('seeked', refresh);
+refresh();
+</script>
+</html>

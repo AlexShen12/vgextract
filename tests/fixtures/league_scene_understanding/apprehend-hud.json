@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "source_interval": [
+    93.3,
+    94.3
+  ],
+  "source_crop": [
+    789,
+    978,
+    983,
+    1032
+  ],
+  "source_review": "Parent assistant inspected all 16 enlarged QWER strips and cast bars at native source resolution; 16 FPS source sampling. Human review absent. Fixture PNGs were cropped directly from decoded MP4 frames without a JPEG intermediate.",
+  "scope": "Actual HUD OCR and persistence regression; no independent recognition-accuracy score.",
+  "profile": {
+    "thresholds": {
+      "ocr_confidence": 0.85,
+      "pixel_change": 0.08,
+      "identity_change": 0.12
+    },
+    "owners": [
+      {
+        "id": "selected",
+        "slots": [
+          {
+            "id": "W",
+            "kind": "ability",
+            "box": [
+              51,
+              4,
+              94,
+              49
+            ],
+            "countdown_box": [
+              56,
+              18,
+              89,
+              41
+            ]
+          },
+          {
+            "id": "E",
+            "kind": "ability",
+            "box": [
+              99,
+              4,
+              142,
+              49
+            ],
+            "countdown_box": [
+              104,
+              18,
+              137,
+              41
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "frames": [
+    {
+      "id": "scene-source-frame_bb18863138f9797d70ea",
+      "time": 93.30988333333333,
+      "path": "apprehend-hud-00.png",
+      "sha256": "6e276bbd90700ddec1844a1a543c48eef288a636a23e9c8656f9029442089069",
+      "cast_bar_path": "apprehend-cast-bar-00.png",
+      "cast_bar_sha256": "b86a344139bf0844b9847cb14304ddb17ff46a401c4fc743a8959e2b9462d9ab"
+    },
+    {
+      "id": "scene-source-frame_e96f081e9580ee087e79",
+      "time": 93.37661666666666,
+      "path": "apprehend-hud-01.png",
+      "sha256": "abfdfedff81dee1daf76476ee541bd51a02cf5308d2edab06ef6a542b1a3161e",
+      "cast_bar_path": "apprehend-cast-bar-01.png",
+      "cast_bar_sha256": "2dcff7968e96dfb17388a010f51dedc10e0fd2107eb05340d10fa199333b8eb7"
+    },
+    {
+      "id": "scene-source-frame_f70e0411ccc2d74c3de6",
+      "time": 93.42666666666666,
+      "path": "apprehend-hud-02.png",
+      "sha256": "abfdfedff81dee1daf76476ee541bd51a02cf5308d2edab06ef6a542b1a3161e",
+      "cast_bar_path": "apprehend-cast-bar-02.png",
+      "cast_bar_sha256": "15e63d8c4675d741320eaf31895f564e36c57f36475f19b8053961cbed3e2b57"
+    },
+    {
+      "id": "scene-source-frame_a61f96ed13f6feeff800",
+      "time": 93.4934,
+      "path": "apprehend-hud-03.png",
+      "sha256": "f6bae33861c5ae4f2148a42e240432bfde38ce42d8714d321047b7fef6ddd6ab",
+      "cast_bar_path": "apprehend-cast-bar-03.png",
+      "cast_bar_sha256": "027da3d276f97cf5791c0ca9b86bffbe95f8801213d0b7fb592c2aebbb3049c5"
+    },
+    {
+      "id": "scene-source-frame_72c27cb52d0d381a1838",
+      "time": 93.56013333333334,
+      "path": "apprehend-hud-04.png",
+      "sha256": "f6bae33861c5ae4f2148a42e240432bfde38ce42d8714d321047b7fef6ddd6ab",
+      "cast_bar_path": "apprehend-cast-bar-04.png",
+      "cast_bar_sha256": "9a6bf7ea62d97b234db59cd6dd26e8293a64f3346919e8b11c49d9a36a4e8ae4"
+    },
+    {
+      "id": "scene-source-frame_f8b26dd7f4ac82eca89f",
+      "time": 93.62686666666667,
+      "path": "apprehend-hud-05.png",
+      "sha256": "b090ec0764aa8b603de200047761d973e47615000298960ffb37180d5be953b0",
+      "cast_bar_path": "apprehend-cast-bar-05.png",
+      "cast_bar_sha256": "72761d8a1bca5cc4a5a3c1519dd52ac7818774e890664dbd18118de238a06a69"
+    },
+    {
+      "id": "scene-source-frame_b61a53b2b3eed72002ec",
+      "time": 93.67691666666667,
+      "path": "apprehend-hud-06.png",
+      "sha256": "5d02b8e68ed48bcc7ebe4030c3df66ad9369c90c3a5f151d9a6acd50362eef1f",
+      "cast_bar_path": "apprehend-cast-bar-06.png",
+      "cast_bar_sha256": "cf8be3a7594c457a41bbb5f72f88ff6ccf5ad833fb59b5fd6bd0a94a18eb0dd0"
+    },
+    {
+      "id": "scene-source-frame_baeb97b864ed44bd7df4",
+      "time": 93.74365,
+      "path": "apprehend-hud-07.png",
+      "sha256": "e43258bdf8b7f20d321b0a5c0b644304f8cb86f056e8c0cd1dcb138420deea16",
+      "cast_bar_path": "apprehend-cast-bar-07.png",
+      "cast_bar_sha256": "7c0f0eca3c17959b1f8da7bc4792f66ef3430559cf9870a1e56cf2e468239f7e"
+    },
+    {
+      "id": "scene-source-frame_5b264823d88ef93cc9ff",
+      "time": 93.81038333333333,
+      "path": "apprehend-hud-08.png",
+      "sha256": "681015e3b94e4fcff29581e7a8e2461477f61ab1a52fe48744d1cb5fe72d077d",
+      "cast_bar_path": "apprehend-cast-bar-08.png",
+      "cast_bar_sha256": "841b8c92965dfaade538df3eebdc52c505562f6eaae6fc83e85e6b90e7b067f7"
+    },
+    {
+      "id": "scene-source-frame_8f675d837770a5bfd295",
+      "time": 93.87711666666667,
+      "path": "apprehend-hud-09.png",
+      "sha256": "c77896f006aa56b9426d03acb01e9658171ad60afb1a593630799f468364aad9",
+      "cast_bar_path": "apprehend-cast-bar-09.png",
+      "cast_bar_sha256": "2092dda0b12d7ab0083b3ba0c112b9a62dab7cb41151ba2261adf6a81a23873a"
+    },
+    {
+      "id": "scene-source-frame_c75a20c0c0382c126e5a",
+      "time": 93.92716666666666,
+      "path": "apprehend-hud-10.png",
+      "sha256": "b1a1181d98b6242c695565cbd95482bfa6319453b946c16f496c26fdd6819fc9",
+      "cast_bar_path": "apprehend-cast-bar-10.png",
+      "cast_bar_sha256": "23f9623be4d8670aa2c982a0c701126966aa006c9d4d38c4b1e6c0537275c0e6"
+    },
+    {
+      "id": "scene-source-frame_f1d93417af4fadd8773d",
+      "time": 93.9939,
+      "path": "apprehend-hud-11.png",
+      "sha256": "e5fb4f1afcd5a57e6d0dd21c3d66f2cf384bd71e23ebee40551e65c022d2b900",
+      "cast_bar_path": "apprehend-cast-bar-11.png",
+      "cast_bar_sha256": "cec36bb0e24cb6e9b76b3be93658397e16f5f0fe2f58505281406b5e71009f22"
+    },
+    {
+      "id": "scene-source-frame_2a3b480e324d2463a070",
+      "time": 94.06063333333333,
+      "path": "apprehend-hud-12.png",
+      "sha256": "29ee834b52d355e6e020589229c24c9c39d31dd007113f8a062ad05cd43f92b4",
+      "cast_bar_path": "apprehend-cast-bar-12.png",
+      "cast_bar_sha256": "3d3283970cb00366b37c1b9ded9f6aa89e261654153a950b238a6cbdd76d1339"
+    },
+    {
+      "id": "scene-source-frame_45adfd5a1f615551c9e3",
+      "time": 94.12736666666666,
+      "path": "apprehend-hud-13.png",
+      "sha256": "2cd8daa9c689e071ac7c6a28eae1b27acff58d5ebed35cc00d710dd6928940eb",
+      "cast_bar_path": "apprehend-cast-bar-13.png",
+      "cast_bar_sha256": "c3021f220984216359608b2e6600c4b98d68aa15fe1fef3abdc2fe00fb7a6533"
+    },
+    {
+      "id": "scene-source-frame_0c7472687c58cbfe9106",
+      "time": 94.17741666666667,
+      "path": "apprehend-hud-14.png",
+      "sha256": "0e4be5fc9e2d4ac7ec36f95a9d1c6d1c0864ddda17443b5e63b21887871039b2",
+      "cast_bar_path": "apprehend-cast-bar-14.png",
+      "cast_bar_sha256": "2f24fffcec298385d7b05d241a7c954ef7b204c532aea29b71653214870d0779"
+    },
+    {
+      "id": "scene-source-frame_d265663edb4608892b1c",
+      "time": 94.24415,
+      "path": "apprehend-hud-15.png",
+      "sha256": "e2b77c1f36f776b0aac43098f369a1cf29a2591667d5b0f708091d7b7a4baec8",
+      "cast_bar_path": "apprehend-cast-bar-15.png",
+      "cast_bar_sha256": "3748110c452cbaef0c381d57a9a41ac1b431825af0fecfec6b0a14774383d9c5"
+    }
+  ],
+  "expected": {
+    "slot": "E",
+    "upper_cost": 70,
+    "centered_cooldown": 26,
+    "onset_bracket": [
+      93.56013333333334,
+      93.62686666666667
+    ],
+    "other_slot": "W",
+    "other_upper_cost": 40,
+    "new_activations": 1,
+    "ability_name": "Apprehend",
+    "cast_bar_visible_interval": [
+      93.37661666666666,
+      93.56013333333334
+    ]
+  },
+  "cast_bar_crop": [
+    700,
+    740,
+    1260,
+    845
+  ],
+  "recall_profile": {
+    "recall": {
+      "text_box": [
+        165,
+        22,
+        330,
+        50
+      ],
+      "progress_box": [
+        55,
+        54,
+        373,
+        66
+      ],
+      "countdown_box": [
+        178,
+        68,
+        293,
+        98
+      ],
+      "labels": [
+        "recall"
+      ],
+      "confirmation_samples": 2
+    }
+  },
+  "positive_recall_frames": [
+    {
+      "id": "scene-source-frame_dac5b0a478001daac2e6",
+      "time": 510.51,
+      "path": "recall-positive-00.png",
+      "sha256": "78467726ccd132670da2fcc23fd5e3fdaa25ac33c970a3e2775424f55053e05f"
+    },
+    {
+      "id": "scene-source-frame_327164d7eb49e078f0f3",
+      "time": 510.5767333333333,
+      "path": "recall-positive-01.png",
+      "sha256": "036faf891dd13e8d3c9a12bc4dad65ce5944b5c1557cfb28e0d141419e75bb09"
+    },
+    {
+      "id": "scene-source-frame_97884652efcc5783f994",
+      "time": 510.6267833333333,
+      "path": "recall-positive-02.png",
+      "sha256": "be9da0768c0402bd88ec1bbe7dc346e290e87bf86e03f3c04f71e3f57762adbb"
+    },
+    {
+      "id": "scene-source-frame_d6f98596908570d78b6c",
+      "time": 510.69351666666665,
+      "path": "recall-positive-03.png",
+      "sha256": "90c2fee12dea7fea7e4ac73c796859fc67dab94b396fd1b6843bce38ea8a952a"
+    }
+  ]
+}

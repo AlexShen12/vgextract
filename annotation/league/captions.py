@@ -4,7 +4,7 @@ from __future__ import annotations
 from collections import Counter
 import json
 
-from .core import atomic_json, consistent_review, finite, read_json, uid
+from .core import atomic_json, consistent_review, digest, finite, read_json, uid
 
 
 DEPENDENCIES = ["states", "events", "normalized_observations", "issues"]
@@ -17,6 +17,8 @@ EVENT_CRITERIA = {
     "minion_last_hit": {"minion_death_visible", "actor_action_linked_to_death"},
     "ability_hit": {"ability_cast_visible", "target_impact_visible", "cast_linked_to_impact"},
 }
+PILOT_CRITERIA = {**EVENT_CRITERIA, "ability_slot": {"slot_activation_visible", "slot_linked_to_action"}}
+PILOT_CRITERIA["minion_last_hit"] = EVENT_CRITERIA["minion_last_hit"] | {"lane_minion_visible"}
 NUMERIC_FIELDS = {"cs": "CS", "kills": "kill counter", "deaths": "death counter",
                   "assists": "assist counter", "level": "level"}
 TEXT_FIELDS = {"player_name": "player name", "game_clock": "game clock",
@@ -40,6 +42,12 @@ def usable(row, pilot=False):
             and row.get("evidence_modality", "visual") == "visual")
 
 
+def body_signature(row):
+    """The body evidence actually shown to a scene reader, excluding review prose."""
+    return digest({k: row.get(k) for k in ("frame_id", "owner_id", "owner_epoch", "segment_id",
+                  "actor_track", "binding_visible", "actor_region")})
+
+
 def event_grounding(event, frame_times, *, frame_context=None, body=None):
     """Validate explicit actor/target bindings and criterion-to-frame links.
 
@@ -47,7 +55,9 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
     cannot establish an impact or last hit. All links must resolve in the clip.
     """
     kind = event["kind"]
-    if kind not in EVENT_CRITERIA:
+    pilot_v2 = event.get("experimental") is True and event.get("caption_pilot") is True and event.get("scene_schema_version") == 2
+    required = PILOT_CRITERIA if pilot_v2 else EVENT_CRITERIA
+    if kind not in required:
         raise ValueError("unsupported_event_kind")
     if event.get("target") and kind not in {"targeted_attack", "minion_last_hit", "ability_hit"}:
         raise ValueError("unqualified_target_attribution")
@@ -72,6 +82,10 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
         if (not isinstance(ids, list) or not ids or any(not isinstance(f, str) for f in ids)
                 or not set(ids) <= frames):
             raise ValueError("missing_" + role + "_binding_evidence")
+        signatures = value.get("body_signatures", {})
+        if not isinstance(signatures, dict) or any(not isinstance(f, str) or not isinstance(s, str) or not s
+                                                   for f, s in signatures.items()):
+            raise ValueError("invalid_body_evidence_signatures")
         return {"id": uid("caption-binding", role, value), "role": role,
                 "entity": entity, "binding": value["binding"], "scope": "scene_entity",
                 "evidence_refs": [ref("frames", f) for f in sorted(set(ids))]}
@@ -91,11 +105,11 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
                 or not set(ids) <= frames):
             raise ValueError("missing_criterion_evidence")
         criteria.setdefault(cue["criterion"], set()).update(ids)
-    if not EVENT_CRITERIA[kind] <= criteria.keys():
+    if not required[kind] <= criteria.keys():
         raise ValueError("missing_visual_criteria")
-    if kind in {"attack", "targeted_attack", "cast", "minion_last_hit", "ability_hit"}:
+    if kind in {"attack", "targeted_attack", "cast", "minion_last_hit", "ability_hit", "ability_slot"}:
         fps = event.get("sampling_fps", 0)
-        cue_frames = {f for name in EVENT_CRITERIA[kind] for f in criteria[name]}
+        cue_frames = {f for name in required[kind] for f in criteria[name]}
         cue_times = sorted({frame_times[f] for f in cue_frames})
         # First-frame-at-target decoding quantizes times to native PTS. Pilot
         # audits record source FPS so this tolerance cannot disguise sparse input.
@@ -115,9 +129,11 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
                            else ("ability_cast_visible", "target_impact_visible"))
         if min(frame_times[f] for f in criteria[action]) > max(frame_times[f] for f in criteria[outcome]):
             raise ValueError("outcome_precedes_action")
-    if kind == "ability_hit" and (not isinstance(event.get("ability"), str)
+    if kind == "ability_hit" and not (pilot_v2 and event.get("ability") is None) and (not isinstance(event.get("ability"), str)
                                   or not event["ability"].strip() or len(event["ability"]) > 120):
         raise ValueError("unresolved_ability")
+    if kind == "ability_slot" and event.get("ability") not in {"Q", "W", "E", "R"}:
+        raise ValueError("unresolved_ability_slot")
     if frame_context is not None:
         # Pilot events require a single supported scene/owner context, including
         # every intervening sampled frame, not just matching endpoint labels.
@@ -137,6 +153,9 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
             if (not bound.get("binding_visible") or bound.get("review_status") == "rejected" or bound.get("actor_track") != event["actor_binding"]["binding"]
                     or bound.get("owner_id") != owner):
                 raise ValueError("missing_actor_binding_at_cue")
+            inspected = event["actor_binding"].get("body_signatures", {}).get(f, bound.get("_uncorrected_binding_signature"))
+            if inspected is not None and inspected != body_signature(bound):
+                raise ValueError("stale_actor_binding_evidence")
         if kind == "movement" and len({frame_times[f] for f in criteria["movement_visible"]}) < 2:
             raise ValueError("insufficient_movement_evidence")
         known_names = {body[f].get("champion") for f in frames}-{None}
@@ -145,7 +164,7 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
         if len(bindings) > 1:
             samples = event["target_binding"].get("regions", [])
             regions = {r["frame_id"]: r.get("box") for r in samples}
-            needed = set().union(*(criteria[name] for name in EVENT_CRITERIA[kind]))
+            needed = set().union(*(criteria[name] for name in required[kind]))
             if not needed <= regions.keys():
                 raise ValueError("missing_target_binding_at_cue")
             for f in needed:
@@ -157,7 +176,7 @@ def event_grounding(event, frame_times, *, frame_context=None, body=None):
             bindings[1]["regions"] = samples
         bindings[0]["regions"] = [{"frame_id": f, "box": body[f]["actor_region"]} for f in sorted(frames)]
     return bindings, [{"criterion": name, "evidence_refs": [ref("frames", f) for f in sorted(criteria[name])]}
-                      for name in sorted(EVENT_CRITERIA[kind])]
+                      for name in sorted(required[kind])]
 
 
 def _display(field, value):
@@ -306,14 +325,19 @@ def construct_captions(states, events, observations, *, interval, source_sha256,
                 "targeted_attack": f"{actor} is observed directing an attack at {target}.",
                 "cast": f"{actor} is observed casting an ability.",
                 "recall": f"{actor} is observed channeling recall.",
+                "ability_slot": f"{actor}'s {event.get('ability')} ability is observed activating.",
                 "minion_last_hit": f"{actor} is observed landing the last hit on {target}.",
-                "ability_hit": f"{actor}'s {event.get('ability')} is observed hitting {target}."}[kind]
+                "ability_hit": (f"An ability cast by {actor} is observed hitting {target}." if event.get("ability") is None
+                                else f"{actor}'s {event.get('ability')} is observed hitting {target}.")}[kind]
         evidence = [ref("events", event["id"])] + [ref("frames", f) for f in event["evidence_ids"]]
         emit(kind, text, event["start"], event["end"], bindings, evidence,
              {"actor": event["actor"], "target": event.get("target"), "ability": event.get("ability")}, criteria)
         if pilot:
             captions[-1].update(playback_segment_id=event.get("playback_segment_id"), owner_id=event.get("owner_id"),
                                 owner_epoch=event.get("owner_epoch"), actor_track=event["actor_binding"]["binding"])
+            if event.get("event_id"):
+                captions[-1]["event_id"] = claim_event = event["event_id"]
+                captions[-1]["claims"][0]["event_id"] = claim_event
 
     unique = {c["id"]: c for c in captions}
     captions = sorted(unique.values(), key=lambda c: (c["start"], c["end"], c["id"]))

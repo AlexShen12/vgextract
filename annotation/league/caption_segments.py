@@ -76,8 +76,41 @@ def deduplicate_events(events):
         {"record_id": r["id"], "reason": "competing_target_attribution"} for r in result if r["id"] in conflicts]
 
 
-def segment_captions(captions, frames, interval, source_sha256, policy=POLICY):
+def episode_windows(rows, context, extent, is_action, policy=POLICY):
+    """Group ordered evidence intervals and pad them within one playback context."""
+    episodes = []
+    for row in rows:
+        if not episodes or extent(row)[0]-max(extent(r)[1] for r in episodes[-1]) > policy["merge_gap_seconds"]:
+            episodes.append([])
+        episodes[-1].append(row)
+    for episode in episodes:
+        anchors = [row for row in episode if is_action(row)] or episode
+        lower = max(context["start"], min(episode[0]["start"], min(extent(r)[0] for r in anchors)-policy["setup_seconds"]))
+        upper = min(context["end"], max(max(r["end"] for r in episode), max(extent(r)[1] for r in anchors)+policy["result_seconds"]))
+        chain = []
+        while lower < upper:
+            end = min(upper, lower+policy["max_clip_seconds"])
+            if end < upper:
+                quiet = sorted({r["end"] for r in episode if lower < r["end"] <= end
+                                and not any(x["start"] < r["end"] < x["end"] for x in episode)})
+                if quiet and quiet[-1] > lower+policy["max_clip_seconds"]/2:
+                    end = quiet[-1]
+            included = [r for r in episode if extent(r)[0] < end and
+                        (extent(r)[1] > lower or r["start"] == r["end"] == lower)]
+            if included:
+                chain.append((lower, end, included))
+            lower = end
+        yield chain
+
+
+def segment_captions(captions, frames, interval, source_sha256, policy=POLICY, *, occurrences=()):
     clips = []
+    occurrence_map = {o["id"]: o for o in occurrences}
+    def extent(c):
+        row = occurrence_map.get(c.get("event_id"), c)
+        return row["start"], row["end"]
+    def is_action(c):
+        return c["claims"][0]["kind"] not in {"displayed_state", "cs_increased"}
     by_context = defaultdict(list)
     for caption in captions:
         by_context[(caption.get("playback_segment_id"), caption.get("owner_id"), caption.get("owner_epoch"))].append(caption)
@@ -85,48 +118,34 @@ def segment_captions(captions, frames, interval, source_sha256, policy=POLICY):
         selected = sorted((c for c in by_context[context["context"]]
                            if context["start"] <= c["start"] <= c["end"] < context["end"]),
                           key=lambda c: (c["start"], c["end"], c["id"]))
-        episodes = []
-        for caption in selected:
-            if (not episodes or caption["start"]-max(c["end"] for c in episodes[-1]) > policy["merge_gap_seconds"]):
-                episodes.append([])
-            episodes[-1].append(caption)
-        for episode in episodes:
-            scene = [c for c in episode if c["claims"][0]["kind"] not in {"displayed_state", "cs_increased"}]
-            anchors = scene or episode
-            lower = max(context["start"], min(episode[0]["start"], anchors[0]["start"]-policy["setup_seconds"]))
-            upper = min(context["end"], max(max(c["end"] for c in episode), max(c["end"] for c in anchors)+policy["result_seconds"]))
+        for windows in episode_windows(selected, context, extent, is_action, policy):
             chain = []
-            while lower < upper:
-                end = min(upper, lower+policy["max_clip_seconds"])
-                if end < upper:
-                    quiet = sorted({c["end"] for c in episode if lower < c["end"] <= end
-                                    and not any(x["start"] < c["end"] < x["end"] for x in episode)})
-                    if quiet and quiet[-1] > lower+policy["max_clip_seconds"]/2:
-                        end = quiet[-1]
-                included = [c for c in episode if c["start"] < end and (c["end"] > lower or c["start"] == c["end"] == lower)]
-                # Context-only tails do not need their own clip.
-                if included:
-                    action = [c for c in included if c["claims"][0]["kind"] not in {"displayed_state", "cs_increased"}] or included
-                    first, last = min(c["start"] for c in action), max(c["end"] for c in action)
-                    phases = {
-                        "setup": [ref("frames", f["id"]) for f in context["frames"] if lower <= f["time"] < min(first, end)],
-                        "action": combine_refs(*[c["evidence_refs"] for c in action]),
-                        "result": [ref("frames", f["id"]) for f in context["frames"] if max(last, lower) < f["time"] < end],
-                    }
-                    phases["action"] = [r for r in phases["action"] if r["table"] != "frames" or any(
-                        f["id"] == r["id"] and lower <= f["time"] < end for f in context["frames"])]
-                    clip = {"schema_version": 1, "id": uid("caption-clip", source_sha256, context["context"], lower, end, [c["id"] for c in included]),
-                            "source_sha256": source_sha256, "time_basis": "source_video_seconds", "start": lower, "end": end,
-                            "playback_segment_id": context["context"][0], "owner_id": context["context"][1], "owner_epoch": context["context"][2],
-                            "caption_ids": [c["id"] for c in included], "text": " ".join(c["text"] for c in included),
-                            "phases": phases, "setup_status": "observed_context" if phases["setup"] else "unknown",
-                            "result_status": "observed_context" if phases["result"] else "unknown",
-                            "left_censored": first-lower < policy["setup_seconds"] or first < lower,
-                            "right_censored": end-last < policy["result_seconds"] or last > end,
-                            "previous_clip_id": None, "next_clip_id": None, "repeat_group_id": None, "earlier_occurrence_id": None,
-                            "experimental": True, "review_status": "unreviewed"}
-                    chain.append(clip)
-                lower = end
+            for lower, end, included in windows:
+                action = [c for c in included if is_action(c)] or included
+                first, last = min(extent(c)[0] for c in action), max(extent(c)[1] for c in action)
+                phases = {
+                    "setup": [ref("frames", f["id"]) for f in context["frames"] if lower <= f["time"] < min(first, end)],
+                    "action": combine_refs(*[c["evidence_refs"] for c in action]),
+                    "result": [ref("frames", f["id"]) for f in context["frames"] if max(last, lower) < f["time"] < end],
+                }
+                phases["action"] = [r for r in phases["action"] if r["table"] != "frames" or any(
+                    f["id"] == r["id"] and lower <= f["time"] < end for f in context["frames"])]
+                event_ids = sorted({c["event_id"] for c in included if c.get("event_id")})
+                phase_frames = {f for eid in event_ids for ids in occurrence_map.get(eid, {}).get("phase_evidence", {}).values() for f in ids}
+                phases["action"] = combine_refs(phases["action"], [ref("frames",f["id"]) for f in context["frames"] if f["id"] in phase_frames and lower <= f["time"] < end])
+                clip = {"schema_version": 1, "id": uid("caption-clip", source_sha256, context["context"], lower, end, [c["id"] for c in included]),
+                        "source_sha256": source_sha256, "time_basis": "source_video_seconds", "start": lower, "end": end,
+                        "playback_segment_id": context["context"][0], "owner_id": context["context"][1], "owner_epoch": context["context"][2],
+                        "caption_ids": [c["id"] for c in included], "text": " ".join(c["text"] for c in included),
+                        "phases": phases, "setup_status": "observed_context" if phases["setup"] else "unknown",
+                        "result_status": "observed_context" if phases["result"] else "unknown",
+                        "left_censored": first-lower < policy["setup_seconds"] or first < lower,
+                        "right_censored": end-last < policy["result_seconds"] or last > end,
+                        "previous_clip_id": None, "next_clip_id": None, "repeat_group_id": None, "earlier_occurrence_id": None,
+                        "experimental": True, "review_status": "unreviewed"}
+                if event_ids:
+                    clip["event_ids"] = event_ids
+                chain.append(clip)
             for i, clip in enumerate(chain):
                 clip["previous_clip_id"] = chain[i-1]["id"] if i else None
                 clip["next_clip_id"] = chain[i+1]["id"] if i+1 < len(chain) else None

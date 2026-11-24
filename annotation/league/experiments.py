@@ -528,8 +528,8 @@ def run_worker(store, python, job, directory):
         try:
             while process.poll() is None:
                 store.check_stop()
-                if time.monotonic() - started > 1800:
-                    raise RuntimeError("Experiment worker exceeded thirty minutes")
+                if time.monotonic() - started > job.get('timeout_seconds', 1800):
+                    raise RuntimeError("Experiment worker exceeded its configured time limit")
                 time.sleep(0.25)
             if process.returncode:
                 raise RuntimeError(

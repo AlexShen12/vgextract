@@ -130,14 +130,16 @@ def assessments(root):
     root = Path(root)
     generation = read_json(root/"caption_coverage.json")["key"]
     rows = {}
+    captions={c['id']:c for c in read_rows(root/'captions.jsonl')}
     for path in sorted((root/"assessments").glob("*.json")):
         row = read_json(path)
-        if row["generation_key"] == generation:
+        if row["generation_key"] == generation and (not row.get('caption_signature') or
+                row['caption_signature']==digest(captions.get(row['caption_id']))):
             rows[row["caption_id"]] = row
     return rows
 
 
-def score_clip(clip, root):
+def score_clip(clip, root, *, kinds=None):
     root = Path(root)
     captions, clips = read_rows(root/"captions.jsonl"), read_rows(root/"caption_clips.jsonl")
     reviewed = assessments(root)
@@ -146,7 +148,7 @@ def score_clip(clip, root):
     for table in ("states", "events", "normalized_observations"):
         known[table] = {r["id"] for r in read_rows(root/(table+".jsonl"))}
     by_kind, used = {}, set()
-    for kind in sorted(KINDS):
+    for kind in sorted(KINDS if kinds is None else kinds):
         predicted = [c for c in captions if c["claims"][0]["kind"] == kind]
         references = [r for r in clip["claims"] if r["kind"] == kind]
         matched = duplicates = evidence_valid = binding_references = binding_correct = 0
@@ -207,9 +209,9 @@ def score_clip(clip, root):
             "missing_cases": sorted(CASES-set(clip["case_tags"]))}
 
 
-def aggregate(results, clips):
+def aggregate(results, clips, *, kinds=None):
     by_kind = {}
-    for kind in sorted(KINDS):
+    for kind in sorted(KINDS if kinds is None else kinds):
         sums = Counter()
         for result in results:
             sums.update({k: v for k, v in result["by_kind"][kind].items() if isinstance(v, int)})
@@ -277,7 +279,7 @@ def experiment_captions(store, config, *, labels=None, initialize=False, draft=F
             if digest(read_json(target)) != digest(data):
                 raise ValueError("Caption references changed during evaluation; restart with preserved partial results")
             result = caption_pilot(store, config, clip["start"], clip["end"], infer=infer, runner=runner,
-                                   action_profile=action_profile, icon_references=icon_references)
+                                   action_profile=action_profile, icon_references=icon_references, arm="baseline")
             if list((Path(result["root"])/"reviews").glob("*.json")):
                 raise ValueError("Corrected pilot predictions cannot be used for benchmark acceptance")
             report["clips"][clip["id"]] = {"split": clip["split"], "root": result["root"], "resources": result["resource_metrics"],

@@ -1,7 +1,27 @@
 # League annotation and memory evaluation
 
-The default is a reduced Midbeast intake: native field crops → numeric Tesseract,
-bounded Qwen transcription and direct bar measurement → schema-2 observations →
+For the unified experimental Midbeast Pass 1 workflow, see the
+[Pass 1 runbook](../../docs/league-pass1-runbook.md). It reuses existing readers,
+adds shared playback/selection scopes, inventory identity links and histories,
+and conservative scoreboard reopen groups. Its manifest distinguishes completed
+full-recording producers from pilot coverage and pending quality validation.
+`python -m annotation.league.pass1 --help` lists the commands; `/pass1` in the
+existing review app opens the assembled bundle. SAM windows remain out of scope.
+
+The [four-pass pipeline design](../../docs/league-annotation-pipeline.md) defines
+the target flow from HUD, commentary and killfeed intake through SAM masks,
+clip captions, and descriptions. Pass 1 prefers retained YouTube auto-captions
+for commentary, with ASR as a fallback. Use `pass1 import-captions` to import a
+timed JSON3 track, then finalize to publish the shared timeline. The current
+bundle uses the imported YouTube track and retains the completed ASR comparison. This README covers the current commands and release scope.
+
+The [reference refresh and cast/body recognition workflow](../../docs/league-recognition-refresh.md)
+documents the 16.22 catalogs, opt-in cast-bar reader and source-labeling page,
+gated profile promotion, and isolated body-recognition experiments. New Longleaf
+scripts prepare separate jobs and do not submit them.
+
+The default is a Midbeast intake: native field crops → numeric Tesseract,
+bounded Qwen transcription, direct bar measurement and inventory recognition → schema-2 observations →
 fusion → evidence-backed gameplay captions and supported visual questions → optional independent solver evaluation.
 **Release acceptance is pending. Full-video intake remains gated.**
 
@@ -12,6 +32,21 @@ labels live at `/caption-labels`. `experiment --suite captions` initializes,
 freezes and scores a separate caption benchmark. CPU-only runs reuse compatible
 scene caches and report missing scene evidence. See
 [caption workflow and acceptance](../../docs/league-caption-generation.md).
+
+### Darius cut and clip experiment
+
+Install `annotation/league/requirements-darius-clips.txt`, then run
+`python -m annotation.league.darius_clip_pilot` from the repository root. The
+command scans the pinned upload and writes an experimental comparison under
+`data/league_runs/midbeast-pass1-final-v1/experiments/darius-clips/r1/`. Open
+`review.html` to play the source ranges. To reproduce the source-reviewed
+comparison, pass the experiment's `source-review.json` via `--review`.
+
+`report.json` records the comparison coverage, source-review method, and phase
+retention before and after adding visual context. Clip candidates are limited to
+the dense Pass 1 sample windows, less the caption, occurrence, and scene
+holdout guards. `detector-scan.json` can be reused for the same source and
+detector configuration.
 
 ## Source and enabled fields
 
@@ -24,18 +59,24 @@ The downloaded MP4 hash is
 English speech eligibility still requires the audio pilot audit; source metadata
 reports English and inspected frames show gameplay plus commentator facecam.
 
-`midbeast.json` and `profiles/midbeast-1080p-v1.json` enable 21 calibrated fields:
+Fresh runs use `profiles/midbeast-1080p-inventory-v1.json`. The profile retains the
+21 original fields and adds the inventory crops.
 
 | Reader | Fields |
 |---|---|
 | Tesseract, one fixed bright-glyph preprocessing, one call | Clock, team kills, selected K/D/A, CS, gold, level, displayed objective timer |
 | Qwen3.8-27B-FP8 | Selected numeric HP, ten displayed scoreboard player-name slots, central notices including objective text |
 | Direct pixels | Selected HP bar proportion, independent of numeric HP |
+| CPU reference icon matching | Selected portrait, six item slots and trinket, plus the same fields for all ten rows of a visible scoreboard |
 
-No champion identity is inferred from a player name or portrait. Unknown slots
-retain their readable facts. Portrait/item/spell matching, ability ranks/cooldowns,
-minimap tracking, gameplay-event reasoning and audio-derived game state are visibly
-unsupported in production. Unknown patch is allowed for visual processing;
+Inventory ownership is established from the same-frame portrait. Unresolved rows
+retain their readable items. For a dimmed scoreboard portrait with red respawn
+digits, the reader compares grayscale references while excluding digit pixels.
+The Midbeast selected portrait also has a
+source-calibrated skin example corroborated by three ability icons. Spell
+matching, ability ranks/cooldowns, minimap
+tracking, gameplay-event reasoning and audio-derived game state are deferred in
+production. Unknown patch is allowed for visual processing;
 mechanics are off and require an explicitly established patch.
 
 Frames are sampled at 1 FPS using actual PyAV source PTS. Calibrated panel anchors
@@ -72,6 +113,7 @@ run directory instead of mixing engines.
 | `intake-benchmark --labels …` | Score exact text, parsed numbers, bars and presence separately. |
 | `experiment --suite crops\|events\|audio\|all` | Separate experimental artifacts; no production evidence changes. |
 | `cache-models --suite intake\|events\|audio\|all` | Download immutable pinned checkpoints for later offline use. |
+| `cache-inventory-references --reference-version 16.13.1` | Cache Data Dragon item icons, descriptions, and champion portraits for the bundled inventory profile. |
 
 Qwen intake is a transcription reader, separate from the existing optional QA
 solver. It uses no mechanics retrieval or target-video examples. Requests contain
@@ -89,6 +131,96 @@ tokens and latency are retained. Identical compatible crop contents may reuse
 recognition at each sampled timestamp; no continuous visibility is inferred.
 Numeric preprocessing and VL reading have separate cache keys; unrelated mechanics
 or solver changes do not repeat intake. Model manifests verify file SHA256 offline.
+
+## Killfeed timeline pilot
+
+The CPU pilot supports the calibrated 1080p Midbeast recording `OLLZBe5-fg4`.
+Pass a completed single-match scoreboard skim for the same recording and use
+`--start` and `--end` to limit extraction to a source-video interval.
+
+```sh
+python -m annotation.league --run-dir data/league_runs/midbeast-OLLZBe5-fg4-v2 \
+  killfeed-intake --scoreboard-skim data/league_recognition_v1/scoreboard-skim-20261111-v1
+python -m annotation.league --run-dir data/league_runs/midbeast-OLLZBe5-fg4-v2 review
+```
+
+**Killfeed announcements** and **Killfeed roster pilot** in review open the
+source video and saved evidence crops. For an annotated run, `fuse` also adds
+the announcements to **Events**. The roster view shows provisional team
+membership until the first accepted scoreboard witness. Opposing or complete
+scoreboard evidence can veto a feed identity. The pilot records team membership
+only.
+
+The active revision is under `killfeed/active.json`. Its directory contains
+`killfeed_timeline.jsonl`, `killfeed_roster_timeline.jsonl`, and the raw readings
+and crops. Rerun intake after a scoreboard review to use its new revision.
+Score a full-match run against the saved source-only labels with
+`python -m annotation.league.killfeed_benchmark --run-dir RUN --scoreboard-skim SKIM`.
+
+## Minimap timeline
+
+```sh
+python -m annotation.league minimap-intake
+python -m annotation.league review
+```
+
+The opt-in CPU reader uses the prepared 1080p Midbeast source `OLLZBe5-fg4`.
+It samples the native minimap every five source-video seconds. Set `--interval`
+to change the cadence or use `--start` and `--end` to focus on a window.
+Select **Minimap timeline** in review to seek to each sample and see its crop.
+Each execution replaces `minimap_timeline.jsonl` with the requested interval.
+
+Each sample records approximate visible minion-wave centers by team and lane
+and the sampled status of the 18 lane towers. Centers are pixel coordinates
+relative to the minimap crop. A tower icon can be standing, absent at a clear
+site, or unknown. Unknown statuses include the reason the reader abstained.
+Wave readings are presence candidates, and tower statuses describe the sampled
+frame. Review includes the native crop for checking both.
+
+## Inventory timeline
+
+Cache the inventory references before annotation. Use `--offline` before the
+subcommand when the pinned metadata and icons already exist in the local caches.
+Use a fresh `--run-dir` for the inventory profile if the default run directory
+already has a saved config. The reference version identifies catalog artwork and
+descriptions independently of the footage's gameplay patch.
+
+Selected HUD items use the top unique reference above a score floor. Trinket
+crops account for the selected HUD's frame and the scoreboard's vision score.
+Ordinary scoreboard items also require separation between the top two matches.
+On a close miss, the reader tries one-pixel shifts in the four cardinal directions.
+Among passing shifts, it prefers the item with the most agreeing views, then the
+highest similarity score. Review links to the winning native crop.
+
+Use `midbeast-1080p-inventory-v3` for development checks of scoreboard portraits.
+It pins Data Dragon 16.22.1 and CommunityDragon 16.22 and scores the center, left,
+right, up, and down crops for a visible portrait. Passing views vote for their
+top champion. Equal vote counts use the strongest similarity. The inventory
+review shows each top match, score, margin, and gate outcome. Hidden portraits
+remain unknown, and the respawn view uses its own score and margin gates.
+The v3 color margin is 0.05. Independent labels and the five-minute pilot are
+required for a release comparison.
+
+`annotate` saves individual item and portrait crops. `fuse` writes
+`inventory_snapshots.jsonl` and `inventory_timeline.jsonl`. The review app's
+`/inventory` page follows the source video and links each slot to its crop. A
+confirmed scoreboard inventory can be shown as **last seen** after the panel
+closes within the same playback segment. Apply changes through HUD observation
+corrections and rerun `fuse` to refresh the inventory timeline.
+
+For release validation, extend the source-only crop labels with `inventory.*`
+field IDs from the new profile. Use canonical Data Dragon IDs as strings and
+mark visibly empty slots or closed panels `absent`. Mark obscured or visually
+indistinguishable identities `unreadable`. Record an `inventory_labeling` object
+with `labeler` and `independent_of_predictions: true`, and include
+`inventory_scoreboard_open`, `inventory_scoreboard_closed`, and
+`inventory_hidden_portrait` in each split. `annotate --sample-times LABELS.json`
+extracts the samples. `intake-benchmark --labels LABELS.json --freeze` checks
+development results and freezes the profile. Re-extract the samples and score
+with `intake-benchmark --labels LABELS.json`. The report scores reference matching
+by surface and requires 98% precision and 70% readable
+coverage for both items and portrait attribution. Full intake also requires the
+existing five-minute runtime pilot.
 
 ## Gameplay captions
 

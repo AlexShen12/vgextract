@@ -475,7 +475,7 @@ def collect(store, tasks, config):
     return result
 
 
-def annotate(store, config, runner=None, resolver=None, *, retry_failed=False, sample_times=None, pilot=False):
+def annotate(store, config, runner=None, resolver=None, *, retry_failed=False, sample_times=None, pilot=False, experimental=False):
     from .hybrid_intake import annotate as hybrid_annotate
     return hybrid_annotate(store, config, runner, resolver, retry_failed=retry_failed,
-                           sample_times=sample_times, pilot=pilot)
+                           sample_times=sample_times, pilot=pilot, experimental=experimental)

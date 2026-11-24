@@ -1,0 +1,84 @@
+{
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "sampling_fps": 1,
+  "source_duration_seconds": 1732.765896,
+  "source_samples": 1733,
+  "scoreboard_samples": 144,
+  "openings": 111,
+  "complete_single_frames": 0,
+  "scan_seconds": 353.1865723328665,
+  "match_status": "confirmed",
+  "complete_at_source_seconds": 419.00191666666666,
+  "roster": {
+    "left": {
+      "Ahri": {
+        "accepted_reads": 53,
+        "first_source_time": 7.007,
+        "first_crop": "portraits/7.007000-left-row3.png",
+        "first_crop_sha256": "be460fd5ada87309e19a403661436e0ed4a21b8575a0145922da283da37689e0"
+      },
+      "JarvanIV": {
+        "accepted_reads": 12,
+        "first_source_time": 419.00191666666666,
+        "first_crop": "portraits/419.001917-left-row2.png",
+        "first_crop_sha256": "36c8141b09877d83c0514de4f1c3b02bbc3f65dc57692a6a07569ff9e4a0da27"
+      },
+      "Leona": {
+        "accepted_reads": 67,
+        "first_source_time": 126.00921666666666,
+        "first_crop": "portraits/126.009217-left-row5.png",
+        "first_crop_sha256": "776c55c6efd2105defcb13cf96e34c62ca1c222fdb8017a58f64c8c6c2c24d51"
+      },
+      "Singed": {
+        "accepted_reads": 63,
+        "first_source_time": 59.00895,
+        "first_crop": "portraits/59.008950-left-row1.png",
+        "first_crop_sha256": "6eeebdbc13ae6be0f2fa4dfa9d3c99e7e2e6df66241768d388b21263e11c48ac"
+      },
+      "Xayah": {
+        "accepted_reads": 76,
+        "first_source_time": 15.015,
+        "first_crop": "portraits/15.015000-left-row4.png",
+        "first_crop_sha256": "4e1b35aa63fbe10bbfa0947addae3db157757cc3600081599f9b563302b127d7"
+      }
+    },
+    "right": {
+      "Alistar": {
+        "accepted_reads": 142,
+        "first_source_time": 7.007,
+        "first_crop": "portraits/7.007000-right-row5.png",
+        "first_crop_sha256": "591ec1b0ca77b1c534f155e0e0d8bfcdeac3ff3951fba03edb50694d297ac2cc"
+      },
+      "AurelionSol": {
+        "accepted_reads": 136,
+        "first_source_time": 7.007,
+        "first_crop": "portraits/7.007000-right-row4.png",
+        "first_crop_sha256": "b3fcf33c418190a0147542b64e71fc35fb62a7bc71db9a8665f146de5ab938f1"
+      },
+      "Darius": {
+        "accepted_reads": 144,
+        "first_source_time": 7.007,
+        "first_crop": "portraits/7.007000-right-row1.png",
+        "first_crop_sha256": "07e88e72698f5d9ae0edd4177212fbfc73c94a897ad9de858d224baeee6fa2ff"
+      },
+      "Katarina": {
+        "accepted_reads": 138,
+        "first_source_time": 7.007,
+        "first_crop": "portraits/7.007000-right-row3.png",
+        "first_crop_sha256": "99528cabd585904bea0dc68b66d42bd3a58fda0c8c134864561f1cab84f07a84"
+      },
+      "Talon": {
+        "accepted_reads": 144,
+        "first_source_time": 7.007,
+        "first_crop": "portraits/7.007000-right-row2.png",
+        "first_crop_sha256": "701edeac08c9d16273b6bc8d5194f50d4fd52c271d7fba619b842c7c1a3ab39f"
+      }
+    }
+  },
+  "ocr_reads": 21,
+  "confirmed_name_bindings": 0,
+  "match_roster_sha256": "d1306a383482b5938edadfcaa93b0ac785f9a8445b4259bac83779e0a9545773",
+  "timeline_sha256": "19581c62001da0b64bb21c676f4ca7ec4c6c39d029229857c1f32cdc73d7d22a",
+  "experimental": true,
+  "accepted_members": 10
+}

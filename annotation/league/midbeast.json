@@ -131,7 +131,7 @@
       ]
     }
   ],
-  "layout_profile": "midbeast-1080p-v1",
+  "layout_profile": "midbeast-1080p-inventory-v1",
   "source_video": "data/youtube/lol_midbeast/OLLZBe5-fg4.mp4",
   "intake_engine": "hybrid-v1",
   "evaluation_enabled": false,

@@ -51,12 +51,12 @@ def parse_text(raw: str, parser: str):
             "amount": float(text.rstrip("kK"))
             * (1000 if text[-1:].lower() == "k" else 1),
         }
-    if parser == "health":
+    if parser in {"health", "resource"}:
         match = re.fullmatch(r"(\d{1,6})\s*(?:/|\s+)\s*(\d{1,6})", text)
         if not match:
             raise ValueError("expected current/maximum health")
         current, maximum = map(int, match.groups())
-        if not 0 <= current <= maximum or maximum == 0:
+        if not 0 <= current <= maximum or (maximum == 0 and parser == "health"):
             raise ValueError("invalid health bounds")
         return {"displayed_text": raw, "current": current, "maximum": maximum}
     if parser == "kda":
@@ -98,7 +98,7 @@ def parse_text(raw: str, parser: str):
     raise ValueError("unsupported parser")
 
 
-def tesseract(path: Path, alternate=False, whitelist=None) -> dict:
+def tesseract(path: Path, alternate=False, whitelist=None, *, language="eng") -> dict:
     command = [
         os.environ.get("LEAGUE_TESSERACT", "tesseract"),
         str(path),
@@ -106,7 +106,7 @@ def tesseract(path: Path, alternate=False, whitelist=None) -> dict:
         "--psm",
         "8" if alternate else "7",
         "-l",
-        "eng",
+        language,
     ]
     if os.environ.get("LEAGUE_TESSDATA"):
         command += ["--tessdata-dir", os.environ["LEAGUE_TESSDATA"]]

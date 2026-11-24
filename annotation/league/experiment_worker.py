@@ -9,8 +9,9 @@ from pathlib import Path
 import time
 import wave
 
-from .core import atomic_json, read_json, finite
+from .core import atomic_json, read_json, finite, digest
 from .local_models import checkpoint, nvidia_uuid
+from .media import file_hash
 
 
 def wave_data(path):
@@ -34,6 +35,8 @@ def wave_data(path):
 def bind_audio_alignment(chunk, timestamps):
     """Keep model timings as evidence; expose only words inside their audio crop."""
     candidates, words, rejected = [], [], []
+    previous_start = chunk['source_start']
+    previous_end = chunk['source_start']
     for item in timestamps:
         start = chunk["source_start"] + float(item["start_time"])
         end = chunk["source_start"] + float(item["end_time"])
@@ -47,6 +50,7 @@ def bind_audio_alignment(chunk, timestamps):
             finite(start)
             and finite(end)
             and chunk["source_start"] <= start <= end <= chunk["source_end"]
+            and start >= previous_start and end >= previous_end
         ):
             rejected.append(
                 {
@@ -56,10 +60,11 @@ def bind_audio_alignment(chunk, timestamps):
             )
         else:
             words.append(candidate)
+            previous_start, previous_end = start, end
     chunk["alignment_candidates"] = candidates
     chunk["words"] = words
     chunk["alignment"] = {
-        "status": "partial" if rejected else "aligned",
+        "status": "partial" if rejected else ("aligned" if words else "unavailable"),
         "rejected_words": rejected,
         "accepted_words": len(words),
         "candidate_words": len(candidates),
@@ -80,6 +85,14 @@ def audio_job(job):
         raise RuntimeError("Audio experiment requires one allocated CUDA GPU")
     model_root, asr_pin = checkpoint(job["cache"], "asr")
     aligner_root, aligner_pin = checkpoint(job["cache"], "aligner")
+    state_path = Path(job['output']).with_name('audio-checkpoint.json')
+    recipe = digest({'segments': [{**s, 'sha256': file_hash(Path(s['path']))} for s in job['segments']],
+                     'asr': asr_pin, 'aligner': aligner_pin,
+                     'implementation': file_hash(Path(__file__)),
+                     'packages': {p: importlib.metadata.version(p) for p in ('torch', 'transformers', 'silero-vad')}})
+    saved = read_json(state_path) if job.get('resume') and state_path.exists() else {}
+    reusable = saved.get('chunks', []) if saved.get('recipe') == recipe else []
+    cached = {(c['segment_id'], c['source_start'], c['source_end']): c for c in reusable}
     vad = load_silero_vad(onnx=False)
     chunks = []
     for segment in job["segments"]:
@@ -91,10 +104,12 @@ def audio_job(job):
             return_seconds=False,
             max_speech_duration_s=30,
         )
+        previous_upper = 0
         for index, interval in enumerate(speech):
-            lower, upper = max(0, interval["start"] - 1600), min(
+            lower, upper = max(previous_upper, interval["start"] - 1600), min(
                 len(audio), interval["end"] + 1600
             )
+            previous_upper = upper
             path = Path(job["output"]).parent / (
                 segment["id"] + f"-speech-{index:03d}.wav"
             )
@@ -113,6 +128,9 @@ def audio_job(job):
                     "segment_id": segment["id"],
                 }
             )
+            key = (segment['id'], chunks[-1]['source_start'], chunks[-1]['source_end'])
+            if key in cached:
+                chunks[-1].update({k: v for k, v in cached[key].items() if k != 'path'})
     if not chunks:
         return {
             "experimental": True,
@@ -124,12 +142,14 @@ def audio_job(job):
             "vad_version": importlib.metadata.version("silero-vad"),
             "silence_is_not_transcribed": True,
         }
-    processor = AutoProcessor.from_pretrained(model_root, local_files_only=True)
-    model = AutoModelForMultimodalLM.from_pretrained(
-        model_root, dtype=torch.bfloat16, local_files_only=True
-    ).to("cuda")
-    model.eval()
-    for chunk in chunks:
+    pending = [c for c in chunks if c.get('status') != 'transcribed']
+    if pending:
+        processor = AutoProcessor.from_pretrained(model_root, local_files_only=True)
+        model = AutoModelForMultimodalLM.from_pretrained(
+            model_root, dtype=torch.bfloat16, local_files_only=True
+        ).to("cuda")
+        model.eval()
+    for chunk in pending:
         inputs = processor.apply_transcription_request(
             audio=chunk["path"], language="English"
         ).to("cuda", torch.bfloat16)
@@ -147,17 +167,23 @@ def audio_job(job):
             Path(job["output"]).with_name("transcription-progress.json"),
             {"chunks": chunks, "experimental": True},
         )
-    del model, processor, inputs, output
+        atomic_json(state_path, {'recipe': recipe, 'chunks': chunks})
+    if pending:
+        del model, processor, inputs, output, generated
     gc.collect()
     torch.cuda.empty_cache()
-    processor = AutoProcessor.from_pretrained(aligner_root, local_files_only=True)
-    model = AutoModelForTokenClassification.from_pretrained(
-        aligner_root, dtype=torch.bfloat16, local_files_only=True
-    ).to("cuda")
-    model.eval()
+    pending_alignment = [c for c in chunks if c.get('text') and c.get('alignment', {}).get('status') != 'aligned']
+    if pending_alignment:
+        processor = AutoProcessor.from_pretrained(aligner_root, local_files_only=True)
+        model = AutoModelForTokenClassification.from_pretrained(
+            aligner_root, dtype=torch.bfloat16, local_files_only=True
+        ).to("cuda")
+        model.eval()
     for chunk in chunks:
         if not chunk.get("text"):
             chunk["words"] = []
+            continue
+        if chunk not in pending_alignment:
             continue
         inputs, words = processor.prepare_forced_aligner_inputs(
             audio=chunk["path"], transcript=chunk["text"], language="English"
@@ -176,6 +202,7 @@ def audio_job(job):
             Path(job["output"]).with_name("alignment-progress.json"),
             {"chunks": chunks, "experimental": True},
         )
+        atomic_json(state_path, {'recipe': recipe, 'chunks': chunks})
     return {
         "experimental": True,
         "evidence_modality": "audio",
@@ -191,14 +218,15 @@ def audio_job(job):
     }
 
 
-def tracking_job(job):
+def tracking_job(job, stop=lambda: None):
     import numpy as np
     import torch
     from PIL import Image
     from sam3.model_builder import build_sam3_multiplex_video_predictor
 
     root, pin = checkpoint(job["cache"], "tracking")
-    if len(job["clips"]) != 5 or any(
+    pilot = job.get("protocol") == "selected-sam-v1"
+    if (not job["clips"] or (not pilot and len(job["clips"]) != 5)) or any(
         not 1 <= len(c["prompts"]) <= 3 for c in job["clips"]
     ):
         raise ValueError(
@@ -208,11 +236,18 @@ def tracking_job(job):
         checkpoint_path=str(root / "sam3.1_multiplex.pt"),
         max_num_objects=3,
         use_fa3=False,
+        use_rope_real=False,
         compile=False,
         warm_up=False,
     )
+    from .sam_compat import adapt_session_init, load_verified_state
+    state = torch.load(str(root / "sam3.1_multiplex.pt"), map_location="cpu", weights_only=True, mmap=True)
+    model_load = load_verified_state(predictor.model, state)
+    del state
+    model_load.update(adapt_session_init(predictor.model))
     results = []
     for clip in job["clips"]:
+        stop()
         response = predictor.handle_request(
             request={"type": "start_session", "resource_path": clip["frames_dir"]}
         )
@@ -240,15 +275,24 @@ def tracking_job(job):
                     }
                 )
             frames = []
+            start = clip["prompts"][0].get("frame_index", 0)
+            end = clip.get("end_frame_index", len(clip["frames"]) if pilot else None)
+            if pilot and not 0 <= start < end <= len(clip["frames"]):
+                raise ValueError("Invalid SAM frame range")
             for response in predictor.handle_stream_request(
-                request={"type": "propagate_in_video", "session_id": session}
+                request={"type": "propagate_in_video", "session_id": session,
+                         **({"start_frame_index": start, "propagation_direction": "forward"} if pilot else {}),
+                         **({"max_frame_num_to_track": end - start - 1} if "end_frame_index" in clip else {})}
             ):
+                stop()
                 output = response["outputs"]
                 masks, ids = output["out_binary_masks"], output["out_obj_ids"]
                 paths = []
                 for mask, object_id in zip(masks, ids):
                     if hasattr(mask, "detach"):
                         mask = mask.detach().cpu().numpy()
+                    if pilot and np.asarray(mask).squeeze().shape != (clip["height"], clip["width"]):
+                        raise ValueError("SAM mask must retain source-native geometry")
                     path = (
                         Path(job["output"]).parent
                         / f'{clip["id"]}-{response["frame_index"]:04d}-{int(object_id)}.png'
@@ -256,9 +300,18 @@ def tracking_job(job):
                     Image.fromarray(
                         np.asarray(mask).squeeze().astype("uint8") * 255
                     ).save(path)
-                    paths.append({"object_id": int(object_id), "mask_path": str(path)})
+                    paths.append({"object_id": int(object_id), "mask_path": str(path),
+                                  **({"sha256": file_hash(path)} if pilot else {})})
                 frames.append({"frame_index": response["frame_index"], "masks": paths})
+                if pilot:
+                    atomic_json(Path(job["output"]).parent / (clip["id"] + "-partial.json"),
+                                {"clip_id": clip["id"], "frames": frames, "complete": False})
             results.append({"clip_id": clip["id"], "frames": frames})
+            if pilot:
+                expected = set(range(start, end))
+                if {f["frame_index"] for f in frames} != expected or len(frames) != len(expected):
+                    raise ValueError("Incomplete or duplicate SAM source-frame predictions")
+                atomic_json(Path(job["output"]).parent / (clip["id"] + "-complete.json"), results[-1])
         finally:
             predictor.handle_request(
                 request={"type": "close_session", "session_id": session}
@@ -268,6 +321,7 @@ def tracking_job(job):
         "model": pin,
         "coordinate_system": "screen_pixels",
         "semantic_events": False,
+        "model_load": model_load,
         "clips": results,
     }
 

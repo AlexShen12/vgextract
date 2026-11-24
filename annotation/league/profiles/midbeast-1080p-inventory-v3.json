@@ -1,0 +1,1993 @@
+{
+  "schema_version": 2,
+  "id": "midbeast-1080p-inventory-v3",
+  "revision": 1,
+  "size": [
+    1920,
+    1080
+  ],
+  "calibrated": true,
+  "calibration_source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "calibration_frames": [
+    30,
+    90,
+    180,
+    300,
+    450,
+    600,
+    750,
+    900,
+    1050,
+    1200,
+    1450,
+    1650
+  ],
+  "calibration_note": "Development candidate with scoreboard portrait alignment and a 0.05 color margin. Evaluated on three inspected scoreboard openings. Release requires independent held-out validation.",
+  "anchors": [
+    {
+      "name": "selected-hud-frame",
+      "box": [
+        519,
+        980,
+        527,
+        1002
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAWCAIAAABysUo3AAAAgUlEQVR4nK2RUQrDMAxDJTX9GPvY5XqCnWBHW792tX04dklLWVuSQmEiEJD8bIfw+RrG98fMbvcHfpLQkBq+XyS83Qr1QJcJnAdqErFqG6Te9c2WPfcsNWS5UsyEux/Kd8O3mdH++I7UgQogoABRzuJr2a9CaP1ewQlyZkKdxPqYCQpDKocwAPlRAAAAAElFTkSuQmCC",
+      "maximum_error": 0.12
+    },
+    {
+      "name": "header-clock-icon",
+      "box": [
+        1837,
+        4,
+        1855,
+        25
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAVCAIAAADEqSm4AAADW0lEQVR4nHVUa08bRxS9Mzs7u+v3Azv4ER5NKxOrCag1qYqAiKpSUfJ7kVCTb4kaBVoBggDBNoZaxZRg/Fi8j5nZmco2aaSink9zpXvPPUc6d5CZz8M9IIT+fSul7jfg/9RSDpvUZ8D/gIy5lVKaEiMaBfJuyXgnRvqwlArhOwlyPHZf3uDy6gtxMm2aplQSwRflREOAgQdSICW5EH77VoviydkHSimCwff99qf27Q1EUnrEjNyKoSkNCBk5UEIEzHOA8a+fPpqfn69UKpzzWMQaDJzXv27u7e25rt/v9yUNj+QgZOUmA+4yzwPH//H5sxfrP4fD4ePjY8/zCJamaU4/zDnO4NWr17+9rWZnYoGUzB95k1JCIH765fnK6sr5eWN7e7tarQoxFEkIPC7Nrq2tra+vG4bRuGxzzkFJzDkXXTs/PbO0tHTWONvY2NjbPnG6inNw+uA4cHPT6fV6yWTi5csXU1NTrYtr13WJ8DxzIrG4WBGBePP2TevPbjiJLcvq9QbfLz4ulUqZdDyTyTDGEEIhy0IIhBAEXDcw9Hg81bpoXf19RS1IxGJX191sNrW8vByPx5PJzO7u7sfjarlczmZmLWvHdTgBSnVdRwhxzsexUFIRAvl83jAMz/MODw83NzdbF52JiYnsw6+IRgA4AaQJIZRSLJB8lCwRiMAM7ZzUa5fNudLc2Yej1nk/kkLUIhgEBkE0gYFonHPbthOJRDgcZv4wBJFIVErZuey9e/fetm0AME0zk8nU6/WxSaxbIRXAzv5R2sTfzuQpAeY66Lad0mU8hEMKbjsKTHj0TYlQ82D/0Pe5TgxCKeWMnjUatVqiXC77gh8cfMRKeB4ICToFEoaFhbmFhfl6vT5wBsNwY4wiU9OB5zPGJlPx1dWVB+lYs9k8+vB7q9WSSOZyuaeVH2KxWLPV3trasm1GhqAoVCxiqRhjrHM9WSw+++5JoVCwDOn7vkTSMAyOSK1We//HfvfTtRlNE0I0rCOzWNQQZoxRPTHo9zVdFgqFJ3NFSikgwRg7afx1enoa2DaORk0zMjoucjcmZYAgwjkPxEA6LjEY1jQAIWUglE4NQ9N1SqkQ45PDRCkUDBk0oRxEEdKIZkSRVEEQKOCAQUMKNAKawSVSn/+YfwDyssvpx9fh6AAAAABJRU5ErkJggg==",
+      "maximum_error": 0.12
+    }
+  ],
+  "required_anchors": 2,
+  "fields": [
+    {
+      "id": "match_hud/match/game_clock",
+      "route": "match_hud",
+      "slot_id": "match",
+      "field": "game_clock",
+      "box": [
+        1854,
+        0,
+        1919,
+        26
+      ],
+      "reader": "number",
+      "parser": "clock",
+      "backend": "tesseract",
+      "entity": "match"
+    },
+    {
+      "id": "match_hud/team:red/kills",
+      "route": "match_hud",
+      "slot_id": "team:red",
+      "field": "kills",
+      "box": [
+        1549,
+        0,
+        1579,
+        25
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "backend": "tesseract",
+      "entity": "team:red"
+    },
+    {
+      "id": "match_hud/team:blue/kills",
+      "route": "match_hud",
+      "slot_id": "team:blue",
+      "field": "kills",
+      "box": [
+        1594,
+        0,
+        1625,
+        25
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "backend": "tesseract",
+      "entity": "team:blue"
+    },
+    {
+      "id": "selected_hud/selected/kda",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "kda",
+      "box": [
+        1665,
+        0,
+        1725,
+        25
+      ],
+      "reader": "number",
+      "parser": "kda",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/cs",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "cs",
+      "box": [
+        1775,
+        0,
+        1814,
+        25
+      ],
+      "reader": "number",
+      "parser": "integer",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/displayed_gold",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "displayed_gold",
+      "box": [
+        1112,
+        1055,
+        1182,
+        1074
+      ],
+      "reader": "number",
+      "parser": "gold",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/level",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "level",
+      "box": [
+        709,
+        1054,
+        725,
+        1073
+      ],
+      "reader": "number",
+      "parser": "level",
+      "backend": "tesseract"
+    },
+    {
+      "id": "selected_hud/selected/health",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "health",
+      "box": [
+        867,
+        1041,
+        972,
+        1059
+      ],
+      "reader": "number",
+      "parser": "health",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "selected_hud/selected/health_fraction",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "health_fraction",
+      "box": [
+        756,
+        1044,
+        1057,
+        1045
+      ],
+      "reader": "bar",
+      "parser": "integer",
+      "backend": "bar",
+      "color": "green"
+    },
+    {
+      "id": "scoreboard/left:row1/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "player_name",
+      "box": [
+        711,
+        312,
+        950,
+        335
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row2/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "player_name",
+      "box": [
+        711,
+        389,
+        950,
+        412
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row3/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "player_name",
+      "box": [
+        711,
+        466,
+        950,
+        489
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row4/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "player_name",
+      "box": [
+        711,
+        543,
+        950,
+        566
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/left:row5/player_name",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "player_name",
+      "box": [
+        711,
+        620,
+        950,
+        643
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row1/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "player_name",
+      "box": [
+        1250,
+        312,
+        1489,
+        335
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row2/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "player_name",
+      "box": [
+        1250,
+        389,
+        1489,
+        412
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row3/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "player_name",
+      "box": [
+        1250,
+        466,
+        1489,
+        489
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row4/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "player_name",
+      "box": [
+        1250,
+        543,
+        1489,
+        566
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "scoreboard/right:row5/player_name",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "player_name",
+      "box": [
+        1250,
+        620,
+        1489,
+        643
+      ],
+      "reader": "text",
+      "parser": "name",
+      "backend": "vl",
+      "required_when_panel_present": true
+    },
+    {
+      "id": "objective_panel/match/objective_timer",
+      "route": "objective_panel",
+      "slot_id": "match",
+      "field": "objective_timer",
+      "box": [
+        906,
+        3,
+        953,
+        23
+      ],
+      "reader": "number",
+      "parser": "timer",
+      "backend": "tesseract",
+      "entity": "match"
+    },
+    {
+      "id": "central_notice/match/notice",
+      "route": "central_notice",
+      "slot_id": "match",
+      "field": "notice",
+      "box": [
+        744,
+        66,
+        1238,
+        167
+      ],
+      "reader": "text",
+      "parser": "notice",
+      "backend": "vl",
+      "entity": "match"
+    },
+    {
+      "id": "selected_hud/selected/inventory.champion",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.champion",
+      "box": [
+        670,
+        994,
+        722,
+        1046
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "selected_hud/selected/inventory.0",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.0",
+      "box": [
+        1083,
+        982,
+        1115,
+        1015
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "selected_hud/selected/inventory.1",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.1",
+      "box": [
+        1118,
+        981,
+        1151,
+        1014
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "selected_hud/selected/inventory.2",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.2",
+      "box": [
+        1154,
+        981,
+        1187,
+        1014
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "selected_hud/selected/inventory.3",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.3",
+      "box": [
+        1083,
+        1016,
+        1115,
+        1048
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "selected_hud/selected/inventory.4",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.4",
+      "box": [
+        1118,
+        1016,
+        1151,
+        1048
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "selected_hud/selected/inventory.5",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.5",
+      "box": [
+        1155,
+        1018,
+        1188,
+        1050
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "selected_hud/selected/inventory.trinket",
+      "route": "selected_hud",
+      "slot_id": "selected",
+      "field": "inventory.trinket",
+      "box": [
+        1191,
+        982,
+        1224,
+        1015
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.champion",
+      "box": [
+        491,
+        324,
+        535,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.0",
+      "box": [
+        714,
+        336,
+        746,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.1",
+      "box": [
+        748,
+        336,
+        780,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.2",
+      "box": [
+        783,
+        336,
+        815,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.3",
+      "box": [
+        817,
+        336,
+        849,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.4",
+      "box": [
+        851,
+        336,
+        883,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.5",
+      "box": [
+        885,
+        336,
+        917,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row1/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "left:row1",
+      "field": "inventory.trinket",
+      "box": [
+        922,
+        336,
+        954,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.champion",
+      "box": [
+        491,
+        400,
+        535,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.0",
+      "box": [
+        714,
+        412,
+        746,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.1",
+      "box": [
+        748,
+        412,
+        780,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.2",
+      "box": [
+        783,
+        412,
+        815,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.3",
+      "box": [
+        817,
+        412,
+        849,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.4",
+      "box": [
+        851,
+        412,
+        883,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.5",
+      "box": [
+        885,
+        412,
+        917,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row2/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "left:row2",
+      "field": "inventory.trinket",
+      "box": [
+        922,
+        412,
+        954,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.champion",
+      "box": [
+        491,
+        476,
+        535,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.0",
+      "box": [
+        714,
+        488,
+        746,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.1",
+      "box": [
+        748,
+        488,
+        780,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.2",
+      "box": [
+        783,
+        488,
+        815,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.3",
+      "box": [
+        817,
+        488,
+        849,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.4",
+      "box": [
+        851,
+        488,
+        883,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.5",
+      "box": [
+        885,
+        488,
+        917,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row3/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "left:row3",
+      "field": "inventory.trinket",
+      "box": [
+        922,
+        488,
+        954,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.champion",
+      "box": [
+        491,
+        552,
+        535,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.0",
+      "box": [
+        714,
+        564,
+        746,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.1",
+      "box": [
+        748,
+        564,
+        780,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.2",
+      "box": [
+        783,
+        564,
+        815,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.3",
+      "box": [
+        817,
+        564,
+        849,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.4",
+      "box": [
+        851,
+        564,
+        883,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.5",
+      "box": [
+        885,
+        564,
+        917,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row4/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "left:row4",
+      "field": "inventory.trinket",
+      "box": [
+        922,
+        564,
+        954,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.champion",
+      "box": [
+        491,
+        628,
+        535,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.0",
+      "box": [
+        714,
+        640,
+        746,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.1",
+      "box": [
+        748,
+        640,
+        780,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.2",
+      "box": [
+        783,
+        640,
+        815,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.3",
+      "box": [
+        817,
+        640,
+        849,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.4",
+      "box": [
+        851,
+        640,
+        883,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.5",
+      "box": [
+        885,
+        640,
+        917,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/left:row5/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "left:row5",
+      "field": "inventory.trinket",
+      "box": [
+        922,
+        640,
+        954,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.champion",
+      "box": [
+        1032,
+        324,
+        1076,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.0",
+      "box": [
+        1253,
+        336,
+        1285,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.1",
+      "box": [
+        1287,
+        336,
+        1319,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.2",
+      "box": [
+        1321,
+        336,
+        1353,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.3",
+      "box": [
+        1355,
+        336,
+        1387,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.4",
+      "box": [
+        1389,
+        336,
+        1421,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.5",
+      "box": [
+        1423,
+        336,
+        1455,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row1/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "right:row1",
+      "field": "inventory.trinket",
+      "box": [
+        1458,
+        336,
+        1490,
+        368
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.champion",
+      "box": [
+        1032,
+        400,
+        1076,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.0",
+      "box": [
+        1253,
+        412,
+        1285,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.1",
+      "box": [
+        1287,
+        412,
+        1319,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.2",
+      "box": [
+        1321,
+        412,
+        1353,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.3",
+      "box": [
+        1355,
+        412,
+        1387,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.4",
+      "box": [
+        1389,
+        412,
+        1421,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.5",
+      "box": [
+        1423,
+        412,
+        1455,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row2/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "right:row2",
+      "field": "inventory.trinket",
+      "box": [
+        1458,
+        412,
+        1490,
+        444
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.champion",
+      "box": [
+        1032,
+        476,
+        1076,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.0",
+      "box": [
+        1253,
+        488,
+        1285,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.1",
+      "box": [
+        1287,
+        488,
+        1319,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.2",
+      "box": [
+        1321,
+        488,
+        1353,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.3",
+      "box": [
+        1355,
+        488,
+        1387,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.4",
+      "box": [
+        1389,
+        488,
+        1421,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.5",
+      "box": [
+        1423,
+        488,
+        1455,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row3/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "right:row3",
+      "field": "inventory.trinket",
+      "box": [
+        1458,
+        488,
+        1490,
+        520
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.champion",
+      "box": [
+        1032,
+        552,
+        1076,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.0",
+      "box": [
+        1253,
+        564,
+        1285,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.1",
+      "box": [
+        1287,
+        564,
+        1319,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.2",
+      "box": [
+        1321,
+        564,
+        1353,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.3",
+      "box": [
+        1355,
+        564,
+        1387,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.4",
+      "box": [
+        1389,
+        564,
+        1421,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.5",
+      "box": [
+        1423,
+        564,
+        1455,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row4/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "right:row4",
+      "field": "inventory.trinket",
+      "box": [
+        1458,
+        564,
+        1490,
+        596
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.champion",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.champion",
+      "box": [
+        1032,
+        628,
+        1076,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "champion"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.0",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.0",
+      "box": [
+        1253,
+        640,
+        1285,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.1",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.1",
+      "box": [
+        1287,
+        640,
+        1319,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.2",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.2",
+      "box": [
+        1321,
+        640,
+        1353,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.3",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.3",
+      "box": [
+        1355,
+        640,
+        1387,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.4",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.4",
+      "box": [
+        1389,
+        640,
+        1421,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.5",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.5",
+      "box": [
+        1423,
+        640,
+        1455,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    },
+    {
+      "id": "scoreboard/right:row5/inventory.trinket",
+      "route": "scoreboard",
+      "slot_id": "right:row5",
+      "field": "inventory.trinket",
+      "box": [
+        1458,
+        640,
+        1490,
+        672
+      ],
+      "reader": "icon",
+      "parser": "identity",
+      "backend": "inventory",
+      "kind": "item"
+    }
+  ],
+  "panels": {
+    "scoreboard": {
+      "present_anchors": [
+        {
+          "name": "scoreboard-left-border",
+          "box": [
+            383,
+            260,
+            395,
+            286
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAaCAIAAAAMmCo2AAABIklEQVR4nK2STU7EMAyFnz1pyQxIs0EaFmy4BfdfcQuugGBQfyb2Q/lRRdEsisCtojZ5+fxiR56f8PKK0+PDWULfd/F4r6J77UMI5/c3kslSAACB6u72cIgxzmTyNEyW58l5nrNIiXh3E2P/4ZISpQtml2EYACjc3CyZAhg/p2maSObdeT/dfRzHZPkBUNI53G1RlDHpDsyTJCWTluUa7g1ZQ0R0lvrt2QOUBNmmFgOKDaGDdFcXluwkN5HCZS1zwEAjjU56qTR+kkT1u+VGguZ/LQwHWF6HORylQMpazHV4Lrhnw1kPEiGprw6lUm1lLzWnbKzT8bJBhC2kjv9FUl+d7g+kfbuSaJ0S0dKZ66TaL5F241aiqchImnlVSIlfk74Ao068zo1ktfsAAAAASUVORK5CYII=",
+          "maximum_error": 0.12
+        },
+        {
+          "name": "scoreboard-right-border",
+          "box": [
+            1526,
+            260,
+            1538,
+            286
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAaCAIAAAAMmCo2AAABB0lEQVR4nK2STU7DMBSE500c9QJIkdix4gDcCyQOkbMisWCBWsVp86Z6TugPTWgWjLyI7NG8z+PYw/OLmfWVScrbr7zb4vPj8al5f31rmqbbfbdtSxQZwwSg2mxwI7r8dve3SSUgwooWTYMPSxlm5u6U6xS2pOQeTPNjLsF1L4kxbI0J90TFPK8Qt6dIVQWRxJ7YS1nIU+N/KzFZqisiyjAkluFUgnWx1JlnGrlU9Dlp0AGOpAQ4RGAEYKLDeym7+kWmy3hK8tBVEZJSSsMwvSnL1szfYjb9YcEkWXk6AoJ5kIXcUEd9pyTMMvGC6froUNb4cda6xovvhwkOG2/kUF1OVyf9n+kI7iGLTPb0HWoAAAAASUVORK5CYII=",
+          "maximum_error": 0.12
+        }
+      ],
+      "not_present_means_absent": true
+    },
+    "objective_panel": {
+      "present_anchors": [
+        {
+          "name": "objective-panel-border",
+          "box": [
+            787,
+            1,
+            796,
+            34
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAhCAIAAACEDBYcAAABUElEQVR4nIVS0UoDMRCcSdL24BQpFfRJn/wJv0Lw/x8FBR8KVUR62ZHdtLFarAsXkpvNzsxm+fhwz+FcEmqSlC0BKPKVtzdnT69vJJhJ0rTCPjgr2E79BGjRsTJclItxOY7jh/w86cpXBgZAESYHnRiINBQDt5XbCYZZ/H0HkOKOf1ZrNTNU38t8pe0xwgBNUT8yRCd0Ty26vB6eS0sUG8zQwdi7/78incBK0+budpTNn3YYvLMpRX9bWOMz+63Q9ppLAsiSmcVcq1tOIFX/0yKJSE5ppGjeIjR/gUWHesgfJfrZtZi5Dwsmdn/HoVaz645K1lzjEOs1G8adv8T+Sn0ycqg7xXfyjZwl3By/fpHAFBPeOnCAOvajToqMaEjJPpX7S77ZRkrMWc5/yuH13fj84rO8mGOxKFaHqDmTVFaXl8Mw32w26/X0uZnOlt8UXxVD3J212DWYAAAAAElFTkSuQmCC",
+          "maximum_error": 0.12
+        },
+        {
+          "name": "objective-panel-border-right",
+          "box": [
+            1122,
+            1,
+            1131,
+            34
+          ],
+          "png": "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAhCAIAAACEDBYcAAABJ0lEQVR4nJ1S0U7DMAz0OVnVraJbkSbxB3wAn8ILr3z/tEpogm1ZbaMkbRnQIuAeIieXs8+J8fz0SANYAxHBDgDKRUBR342ct7iW5SGEcLMECNXIUeIIr2TkmHxz/yCdZMoljnm/3+1EX3wIQVV7WeKKYigBu3Cfa3BESqQLVbZ8+RvA8IB80EgLkLLP64jIX2+ypQ4xgTPnzXRWV8jXnGz9I/if6pl00dgVzBDFhkkdoi+z6HOkcwIxo2SQr31aAg2xN5OhMQI4nXLUaNrMgf/J+c896K91Ijq+C3MM3J/r5ZmKJ2DkZieAiAlOpHc7q2OGZ1LET4mjnQJyBobM18s+Hbrk7VLXtV9Q27Z2dtt6ddts+xlcVdXxdNK383q9VtJNs6lWy3febpMtns0YgAAAAABJRU5ErkJggg==",
+          "maximum_error": 0.12
+        }
+      ],
+      "not_present_means_absent": true
+    }
+  },
+  "thresholds": {
+    "number": 0.85
+  },
+  "thresholds_frozen": false,
+  "capabilities": {
+    "families": [
+      "number",
+      "text",
+      "bar",
+      "presence",
+      "icon"
+    ],
+    "field_groups": [
+      "number:clock",
+      "number:gold",
+      "number:integer",
+      "number:kda",
+      "number:level",
+      "number:health",
+      "number:timer",
+      "text:name",
+      "text:notice",
+      "bar",
+      "absence",
+      "english_text",
+      "korean_text",
+      "icon:item",
+      "icon:champion"
+    ],
+    "cases": [
+      "hp_changes",
+      "korean_names",
+      "english_names",
+      "hidden_panels",
+      "overlays",
+      "pauses",
+      "rewinds"
+    ]
+  },
+  "deferred": {
+    "icons": "Spell and passive matching deferred",
+    "ability_ranks": "deferred",
+    "ability_cooldowns": "deferred",
+    "minimap": "tracking not validated",
+    "gameplay": "event experiments only",
+    "audio": "ASR experiment only",
+    "objective_labels": "No persistent objective-name panel in the selected POV; visible objective notices use the VL notice reader"
+  },
+  "threshold_note": "Unfrozen Midbeast development candidate; no text self-confidence or deferred-icon gates. Freeze requires independently verified Midbeast development labels.",
+  "inventory": {
+    "reference_version": "16.22.1",
+    "thresholds": {
+      "selected_hud": {
+        "item": {
+          "score": 0.68,
+          "margin": 0.0
+        },
+        "trinket": {
+          "score": 0.58,
+          "margin": 0.0
+        },
+        "champion": {
+          "score": 0.62,
+          "margin": 0.07
+        }
+      },
+      "scoreboard": {
+        "item": {
+          "score": 0.68,
+          "margin": 0.07
+        },
+        "champion": {
+          "score": 0.62,
+          "margin": 0.05
+        },
+        "respawn": {
+          "score": 0.74,
+          "margin": 0.06
+        },
+        "trinket": {
+          "score": 0.52,
+          "margin": 0.11
+        },
+        "masked_trinket": {
+          "score": 0.7,
+          "margin": 0.07
+        }
+      }
+    },
+    "panels": {
+      "selected_hud": [
+        650,
+        977,
+        1225,
+        1080
+      ],
+      "scoreboard": [
+        383,
+        260,
+        1538,
+        701
+      ]
+    },
+    "empty_rgb": [
+      6,
+      14,
+      13
+    ],
+    "hidden_portraits": [
+      "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"
+    ],
+    "selected_portrait": {
+      "id": "Darius",
+      "time": 750,
+      "png": "iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAIAAABKGoy8AAAYoklEQVR4nGV52W9cV5rfOeeeuy+1sBayuFOkSGq1bMu27PZEXsYBuuGZ7sEMJgjQk9c85CXI8+S5/4vEQIAJECPtTqbdybTHbo+3li2blm1ZEkVSJItVrH27+z1bcKq6nQnyoV6qUFX33m/7LQf+6Nl/8eDBgyRWXnzxxTQiiqIc7T9WVbWcLzDGBoOeYRg5rE0mEy1luq6jlOi67tiYUjKMBaU01EqlUilENkLIXV3FGD91ZXdnZ1sLe795992gfW7Z1uD4SavVNgQFAHiel6ZpROKUpiEgKlCpAQrFwv3mo2KhWFlfYJQ1O6fdVhfduXsnjmPXdRlj8/PzGONSqWSaJsbYMAyEUBRFnHHDMBhnjDOIIESQkIwQyjlnjJmmNRqNB4NBLpcjhCRJgrFSKBQ3Nzefe/75nd2d69euQwgZk3cmhHweMA0FYBWoqooVrGiatrS05Af+/qN9QkilUskVc7g6t1YulznTet2JoReDiM2VF7vdLmWQcV5cWOn1eglUddshiUiE4ApkQJ1wKKASaxrQQIL0YRQ6CwuiMBdnmBE6iDNku3ZRXH3+KUr9TqeT07QWIAjplFIIoRBC4RgCBLDKGc+CeJANc8vFNukFZNQ6aC1u1C5vXEO3b98uFPKqqkIIwzBaWlpybMd1Xayquq5nWeZ5HmMsCAJN07CCIYSUyZyJP0YQ+KVSqVZbhBABAMbj8XAwMA0DAJDL5dbW1wrFghCCAw4hBABQShlj8h+AIJQQTvKevIEsyzDEFrAzkjWbDc4ZNpxKroh6w1OIVcphnNByoaSo5qTbiaJoHPmmZc7NL8RxjII0ZTEUHAAQCwIASKEGAGBWwVtcNStLYZJkAgYZenLa6Q3jIiK6biwvl7vdekSSDFCGINRUJjhhlAOBACIgfWb32drG2ng8Phw2T0UDAt3QrZE/OjhqoM8++0zBuFKpxHHcOm89OX6Sz+cvX75crVZN06zOV4UQnudhjAEAs8zNWueHWF1dyeVyaZrOPjcMI/CDRqMRRWEYBrquy7aZ5glBqCAkEzd9CyG8uLR969atOI6fHB+Xy2Ub2zGIAQC6rvdGbXTW7Bwdn9mee/u1V6/deCpKks/vftVstS9dvbZ5cUczLFU3R5PAdnMDf+KnMcRqfq6kagZlwiqUbrzwUmHhgjCKDBdTmAMcGpqZd/Pv/8P79f0nDtIrmr1RrK5srQcgHiSDlKZCziyngAAkdi/uOqbz9d43rUaLM1CrLRnAgUBVCHSAi0tzc81mU3B+5cqVWrUWRZEG1cPDw8z3d3Z3hG0cHByko9HCwsLJ9w/TNBWKwRirVqqVSoW7VTrtIJkzKBBChGSqqlq2nPTxeKxgTCnVNO2VV15ptVpfP7rrIpcTiiAEAkCICCEHBwcqxp7nBYFMs6maMv2mCSHEa1uXP/nkE97qKHIAdMJZEoVCiMPT45TTnZ3d7dc3WBJ3u10FKYQQx7Pz+ZyxWgMKnnCWsDTRqRAiQ/IWV6oly7LKJkcQ9Rvtf/gf77728vNnZ8P8wuLu0882Ou3msDEHHIwxpwAoCKjwweOHpm3ni8VxRDDSHdWO4zjnuJQy5HmebduM0SSJh4MB51xBCEKoKLjX633++Z3z86bnebquAwA44Pl8vlqdN6Yxm18FKbNGBAAsLy8vLi7mc3ms4jhJHh8c/OIXv2g0m1mWLS8v/+QnP664FQKIEAIBBUFommYulysUC5ZtKYqSZRmjctVnmfwOjuN4dXWV8TRXLLIsAwillGiaZgjoui4S/PD779uPD1dWVqrl8vrqqlOtRgjq2JQrJo6DYc+zYy/nJkmay+WqRmIYIOr1vvvss6h9NB6P5wruCy88d95OBATLFzae/5OX3/n1fxMsygHPNLTmaNAc9giQ1yrnC/cbzTAb2cBCjgqEkFW/ffu2ivF5s1mpVNI0ZZSpWFVVVQih67qqqnES379/v1Qqzc3NaZqGEOLTPtN13bIshJCmaeVy2bKsOIkHw0Gr1ep0OqPRaJSOGq3mp59+en7epJQRSm/cuPHT1//cAEYCEkrIyfHxaDwWQqRpKv+Wyz0FASSEcM5Ro9G4fPmyH4bffn+/UCohrCQkg1jBmiYg5JRhpJiabmiaZVmcc4wUQ9VMqBR0c9UrrudLVQGKhC5Apg+77ZODx99+1W/Wq3nX0B0DOAhax6et/SeNUZilVK0uXvjpX/7rm8/+CQDaMAz7QQh1A2FcqlRsz4VYma2Y2ZJHWZYNBoMLFy7EUawgtHXx4qy9fmgjRUEYY4SQEPJnEEKEEFYUXdcNw7Bs2zANCOWzDvqDx/uP735xt16vG6bheV61Mr+zs722tj6ZTBpnDS44IcSy7L/+63/10vMvhSCcvrUMwygUCrJcWBWAw2kKZc8BhX3/8NtX//TVe/fuNbutSq3aeOL6kV+qLvh+4JgGVhVNQ7oloSyOYwWK7YubGhYIAYUmhZKnqVa9Xu8en+J+nwzObR4bxACTwCov2BAShLlbtnOlECn3T3pjZqRMubj71N/820o/ph9884+bxcuOawtNrvdMMAJYwEITq5ALFEfxh//04Xvvvafrer1e393drVarhmFkGVFViQoIIckcMJZ8aTrIqqo6jkOpHCjTMAuFQq1WS9P0+OREUTAh5HBw2Om0CZGDVSgWinPF115/7bmbz0EI6/X6ZDLRdX17Z+enP/vZir3SardrtYUpA1LCMAIAmNicgQ1CCuj1Oh98+OHR8ZMoSSrz1d0rV1RdT0imGYaCp6MxDU3TZlPS7XZViEys5XI5x3VsR8/l7PagWW8fD7tNS1N2t552FsqtOLq7v//dWb1PSZsB78Lm6gsv+U7+jLKGEEMoVq5fe/HVV3sT/7zdHgdBu9dNSYaABhDmgjPOkGnKpaCq+P13/35/f39paWlra2turmhMaYWKZbZl+TF2HMfzPEppp9OZLnG550hG4ihunjfr9bqiKKuray+//PLf/se//fnPf16pVDrDTrfb9Txvf//RgwcPFxZqm5ubCKFBv396ehrH8ebmpoKVb7/7TggxHAywqprAzEg2yxzmkjFywzADMG63W/3+oN/vVavzmeEjCD2MSZaxNJthiyx3nEEIDw8Py+WyAmStO53OyfHJcDR0HGdxsVavn77zy3dc1/V9f2ttq7S2vnvt+n67v99qDdUjIUD/vK/NR7WKO/Jj17Ceu/H0N9/uffftt0hRnn3mmTt3PuuRXo5P4Ws2kuPxyCpeKJVK77zzy169kSRJTpXjBgAwDCNM5SiMRiNd13NOrlAoAJrs7e1Zui0peH9wenqasrSoFj3POz4+efu/v71QXcCVxVu3bpXW1ufn5zPLPa2f7u3tEUJYOCiVSgV3PYwim7P19Y3xuH92dmY7DkLo6rWrd768wwVToIJVAIkAc463tLTEM/Jf/tNb425PVdWbV69fuXqVQAVLDFayjAoOhRxzPBiMapU5w3IaZ43m+bmFtUajQUAMCE2HE0/VXQByCF3c3Lixu11e3tAI602GqaAuxKlgjUHw8NuHBhPLy8vtcWjnCtXF1ZTBTqvV7Y+fffap0Tj4/mDPgCqWEwEA51zTNMdxcrlcPJ7EWf/zr75ot9s/uf0qQohRiQdBGFi25ThOs9k8Ohqtra2PhyPf988mfQywDZxSqbRQq43H46euPXXjxg3qFTzPQwg1G42T5hmE0PO8Xr/ned5wODo8PEQIFV1HCFEqlTKSCcZOT09brflnnnnm+GQ/Ixm8cflnjUZDYEVV8a1bL1ar1SxJPvn44/bpWZCGLlDLpbKlysEsl8vV+fny3NyD7x/wmEiClKaB70/6Q8d1trc2t7a2nnv+eqfdAapSqVT8IFKxOkrJcDi8d9jPsixU1U6n0w5iVVV1SwLjdrXiuq7O0yAIzo4efPrpJznXfOWVVxrNww/+6X25KRzH8ZM4DKNPP/3k5s3nXnzhBduyuo3zx/v7UX9Yb9cVACpRZTKZnJ2dRUGo6/p6bYWQLJ/L1Wo1E6vz1fmtzY1KpbK5tby5uRmTLIyiIIxnWDkjw81mczLxwf8bYRjYtoUxnqGzpmmDwWA8Hler1Y2VDawI7hp6FASI0F6rvff5F3NezjTN+unp1WvXLm3tvPWf3yJxXK1Uj46ONE07mxzf2r61vLFmW3bOttvt9pUNmbRarRpF8enpaS6Xs3OOpnlR6BNKsUDluZyZ4zQaTMIhSyaqAKoACtewAJMo08PU8CyAjXJ10XYL7dH56VnzytXNja2LWMqfaSCISnOlwWDw0Ucf7ezsAACOjo4e33/U7rRLXr7daW/vbN++ffvgwaO1tVWWZpZtLS0tlUolEaUSWAfDXq/X7Z0pSFneWFlZXc0XCkkcm4pmmiayQKfTiQUaDoYASJEmhAAARJGsWIBkx6uaOjdXGvYL/X7/5ASvrq6hmTCRIoozCUemeXC6X6/X/+Kv/vL6U09RBWLLhLZZWV25+tzNN/78zX/3H/59xOhgNCpVKtvbO5VKJYyib7/5JsuyQiF/6dIlQsmHH3745d27cRR5nsfTJAkmcaepJcGCgV57+sqaZzpZqGeJGoeOgYfdZhzHlUpFCO5NQwgxHgcQKpgypkiWgQkkMzAAIMkyuWmxijc2NgzDUKAkg5Yl2X2SJL7vm1Mml6ZpHMdhEFi2bVnm4eHh/ft7KysrpVLpyfExZWx5ebk4V/Z9nxJCmXx4COHS0hIAoOMnnDHdsgihcRxnWeb8MWbc5/z8HAlKAReOZZiaihGAnEmxwlmSRFEYcE5zeVdR5MaZmytlWTaaTBzPExD4YTD2J6qul2sLV25cn8TRBx9/9NEnHxuW+eOfvPmnr79Bsuzrvb3G2RkEII6CLIkAZwiIkmttLM6XXBuSFNAE0CRLIk4z29BtU74sQ1MAHPb7eFb7GZvlEEhJAP6QofF4PJn4WDISxTCMnZ3t09PTLIyffvrpz97/XbPZXJ2vLS8v717YZJT97sP3gyB45plnCsUihFDS5lIJALD/6FGpVCJE0hkgLwUYk+VbgpI1JpmEUUqpdGRszBmjlCqKAoAAHCDBUigyrHBDQxpWNKxAwBhN855jmbqqQMGoqipzc/nRaNDttr+69/WTk+Payup5b3A+Gs9vrCLX3Xv8+OHRE931ykubulsmVO0PYs+tFIuL5fLSo0fHfhjoppFmISGRykJMw4LOVss2ZLGuMEAjQULI4875MaMJRhwygjj9A7ZKNa9iqa64CgFkjCOEbty4cfeLL/uDAUIIKUqr3bZMs91uq6p6+4UfGaZ5dnb2zi//58HDhxhPdaWuKwoyTUPX9TAIJCiHkusihCaTied58pMgAKpUIaqqep7njH2phbks1NHRUbvdBoBapZI/kmOKhGBCMKn6pNEiNE3BAHW7rS++uFMqFS5d3ikWc5SRJA4H/a7tWEKwdrs5nAwLc3nC6N29rwb+JCYZhWAY+IVKOaakcd5sdTvD8UhRcZKlcZr0R4PuoCfLBTnPYp7FmGU2hp6pIU5oFo1Hvf2HD8bDAeCUJJFlTFUnF4ILAYFUDLMxWVlaOTk7ee+998rl8vXrT8dxnMQPCaUKljrSNE3LMu/fv48xzrn57YsXm41GFEZRlqiq2uv17n93v9/uaJq2uFC5fPkyxjJDvWF/NByq6hzG0k2S6YR/oLFSkGdZFIaj0UhuBkWJ49hzbEUBGIqUEYKEjRVleofANG3H9M7H52+99daf/dlwa2sLqzwI+t0uwJhxkR0cnCxVl23HRlNCFUfBV199adnm2trqWbu5tLxUmi86tvObX//6f33w3ssvveQ6LmNZkia+rwkhGJPihaXUMIyy40XqkIto0u4G/YHKhCagyuWaljKKUkIpQAwDXYdSustVp+u6R7x+3PnVr3518+bNCxekfBoMBkmSECLNr/3HclHffPrmzvYO53zWcDdvPnf18uVBvx/442ajeXJycq977/T4+OazN0tzeUXBvh9omkqIdDZ1W9c0TbedWq1GKe12uzMUVlVVURCjFOs6zqbyGAEmAJEKRkE0TSBnnu2gEAyS+nffmevrq+VyOY6lY2LqpmFo4TgKgqDdbruuWy3P/c2/+fl8peLYduD7b7/99t5Xd4UQvWGnAipd1n33zru3tm7u7l4CjKXRHzxXyKiOoAFBztBNBEngqwBamm6omjR2EcQIYcGnOpFxAmRKpJczlVUKVlzXJSN2Pjz/7W9/+9prr5XLZUopAhLxKhWtWChyylvnrULOFYJ3u93/+nd/9+DBgyfN4wCMLGAxQBbMBRgLCujh4WGxOFctlyXRmsKPRgjjPE3T8XjMOXcch2eR9IcRUjAWkEvrueZsQAQBkKAxM44ZZWmaQiiQgqIwCtIgAdny3PIbb7zhuu6wPxmNRomf5HI5SME39+4xmum6nkRRP+yTqTuOAUIAYYA44BLkAcCAe5Z35epVSbfW1pCiTIIIQThfmR8OR3v3vh4Mh7YmRwfr01UMZUfOfis5woybcCadW2mISBNIwqut2Qigev/k4cOH0uR3nBmizLqTMnY0OTroHrTDNgdcB7oBDA1qeKpOEPjj/wNpuXU6neFgAADQpkMaxfFwODo/b47HYzYFBowlHiFFmdoMCoZKOG0ByQo5NyijGMvKMwYYYxgjIZBDDZ/7e3tfbqytLVQW8q7tE6EpKJZliVWgzilFz3HTNOU0k3jIuKzGFKxmsbV2cX1jPQojKJtJ4ZQpnAmSpnF43jjjWWpPpZ2iyJGUrSWg9OdmBOQHp3fGXRVF1lc+h5wdRVVVG9gRGH76yaec8+Lc3Mw9mZ5DUAMYtcVF2ZHs/9rkP1gts7h69erm5uaVq1c21jcQQjNqk6ap3HBRZJqm4ziza6Hp/SE0fQ3joaJQACjnBEhbLzNMpGkCY4AxME01n3cQ4qoGLWCfdY72vv5CUfhCrTpNNs/l3PWFlaWlWhz6KQkjEWQi0VWsKigFsfSmVOP65avyiCcI0zTFKiaU9Af9IAwYZUmSAABmXs7MKxqPx91uFwFIM4IFAJ1+r5hfQdNCCCEIIVhRuJDjwhmnjJZKpXK5fHZ2dtR5fO/eNwsLtZX5tSRJEjUtlUqWbpTL5W++/KoLukKuJEFJruYuLi9e2tzcLBWleeD7fhAGClJUTZUnBVEsmxvDRqPxw4EOYywMw3avDQCYK+el3VYtVpuDdsYyjDHkVAAQxz5CzNB0RQEjfyTnw3IMHakK1IDaz9r3v/l6e2PbTowoCKvzFZKko9FgdW15E2+4rit9agHy+fyt559N07TVaHueJ7nW1DadjgIb+UMpwJDWG/QVBVPOJ4F/fHwix1Qli4uLMQ0SmuCXfvTSBx984Pt+ccrDZpmbnc/8gBZpmjYaDduxdaATEB+fnHS73VwuF/gRJcTK5YbDwZtvvnn92vWF2sJ4PD57cjIejwe99qOHj6qV+Xq9fnZ2ZhiG63mUsSQJpXmqyhQmSYLkyQSRqc2kNtMhZJRNJhPKGC4vrrzyL3/8v3/z981BveQWsIIxMqF0AwRCsFqaGwwHo+FImj1I1RSsMCiEXKqXLl3Cqoow3tjaPDg4eO/995utlj/ym80miZNKpWKo2uLimqKgx1993eu1p7ZGVCgUOOcZo66pPTp63BuPpj643P8Ayv6LON0/fUCAJKG43+8vLS298MILd+7ciUIpSaZEFGRZRgkdjoaU0IxljLNZzwIGEpCMRqM4itI0U7AihCgWCsNO9+joCHI5pNsXL17c3oacn52d3b//yPf9QlE+tu26s21gWVa3263XTwGQB1T/PGZjrqnaJJ3g7x/vZ4JfvrbtFayPf/ePvV43p/uqXsBMj0I/SoYa0jFAWRIgwPOewwciEH6rcz4Yr3henqds4o9M26hWy4SQq5evWqYFKB2N+sdHTzhjXs5ZXrnJAQmCQNX10WjY7bYhQkHkRyJQkSwuh7OZkAdLHHIAAYOQghSfn59LLkpWNjc3xYsv3f3y7nmj62RkZjXauqOqOInpzHPVNG1hfn4wlOcEJyen6+uqYRjSATYMW5X69MnRE6njxxPf9zGE5XJZ1bQsTb9/9N1kMqktLaVpWq/XbccBSJiKRacHfP9/MEZNzYTF8jbGSrmo7u7slgt2GIZ7dz49OjrVETAMnXNu23aWAtOybDOfZdn0sKXYGyX9fn9n58r29k4Whvv7jxM/siwrS9J2u1Vw3EKhuFKrIYiiOHrw4EF3JBkRhxxByMFI8jkgbd0ki4YkmxHxGdLJXpuGDgDWNDXLSLs1IIRsrS1ubm6+/vrrv//97/fvfz+KUlU2QaRprnQ5JYWXlu/5+blbWNjY2FBVLYpCaWkrcunLI3U/6I8HpVxhYWFeCHF6dtput+v9uqVa/zwxnLMxDZIMYACW8nlFUxzHVRTZ2RmVVfIldmT/B/b9bNFFonOCAAAAAElFTkSuQmCC",
+      "evidence": {
+        "Q": [
+          792,
+          982,
+          835,
+          1027
+        ],
+        "E": [
+          888,
+          982,
+          931,
+          1027
+        ],
+        "R": [
+          936,
+          982,
+          979,
+          1027
+        ]
+      }
+    },
+    "communitydragon_version": "16.22",
+    "scoreboard_portrait_alignment": true
+  },
+  "reference_rollout": "experimental_pending_comparison"
+}

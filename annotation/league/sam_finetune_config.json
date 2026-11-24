@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "code_revision": "f1647e8d0c1d280991f4d1b7d974c2704537fe66",
+  "model_id": "facebook/sam3",
+  "prompt": "League of Legends champion",
+  "seed": 1622,
+  "resolution": 1008,
+  "learning_rate": 0.00001,
+  "weight_decay": 0.01,
+  "batch_size": 1,
+  "gradient_accumulation": 4,
+  "max_epochs": 20,
+  "confidence_threshold": 0.5,
+  "freeze_prefixes": ["backbone."],
+  "mask_loss_weights": {"loss_mask": 200.0, "loss_dice": 10.0},
+  "selection_metric": "validation_mean_instance_iou_with_misses_zero",
+  "correction_policy": "none_during_paired_evaluation"
+}

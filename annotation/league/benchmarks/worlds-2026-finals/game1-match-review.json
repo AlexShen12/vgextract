@@ -1,0 +1,1586 @@
+{
+  "video_id": "fFlOTEiQ9x0",
+  "games": {
+    "game-1": {
+      "teams": {
+        "blue": "GEN",
+        "red": "BLG"
+      },
+      "players": [
+        {
+          "name": "Kiin",
+          "champion": "Olaf",
+          "side": "blue",
+          "row": 0
+        },
+        {
+          "name": "Canyon",
+          "champion": "LeeSin",
+          "side": "blue",
+          "row": 1
+        },
+        {
+          "name": "Chovy",
+          "champion": "Syndra",
+          "side": "blue",
+          "row": 2
+        },
+        {
+          "name": "Ruler",
+          "champion": "Corki",
+          "side": "blue",
+          "row": 3
+        },
+        {
+          "name": "Duro",
+          "champion": "Nami",
+          "side": "blue",
+          "row": 4
+        },
+        {
+          "name": "Bin",
+          "champion": "KSante",
+          "side": "red",
+          "row": 0
+        },
+        {
+          "name": "Xun",
+          "champion": "JarvanIV",
+          "side": "red",
+          "row": 1
+        },
+        {
+          "name": "Knight",
+          "champion": "Locke",
+          "side": "red",
+          "row": 2
+        },
+        {
+          "name": "Viper",
+          "champion": "Kalista",
+          "side": "red",
+          "row": 3
+        },
+        {
+          "name": "ON",
+          "champion": "Renata",
+          "side": "red",
+          "row": 4
+        }
+      ],
+      "final_draft_time": 15780,
+      "scoreboard_time": 15848,
+      "draft": [
+        {
+          "order": 1,
+          "side": "blue",
+          "action": "ban",
+          "champion": "Nocturne",
+          "time": 15305,
+          "state": "locked"
+        },
+        {
+          "order": 2,
+          "side": "red",
+          "action": "ban",
+          "champion": "Qiyana",
+          "time": 15312,
+          "state": "locked"
+        },
+        {
+          "order": 3,
+          "side": "blue",
+          "action": "ban",
+          "champion": "Orianna",
+          "time": 15320,
+          "state": "locked"
+        },
+        {
+          "order": 4,
+          "side": "red",
+          "action": "ban",
+          "champion": "Cassiopeia",
+          "time": 15340,
+          "state": "locked"
+        },
+        {
+          "order": 5,
+          "side": "blue",
+          "action": "ban",
+          "champion": "Vi",
+          "time": 15360,
+          "state": "locked"
+        },
+        {
+          "order": 6,
+          "side": "red",
+          "action": "ban",
+          "champion": "Lulu",
+          "time": 15400,
+          "state": "locked"
+        },
+        {
+          "order": 7,
+          "side": "blue",
+          "action": "pick",
+          "champion": "LeeSin",
+          "time": 15430,
+          "state": "locked"
+        },
+        {
+          "order": 8,
+          "side": "red",
+          "action": "pick",
+          "champion": "Renata",
+          "time": 15466,
+          "state": "locked"
+        },
+        {
+          "order": 9,
+          "side": "red",
+          "action": "pick",
+          "champion": "Kalista",
+          "time": 15490,
+          "state": "locked"
+        },
+        {
+          "order": 10,
+          "side": "blue",
+          "action": "pick",
+          "champion": "Syndra",
+          "time": 15520,
+          "state": "locked"
+        },
+        {
+          "order": 11,
+          "side": "blue",
+          "action": "pick",
+          "champion": "Olaf",
+          "time": 15540,
+          "state": "locked"
+        },
+        {
+          "order": 12,
+          "side": "red",
+          "action": "pick",
+          "champion": "Locke",
+          "time": 15550,
+          "state": "locked"
+        },
+        {
+          "order": 13,
+          "side": "red",
+          "action": "ban",
+          "champion": "Ezreal",
+          "time": 15590,
+          "state": "locked"
+        },
+        {
+          "order": 14,
+          "side": "blue",
+          "action": "ban",
+          "champion": "Jax",
+          "time": 15610,
+          "state": "locked"
+        },
+        {
+          "order": 15,
+          "side": "red",
+          "action": "ban",
+          "champion": "Seraphine",
+          "time": 15640,
+          "state": "locked"
+        },
+        {
+          "order": 16,
+          "side": "blue",
+          "action": "ban",
+          "champion": "Camille",
+          "time": 15670,
+          "state": "locked"
+        },
+        {
+          "order": 17,
+          "side": "red",
+          "action": "pick",
+          "champion": "KSante",
+          "time": 15700,
+          "state": "locked"
+        },
+        {
+          "order": 18,
+          "side": "blue",
+          "action": "pick",
+          "champion": "Corki",
+          "time": 15730,
+          "state": "locked"
+        },
+        {
+          "order": 19,
+          "side": "blue",
+          "action": "pick",
+          "champion": "Nami",
+          "time": 15759,
+          "state": "locked"
+        },
+        {
+          "order": 20,
+          "side": "red",
+          "action": "pick",
+          "champion": "JarvanIV",
+          "time": 15763,
+          "state": "locked"
+        },
+        {
+          "side": "red",
+          "action": "pick",
+          "champion": "Kalista",
+          "time": 15450,
+          "state": "hover"
+        }
+      ],
+      "final_kills": {
+        "blue": 19,
+        "red": 4
+      }
+    }
+  },
+  "scoreboard_labels": [
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "blue",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1055",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "blue",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1103",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "blue",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1056",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "blue",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1086",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "blue",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "3865",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "red",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1054",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "red",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1101",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "red",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1056",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "red",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "1086",
+        "slot2": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 15848,
+      "side": "red",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": 1,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "slot1": "3865",
+        "slot2": "2003",
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "blue",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 7,
+        "cs": 65,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "3047",
+        "slot2": "1055",
+        "slot3": "unreadable",
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "blue",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 6,
+        "cs": 51,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "3044",
+        "slot2": "1103",
+        "slot3": "1028",
+        "slot4": "2003",
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "blue",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 7,
+        "cs": 76,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "1056",
+        "slot2": "unreadable",
+        "slot3": "2031",
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "blue",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 6,
+        "cs": 75,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "3051",
+        "slot2": "unreadable",
+        "slot3": "1086",
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "blue",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": "unreadable",
+        "cs": 5,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "3865",
+        "slot2": "1028",
+        "slot3": "2022",
+        "slot4": "2003",
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "red",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 7,
+        "cs": 67,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "unreadable",
+        "slot2": "1054",
+        "slot3": "unreadable",
+        "slot4": "2031",
+        "slot5": "unreadable",
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "red",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 6,
+        "cs": 62,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "1037",
+        "slot2": "1101",
+        "slot3": "1028",
+        "slot4": "1028",
+        "slot5": "2055",
+        "slot6": "2003",
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "red",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 7,
+        "cs": 73,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "1056",
+        "slot2": "1033",
+        "slot3": "unreadable",
+        "slot4": "unreadable",
+        "slot5": "2031",
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "red",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 6,
+        "cs": 70,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "1037",
+        "slot2": "unreadable",
+        "slot3": "1086",
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16255,
+      "side": "red",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": 5,
+        "cs": 7,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        },
+        "slot1": "unreadable",
+        "slot2": "3865",
+        "slot3": null,
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "blue",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 11,
+        "cs": 117,
+        "kda": {
+          "kills": 0,
+          "deaths": 1,
+          "assists": 1
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "blue",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 9,
+        "cs": 109,
+        "kda": {
+          "kills": 1,
+          "deaths": 1,
+          "assists": 1
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "blue",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 10,
+        "cs": 132,
+        "kda": {
+          "kills": 1,
+          "deaths": 0,
+          "assists": 1
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "blue",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 9,
+        "cs": 141,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 2
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "blue",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": 6,
+        "cs": 13,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 2
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "red",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 11,
+        "cs": 130,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 1
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "red",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 9,
+        "cs": 113,
+        "kda": {
+          "kills": 1,
+          "deaths": 0,
+          "assists": 1
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "red",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 10,
+        "cs": 127,
+        "kda": {
+          "kills": 1,
+          "deaths": 0,
+          "assists": 1
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "red",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 9,
+        "cs": 138,
+        "kda": {
+          "kills": 0,
+          "deaths": 1,
+          "assists": 2
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16620,
+      "side": "red",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": "unreadable",
+        "cs": 18,
+        "kda": {
+          "kills": 0,
+          "deaths": 1,
+          "assists": 2
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "blue",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 13,
+        "cs": 170,
+        "kda": {
+          "kills": 0,
+          "deaths": 1,
+          "assists": 1
+        },
+        "slot1": "unreadable",
+        "slot2": "3047",
+        "slot3": "3044",
+        "slot4": "1055",
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "blue",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 12,
+        "cs": 164,
+        "kda": {
+          "kills": 2,
+          "deaths": 1,
+          "assists": 1
+        },
+        "slot1": "3071",
+        "slot2": "3111",
+        "slot3": "unreadable",
+        "slot4": "1037",
+        "slot5": "2055",
+        "slot6": null,
+        "trinket": "3340"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "blue",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": 12,
+        "cs": 184,
+        "kda": {
+          "kills": 1,
+          "deaths": 1,
+          "assists": 2
+        },
+        "slot1": "unreadable",
+        "slot2": "unreadable",
+        "slot3": "unreadable",
+        "slot4": "unreadable",
+        "slot5": "1056",
+        "slot6": "2055",
+        "trinket": "3363"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "blue",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 12,
+        "cs": 239,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 2
+        },
+        "slot1": "3078",
+        "slot2": "unreadable",
+        "slot3": "1086",
+        "slot4": "1036",
+        "slot5": "1036",
+        "slot6": "2055",
+        "trinket": "3363"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "blue",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": 9,
+        "cs": 21,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 2
+        },
+        "slot1": "unreadable",
+        "slot2": "3114",
+        "slot3": "unreadable",
+        "slot4": "unreadable",
+        "slot5": "2022",
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "red",
+      "row": 0,
+      "split": "heldout",
+      "fields": {
+        "level": 14,
+        "cs": 208,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 1
+        },
+        "slot1": "unreadable",
+        "slot2": "3047",
+        "slot3": "unreadable",
+        "slot4": "unreadable",
+        "slot5": "1054",
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "red",
+      "row": 1,
+      "split": "heldout",
+      "fields": {
+        "level": 12,
+        "cs": 177,
+        "kda": {
+          "kills": 1,
+          "deaths": 0,
+          "assists": 2
+        },
+        "slot1": "6333",
+        "slot2": "3071",
+        "slot3": "unreadable",
+        "slot4": "2055",
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "red",
+      "row": 2,
+      "split": "heldout",
+      "fields": {
+        "level": "unreadable",
+        "cs": 202,
+        "kda": {
+          "kills": 1,
+          "deaths": 1,
+          "assists": 1
+        },
+        "slot1": "3100",
+        "slot2": "unreadable",
+        "slot3": "unreadable",
+        "slot4": "1056",
+        "slot5": "unreadable",
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "red",
+      "row": 3,
+      "split": "heldout",
+      "fields": {
+        "level": 12,
+        "cs": 239,
+        "kda": {
+          "kills": 1,
+          "deaths": 1,
+          "assists": 2
+        },
+        "slot1": "unreadable",
+        "slot2": "3087",
+        "slot3": "1086",
+        "slot4": null,
+        "slot5": null,
+        "slot6": null,
+        "trinket": "3363"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 17041,
+      "side": "red",
+      "row": 4,
+      "split": "heldout",
+      "fields": {
+        "level": "unreadable",
+        "cs": 24,
+        "kda": {
+          "kills": 0,
+          "deaths": 1,
+          "assists": 3
+        },
+        "slot1": "unreadable",
+        "slot2": "unreadable",
+        "slot3": "unreadable",
+        "slot4": "1033",
+        "slot5": "unreadable",
+        "slot6": null,
+        "trinket": "3364"
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "blue",
+      "row": 0,
+      "split": "calibration",
+      "fields": {
+        "level": 4,
+        "cs": 24,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "blue",
+      "row": 1,
+      "split": "calibration",
+      "fields": {
+        "level": 4,
+        "cs": 23,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "blue",
+      "row": 2,
+      "split": "calibration",
+      "fields": {
+        "level": 4,
+        "cs": 29,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "blue",
+      "row": 3,
+      "split": "calibration",
+      "fields": {
+        "level": 3,
+        "cs": 27,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "blue",
+      "row": 4,
+      "split": "calibration",
+      "fields": {
+        "level": 3,
+        "cs": 1,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "red",
+      "row": 0,
+      "split": "calibration",
+      "fields": {
+        "level": 4,
+        "cs": 25,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "red",
+      "row": 1,
+      "split": "calibration",
+      "fields": {
+        "level": 4,
+        "cs": 27,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "red",
+      "row": 2,
+      "split": "calibration",
+      "fields": {
+        "level": 4,
+        "cs": 26,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "red",
+      "row": 3,
+      "split": "calibration",
+      "fields": {
+        "level": 3,
+        "cs": 31,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    },
+    {
+      "game_id": "game-1",
+      "time": 16024,
+      "side": "red",
+      "row": 4,
+      "split": "calibration",
+      "fields": {
+        "level": 3,
+        "cs": 0,
+        "kda": {
+          "kills": 0,
+          "deaths": 0,
+          "assists": 0
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "time": 16184.25,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "JarvanIV",
+      "objective": "ocean_drake",
+      "witness_time": 16185.0
+    },
+    {
+      "time": 16330,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "LeeSin",
+      "objective": "voidgrubs",
+      "witness_time": 16330.75
+    },
+    {
+      "time": 16334.5,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "LeeSin",
+      "objective": "voidgrubs",
+      "witness_time": 16335.25
+    },
+    {
+      "time": 16340.25,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "kill",
+      "killer_champion": "Locke",
+      "victim_champion": "Olaf",
+      "witness_time": 16341.0
+    },
+    {
+      "time": 16341.75,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "JarvanIV",
+      "objective": "voidgrubs",
+      "witness_time": 16342.5
+    },
+    {
+      "time": 16344.75,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "LeeSin",
+      "victim_champion": "Kalista",
+      "witness_time": 16345.5
+    },
+    {
+      "time": 16349,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Syndra",
+      "victim_champion": "Renata",
+      "witness_time": 16349.75
+    },
+    {
+      "time": 16349.25,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "kill",
+      "killer_champion": "JarvanIV",
+      "victim_champion": "LeeSin",
+      "witness_time": 16350.0
+    },
+    {
+      "time": 16509,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "JarvanIV",
+      "objective": "chemtech_drake",
+      "witness_time": 16509.75
+    },
+    {
+      "time": 16639.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "LeeSin",
+      "victim_champion": "Locke",
+      "witness_time": 16640.0
+    },
+    {
+      "time": 16678.75,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "kill",
+      "killer_champion": "Kalista",
+      "victim_champion": "Syndra",
+      "witness_time": 16679.5
+    },
+    {
+      "time": 16778.5,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "JarvanIV",
+      "objective": "rift_herald",
+      "witness_time": 16779.25
+    },
+    {
+      "time": 16841,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "JarvanIV",
+      "objective": "hextech_drake",
+      "witness_time": 16841.75
+    },
+    {
+      "time": 17161.25,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "Kalista",
+      "objective": "hextech_drake",
+      "witness_time": 17162.0
+    },
+    {
+      "time": 17163.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Syndra",
+      "victim_champion": "JarvanIV",
+      "witness_time": 17164.0
+    },
+    {
+      "time": 17166.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "Renata",
+      "witness_time": 17167.0
+    },
+    {
+      "time": 17172.5,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "Kalista",
+      "witness_time": 17173.25
+    },
+    {
+      "time": 17208.75,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "LeeSin",
+      "objective": "baron_nashor",
+      "witness_time": 17209.5
+    },
+    {
+      "time": 17353.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Syndra",
+      "victim_champion": "KSante",
+      "witness_time": 17354.0
+    },
+    {
+      "time": 17558.75,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "JarvanIV",
+      "objective": "elder_dragon",
+      "witness_time": 17559.5
+    },
+    {
+      "time": 17561,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Olaf",
+      "victim_champion": "Kalista",
+      "witness_time": 17561.75
+    },
+    {
+      "time": 17562,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Syndra",
+      "victim_champion": "Renata",
+      "witness_time": 17562.75
+    },
+    {
+      "time": 17566.75,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Syndra",
+      "victim_champion": "JarvanIV",
+      "witness_time": 17567.5
+    },
+    {
+      "time": 17569.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "KSante",
+      "witness_time": 17570.0
+    },
+    {
+      "time": 17622.5,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "LeeSin",
+      "objective": "baron_nashor",
+      "witness_time": 17623.25
+    },
+    {
+      "time": 17955.75,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Olaf",
+      "victim_champion": "Kalista",
+      "witness_time": 17956.5
+    },
+    {
+      "time": 17956.25,
+      "game_id": "game-1",
+      "side": "red",
+      "kind": "kill",
+      "killer_champion": "Locke",
+      "victim_champion": "LeeSin",
+      "witness_time": 17957.0
+    },
+    {
+      "time": 17965.75,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "KSante",
+      "witness_time": 17966.5
+    },
+    {
+      "time": 17970.5,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Nami",
+      "victim_champion": "JarvanIV",
+      "witness_time": 17971.25
+    },
+    {
+      "time": 17977,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "Corki",
+      "objective": "elder_dragon",
+      "witness_time": 17977.75
+    },
+    {
+      "time": 18043.5,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "LeeSin",
+      "objective": "baron_nashor",
+      "witness_time": 18044.25
+    },
+    {
+      "time": 18148.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "Renata",
+      "witness_time": 18149.0
+    },
+    {
+      "time": 18153.75,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "JarvanIV",
+      "witness_time": 18154.5
+    },
+    {
+      "time": 18154.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Syndra",
+      "victim_champion": "Kalista",
+      "witness_time": 18155.0
+    },
+    {
+      "time": 18156.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "LeeSin",
+      "victim_champion": "Locke",
+      "witness_time": 18157.0
+    },
+    {
+      "time": 18156.25,
+      "game_id": "game-1",
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Corki",
+      "victim_champion": "KSante",
+      "witness_time": 18157.0
+    }
+  ]
+}

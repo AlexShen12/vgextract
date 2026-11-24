@@ -11,7 +11,7 @@ def spans(mask):
     return zip(np.flatnonzero(edges == 1), np.flatnonzero(edges == -1))
 
 
-def candidates(image, profile):
+def candidates(image, profile, *, require_coherent_fill=False):
     """Require a colored bar, dark frame and a champion level cell, not color alone."""
     cfg = profile["body_binder"]
     pixels = np.asarray(image.convert("RGB"), dtype=float)
@@ -38,7 +38,10 @@ def candidates(image, profile):
                 continue
             if left+width >= x1 or y+height >= y1:
                 continue
-            if any(abs(left-r["bar_box"][0]) < 8 and abs(y-r["bar_box"][1]) < height+5 for r in result):
+            # Different fill rows can begin at different x positions on the same bar.
+            if any((abs(left - r["bar_box"][0]) < 8 and abs(y - r["bar_box"][1]) < height + 5)
+                   or (abs(left - r["bar_box"][0]) <= .15 * width and abs(y - r["bar_box"][1]) <= height / 2)
+                   for r in result):
                 continue
             offsets = cfg["level_cell"]
             a, b, c, d = left+offsets[0], y+offsets[1], left+offsets[2], y+offsets[3]
@@ -54,6 +57,10 @@ def candidates(image, profile):
             if float((border.max(axis=2) < 80).mean()) < cfg["minimum_border_dark"]:
                 continue
             fill = mask[y:y+height, left:left+width].mean(axis=0) >= .4
+            if require_coherent_fill:
+                longest_fill = max((end - start for start, end in spans(fill)), default=0)
+                if longest_fill < cfg["minimum_fill_pixels"] or longest_fill < .7 * fill.sum():
+                    continue
             fraction = float(fill.mean())
             if hud_fraction is not None and abs(fraction-hud_fraction) > cfg["health_tolerance"]:
                 continue

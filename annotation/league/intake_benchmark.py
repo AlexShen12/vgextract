@@ -26,6 +26,7 @@ REQUIRED_CASES = {
     "cooldown_rank_distinctions",
     "absent_panels_or_notices",
 }
+INVENTORY_CASES = {"inventory_scoreboard_open", "inventory_scoreboard_closed", "inventory_hidden_portrait"}
 
 
 def release_policy():
@@ -33,6 +34,7 @@ def release_policy():
         {
             "gates": GATES,
             "cases": sorted(REQUIRED_CASES),
+            "inventory_cases": sorted(INVENTORY_CASES),
             "implementation": implementation_hash(["intake_benchmark.py"]),
         }
     )
@@ -41,6 +43,8 @@ def release_policy():
 def label_coverage(data, fields, capabilities=None):
     """An easy subset cannot certify untested readers or difficult cases."""
     missing = {}
+    inventory_missing = {}
+    inventory_enabled = any(field.get("backend") == "inventory" for field in fields.values())
     for split in ("development", "held_out"):
         frames = [f for f in data["frames"] if f["split"] == split]
         labels = [label for frame in frames for label in frame["labels"]]
@@ -90,6 +94,8 @@ def label_coverage(data, fields, capabilities=None):
         if any(label["availability"] == "absent" for label in labels):
             present.add("absence")
         missing[split] = sorted(required - present)
+        if inventory_enabled:
+            inventory_missing[split] = inventory_label_coverage(frames, fields)
     cases = {tag for frame in data["frames"] for tag in frame.get("case_tags", [])}
     required_cases = (
         set(capabilities["cases"]) if capabilities is not None else REQUIRED_CASES
@@ -97,8 +103,40 @@ def label_coverage(data, fields, capabilities=None):
     return {
         "missing_field_groups": missing,
         "missing_cases": sorted(required_cases - cases),
-        "passed": not any(missing.values()) and required_cases <= cases,
+        "missing_inventory_cases": inventory_missing,
+        "passed": not any(missing.values()) and required_cases <= cases and not any(inventory_missing.values()),
     }
+
+
+def inventory_label_coverage(frames, fields):
+    cases, visible = set(), defaultdict(int)
+    for frame in frames:
+        labels = [(fields[label["field_id"]], label["availability"]) for label in frame["labels"]
+                  if fields[label["field_id"]].get("backend") == "inventory"]
+        scoreboard = [(field, status) for field, status in labels if field["route"] == "scoreboard"]
+        tags = set(frame.get("case_tags", []))
+        if any(status == "visible" for _, status in scoreboard):
+            cases.update(tags & {"inventory_scoreboard_open"})
+            if any(status == "unreadable" and field["kind"] == "champion" for field, status in scoreboard):
+                cases.update(tags & {"inventory_hidden_portrait"})
+            if any(status == "absent" and field["kind"] == "item" for field, status in scoreboard):
+                cases.add("visible_empty_slot")
+        if scoreboard and all(status == "absent" for _, status in scoreboard):
+            cases.update(tags & {"inventory_scoreboard_closed"})
+        for field, status in labels:
+            if status != "visible":
+                continue
+            if field["kind"] == "item":
+                visible[field["slot_id"].split(":")[0] + "/items"] += 1
+                if field["field"] == "inventory.trinket":
+                    visible["trinket"] += 1
+            else:
+                visible[field["route"] + "/portraits"] += 1
+    minimum = {"left/items": 5, "right/items": 5, "selected/items": 10, "trinket": 1,
+               "scoreboard/portraits": 5, "selected_hud/portraits": 5}
+    return sorted((INVENTORY_CASES | {"visible_empty_slot"}) - cases) + [
+        f"{group} ({visible[group]}/{count})" for group, count in minimum.items() if visible[group] < count
+    ]
 
 
 def load_labels(path, source, profile, *, draft=False):
@@ -114,6 +152,11 @@ def load_labels(path, source, profile, *, draft=False):
         known = {f["id"]: f for f in enabled_fields(profile)}
     else:
         known = {f["id"]: f for f in profile["fields"]}
+    if profile.get("inventory") and not draft:
+        labeling = data.get("inventory_labeling", {})
+        labeler = labeling.get("labeler")
+        if labeling.get("independent_of_predictions") is not True or not isinstance(labeler, str) or not labeler.strip():
+            raise ValueError("Inventory release labels require independent source-only review provenance")
     for split in ("development", "held_out"):
         group = [f for f in frames if f.get("split") == split]
         if len(group) != 20 or not all(
@@ -138,6 +181,10 @@ def load_labels(path, source, profile, *, draft=False):
                 raise ValueError(
                     "Visible benchmark fields require an independently verified value"
                 )
+            if known[field].get("backend") == "inventory" and label["availability"] == "visible":
+                value = label["value"]
+                if not isinstance(value, str) or not value or (known[field]["kind"] == "item" and not value.isdecimal()):
+                    raise ValueError("Inventory labels require canonical Data Dragon IDs")
             if (
                 label["availability"] == "visible"
                 and known[field]["reader"] in {"number", "text"}
@@ -255,12 +302,20 @@ def score(frames, predictions, fields, families=None):
         for name in (families if families is not None else GATES)
     }
     slices = defaultdict(lambda: {"eligible": 0, "accepted": 0, "correct": 0})
+    inventory = {
+        f"{field['route']}/{field['kind']}": inventory_counts()
+        for field in fields.values() if field.get("backend") == "inventory"
+    }
     for frame in frames:
         for label in frame["labels"]:
-            kind = fields[label["field_id"]]["reader"]
+            field = fields[label["field_id"]]
+            kind = field["reader"]
             if kind not in metrics:
                 raise ValueError("Benchmark label targets a deferred field family")
             prediction = predictions.get((frame["time"], label["field_id"]))
+            is_inventory = field.get("backend") == "inventory"
+            if is_inventory:
+                record_inventory(inventory[f"{field['route']}/{field['kind']}"], prediction, label)
             visible = (
                 prediction is not None and prediction.get("acceptance") == "accepted"
             )
@@ -269,7 +324,7 @@ def score(frames, predictions, fields, families=None):
                 "absent",
             }
             pm = metrics["presence"]
-            if label["availability"] != "unreadable":
+            if not is_inventory and label["availability"] != "unreadable":
                 pm["eligible"] += 1
                 pm["accepted"] += presence
                 pm["covered"] += presence
@@ -309,11 +364,33 @@ def score(frames, predictions, fields, families=None):
             and m["precision"] >= precision
             and m["coverage"] >= coverage
         )
+    for counts in inventory.values():
+        counts["precision"] = counts["correct"] / counts["accepted"] if counts["accepted"] else 0
+        counts["coverage"] = counts["covered"] / counts["eligible"] if counts["eligible"] else 0
+        precision, coverage = GATES["icon"]
+        counts["passed"] = counts["precision"] >= precision and counts["coverage"] >= coverage
     return {
         "families": metrics,
         "field_slices": dict(slices),
-        "passed": all(m["passed"] for m in metrics.values()),
+        "inventory": inventory,
+        "passed": all(m["passed"] for m in metrics.values()) and all(m["passed"] for m in inventory.values()),
     }
+
+
+def inventory_counts():
+    return dict(eligible=0, covered=0, accepted=0, correct=0, false_on_absent=0, false_on_unreadable=0)
+
+
+def record_inventory(counts, prediction, label):
+    status = label["availability"]
+    present = status == "visible"
+    emitted = prediction is not None and prediction.get("acceptance") == "accepted"
+    counts["eligible"] += present
+    counts["accepted"] += emitted
+    counts["covered"] += present and emitted
+    counts["correct"] += correct(prediction, label, "icon") if present else 0
+    if emitted and not present:
+        counts[f"false_on_{status}"] += 1
 
 
 def benchmark(store, config, labels, *, freeze=False, draft=False):

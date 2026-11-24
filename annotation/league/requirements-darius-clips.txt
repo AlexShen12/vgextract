@@ -1,0 +1,3 @@
+-r requirements-intake.txt
+scenedetect-headless==0.7.3
+opencv-python-headless==4.12.0.88

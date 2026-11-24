@@ -7,7 +7,7 @@ from .caption_benchmark import ANNOTATION_CATEGORIES, assessments, validate_labe
 from .caption_pilot import effective, pilot_lock, regenerate
 from .caption_scene import accepted_events
 from .action_v3 import load_profile
-from .core import STATUSES, atomic_json, finite, now, read_json, read_rows
+from .core import STATUSES, atomic_json, digest, finite, now, read_json, read_rows
 
 
 def pilot_root(store, pilot_id):
@@ -21,7 +21,8 @@ def pilot_root(store, pilot_id):
 
 def correct_pilot(root, table, record_id, changes, status, reviewer):
     allowed = {
-        "scene_proposals": {"kind", "start", "end", "actor", "actor_label", "actor_binding", "target", "target_label", "target_binding", "ability", "visual_evidence", "evidence_ids"},
+        "scene_proposals": {"kind", "start", "end", "actor", "actor_label", "actor_binding", "target", "target_label", "target_binding", "ability", "visual_evidence", "evidence_ids",
+                            "relation", "prior_proposal_id", "phase_frames", "components"},
         "normalized_observations": {"value", "visibility", "acceptance"},
         "body_readings": {"binding_visible", "actor_track", "actor_region"},
     }
@@ -39,9 +40,16 @@ def correct_pilot(root, table, record_id, changes, status, reviewer):
                 audit = read_json(root/"input-audit.json")
                 if not all(finite(row.get(k)) for k in ("start", "end")) or not audit["interval"][0] <= row["start"] <= row["end"] <= audit["interval"][1]:
                     raise ValueError("Correction outside source interval")
-                accepted, omitted = accepted_events([row], audit["frames"], effective(root, "body_readings"))
-                if not accepted:
-                    raise ValueError("Correction lacks grounding: "+str(omitted))
+                if row.get("scene_schema_version") == 2:
+                    from .caption_occurrences import resolve_occurrences
+                    proposals = [row if r["id"] == record_id else r for r in rows.values()]
+                    _, _, omitted = resolve_occurrences(proposals, audit["frames"], effective(root,"body_readings"), audit["source_sha256"])
+                    if any(o["record_id"] == record_id and o["reason"].startswith("invalid_occurrence_context") for o in omitted):
+                        raise ValueError("Correction lacks occurrence grounding: "+str(omitted))
+                else:
+                    accepted, omitted = accepted_events([row], audit["frames"], effective(root, "body_readings"))
+                    if not accepted:
+                        raise ValueError("Correction lacks grounding: "+str(omitted))
                 # Labels are renderer-controlled: review cannot introduce prose.
                 if any(k in changes for k in ("actor_label", "target_label")):
                     raise ValueError("Correct entity/binding evidence, not generated labels")
@@ -78,6 +86,7 @@ def assess_caption(root, body):
             raise ValueError("Caption not found")
         row = {k: body[k] for k in (*fields, "reviewer", "independent_of_generation", "caption_id")}
         row.update(generation_key=read_json(root/"caption_coverage.json")["key"], created_at=now())
+        row['caption_signature']=digest(captions[body['caption_id']])
         directory = root/"assessments"
         sequence = len(list(directory.glob("*.json")))+1
         atomic_json(directory/f"{sequence:06d}.json", row)
@@ -113,6 +122,7 @@ def install_caption_routes(app, store):
             with pilot_lock(root):
                 data = {name: read_rows(root/(name+".jsonl")) for name in ("captions", "caption_clips", "caption_omissions", "events", "states", "normalized_observations", "counter_readings", "resampling")}
                 data.update(scene_proposals=effective(root, "scene_proposals"), body_readings=effective(root, "body_readings"),
+                            scene_occurrences=read_rows(root/"scene_occurrences.jsonl"), creep_credits=read_rows(root/"creep_credits.jsonl"),
                             report=read_json(root/"report.json"), frames=audit["frames"], assessments=assessments(root),
                             coverage=read_json(root/"caption_coverage.json"))
             return data
@@ -178,3 +188,45 @@ def install_caption_routes(app, store):
                 return clip
         except (KeyError, TypeError, ValueError, OSError) as exc:
             raise HTTPException(422, str(exc)) from exc
+
+    @app.get('/api/caption-event-labels')
+    def occurrence_labels():
+        path=store.path('benchmarks/caption-events/v1/events.json')
+        if not path.exists():raise HTTPException(404,'Initialize experiment --suite caption-events first')
+        return read_json(path)
+
+    @app.post('/api/caption-event-labels/{clip_id}')
+    async def save_occurrence_labels(clip_id: str, request: Request):
+        origin_check(request)
+        try:
+            from .caption_event_benchmark import validate
+            body=await request.json()
+            if not isinstance(body.get('labeler'),str) or not body['labeler'].strip() or not isinstance(body.get('annotations'),dict):
+                raise ValueError('Named source-only labeler required')
+            directory=store.path('benchmarks/caption-events/v1')
+            with (directory/'.labels.lock').open('a') as lock:
+                fcntl.flock(lock,fcntl.LOCK_EX)
+                path=directory/'events.json';data=read_json(path)
+                clip=next((c for c in data['clips'] if c['id']==clip_id),None)
+                if clip is None:raise ValueError('Occurrence neighborhood not found')
+                if clip['split']=='development' and list(directory.glob('freeze-*.json')):
+                    raise ValueError('Development references are frozen; create a new revision')
+                if clip['split']=='held_out' and any(clip_id in read_json(p).get('clips',{}) and not read_json(p).get('draft',True)
+                        for p in store.path('experiments/caption-events').glob('*/report.json')):
+                    raise ValueError('Held-out inference already exists; preserve references and create a new revision')
+                allowed={'start','end','repeat_group','verified','inspected','explicit_negative','negative_annotations','case_tags',
+                         'events','claims','bindings','phases','playback','repeats','coverage_exhaustive','notes',
+                         'independent_of_current_predictions','historical_prediction_exposure','coverage_scope'}
+                if set(body['annotations'])-allowed:raise ValueError('Invalid occurrence label fields')
+                if body.get('independent_of_predictions') is not True and not (clip['split']=='development' and body['annotations'].get('independent_of_current_predictions') is True):
+                    raise ValueError('Independent source provenance required; held-out cannot use development exposure scope')
+                import copy
+                before=copy.deepcopy(clip)
+                clip.update(body['annotations'],labeler=body['labeler'],independent_of_predictions=body.get('independent_of_predictions') is True)
+                validate(store,data)
+                revision=len(list((directory/'revisions').glob('*.json')))+1
+                atomic_json(directory/'revisions'/f'{revision:06d}.json',{'before':before,'after':clip,'created_at':now()})
+                atomic_json(path,data)
+                return clip
+        except (KeyError,TypeError,ValueError,OSError) as exc:
+            raise HTTPException(422,str(exc)) from exc

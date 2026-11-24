@@ -1,0 +1,271 @@
+{
+  "reference_version": "16.22.1",
+  "communitydragon_version": "16.22",
+  "requests_sha256": "b9d339df5f08161f0b67116c063224a0c32524525f96527beb76074e83cc00c8",
+  "scope": "Base-skin metadata and endpoint checks. Download integrity, animation and visual audit remain pending.",
+  "early_full_download_attempts": [
+    {
+      "champion": "Ahri",
+      "status": "unsupported",
+      "error": "The read operation timed out"
+    },
+    {
+      "champion": "Alistar",
+      "status": "unsupported",
+      "error": "skeleton asset returned HTTP 404: https://raw.communitydragon.org/16.22/game/assets/characters/alistar/skins/base/alistar.skl"
+    },
+    {
+      "champion": "AurelionSol",
+      "status": "unsupported",
+      "error": "Static reference unavailable: https://raw.communitydragon.org/16.22/game/data/characters/aurelionsol/skins/skin0.bin.json: The read operation timed out"
+    }
+  ],
+  "skins": [
+    {
+      "champion": "Ahri",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/ahri/skins/skin0.bin.json",
+      "metadata_sha256": "58545b0b84a5b863c0320361dddf711d9b870218d8e35636feb145bfab6832ff",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/ahri/skins/base/ahri_base.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/ahri/skins/base/ahri_base.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/ahri/skins/base/ahri_base_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "Alistar",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/alistar/skins/skin0.bin.json",
+      "metadata_sha256": "967f5f893e63af4e22f7142a5512e777f302960272c345124d336e8cdba3548f",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/alistar/skins/base/alistar.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/alistar/skins/base/alistar.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/alistar/skins/base/alistar_base_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "AurelionSol",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/aurelionsol/skins/skin0.bin.json",
+      "metadata_sha256": "8b1a9f1a86a900f975397e4b4769548d9a68265acc0a0e7e9a55b93cb20ebc12",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/aurelionsol/skins/base/aurelionsol.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/aurelionsol/skins/base/aurelionsol.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/aurelionsol/skins/base/aurelionsol_body_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "Darius",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/darius/skins/skin0.bin.json",
+      "metadata_sha256": "9e653d6bbbf0afb0e96a0bc0041543021982d28c219275cbf4d6b429f1184993",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/darius/skins/base/darius.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/darius/skins/base/darius.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/darius/skins/base/darius_base_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "JarvanIV",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/jarvaniv/skins/skin0.bin.json",
+      "metadata_sha256": "b6673327e5425afce09e23fb22e9d51d72821e2a4884a0b318509d706e36c102",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/jarvaniv/skins/base/jarvaniv.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/jarvaniv/skins/base/jarvaniv.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/jarvaniv/skins/base/jarvaniv_base_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "Katarina",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/katarina/skins/skin0.bin.json",
+      "metadata_sha256": "344af120e7674a4001567a08dadcca884c6a030fc934c72d7ba5dea6eb4e3e68",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/katarina/skins/base/katarina.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/katarina/skins/base/katarina.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/katarina/skins/base/katarina_base_2012_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "Leona",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/leona/skins/skin0.bin.json",
+      "metadata_sha256": "e7b986b4a9e72d833db5f9fa15be3f5bca24d6c7122f461b2b20c3d80506ccf1",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/leona/skins/base/leona.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/leona/skins/base/leona.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/leona/skins/base/leona_base_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "Singed",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/singed/skins/skin0.bin.json",
+      "metadata_sha256": "2928abe3c63bc76ad204b17ac47ffb3622e51d283bc06d01ad18fe7961985dce",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/singed/skins/base/singed.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/singed/skins/base/singed.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/singed/skins/base/singed_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    },
+    {
+      "champion": "Talon",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/talon/skins/skin0.bin.json",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/talon/skins/base/talon.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/talon/skins/base/talon.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/talon/skins/base/talon_base_tx_cm.png",
+          "head_status": 200
+        }
+      ],
+      "initial_metadata_error": "The read operation timed out",
+      "metadata_sha256": "4ef8e058a80930b53ff103de4f4f42e851bd9e52553e57d10ba377aa02495c86",
+      "metadata_origin": "verified cached pinned metadata"
+    },
+    {
+      "champion": "Xayah",
+      "metadata_url": "https://raw.communitydragon.org/16.22/game/data/characters/xayah/skins/skin0.bin.json",
+      "metadata_sha256": "b28ba874bd40e9d0ef366a23c3cc97f5fbacd00c04073b458c726f3152fd5c53",
+      "assets": [
+        {
+          "role": "mesh",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/xayah/skins/base/xayah_base.skn",
+          "head_status": 200
+        },
+        {
+          "role": "skeleton",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/xayah/skins/base/xayah_base.skl",
+          "head_status": 404
+        },
+        {
+          "role": "texture",
+          "url": "https://raw.communitydragon.org/16.22/game/assets/characters/xayah/skins/base/xayah_base_tx_cm.png",
+          "head_status": 200
+        }
+      ]
+    }
+  ],
+  "directory_checks": [
+    {
+      "url": "https://raw.communitydragon.org/json/16.22/game/assets/characters/darius/skins/base/",
+      "sha256": "a84332dca23aa3d1a4599dbbad8ca64421f7a30234d24490a354a6e9d3625b8a",
+      "files": [
+        "darius",
+        "particles",
+        "darius.skn",
+        "darius_base_tx_cm.png",
+        "dariusloadscreen.png"
+      ]
+    },
+    {
+      "url": "https://raw.communitydragon.org/json/16.22/game/assets/characters/talon/skins/base/",
+      "sha256": "9d68d9cfe365aace70deadfab79dee70a6ab58f900f44bab3197e4b0ac04a99a",
+      "files": [
+        "particles",
+        "talon",
+        "talon.skn",
+        "talon_base_tx_cm.png",
+        "talonloadscreen.png"
+      ]
+    }
+  ]
+}

@@ -52,7 +52,8 @@ def _spent(task_dir: Path) -> dict:
             "peak_gpu_memory_bytes": max((m.get("peak_gpu_memory_bytes", 0) for m in metrics), default=0)}
 
 
-def annotate(store: Store, config, runner=None, resolver=None, *, retry_failed=False, sample_times=None, pilot=False) -> dict:
+def annotate(store: Store, config, runner=None, resolver=None, *, retry_failed=False, sample_times=None, pilot=False, experimental=False) -> dict:
     """Production intake uses restricted VL transcription and calibrated numeric fields."""
     from .intake import annotate as calibrated_intake
-    return calibrated_intake(store, config, retry_failed=retry_failed, sample_times=sample_times, pilot=pilot)
+    return calibrated_intake(store, config, retry_failed=retry_failed, sample_times=sample_times, pilot=pilot,
+                             experimental=experimental)

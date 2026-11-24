@@ -165,3 +165,43 @@ untested. The separate independent-agent instructions are in
 `docs/league-actions-labeling-handoff.md`.
 Unresolved slot candidates are scored separately from established activations;
 rapid ordering and known-slot attribution retain explicit scoring denominators.
+
+## First scene pass benchmark
+
+`experiment --suite actions --infer --scene-baseline` evaluates the existing 4 FPS
+scene input, including the HUD strip and approximate player track overlays. It
+saves the validated proposals before HUD matching, counter fusion or resampling.
+Use the separate `benchmarks/actions-v3/scene-baseline-v1/actions.json` reference
+revision. Its source-only annotator records an inspection note per clip and labels
+observable events with `actor_role`, `evidence_note`, `boundary_resolvable`, and
+an ability slot only when independently identifiable.
+
+Use `--preflight-only` for one development clip, `--draft` for development
+inference on verified labels, `--freeze` after accepted development proposals,
+then the command with no stage flag for held-out scoring. Use the same profile,
+model runtime and icon references throughout. On Longleaf, use
+`slurm_action_scene_baseline.sl` with `preflight`, `development`, or `held-out`.
+The held-out job freezes a completed development recipe if needed. To freeze
+separately, run the script directly with `freeze` from the staged source directory.
+
+Reports under `experiments/actions-v3-scene-baseline/benchmarks/` include counts,
+one-to-one matches, attribution coverage, timing errors, and rejected requests.
+The held-out report includes source timestamps for each cited frame to support
+independent visual review. An absent reference class is marked untested. A match
+measures agreement with the source labels, and the separate evidence review
+checks whether the model's cited frames support its claim.
+
+## HUD-first ability activations
+
+Use `action-window --hud-grounded --detect` to emit Q/W/E/R activations from the
+HUD. The reader requires an icon change followed by at least three consistent
+cooldown readings in the same playback and owner context. Each activation in
+`core/actions.jsonl` records the HUD owner, slot, and time bracket. Its
+`hud_candidate_id` points to the supporting frames in `core/hud_candidates.jsonl`.
+
+Use `--infer` with `--hud-grounded` to review the visible scene around those
+activations. Accepted scene evidence is linked by `scene_ids` and upgrades the
+evidence class to `corroborated`. Activations remain `hud-supported` when the
+scene is unavailable, ambiguous, or the model abstains. The onset bracket
+describes when the cooldown overlay appeared. The result leaves ability effects
+and combat outcomes unresolved unless supported by separate evidence.

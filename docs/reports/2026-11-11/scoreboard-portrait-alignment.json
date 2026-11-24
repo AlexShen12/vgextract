@@ -1,0 +1,557 @@
+{
+  "scope": "inspected development footage",
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "reference_version": "16.22.1",
+  "communitydragon_version": "16.22",
+  "profile_id": "midbeast-1080p-inventory-v3",
+  "profile_hash": "5e48cdfd8bc050b6a7f20128c49538f4f4437cc80b099470e70b66401d3cf5ef",
+  "reader_signature": "1d4c7b268a0b3261b974c8a27bc6d8361689b05987279c3e0968ce8c2ebc6983",
+  "baseline_profile": "midbeast-1080p-inventory-v2",
+  "baseline_accepted": 17,
+  "accepted": 20,
+  "eligible_crops": 30,
+  "unresolved_reasons": {
+    "scoreboard hides the portrait": 6,
+    "respawn digits obscure too much of the portrait": 2,
+    "icon score or margin below the direct-match threshold": 2
+  },
+  "sampled_windows": [
+    [
+      590,
+      650
+    ],
+    [
+      890,
+      950
+    ],
+    [
+      1190,
+      1250
+    ],
+    [
+      1490,
+      1550
+    ],
+    [
+      1650,
+      1710
+    ]
+  ],
+  "additional_open_samples": 33,
+  "maximum_accepted_in_one_sample": 9,
+  "complete_samples": 0,
+  "pilot_champion_candidates": [
+    "Ahri",
+    "Alistar",
+    "AurelionSol",
+    "Darius",
+    "JarvanIV",
+    "Katarina",
+    "Leona",
+    "Singed",
+    "Talon",
+    "Xayah"
+  ],
+  "changed_reads": [
+    {
+      "time": 99.01558333333334,
+      "slot": "left:row3",
+      "direct": {
+        "acceptance": "accepted",
+        "value": "Ahri",
+        "raw_text": null,
+        "skin_id": "103089",
+        "reason": "matched best portrait variant per champion",
+        "reader": {
+          "score": 0.6642112731933594,
+          "margin": 0.053391337394714355,
+          "reference_sha256": "82431fc26d76fc5ec6fb1e5e2e1212f5bf827c6a4094d1ae3cd03f2b8a039281",
+          "engine": "inventory-reference-v2"
+        },
+        "candidates": [
+          {
+            "id": "Ahri",
+            "score": 0.6642112731933594
+          },
+          {
+            "id": "Sivir",
+            "score": 0.610819935798645
+          },
+          {
+            "id": "Annie",
+            "score": 0.6096110343933105
+          }
+        ],
+        "cache_path": "inventory-reader-cache/6c6081e0b50b4d8b44d1c8897719bbdf9781aca9be719ed29d697432bd416f25/reading.json"
+      },
+      "resolved": {
+        "acceptance": "accepted",
+        "value": "Ahri",
+        "raw_text": null,
+        "skin_id": "103000",
+        "reason": "matched scoreboard portrait across center and cardinal views",
+        "reader": {
+          "score": 0.7297579050064087,
+          "margin": 0.10218292474746704,
+          "reference_sha256": "d2d9b1a6ea3f6681255919c9a4aab59312c3e1d671ea98f27ac6f74a7abd4e41",
+          "engine": "inventory-reference-v2",
+          "pixel_shift": [
+            1,
+            0
+          ],
+          "shift_votes": 2,
+          "alignment_views": [
+            {
+              "offset": [
+                0,
+                0
+              ],
+              "top_id": "Ahri",
+              "score": 0.6642112731933594,
+              "margin": 0.053391337394714355,
+              "eligible": true,
+              "view": "color",
+              "reason": "matched best portrait variant per champion"
+            },
+            {
+              "offset": [
+                -1,
+                0
+              ],
+              "top_id": "Rakan",
+              "score": 0.6288927793502808,
+              "margin": 0.004611194133758545,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                1,
+                0
+              ],
+              "top_id": "Ahri",
+              "score": 0.7297579050064087,
+              "margin": 0.10218292474746704,
+              "eligible": true,
+              "view": "color",
+              "reason": "matched best portrait variant per champion"
+            },
+            {
+              "offset": [
+                0,
+                -1
+              ],
+              "top_id": "Ahri",
+              "score": 0.6537290215492249,
+              "margin": 0.007647156715393066,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                0,
+                1
+              ],
+              "top_id": "Ahri",
+              "score": 0.650107741355896,
+              "margin": 0.0218123197555542,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            }
+          ]
+        },
+        "candidates": [
+          {
+            "id": "Ahri",
+            "score": 0.7297579050064087
+          },
+          {
+            "id": "Sivir",
+            "score": 0.6275749802589417
+          },
+          {
+            "id": "TwistedFate",
+            "score": 0.6151340007781982
+          }
+        ],
+        "cache_path": "inventory-reader-cache/793805169a8203e1303109ebf39d504731312773289bb8d1b6f87c3ec0f12bde/reading.json"
+      },
+      "baseline": {
+        "offset": [
+          0,
+          0
+        ],
+        "acceptance": "unknown",
+        "value": null,
+        "raw_text": null,
+        "skin_id": "103089",
+        "reason": "icon score or margin below the direct-match threshold",
+        "reader": {
+          "score": 0.6642112731933594,
+          "margin": 0.053391337394714355,
+          "reference_sha256": "82431fc26d76fc5ec6fb1e5e2e1212f5bf827c6a4094d1ae3cd03f2b8a039281"
+        },
+        "candidates": [
+          {
+            "id": "Ahri",
+            "score": 0.6642112731933594
+          },
+          {
+            "id": "Sivir",
+            "score": 0.610819935798645
+          },
+          {
+            "id": "Annie",
+            "score": 0.6096110343933105
+          }
+        ],
+        "attempts": []
+      }
+    },
+    {
+      "time": 99.01558333333334,
+      "slot": "left:row4",
+      "direct": {
+        "acceptance": "unknown",
+        "value": null,
+        "raw_text": null,
+        "skin_id": "114001",
+        "reason": "icon score or margin below the direct-match threshold",
+        "reader": {
+          "score": 0.6711563467979431,
+          "margin": 0.032806336879730225,
+          "reference_sha256": "fc11ff06807eae248e0595654bd09e8d52beb13ceebbe6e140686313b49a7e71",
+          "engine": "inventory-reference-v2"
+        },
+        "candidates": [
+          {
+            "id": "Fiora",
+            "score": 0.6711563467979431
+          },
+          {
+            "id": "Xayah",
+            "score": 0.6383500099182129
+          },
+          {
+            "id": "MissFortune",
+            "score": 0.6339589357376099
+          }
+        ],
+        "attempts": [],
+        "cache_path": "inventory-reader-cache/e066591f671545f5e817b2961f6e42990a55f3dddf4acf8b8123fd417ac744ce/reading.json"
+      },
+      "resolved": {
+        "acceptance": "accepted",
+        "value": "Xayah",
+        "raw_text": null,
+        "skin_id": null,
+        "reason": "matched scoreboard portrait across center and cardinal views",
+        "reader": {
+          "score": 0.7317643165588379,
+          "margin": 0.05570274591445923,
+          "reference_sha256": "413e04c638cf7f25c231295b914b49947d98092f8b02ab61ac703fe8e4a5baf6",
+          "engine": "inventory-reference-v2",
+          "pixel_shift": [
+            1,
+            0
+          ],
+          "shift_votes": 1,
+          "alignment_views": [
+            {
+              "offset": [
+                0,
+                0
+              ],
+              "top_id": "Fiora",
+              "score": 0.6711563467979431,
+              "margin": 0.032806336879730225,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                -1,
+                0
+              ],
+              "top_id": "Fiora",
+              "score": 0.6627181768417358,
+              "margin": 0.03282010555267334,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                1,
+                0
+              ],
+              "top_id": "Xayah",
+              "score": 0.7317643165588379,
+              "margin": 0.05570274591445923,
+              "eligible": true,
+              "view": "color",
+              "reason": "matched best portrait variant per champion"
+            },
+            {
+              "offset": [
+                0,
+                -1
+              ],
+              "top_id": "Fiora",
+              "score": 0.6477003693580627,
+              "margin": 0.006235480308532715,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                0,
+                1
+              ],
+              "top_id": "Fiora",
+              "score": 0.6614418029785156,
+              "margin": 0.015608787536621094,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            }
+          ]
+        },
+        "candidates": [
+          {
+            "id": "Xayah",
+            "score": 0.7317643165588379
+          },
+          {
+            "id": "Fiora",
+            "score": 0.6760615706443787
+          },
+          {
+            "id": "MissFortune",
+            "score": 0.6356388330459595
+          }
+        ],
+        "cache_path": "inventory-reader-cache/136462a06ba754d118c654b71d4808ad4f8d119df3a6b6b6f4d4d7e5ace0de5d/reading.json"
+      },
+      "baseline": {
+        "offset": [
+          0,
+          0
+        ],
+        "acceptance": "unknown",
+        "value": null,
+        "raw_text": null,
+        "skin_id": "114001",
+        "reason": "icon score or margin below the direct-match threshold",
+        "reader": {
+          "score": 0.6711563467979431,
+          "margin": 0.032806336879730225,
+          "reference_sha256": "fc11ff06807eae248e0595654bd09e8d52beb13ceebbe6e140686313b49a7e71"
+        },
+        "candidates": [
+          {
+            "id": "Fiora",
+            "score": 0.6711563467979431
+          },
+          {
+            "id": "Xayah",
+            "score": 0.6383500099182129
+          },
+          {
+            "id": "MissFortune",
+            "score": 0.6339589357376099
+          }
+        ],
+        "attempts": []
+      }
+    },
+    {
+      "time": 164.01385,
+      "slot": "left:row4",
+      "direct": {
+        "acceptance": "unknown",
+        "value": null,
+        "raw_text": null,
+        "skin_id": "114001",
+        "reason": "icon score or margin below the direct-match threshold",
+        "reader": {
+          "score": 0.652325451374054,
+          "margin": 0.02301609516143799,
+          "reference_sha256": "fc11ff06807eae248e0595654bd09e8d52beb13ceebbe6e140686313b49a7e71",
+          "engine": "inventory-reference-v2"
+        },
+        "candidates": [
+          {
+            "id": "Fiora",
+            "score": 0.652325451374054
+          },
+          {
+            "id": "MissFortune",
+            "score": 0.629309356212616
+          },
+          {
+            "id": "Xayah",
+            "score": 0.6286717653274536
+          }
+        ],
+        "attempts": [],
+        "cache_path": "inventory-reader-cache/39250e6a3b5ff1269ec4e8fda41f2a729ec30f103e34cc2e8bcaad80d39bd94d/reading.json"
+      },
+      "resolved": {
+        "acceptance": "accepted",
+        "value": "Xayah",
+        "raw_text": null,
+        "skin_id": null,
+        "reason": "matched scoreboard portrait across center and cardinal views",
+        "reader": {
+          "score": 0.7365113496780396,
+          "margin": 0.07510918378829956,
+          "reference_sha256": "413e04c638cf7f25c231295b914b49947d98092f8b02ab61ac703fe8e4a5baf6",
+          "engine": "inventory-reference-v2",
+          "pixel_shift": [
+            1,
+            0
+          ],
+          "shift_votes": 1,
+          "alignment_views": [
+            {
+              "offset": [
+                0,
+                0
+              ],
+              "top_id": "Fiora",
+              "score": 0.652325451374054,
+              "margin": 0.02301609516143799,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                -1,
+                0
+              ],
+              "top_id": "Fiora",
+              "score": 0.641230583190918,
+              "margin": 0.019564688205718994,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                1,
+                0
+              ],
+              "top_id": "Xayah",
+              "score": 0.7365113496780396,
+              "margin": 0.07510918378829956,
+              "eligible": true,
+              "view": "color",
+              "reason": "matched best portrait variant per champion"
+            },
+            {
+              "offset": [
+                0,
+                -1
+              ],
+              "top_id": "Xayah",
+              "score": 0.6316519975662231,
+              "margin": 0.015839040279388428,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            },
+            {
+              "offset": [
+                0,
+                1
+              ],
+              "top_id": "Fiora",
+              "score": 0.6477435827255249,
+              "margin": 0.006292402744293213,
+              "eligible": false,
+              "view": "color",
+              "reason": "icon score or margin below the direct-match threshold"
+            }
+          ]
+        },
+        "candidates": [
+          {
+            "id": "Xayah",
+            "score": 0.7365113496780396
+          },
+          {
+            "id": "Fiora",
+            "score": 0.66140216588974
+          },
+          {
+            "id": "Ezreal",
+            "score": 0.6249604821205139
+          }
+        ],
+        "cache_path": "inventory-reader-cache/d3332551508977d16f0bc69b22a368b3941c6a936f9fb6b07ff15aba892bb3fa/reading.json"
+      },
+      "baseline": {
+        "offset": [
+          0,
+          0
+        ],
+        "acceptance": "unknown",
+        "value": null,
+        "raw_text": null,
+        "skin_id": "114001",
+        "reason": "icon score or margin below the direct-match threshold",
+        "reader": {
+          "score": 0.652325451374054,
+          "margin": 0.02301609516143799,
+          "reference_sha256": "fc11ff06807eae248e0595654bd09e8d52beb13ceebbe6e140686313b49a7e71"
+        },
+        "candidates": [
+          {
+            "id": "Fiora",
+            "score": 0.652325451374054
+          },
+          {
+            "id": "MissFortune",
+            "score": 0.629309356212616
+          },
+          {
+            "id": "Xayah",
+            "score": 0.6286717653274536
+          }
+        ],
+        "attempts": []
+      }
+    }
+  ],
+  "raw_probe_sha256": "512d351d7990fa152084101dccbf25b7b91e31cf6828c15f1db37572f53d29f4",
+  "raw_scan_sha256": "9384d812969e9ecf9e9f921f9c331808fda9bcbcd3a4b4fdf5f18238e46675e6",
+  "quality_gate_passed": false,
+  "near_best_opening": [
+    {
+      "time": 613.76315,
+      "accepted": 9,
+      "missing_slot": "left:row3",
+      "reason": "scoreboard hides the portrait"
+    },
+    {
+      "time": 613.8799333333334,
+      "accepted": 9,
+      "missing_slot": "left:row3",
+      "reason": "scoreboard hides the portrait"
+    },
+    {
+      "time": 614.0134,
+      "accepted": 9,
+      "missing_slot": "left:row3",
+      "reason": "scoreboard hides the portrait"
+    }
+  ],
+  "missing_portrait_sha256": "89705fff5f8ec5273b09a2cebf70de2497f1c1c99a0678e473cc843d865d15bf"
+}

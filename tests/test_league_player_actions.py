@@ -439,11 +439,12 @@ class CatalogTests(unittest.TestCase):
         detail={'version':'16.13.1','data':{'Example':{'name':'Example','passive':{'name':'Passive','description':'Passive text','image':{'full':'Passive.png'}},'spells':[spell]*4}}}
         def get(url):return (roster if url.endswith('/champion.json') else detail,{'url':url,'sha256':'test','retrieved_at':'now'})
         with tempfile.TemporaryDirectory() as tmp,patch('annotation.league.ability_catalog.JsonCache.get',side_effect=get),patch('annotation.league.ability_catalog.download',return_value=png):
-            report=cache_abilities(tmp);catalog=read_json(Path(report['catalog']))
+            report=cache_abilities(tmp,'16.13.1');catalog=read_json(Path(report['catalog']))
             self.assertEqual(catalog['champions']['Example']['abilities'][1]['tooltip']['unresolved'],['missing'])
             self.assertIsNone(catalog['source_patch']);self.assertFalse(catalog['mechanics_enabled'])
             icon=Path(report['catalog']).parent/'icons/spell/Example.png';icon.write_bytes(b'tampered')
-            self.assertEqual(cache_abilities(tmp)['status'],'partial')
+            with self.assertRaisesRegex(ValueError,'hash mismatch'):
+                cache_abilities(tmp,'16.13.1')
 
 
 if __name__=='__main__':unittest.main()

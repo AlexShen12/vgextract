@@ -267,11 +267,19 @@ def _episode(objective, events):
 
 @consistent_review
 def fuse(store: Store, config) -> dict:
+    from .inventory_timeline import inventory_timeline
+    from .killfeed import TIMELINE, snapshot_rows
     from .normalization import normalize
+    announcements = snapshot_rows(store, TIMELINE)
     observations=normalize(store,config)
-    states, conflicts = fuse_observations(observations)
+    states, conflicts = fuse_observations([row for row in observations if row.get("backend") != "inventory"])
+    snapshots, inventory = inventory_timeline(observations)
+    store.write("inventory_snapshots", snapshots)
+    store.write("inventory_timeline", inventory)
     events = fuse_events(store.rows("event_candidates"))
     events = store.effective(events, "events")
+    if announcements:
+        events = sorted(events + announcements, key=lambda event: (event["start"], event["id"]))
     store.write("states", states)
     store.write("conflicts", conflicts)
     store.write("events", events)

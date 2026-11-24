@@ -1,0 +1,384 @@
+{
+  "video_id": "fFlOTEiQ9x0",
+  "games": {
+    "game-2": {
+      "teams": {
+        "blue": "GEN",
+        "red": "BLG"
+      },
+      "players": [
+        {
+          "name": "Kiin",
+          "champion": "Vayne",
+          "side": "blue",
+          "row": 0
+        },
+        {
+          "name": "Canyon",
+          "champion": "Chogath",
+          "side": "blue",
+          "row": 1
+        },
+        {
+          "name": "Chovy",
+          "champion": "Orianna",
+          "side": "blue",
+          "row": 2
+        },
+        {
+          "name": "Ruler",
+          "champion": "Ezreal",
+          "side": "blue",
+          "row": 3
+        },
+        {
+          "name": "Duro",
+          "champion": "Karma",
+          "side": "blue",
+          "row": 4
+        },
+        {
+          "name": "Bin",
+          "champion": "Gnar",
+          "side": "red",
+          "row": 0
+        },
+        {
+          "name": "Xun",
+          "champion": "Naafiri",
+          "side": "red",
+          "row": 1
+        },
+        {
+          "name": "Knight",
+          "champion": "Cassiopeia",
+          "side": "red",
+          "row": 2
+        },
+        {
+          "name": "Viper",
+          "champion": "Ziggs",
+          "side": "red",
+          "row": 3
+        },
+        {
+          "name": "ON",
+          "champion": "Camille",
+          "side": "red",
+          "row": 4
+        }
+      ],
+      "final_draft_time": 19780,
+      "scoreboard_time": 19816,
+      "draft": [
+        {
+          "side": "blue",
+          "action": "pick",
+          "champion": "Vayne",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "blue",
+          "action": "pick",
+          "champion": "Chogath",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "blue",
+          "action": "pick",
+          "champion": "Orianna",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "blue",
+          "action": "pick",
+          "champion": "Ezreal",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "blue",
+          "action": "pick",
+          "champion": "Karma",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "red",
+          "action": "pick",
+          "champion": "Gnar",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "red",
+          "action": "pick",
+          "champion": "Naafiri",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "red",
+          "action": "pick",
+          "champion": "Cassiopeia",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "red",
+          "action": "pick",
+          "champion": "Ziggs",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "side": "red",
+          "action": "pick",
+          "champion": "Camille",
+          "time": 19780,
+          "state": "locked"
+        },
+        {
+          "action": "exclude",
+          "champion": "Olaf",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "LeeSin",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "Syndra",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "Corki",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "Nami",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "KSante",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "JarvanIV",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "Locke",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "Kalista",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "action": "exclude",
+          "champion": "Renata",
+          "time": 19780,
+          "state": "prior_game_exclusion"
+        },
+        {
+          "side": "blue",
+          "action": "ban",
+          "champion": "Nocturne",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            3,
+            712,
+            65,
+            770
+          ]
+        },
+        {
+          "side": "blue",
+          "action": "ban",
+          "champion": "Qiyana",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            75,
+            712,
+            137,
+            770
+          ]
+        },
+        {
+          "side": "blue",
+          "action": "ban",
+          "champion": "Nautilus",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            147,
+            712,
+            209,
+            770
+          ]
+        },
+        {
+          "side": "blue",
+          "action": "ban",
+          "champion": "Lulu",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            219,
+            712,
+            281,
+            770
+          ]
+        },
+        {
+          "side": "blue",
+          "action": "ban",
+          "champion": "Akali",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            291,
+            712,
+            353,
+            770
+          ]
+        },
+        {
+          "side": "red",
+          "action": "ban",
+          "champion": "Viktor",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            1563,
+            712,
+            1625,
+            770
+          ]
+        },
+        {
+          "side": "red",
+          "action": "ban",
+          "champion": "Renekton",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            1635,
+            712,
+            1697,
+            770
+          ]
+        },
+        {
+          "side": "red",
+          "action": "ban",
+          "champion": "Galio",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            1707,
+            712,
+            1769,
+            770
+          ]
+        },
+        {
+          "side": "red",
+          "action": "ban",
+          "champion": "Vi",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            1779,
+            712,
+            1841,
+            770
+          ]
+        },
+        {
+          "side": "red",
+          "action": "ban",
+          "champion": "Jayce",
+          "time": 19780,
+          "state": "locked",
+          "box": [
+            1851,
+            712,
+            1913,
+            770
+          ]
+        }
+      ]
+    }
+  },
+  "events": [
+    {
+      "game_id": "game-2",
+      "time": 20237.75,
+      "witness_time": 20238.25,
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Ezreal",
+      "victim_champion": "Ziggs"
+    },
+    {
+      "game_id": "game-2",
+      "time": 20253.75,
+      "witness_time": 20254.25,
+      "side": "blue",
+      "kind": "kill",
+      "killer_champion": "Karma",
+      "victim_champion": "Camille"
+    },
+    {
+      "game_id": "game-2",
+      "time": 20306.5,
+      "witness_time": 20307.25,
+      "side": "blue",
+      "kind": "neutral_objective",
+      "killer_champion": "Chogath",
+      "objective": "voidgrubs"
+    },
+    {
+      "game_id": "game-2",
+      "time": 20313.75,
+      "witness_time": 20314.5,
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "Naafiri",
+      "objective": "voidgrubs"
+    },
+    {
+      "game_id": "game-2",
+      "time": 20319.75,
+      "witness_time": 20320.5,
+      "side": "red",
+      "kind": "neutral_objective",
+      "killer_champion": "Naafiri",
+      "objective": "voidgrubs"
+    }
+  ]
+}

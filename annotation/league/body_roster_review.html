@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scoreboard roster review</title>
+<style>
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+body { max-width: 76rem; margin: auto; padding: 1.5rem; }
+video { width: min(100%, 52rem); display: block; background: #111; }
+form, fieldset, article { display: grid; gap: .75rem; }
+fieldset { border: 1px solid #8887; margin: 0; }
+label { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+button, input, select { font: inherit; padding: .4rem; }
+input[type=number] { width: 8rem; }
+#decisions { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: .75rem; }
+article { padding: .75rem; border: 1px solid #8887; border-radius: .4rem; }
+article img { height: 4.5rem; max-width: 100%; object-fit: contain; object-position: left; }
+article .name-crop { height: 2.5rem; }
+article select { width: 100%; }
+.actions { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+[hidden] { display: none; }
+</style>
+<h1>Scoreboard roster review</h1>
+<p id="status" role="status">Loading scoreboard evidence…</p>
+<video id="source" controls preload="metadata" hidden></video>
+<form id="review" hidden>
+  <fieldset>
+    <legend>Playback interval</legend>
+    <label>Start (seconds) <input id="start" type="number" min="0" step="any" required></label>
+    <label>End (seconds) <input id="end" type="number" min="0" step="any" required></label>
+    <label>Reviewer <input id="reviewer" required></label>
+    <label><input id="continuity" type="checkbox" required> I verified that the interval contains one continuous playback segment.</label>
+  </fieldset>
+  <div id="decisions"></div>
+  <div class="actions">
+    <button type="button" id="add">Add portrait decision</button>
+    <button id="save">Save roster review</button>
+    <output id="count" aria-live="polite"></output>
+  </div>
+</form>
+<datalist id="champions"></datalist>
+<template id="decision">
+  <article>
+    <label>Scoreboard observation <select class="witness" required></select></label>
+    <img class="portrait" alt="Portrait crop">
+    <div class="actions"><a class="frame" target="_blank" rel="noopener">Open source frame</a>
+      <button class="seek" type="button">Seek video</button></div>
+    <label>Champion ID <input class="champion" list="champions" required></label>
+    <label><input type="checkbox" class="reject"> Reject this portrait reading</label>
+    <label><input type="checkbox" class="verified" required> I checked this portrait and its team.</label>
+    <div class="name-fields" hidden>
+      <img class="name-crop" alt="Player-name crop from the same row">
+      <label>Verified player name (optional) <input class="name" autocomplete="off"></label>
+    </div>
+    <button type="button" class="remove">Remove decision</button>
+  </article>
+</template>
+<script>
+const $ = selector => document.querySelector(selector);
+const video = $('#source');
+const decisions = $('#decisions');
+let evidence, witnesses;
+
+function count() {
+  const counts = {left: new Set(), right: new Set()};
+  for (const card of decisions.children) {
+    const row = witnesses.get(card.querySelector('.witness').value);
+    const champion = card.querySelector('.champion').value.trim();
+    if (row && champion && card.querySelector('.verified').checked && !card.querySelector('.reject').checked) {
+      counts[row.slot.split(':')[0]].add(champion);
+    }
+  }
+  $('#count').textContent = `Verified portraits · Left ${counts.left.size}/5 · Right ${counts.right.size}/5`;
+}
+
+function add(decision, saved = false) {
+  const card = $('#decision').content.firstElementChild.cloneNode(true);
+  const find = selector => card.querySelector(selector);
+  const select = find('.witness');
+  const champion = find('.champion');
+  const reject = find('.reject');
+  const name = find('.name');
+  const verified = find('.verified');
+  select.append(new Option('Choose a source observation', ''));
+  for (const row of witnesses.values()) {
+    select.append(new Option(`${row.time.toFixed(3)} s · ${row.slot} · ${row.candidate ?? 'Unknown'}`, row.id));
+  }
+  function show() {
+    const row = witnesses.get(select.value);
+    const base = '/evidence/' + encodeURIComponent(select.value) + '/';
+    find('.portrait').hidden = !row;
+    find('.frame').hidden = !row;
+    find('.seek').hidden = !row || !evidence.video;
+    find('.name-fields').hidden = !row?.name_id || reject.checked;
+    champion.disabled = reject.checked;
+    if (row) {
+      find('.portrait').src = base + 'portrait';
+      find('.frame').href = base + 'frame';
+      if (row.name_id) find('.name-crop').src = base + 'name';
+    }
+    count();
+  }
+  select.value = decision?.portrait_id ?? '';
+  champion.value = decision?.champion ?? '';
+  reject.checked = decision?.champion === null;
+  name.value = decision?.name ?? '';
+  verified.checked = saved;
+  select.onchange = () => {
+    champion.value = witnesses.get(select.value)?.candidate ?? '';
+    reject.checked = verified.checked = false;
+    name.value = '';
+    show();
+  };
+  reject.onchange = () => { verified.checked = false; show(); };
+  champion.oninput = () => { verified.checked = false; count(); };
+  verified.onchange = count;
+  find('.remove').onclick = () => { card.remove(); count(); };
+  find('.seek').onclick = () => {
+    video.currentTime = witnesses.get(select.value).time;
+    video.scrollIntoView({block: 'center'});
+  };
+  decisions.append(card);
+  show();
+}
+
+async function load() {
+  const response = await fetch('/api/roster');
+  if (!response.ok) throw new Error('Could not load scoreboard evidence.');
+  evidence = await response.json();
+  witnesses = new Map(evidence.witnesses.map(row => [row.id, row]));
+  $('#champions').replaceChildren(...evidence.champions.map(champion => new Option(champion, champion)));
+  if (evidence.video && !video.getAttribute('src')) video.src = '/source';
+  video.hidden = !evidence.video;
+  const review = evidence.review;
+  [$('#start').value, $('#end').value] = review?.interval ?? evidence.interval;
+  $('#reviewer').value = review?.reviewer ?? '';
+  $('#continuity').checked = !!review?.continuity_verified;
+  $('#status').textContent = evidence.status === 'experimental' ? 'Experimental roster from CPU portrait matching.' :
+    `Roster status · ${evidence.status}` + (Array.isArray(evidence.conflicts) && evidence.conflicts.length ?
+      ` · Conflicting complete reads at ${evidence.conflicts.map(time => time.toFixed(3)).join(', ')} s` : '');
+  decisions.replaceChildren();
+  for (const decision of review?.portraits ?? evidence.suggested) add(decision, !!review);
+  $('#review').hidden = false;
+}
+
+$('#add').onclick = () => add();
+$('#review').onsubmit = async event => {
+  event.preventDefault();
+  $('#save').disabled = true;
+  try {
+    const portraits = Array.from(decisions.children, card => {
+      const row = witnesses.get(card.querySelector('.witness').value);
+      const champion = card.querySelector('.reject').checked ? null : card.querySelector('.champion').value.trim();
+      const name = card.querySelector('.name').value;
+      return {portrait_id: row.id, champion,
+        ...(champion && name.trim() && row.name_id ? {name, name_id: row.name_id, name_crop_sha256: row.name_crop_sha256} : {})};
+    });
+    const response = await fetch('/api/roster', {method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({portraits, revision: evidence.revision, reviewer: $('#reviewer').value.trim(),
+        interval: [Number($('#start').value), Number($('#end').value)], continuity_verified: $('#continuity').checked})});
+    const result = await response.json();
+    if (!response.ok) throw new Error(result.detail);
+    await load();
+    $('#status').textContent = 'Review saved. ' + $('#status').textContent;
+  } catch (error) {
+    $('#status').textContent = error.message;
+  } finally {
+    $('#save').disabled = false;
+  }
+};
+load().catch(error => { $('#status').textContent = error.message; });
+</script>
+</html>

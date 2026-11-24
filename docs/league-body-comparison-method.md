@@ -1,0 +1,30 @@
+# Champion body comparison method
+
+The first submitted study is a development diagnostic. It reuses completed SAM outputs read-only and tests whether removing background pixels helps frozen DINOv2 ViT-S/14 embeddings. It does not establish champion recognition accuracy or promote a reader.
+
+## What the mask means
+
+A SAM mask is a per-frame image: white pixels belong to the tracked object, black pixels are background. The tracker propagates an initial body selection. It can drift to another unit, include effects, or lose the body. Neither the mask nor its health-bar palette establishes champion identity.
+
+The independent source masks are model-reviewed polygon drafts, not human-verified release labels. Their outline approximates the visible body. They can support development debugging but require human correction before release evaluation.
+
+## Initial paired diagnostic
+
+Use the same independently drawn source-mask bounding rectangle for four representations: the complete RGB rectangle, the independent source mask, the verified-seed SAM mask, and the automatic-seed SAM mask. Redact names, health bars, and configured overlays before encoding. Masked pixels outside the body become neutral gray. Because geometry comes from source labels, this measures representation quality conditional on a known location; it does not measure an end-to-end detector.
+
+All 28 visible reference times from five existing 12-second development clips enter the denominator. Keep the six occluded and six unknown times in localization reporting. Two automatic-seed failures remain missing rather than disappearing from coverage. Report mask IoU, false masks on occluded references, extraction counts, and cross-clip appearance similarity. Exclude the query clip from its gameplay comparison candidates. These clips depict the same selected champion in one match, so precision and cross-match generalization remain unmeasured.
+
+Compare those embeddings to a small static-render candidate gallery as ranks only. CommunityDragon OBJ exports and diffuse textures support this first geometry check. Preparation attempted five base champions plus one Darius skin hypothesis. Darius, Talon, and Alistar each have an unambiguous supported OBJ export; Katarina, Aurelion Sol, and the Darius skin hypothesis remain explicit unsupported candidates. Render the supported models at eight headings and two elevations. Static exports do not reproduce animated gameplay poses, materials, or effects. No skin is inferred to be present in the footage, and no identity is accepted from these ranks.
+
+CPU preflight verifies source/mask hashes and the exact DINO code/weights, then computes one 384-dimensional unit embedding. CPU rendering produces the candidate gallery. A dependent GPU allocation embeds and compares the paired inputs; it is capped at 15 minutes. A separate CPU cast-bar pilot reads the five development windows plus a previously inspected short fight at 16 FPS. Neither pilot changes production intake or ongoing jobs.
+
+## Full body identification experiment
+
+1. Collect independently identified crops for all ten champions in the footage, both teams, their confirmed skins, and hard negatives. Record match, source frame, visibility, team, skin evidence, and identity evidence separately. Split by underlying match before choosing galleries or thresholds; duplicates and replays stay together. Build at least 300 track segments, at least 20 per pilot champion, plus 50 non-champion or out-of-gallery negatives. Same-match and cross-match results are separate.
+2. Build the gameplay gallery from other source clips. Prepare an animated rendered gallery only when skeletons and animations are available and conversion succeeds. Use pinned meshes, textures, skeletons, animations, lol2gltf and CPU Blender; audit each admitted skin. Include eight headings, two elevations, and four phases of idle, movement, attack, and supported casts. Unsupported assets and missing poses remain collection gaps.
+3. Detect anonymous proposals from friendly and enemy health bars, then use SAM to track visible pixels. Add proposal refresh and association for late entrants, track splits/merges, and re-entry; the current first-frame proposal prototype is insufficient for general scenes. Keep ownership and track epochs explicit. Evaluate detector misses and mask failures separately from conditional identity quality.
+4. Freeze the DINO encoder, preprocessing, code/weight hashes, and gallery. Compare identical proposals and tracks in six arms: gameplay-only, rendered-only, combined, each with appearance alone or accepted roster/HUD evidence plus continuity. Appearance-only receives no HUD pixels, readable names, or roster. Also pair rectangle and masked representations to verify that segmentation helps.
+5. Rank references by cosine similarity and aggregate the best skin score per champion. Fit acceptance score and runner-up separation on development data. Similarity is not probability. Emit unknown for ambiguous, occluded, out-of-gallery, or conflicting evidence. Keep optional skin identity separate. Require three agreeing accepted samples in five observations at 4 FPS before naming a track; conflicts and tracking/playback/ownership boundaries reset identity.
+6. Freeze policies, then evaluate once on human-verified held-out labels made without reader predictions. Report accepted-ID precision, readable-body coverage, raw counts and confidence intervals separately by team and arm; also localization misses, identity switches, unknown/occluded false matches and skin accuracy. Promotion requires 98% precision and 70% coverage in every required group. Missing labels or cross-match data cannot pass a gate.
+
+Reserve all GPU attempts, including failures, under the eight-hour campaign ceiling and retain one hour for recovery. The initial diagnostic reserves 900 seconds. Full six-arm evaluation and further tracking jobs remain gated on admitted galleries, adequate labels, frozen development policies, and measured runtime. Keep outputs, environment, source snapshot, assets, and logs isolated from historical SAM and reference experiments.

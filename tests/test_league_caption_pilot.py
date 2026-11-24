@@ -316,7 +316,7 @@ class PilotIntegrationTests(unittest.TestCase):
     def run_pilot(self, runner=None, infer=False):
         with patch("annotation.league.caption_pilot.prepare_inputs", return_value=self.audit), patch(
                 "annotation.league.caption_pilot._cpu_detection", side_effect=lambda *args: self.detection()):
-            return caption_pilot(self.store, self.config, 0, 6, infer=infer, runner=runner)
+            return caption_pilot(self.store, self.config, 0, 6, infer=infer, runner=runner, arm="baseline")
 
     def test_cpu_default_reports_missing_scene_and_does_not_load_model(self):
         with patch("annotation.league.caption_pilot.LocalVLRunner", side_effect=AssertionError("GPU loaded")):
@@ -388,6 +388,29 @@ class PilotIntegrationTests(unittest.TestCase):
         self.assertTrue((self.root/"caption_coverage.json").exists())
         self.assertTrue(read_rows(self.root/"scene_proposals.jsonl"))
         self.assertTrue(list((self.root/"requests").glob('*/response.json')))
+
+    def test_body_box_correction_invalidates_scene_until_reinspection(self):
+        runner = self.runner()
+        self.run_pilot(runner, infer=True)
+        emitted = read_rows(self.root/"captions.jsonl")[0]
+        cited = next(r["id"] for r in emitted["evidence_refs"] if r["table"] == "frames")
+        bound = next(r for r in self.body if r["frame_id"] == cited)
+        correct_pilot(self.root, "body_readings", bound["id"], {"actor_region": [210, 200, 310, 400]}, "unreviewed", "fixture")
+        def cites_changed_frame(caption):
+            return {"table": "frames", "id": cited} in caption["evidence_refs"]
+        self.assertFalse(any(cites_changed_frame(c) for c in read_rows(self.root/"captions.jsonl")))
+        self.assertIn("stale_actor_binding_evidence", {r["reason"] for r in read_rows(self.root/"caption_omissions.jsonl")})
+        legacy = read_rows(self.root/"scene_proposals.jsonl")
+        for proposal in legacy:
+            proposal["actor_binding"].pop("body_signatures", None)
+        write_rows(self.root/"scene_proposals.jsonl", legacy)
+        regenerate(self.root)
+        self.assertFalse(any(cites_changed_frame(c) for c in read_rows(self.root/"captions.jsonl")))
+        self.assertIn("stale_actor_binding_evidence", {r["reason"] for r in read_rows(self.root/"caption_omissions.jsonl")})
+        calls = runner.complete.call_count
+        self.run_pilot(runner, infer=True)
+        self.assertGreater(runner.complete.call_count, calls)
+        self.assertTrue(any(cites_changed_frame(c) for c in read_rows(self.root/"captions.jsonl")))
 
     def test_resume_excludes_unvisited_foreign_request_proposals(self):
         runner = self.runner()

@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "id": "midbeast-cast-bars-1080p-v1",
+  "size": [
+    1920,
+    1080
+  ],
+  "calibration_source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "calibration_frames": [
+    93.3,
+    510.51,
+    1660.74,
+    1661.74
+  ],
+  "anchors": [
+    {
+      "name": "selected-hud-frame",
+      "box": [
+        519,
+        980,
+        527,
+        1002
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAWCAIAAABysUo3AAAAgUlEQVR4nK2RUQrDMAxDJTX9GPvY5XqCnWBHW792tX04dklLWVuSQmEiEJD8bIfw+RrG98fMbvcHfpLQkBq+XyS83Qr1QJcJnAdqErFqG6Te9c2WPfcsNWS5UsyEux/Kd8O3mdH++I7UgQogoABRzuJr2a9CaP1ewQlyZkKdxPqYCQpDKocwAPlRAAAAAElFTkSuQmCC",
+      "maximum_error": 0.12
+    },
+    {
+      "name": "header-clock-icon",
+      "box": [
+        1837,
+        4,
+        1855,
+        25
+      ],
+      "png": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAVCAIAAADEqSm4AAADW0lEQVR4nHVUa08bRxS9Mzs7u+v3Azv4ER5NKxOrCag1qYqAiKpSUfJ7kVCTb4kaBVoBggDBNoZaxZRg/Fi8j5nZmco2aaSink9zpXvPPUc6d5CZz8M9IIT+fSul7jfg/9RSDpvUZ8D/gIy5lVKaEiMaBfJuyXgnRvqwlArhOwlyPHZf3uDy6gtxMm2aplQSwRflREOAgQdSICW5EH77VoviydkHSimCwff99qf27Q1EUnrEjNyKoSkNCBk5UEIEzHOA8a+fPpqfn69UKpzzWMQaDJzXv27u7e25rt/v9yUNj+QgZOUmA+4yzwPH//H5sxfrP4fD4ePjY8/zCJamaU4/zDnO4NWr17+9rWZnYoGUzB95k1JCIH765fnK6sr5eWN7e7tarQoxFEkIPC7Nrq2tra+vG4bRuGxzzkFJzDkXXTs/PbO0tHTWONvY2NjbPnG6inNw+uA4cHPT6fV6yWTi5csXU1NTrYtr13WJ8DxzIrG4WBGBePP2TevPbjiJLcvq9QbfLz4ulUqZdDyTyTDGEEIhy0IIhBAEXDcw9Hg81bpoXf19RS1IxGJX191sNrW8vByPx5PJzO7u7sfjarlczmZmLWvHdTgBSnVdRwhxzsexUFIRAvl83jAMz/MODw83NzdbF52JiYnsw6+IRgA4AaQJIZRSLJB8lCwRiMAM7ZzUa5fNudLc2Yej1nk/kkLUIhgEBkE0gYFonHPbthOJRDgcZv4wBJFIVErZuey9e/fetm0AME0zk8nU6/WxSaxbIRXAzv5R2sTfzuQpAeY66Lad0mU8hEMKbjsKTHj0TYlQ82D/0Pe5TgxCKeWMnjUatVqiXC77gh8cfMRKeB4ICToFEoaFhbmFhfl6vT5wBsNwY4wiU9OB5zPGJlPx1dWVB+lYs9k8+vB7q9WSSOZyuaeVH2KxWLPV3trasm1GhqAoVCxiqRhjrHM9WSw+++5JoVCwDOn7vkTSMAyOSK1We//HfvfTtRlNE0I0rCOzWNQQZoxRPTHo9zVdFgqFJ3NFSikgwRg7afx1enoa2DaORk0zMjoucjcmZYAgwjkPxEA6LjEY1jQAIWUglE4NQ9N1SqkQ45PDRCkUDBk0oRxEEdKIZkSRVEEQKOCAQUMKNAKawSVSn/+YfwDyssvpx9fh6AAAAABJRU5ErkJggg==",
+      "maximum_error": 0.12
+    }
+  ],
+  "required_anchors": 2,
+  "scene_box": [
+    0,
+    40,
+    1920,
+    980
+  ],
+  "text_box": [
+    865,
+    762,
+    1030,
+    790
+  ],
+  "progress_box": [
+    755,
+    794,
+    1073,
+    806
+  ],
+  "search_box": [
+    720,
+    740,
+    1200,
+    845
+  ],
+  "masks": [
+    [
+      1225,
+      730,
+      1611,
+      1080
+    ],
+    [
+      0,
+      993,
+      465,
+      1080
+    ],
+    [
+      0,
+      0,
+      315,
+      44
+    ]
+  ],
+  "ocr_confidence": 0.85,
+  "experimental": true,
+  "clock_box": [
+    1854,
+    0,
+    1919,
+    26
+  ],
+  "identity_box": [
+    650,
+    977,
+    738,
+    1080
+  ]
+}

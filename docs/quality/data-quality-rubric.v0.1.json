@@ -1,0 +1,120 @@
+{
+  "rubric_version": "0.1.0-draft",
+  "status": "planning_specification",
+  "implemented_gate_engine": false,
+  "default_access_mode": "reference_only",
+  "video_downloads_authorized": false,
+  "description": "Task-specific quality profiles. This configuration does not run checks or certify sources.",
+  "rating_scale": {
+    "0": "Confirmed defect invalidates intended task in assessed scope",
+    "1": "Material limitations require substantial exclusion or repair",
+    "2": "Usable with explicit bounded restrictions",
+    "3": "Meets declared task requirements within assessed scope, with evidence",
+    "null": "Unassessed, insufficient evidence, or not applicable; gate status distinguishes these"
+  },
+  "gate_statuses": ["pass", "fail", "unknown", "not_applicable"],
+  "decision_states": ["accept_for_task", "restrict", "review", "reject_for_task"],
+  "decision_rules": [
+    "Evaluate required checks for an explicit task and scope; never average ratings to override a failed gate",
+    "Unknown required checks require review and cannot pass vacuously",
+    "Not-applicable status requires a task-specific justification and cannot bypass a required check",
+    "Restrictions create a smaller eligible scope whose required gates must be evaluated",
+    "Confirmed task-invalidating failures reject that task and scope, not all uses of the source",
+    "Sampled acceptance is limited to the declared validated profile and assessed scope",
+    "Changes to source, identity, layout, timeline or reference versions invalidate affected dependents"
+  ],
+  "dimensions": [
+    {"id": "D1", "name": "provenance_and_reproducibility", "layer": "source"},
+    {"id": "D2", "name": "match_and_player_identity", "layer": "source"},
+    {"id": "D3", "name": "visual_legibility", "layer": "source"},
+    {"id": "D4", "name": "timeline_integrity", "layer": "source"},
+    {"id": "D5", "name": "layout_and_actor_binding", "layer": "source"},
+    {"id": "D6", "name": "task_observability_and_completeness", "layer": "source"},
+    {"id": "D7", "name": "audio_availability_and_intelligibility", "layer": "source"},
+    {"id": "D8", "name": "field_event_accuracy_and_coverage", "layer": "extraction"},
+    {"id": "D9", "name": "time_alignment_freshness_and_consistency", "layer": "extraction"},
+    {"id": "D10", "name": "traceability_and_uncertainty", "layer": "extraction"},
+    {"id": "D11", "name": "independent_games_and_sampling_coverage", "layer": "collection"},
+    {"id": "D12", "name": "split_integrity_and_cohort_comparability", "layer": "collection"}
+  ],
+  "task_contracts": {
+    "visible_state_qa": {
+      "required_checks": ["source_traceability", "time_traceability", "required_region_legibility", "layout_calibration", "actor_binding", "reader_validation", "solver_input_evidence"],
+      "restrictions": ["Disable masked or unvalidated fields", "Exclude unknown layout spans", "No hidden-state reconstruction"]
+    },
+    "exact_action_order_qa": {
+      "inherits": "visible_state_qa",
+      "required_checks": ["temporal_resolution", "complete_event_chain", "event_validation", "timing_validation"],
+      "restrictions": ["Reject exact-order claims when decisive frames are missing"]
+    },
+    "longitudinal_observed_behavior": {
+      "required_checks": ["source_traceability", "identity", "match_grouping", "eligible_intervals", "cohort_compatibility", "underlying_label_validation", "observation_denominators"],
+      "restrictions": ["Report conditional-on-observation behavior", "Separate partial and full-match scope", "Do not count reuploads as independent games"]
+    },
+    "speech_transcription": {
+      "required_checks": ["source_traceability", "audio_access", "speech_intelligibility", "language_coverage", "time_traceability"],
+      "restrictions": ["Exclude unusable audio spans", "Do not infer audio quality from metadata or muted playback"]
+    },
+    "patch_dependent_mechanics": {
+      "required_checks": ["source_traceability", "patch_identity", "patch_matched_references", "sufficient_visible_state"],
+      "restrictions": ["Unknown patch disables mechanics claims"]
+    }
+  },
+  "metric_contracts": {
+    "accepted_value_precision": {
+      "numerator": "correct_accepted_predictions",
+      "denominator": "all_accepted_predictions_in_reference_sample_including_false_visible",
+      "zero_denominator": "unknown"
+    },
+    "readable_field_coverage": {
+      "numerator": "reference_readable_cases_with_accepted_prediction",
+      "denominator": "all_reference_readable_cases",
+      "zero_denominator": "unknown"
+    },
+    "supported_yield": {
+      "numerator": "correct_accepted_predictions_on_readable_reference_cases",
+      "denominator": "all_reference_readable_cases",
+      "zero_denominator": "unknown"
+    },
+    "observable_match_coverage": {
+      "numerator": "duration_of_union_of_eligible_game_time_intervals",
+      "denominator": "known_relevant_match_duration",
+      "zero_or_unknown_denominator": "unknown; report observable minutes instead"
+    }
+  },
+  "existing_league_intake_targets": {
+    "provenance": "annotation/league/intake_benchmark.py and annotation/league/README.md as inspected 2026-11-02",
+    "interpretation": "Existing point-estimate gates, not achieved accuracy or generalization guarantees",
+    "number": {"precision_min": 0.99, "readable_coverage_min": 0.90, "correctness": "exact_transcription; report parsed correctness separately"},
+    "text": {"precision_min": 0.95, "readable_coverage_min": 0.70},
+    "bar": {"precision_min": 0.95, "readable_coverage_min": 0.90, "absolute_fraction_tolerance": 0.05},
+    "presence": {"precision_min": 0.99, "coverage_min": 0.95},
+    "applies_to": "Enabled validated profile capabilities only; deferred icon/action capabilities excluded",
+    "zero_denominator_note": "Current benchmark fails missing families; draft metric reports unknown and still prevents acceptance"
+  },
+  "proposed_pilot_budget": {
+    "status": "starting_budget_not_acceptance_threshold",
+    "verified_unique_matches": 10,
+    "development_matches": 6,
+    "frozen_pilot_holdout_matches": 4,
+    "preferred_minimum_sources": 2,
+    "preferred_minimum_layouts": 2,
+    "dispersed_windows_per_source": 5,
+    "window_duration_seconds": 60,
+    "additional_checks": ["Beginning and ending", "Random quiet windows", "Detected layout and continuity changes"],
+    "double_label_fraction": 0.20,
+    "adjudicate_all_answer_critical_disagreements": true,
+    "warning": "Engineering pilot; insufficient by itself for broad high-accuracy claims. Keep match families together and gather new games for later release evaluation."
+  },
+  "reason_codes": [
+    "source_untraceable", "source_version_uncertain", "identity_unverified", "wrong_actor", "match_group_unresolved", "required_region_occluded", "insufficient_effective_resolution", "timeline_gap", "timeline_repeat_unresolved", "layout_uncalibrated", "actor_binding_uncertain", "insufficient_task_coverage", "audio_unavailable", "audio_unintelligible", "reader_unvalidated", "field_accuracy_below_target", "field_coverage_below_target", "event_validation_missing", "timing_uncertain", "stale_state", "missing_evidence", "split_leakage", "patch_unknown", "cohort_mismatch", "insufficient_audit_evidence", "upstream_version_changed"
+  ],
+  "required_record_sections": [
+    "rubric_version", "source_id", "source_url", "access_mode", "match_group_id", "identity_status", "task", "scope", "decision", "required_checks", "metrics", "evidence_refs", "reviewer", "upstream_versions", "limitations"
+  ],
+  "downstream_scorecards": [
+    {"type": "gameplay_caption", "reference": "independent source-grounded atomic claims and salient events", "threshold_status": "to_be_calibrated"},
+    {"type": "speech_transcript", "reference": "independent human transcript and timing", "threshold_status": "to_be_calibrated"},
+    {"type": "generated_qa", "reference": "independently verified answers from actual allowed solver evidence", "threshold_status": "to_be_calibrated"}
+  ]
+}

@@ -120,9 +120,18 @@ def parser():
         if command == "run":
             s.add_argument("--retry-failed", action="store_true")
     s = sub.add_parser("annotate")
+    s.add_argument("--experimental", action="store_true", help="Explicit unvalidated extraction; never satisfies release gates")
     s.add_argument("--retry-failed", action="store_true")
     s.add_argument("--sample-times", type=Path, help="Benchmark labels JSON or a JSON list of source times")
     s.add_argument("--pilot", action="store_true", help="Extract five representative one-minute intervals")
+    s = sub.add_parser("killfeed-intake", help="Read Midbeast kill announcements and propose team roster backfills")
+    s.add_argument("--scoreboard-skim", type=Path, required=True, help="Completed single-match skim of the prepared source")
+    s.add_argument("--start", type=float, help="Start in source-video seconds (defaults to prepared interval)")
+    s.add_argument("--end", type=float, help="End in source-video seconds (defaults to prepared interval)")
+    s = sub.add_parser("minimap-intake", help="Sample lane minion waves and tower visibility on the Midbeast minimap")
+    s.add_argument("--start", type=float, help="Start in source-video seconds (defaults to prepared interval)")
+    s.add_argument("--end", type=float, help="End in source-video seconds (defaults to prepared interval)")
+    s.add_argument("--interval", type=float, help="Seconds between samples (default: 5)")
     for command in ("fuse", "generate-captions", "generate-qa", "evaluate", "preflight", "processor-preview", "cache-assets"):
         sub.add_parser(command)
     s = sub.add_parser("cache-models")
@@ -130,18 +139,22 @@ def parser():
     s.add_argument("--solver", action="store_true")
     s.add_argument("--tracking", action="store_true", help="Also cache the gated SAM 3.1 tracking checkpoint")
     s = sub.add_parser("experiment")
-    s.add_argument("--suite", choices=("crops", "events", "audio", "actions", "captions", "all", *QWEN35_SUITES, "qwen35"), required=True)
+    s.add_argument("--suite", choices=("crops", "events", "audio", "actions", "captions", "caption-events", "all", *QWEN35_SUITES, "qwen35"), required=True)
+    s.add_argument("--arm", choices=("baseline", "event-v2"), default="event-v2", help="Caption occurrence protocol arm")
+    s.add_argument("--collect", action="store_true", help="Caption events: rescore saved predictions without inference")
     s.add_argument("--labels", type=Path, help="Directory containing the independent experiment label manifests")
     s.add_argument("--initialize", action="store_true", help="Save source evidence and unverified label templates without loading GPU models")
     s.add_argument("--draft", action="store_true", help="Diagnostic predictions only; never release acceptance")
     s.add_argument("--freeze", action="store_true", help="For actions/captions: freeze development choices before held-out scoring")
     s.add_argument("--infer", action="store_true", help="Actions/captions: add pinned local scene inference to CPU detection")
+    s.add_argument("--scene-baseline", action="store_true", help="Actions with --infer: score the first 4 FPS scene pass")
     s.add_argument("--prepare-only", action="store_true", help="Qwen3.5: prepare source-only evidence for both splits")
     s.add_argument("--preflight-only", action="store_true", help="Qwen3.5: qualify image/JSON inference for each model")
     s.add_argument("--action-profile", type=Path)
     s.add_argument("--icon-references", type=Path, help="Versioned Q/W/E/R reference manifest (defaults to asset cache)")
     s.add_argument("--assistance", type=Path, help="Obsolete for actions v3 (rejected); use --icon-references")
     s = sub.add_parser("caption-pilot", help="Selected-player caption and clip pilot, isolated from production")
+    s.add_argument("--arm", choices=("baseline", "event-v2"), default="event-v2")
     s.add_argument("--start", type=float, required=True, help="Source-video seconds")
     s.add_argument("--end", type=float, required=True)
     s.add_argument("--infer", action="store_true", help="Run pinned GPU scene inference; default is CPU plus compatible cached scene evidence")
@@ -155,6 +168,9 @@ def parser():
                    help="Compatibility argument; must match the action profile's HUD box")
     s.add_argument("--infer", action="store_true", help="Run the pinned local GPU model; default only saves inspectable inputs")
     s.add_argument("--detect", action="store_true", help="Run CPU player binding, farming and recall detection without loading Qwen")
+    s.add_argument("--cast-bars", action="store_true", help="Opt-in CPU cast bars and description links; experimental")
+    s.add_argument("--ability-catalog", type=Path, help="Pinned ability description catalog for --cast-bars")
+    s.add_argument("--hud-grounded", action="store_true", help="Emit HUD-supported Q/W/E/R activations with optional scene context")
     s.add_argument("--action-profile", type=Path)
     s.add_argument("--icon-references", type=Path, help="Versioned Q/W/E/R reference manifest (defaults to asset cache)")
     s.add_argument("--assistance", type=Path, help="Obsolete for actions v3 (rejected); use --icon-references")
@@ -166,12 +182,21 @@ def parser():
     s.add_argument("--champions", nargs="+", default=["all"], help="Static details to pre-cache; defaults to the complete patch roster")
     s.add_argument("--base-only", action="store_true", help="Roster/items only; champion mechanics lookups will need network later")
     s = sub.add_parser("cache-abilities", help="Cache official descriptions independently of the footage patch")
-    s.add_argument("--reference-version", default="16.13.1")
+    s.add_argument("--reference-version", default="16.22.1")
+    s.add_argument("--communitydragon-version", help="Also cache pinned skin references and separate ability supplements")
     s.add_argument("--champions", nargs="+", default=["all"])
+    s = sub.add_parser("cache-inventory-references", help="Cache versioned item icons, descriptions and portraits")
+    s.add_argument("--reference-version", default="16.22.1")
+    s.add_argument("--communitydragon-version", help="Also cache the matching skin portrait catalog")
+    for command in ("cache-skin-references", "cache-reference-bundle"):
+        s = sub.add_parser(command, help="Cache pinned modern references without changing footage mechanics")
+        s.add_argument("--reference-version", default="16.22.1")
+        s.add_argument("--communitydragon-version", default="16.22")
     s = sub.add_parser("cache-qwen35-references", help="Cache versioned portraits and ability icons without enabling mechanics")
     s.add_argument("--reference-version", default="16.13.1")
     s = sub.add_parser("review")
     s.add_argument("--port", type=int, default=8765)
+    s.add_argument("--body-campaign", type=Path, help="Enable the opt-in body identity evidence view")
     s = sub.add_parser("report")
     s.add_argument("--gpu-hour-rate", type=float)
     return p
@@ -194,20 +219,27 @@ def main(argv=None):
         store.root.mkdir(parents=True, exist_ok=True)
         store.install_signals()
         resolver = None
-        if (config.mechanics and args.command != "cache-abilities") or args.command == "cache-references":
+        if (config.mechanics and args.command not in {"cache-abilities", "cache-inventory-references", "cache-skin-references", "cache-reference-bundle", "cache-qwen35-references"}) or args.command == "cache-references":
             if not config.patch:
                 raise ValueError("Static mechanics requires an explicitly established patch")
             resolver = Resolver(Patch(**config.patch), JsonCache(args.cache_dir, offline=args.offline))
         if args.command == "review":
             from .review import create_app
             import uvicorn
-            uvicorn.run(create_app(store), host="127.0.0.1", port=args.port)
+            uvicorn.run(create_app(store, body_campaign=args.body_campaign), host="127.0.0.1", port=args.port)
             return 0
         suite_writer = parallel_suite(args)
         with batch_writer(store, suite_writer):
             started = time.monotonic()
             command = args.command
             result = {}
+            if command in {"cache-abilities","cache-inventory-references","cache-skin-references","cache-reference-bundle"}:
+                cd_version = getattr(args,"communitydragon_version",None)
+                if args.reference_version == "latest" or cd_version == "latest":
+                    from .reference_bundle import resolve_versions
+                    dd, cd = resolve_versions(config.asset_cache,args.reference_version,cd_version or "latest",offline=args.offline)
+                    args.reference_version = dd
+                    if cd_version is not None:args.communitydragon_version = cd
             if command in {"annotate", "run", "prepare", "processor-preview", "preflight"} and store.path("manifest.json").exists():
                 from .intake import require_v2
                 require_v2(store)
@@ -225,6 +257,21 @@ def main(argv=None):
             if command == "cache-abilities":
                 from .ability_catalog import cache_abilities
                 result = cache_abilities(config.asset_cache, args.reference_version, args.champions, offline=args.offline)
+            if command == "cache-inventory-references":
+                from .inventory_references import cache_inventory_references
+                result = cache_inventory_references(config.asset_cache, args.reference_version, args.cache_dir, offline=args.offline)
+            if command in {"cache-abilities", "cache-inventory-references"} and args.communitydragon_version:
+                from .reference_bundle import cache_skins
+                skins = cache_skins(config.asset_cache, args.reference_version, args.communitydragon_version, offline=args.offline)
+                result["communitydragon"] = {k: skins[k] for k in ("root", "status", "failures")}
+            if command in {"cache-skin-references", "cache-reference-bundle"}:
+                from .reference_bundle import cache_skins, cache_bundle
+                if command == "cache-skin-references":
+                    cached = cache_skins(config.asset_cache, args.reference_version, args.communitydragon_version, offline=args.offline)
+                    result = {k: cached[k] for k in ("root", "status", "failures")}
+                else:
+                    result = cache_bundle(config.asset_cache, args.cache_dir, args.reference_version,
+                                          args.communitydragon_version, offline=args.offline)
             if command == "cache-assets":
                 if not config.patch:
                     raise ValueError("Deferred visual assets require an explicitly established patch")
@@ -233,6 +280,13 @@ def main(argv=None):
             if command == "intake-benchmark":
                 from .intake_benchmark import benchmark
                 result = benchmark(store, config, args.labels, freeze=args.freeze, draft=args.draft)
+            if command == "killfeed-intake":
+                from .killfeed import run
+                result = run(store, config.asset_cache, args.scoreboard_skim, args.start, args.end)
+            if command == "minimap-intake":
+                from .minimap import DEFAULT_INTERVAL, run
+                interval = DEFAULT_INTERVAL if args.interval is None else args.interval
+                result = run(store, args.start, args.end, interval)
             if command == "processor-preview":
                 from .inference import processor_preview
                 result = processor_preview(store, config)
@@ -251,6 +305,8 @@ def main(argv=None):
                 from .qwen35_references import cache_references
                 result = cache_references(config.asset_cache, args.reference_version, offline=args.offline)
             if command == "experiment":
+                if args.scene_baseline and (args.suite != "actions" or not args.infer):
+                    raise ValueError("--scene-baseline requires --suite actions --infer")
                 if args.suite in (*QWEN35_SUITES, "qwen35"):
                     from .qwen35_study import experiment_qwen35
                     if args.assistance:
@@ -258,6 +314,14 @@ def main(argv=None):
                     result = experiment_qwen35(store, config, args.suite, labels=args.labels,
                         initialize_labels=args.initialize, draft=args.draft, freeze=args.freeze, infer=args.infer,
                         preflight=args.preflight_only, prepare_only=args.prepare_only, action_profile=args.action_profile, icon_references=args.icon_references)
+                elif args.suite == "caption-events":
+                    from .caption_event_benchmark import experiment
+                    if args.assistance:
+                        raise ValueError("Caption events do not accept identity assistance")
+                    result = experiment(store, config, labels=args.labels, arm=args.arm, initialize_labels=args.initialize,
+                        draft=args.draft, freeze=args.freeze, infer=args.infer, prepare_only=args.prepare_only,
+                        preflight=args.preflight_only, collect=args.collect, action_profile=args.action_profile,
+                        icon_references=args.icon_references)
                 elif args.suite == "captions":
                     from .caption_benchmark import experiment_captions
                     if args.assistance:
@@ -270,7 +334,8 @@ def main(argv=None):
                     result = experiment_actions(store, config, labels=args.labels, initialize=args.initialize,
                                                 draft=args.draft, freeze=args.freeze,
                                                 action_profile=args.action_profile, assistance=args.assistance, icon_references=args.icon_references,
-                                                infer=args.infer)
+                                                infer=args.infer, scene_baseline=args.scene_baseline,
+                                                preflight=args.preflight_only)
                 else:
                     if args.infer:
                         raise ValueError("experiment --infer is available only with --suite actions or captions")
@@ -281,11 +346,13 @@ def main(argv=None):
                 from .action_v3 import action_window
                 result = action_window(store, config, args.start, args.end, fps=args.fps,
                                        hud_box=args.hud_box, infer=args.infer, detect=args.detect,
-                                       action_profile=args.action_profile, assistance=args.assistance, icon_references=args.icon_references)
+                                       action_profile=args.action_profile, assistance=args.assistance,
+                                       icon_references=args.icon_references, hud_grounded=args.hud_grounded,
+                                       cast_bars=args.cast_bars, ability_catalog=args.ability_catalog)
             if command == "caption-pilot":
                 from .caption_pilot import caption_pilot
                 result = caption_pilot(store, config, args.start, args.end, infer=args.infer,
-                                       action_profile=args.action_profile, icon_references=args.icon_references)
+                                       action_profile=args.action_profile, icon_references=args.icon_references, arm=args.arm)
             if command == "preflight":
                 from .intake import preflight
                 result = preflight(store, config)
@@ -306,7 +373,8 @@ def main(argv=None):
                     if isinstance(samples, dict):
                         samples = [f["time"] for f in samples["frames"]]
                 result = annotate(store, config, retry_failed=args.retry_failed, sample_times=samples,
-                                  pilot=getattr(args, "pilot", False))
+                                  pilot=getattr(args, "pilot", False),
+                                  experimental=getattr(args, "experimental", False))
             if command in {"fuse", "generate-captions", "generate-qa", "evaluate", "run"}:
                 ensure_fused(store, config)
             if command in {"generate-captions", "run"}:
@@ -333,6 +401,10 @@ def main(argv=None):
             atomic_json(store.path(f"timings/{timing_key}.json"), {"wall_seconds": time.monotonic()-started,
                        "completed_at": now(), "command": command})
             print(json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False))
+            if command == "experiment" and args.scene_baseline:
+                return 0 if result.get("status") in {
+                    "completed_experimental", "development_frozen", "unverified_scene_labels_created"
+                } else 1
             return 2 if ((command == "experiment" and result.get("experimental", True)) or
                          (command == "cache-references" and result.get("uncached_champions")) or
                          (command == "intake-benchmark" and not result.get("passed"))) else 0

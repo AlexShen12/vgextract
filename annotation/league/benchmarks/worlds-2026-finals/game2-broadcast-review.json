@@ -1,0 +1,83 @@
+{
+  "video_id": "fFlOTEiQ9x0",
+  "segments": [
+    {
+      "start": 19720,
+      "end": 19782,
+      "broadcast_context": "non_match",
+      "visible_content": "draft"
+    },
+    {
+      "start": 19782,
+      "end": 19815,
+      "broadcast_context": "non_match",
+      "visible_content": "stage"
+    },
+    {
+      "start": 19815,
+      "end": 19870,
+      "broadcast_context": "live",
+      "visible_content": "gameplay"
+    },
+    {
+      "start": 20210,
+      "end": 20211.5,
+      "broadcast_context": "live",
+      "visible_content": "gameplay"
+    },
+    {
+      "start": 20211.5,
+      "end": 20214,
+      "broadcast_context": "non_match",
+      "visible_content": "transition"
+    },
+    {
+      "start": 20214,
+      "end": 20227,
+      "broadcast_context": "replay",
+      "visible_content": "gameplay"
+    },
+    {
+      "start": 20227,
+      "end": 20234.5,
+      "broadcast_context": "replay",
+      "visible_content": "reaction"
+    },
+    {
+      "start": 20234.5,
+      "end": 20236,
+      "broadcast_context": "non_match",
+      "visible_content": "transition"
+    },
+    {
+      "start": 20236,
+      "end": 20264.5,
+      "broadcast_context": "live",
+      "visible_content": "gameplay"
+    },
+    {
+      "start": 20264.5,
+      "end": 20266.5,
+      "broadcast_context": "non_match",
+      "visible_content": "transition"
+    },
+    {
+      "start": 20266.5,
+      "end": 20289.5,
+      "broadcast_context": "replay",
+      "visible_content": "gameplay"
+    },
+    {
+      "start": 20289.5,
+      "end": 20291.5,
+      "broadcast_context": "non_match",
+      "visible_content": "transition"
+    },
+    {
+      "start": 20291.5,
+      "end": 20335,
+      "broadcast_context": "live",
+      "visible_content": "gameplay"
+    }
+  ]
+}

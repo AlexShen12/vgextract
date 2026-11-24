@@ -6,8 +6,9 @@ from pathlib import Path
 
 from .action_benchmark import detection_metrics, identity_metrics, initialize_actions, validate_labels
 from .action_icons import AbilityIdentity
-from .action_v3 import action_window, load_profile
+from .action_v3 import action_window, cache_runtime, load_profile
 from .action_state import POLICY
+from .action_scene_score import INTERVAL_IOU, POINT_TOLERANCE, scene_ledger, summarize_scene, validate_scene_references
 from .core import atomic_json, digest, implementation_hash, read_json, read_rows
 from .local_models import LOCK, LocalVLRunner
 from .intake_profile import check_box
@@ -35,7 +36,7 @@ def validate(store, data, profile, draft):
                 check_box(row["bar_box"], profile["size"])
                 check_box(row["actor_region"], profile["size"])
         for row in clip["actions"]:
-            if row.get("kind") not in {"creep_credit","minion_last_hit","jungle_last_hit","recall","ability_cast","basic_attack","movement","item_use","gold_change"}:
+            if row.get("kind") not in {"creep_credit","minion_last_hit","jungle_last_hit","recall","ability_cast","basic_attack","movement","item_use","gold_change","base_arrival"}:
                 raise ValueError("Unknown independent action kind")
             if row["kind"] == "recall" and row.get("terminal_status") not in {"completed","interrupted","ending_unknown"}:
                 raise ValueError("Recall references need an explicit terminal status")
@@ -123,9 +124,18 @@ def score_clip(clip, report):
 
 
 def experiment_actions(store, config, *, labels=None, initialize=False, draft=False, freeze=False,
-                       action_profile=None, assistance=None, runner=None, icon_references=None, infer=False):
+                       action_profile=None, assistance=None, runner=None, icon_references=None, infer=False,
+                       scene_baseline=False, preflight=False):
     if assistance:
         raise ValueError("--assistance is obsolete for actions v3; use --icon-references")
+    if scene_baseline and (not infer or sum((initialize, draft, freeze, preflight)) > 1):
+        raise ValueError("Scene baseline requires --infer and at most one initialization, draft, freeze or preflight flag")
+    if scene_baseline:
+        directory = Path(labels) if labels else store.path("benchmarks/actions-v3/scene-baseline-v1")
+        if initialize:
+            return initialize_scene_baseline(store, directory, action_profile)
+        return experiment_scene_baseline(store, config, directory, draft=draft, freeze=freeze, preflight=preflight,
+                                         action_profile=action_profile, runner=runner, icon_references=icon_references)
     directory = Path(labels) if labels else store.path("benchmarks/actions-v3")
     target = directory/"actions.json"
     profile = load_profile(action_profile)
@@ -191,6 +201,114 @@ def experiment_actions(store, config, *, labels=None, initialize=False, draft=Fa
         raise
     finally:
         if infer and owned and runner:
+            runner.close()
+        atomic_json(path, report)
+    return report
+
+
+def initialize_scene_baseline(store, directory, action_profile):
+    target = directory/"actions.json"
+    if target.exists():
+        raise ValueError("Refusing to overwrite existing independent scene labels")
+    prior = store.path("benchmarks/actions-v3/actions.json")
+    if not prior.exists():
+        raise ValueError("Initialize the actions v3 benchmark before forking its scene labels")
+    data = read_json(prior)
+    validate(store, data, load_profile(action_profile), draft=True)
+    data.update(forked_from=str(prior), independent_of_predictions=False, labeler=None)
+    for clip in data["clips"]:
+        clip.update(verified=False, independent_of_predictions=False, labeler=None, inspection_note="",
+                    identities=[], bindings=[], transitions=[], actions=[], case_tags=[])
+    atomic_json(target, data)
+    return {"status": "unverified_scene_labels_created", "labels": str(target), "clips": len(data["clips"])}
+
+
+def experiment_scene_baseline(store, config, directory, *, draft, freeze, preflight, action_profile, runner, icon_references):
+    target = directory/"actions.json"
+    data = read_json(target)
+    profile = load_profile(action_profile)
+    clips = validate(store, data, profile, draft=draft or freeze or preflight)
+    development = [clip for clip in clips if clip["split"] == "development"]
+    if not preflight:
+        if data.get("independent_of_predictions") is not True or not data.get("labeler") or any(
+            c.get("verified") is not True or c.get("independent_of_predictions") is not True or not c.get("labeler")
+            for c in development
+        ):
+            raise ValueError("Independent verified development scene labels required")
+        validate_scene_references(development if draft or freeze else clips)
+    reference = Path(icon_references) if icon_references else Path(config.asset_cache)/"manifest.json"
+    signature = {"profile": profile, "policy": POLICY, "masks": config.masks, "source": data["source_sha256"],
+                 "implementation": implementation_hash(["action_scene_score.py", "action_v3.py", "action_body.py",
+                     "action_events.py", "action_icons.py", "action_benchmark_v3.py", "action_benchmark.py",
+                     "action_pipeline.py", "action_state.py", "numeric_reader.py", "readers.py", "media.py",
+                     "playback.py", "core.py", "local_models.py"]),
+                 "icon_references": AbilityIdentity(reference).signature if reference.exists() else None,
+                 "model": read_json(LOCK)["models"]["intake"], "development": development,
+                 "matching": {"point_tolerance_seconds": POINT_TOLERANCE, "minimum_interval_iou": INTERVAL_IOU}}
+    recipe = digest(signature)
+    output = store.path("experiments/actions-v3-scene-baseline/benchmarks")
+    development_path = output/f"development-{recipe[:20]}.json"
+    frozen = directory/"scene-baseline-freeze.json"
+    if freeze:
+        previous = read_json(development_path) if development_path.exists() else {}
+        if previous.get("status") != "completed_experimental" or not previous.get("proposal_count") or not previous.get("request_statuses", {}).get("accepted"):
+            raise ValueError("Complete development scene inference with accepted requests and proposals before freezing")
+        freeze_record = {"signature": recipe, "runtime": previous["runtime"], "choices": signature}
+        if frozen.exists() and read_json(frozen) != freeze_record:
+            raise ValueError("Scene baseline already frozen with different settings; use a new label revision")
+        atomic_json(frozen, freeze_record)
+        return {"status": "development_frozen", "freeze": str(frozen)}
+
+    evaluating = not (draft or preflight)
+    if evaluating and (not frozen.exists() or read_json(frozen)["signature"] != recipe):
+        raise ValueError("Freeze unchanged development scene choices before held-out scoring")
+    selected = development[:1] if preflight else development if draft else [c for c in clips if c["split"] == "held_out"]
+    path = (output/f"preflight-{recipe[:20]}.json" if preflight else development_path if draft
+            else output/f"held-out-{digest([data, recipe])[:20]}.json")
+    report = {"schema_version": 1, "experimental": True, "mode": "scene-baseline", "report": str(path),
+              "status": "running_experimental", "split": "held_out" if evaluating else "development",
+              "preflight": preflight, "signature": recipe, "labels_sha256": digest(data),
+              "source_sha256": data["source_sha256"], "model": signature["model"], "scene_fps": 4,
+              "hud_pixels_visible": True, "matching": signature["matching"], "clips": {}, "quality_metrics": None}
+    owned = runner is None
+    try:
+        if owned:
+            runner = LocalVLRunner(store, config.vl_python or os.environ.get("LEAGUE_VL_PYTHON", ""), config.asset_cache, image_limit=8)
+        report["runtime"] = cache_runtime(runner.identity)
+        if evaluating and report["runtime"] != read_json(frozen)["runtime"]:
+            raise ValueError("Held-out scene runtime differs from the frozen development runtime")
+        statuses = Counter()
+        report["proposal_count"] = 0
+        for clip in selected:
+            if digest(read_json(target)) != report["labels_sha256"]:
+                raise ValueError("Scene reference labels changed during inference")
+            result = action_window(store, config, clip["start"], clip["end"], infer=True, runner=runner,
+                                   action_profile=action_profile, icon_references=icon_references, scene_baseline=True)
+            counts = Counter(request["status"] for request in result["requests"])
+            statuses.update(counts)
+            proposals = len(read_rows(Path(result["results"]["scene_baseline"]["proposals"])))
+            report["proposal_count"] += proposals
+            record = {"report": result["report"], "resources": result["resource_metrics"], "requests": dict(counts),
+                      "proposal_count": proposals, "scene_frames": result["results"]["scene_baseline"]["sampled_frames"]}
+            if evaluating:
+                record["ledger"] = scene_ledger(clip, result)
+            report["clips"][clip["id"]] = record
+            report["request_statuses"] = dict(statuses)
+            atomic_json(path, report)
+        if digest(read_json(target)) != report["labels_sha256"]:
+            raise ValueError("Scene reference labels changed during inference")
+        if not statuses:
+            raise ValueError("No scene requests were made for this split")
+        if preflight and not statuses["accepted"]:
+            raise ValueError("Scene preflight produced no accepted model responses")
+        if evaluating:
+            report["quality_metrics"] = summarize_scene(c["ledger"] for c in report["clips"].values())
+        report["status"] = "completed_experimental"
+    except BaseException as exc:
+        report.update(status="failed_experimental", error=str(exc))
+        raise
+    finally:
+        if owned and runner:
             runner.close()
         atomic_json(path, report)
     return report

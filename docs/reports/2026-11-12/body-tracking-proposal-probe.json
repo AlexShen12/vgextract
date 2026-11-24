@@ -1,0 +1,73 @@
+{
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "labels_sha256": "1f93427bd50dca676349d07aa378a752eb80f44bef4cb15a38498c4f7bec27a2",
+  "implementation": "4b94e6cd90f8c27ae3e1c99d19b75e27a0c48686b9f5a40f38ccb15edd2bbc51",
+  "human_verified": false,
+  "scope": "development-only CPU proposal audit on selected Darius; no new SAM run",
+  "clips": [
+    {
+      "clip": "event-development-00",
+      "frames": 192,
+      "stable_proposals": 34,
+      "late_seeds": 34,
+      "visible_labels": 6,
+      "box_iou_at_least_half": 0,
+      "friendly_matches": 0,
+      "native_time_matches": 6,
+      "raw_friendly_proposal_covers_half_of_body_box": 6,
+      "raw_friendly_best_iou": 0.30666666666666664
+    },
+    {
+      "clip": "event-development-01",
+      "frames": 192,
+      "stable_proposals": 76,
+      "late_seeds": 72,
+      "visible_labels": 5,
+      "box_iou_at_least_half": 0,
+      "friendly_matches": 0,
+      "native_time_matches": 5,
+      "raw_friendly_proposal_covers_half_of_body_box": 5,
+      "raw_friendly_best_iou": 0.4249090909090909
+    },
+    {
+      "clip": "event-development-02",
+      "frames": 192,
+      "stable_proposals": 61,
+      "late_seeds": 59,
+      "visible_labels": 6,
+      "box_iou_at_least_half": 0,
+      "friendly_matches": 0,
+      "native_time_matches": 6,
+      "raw_friendly_proposal_covers_half_of_body_box": 6,
+      "raw_friendly_best_iou": 0.4148181818181818
+    },
+    {
+      "clip": "event-development-03",
+      "frames": 192,
+      "stable_proposals": 96,
+      "late_seeds": 94,
+      "visible_labels": 6,
+      "box_iou_at_least_half": 0,
+      "friendly_matches": 0,
+      "native_time_matches": 6,
+      "raw_friendly_proposal_covers_half_of_body_box": 6,
+      "raw_friendly_best_iou": 0.306
+    },
+    {
+      "clip": "event-development-06",
+      "frames": 192,
+      "stable_proposals": 12,
+      "late_seeds": 11,
+      "visible_labels": 5,
+      "box_iou_at_least_half": 0,
+      "friendly_matches": 0,
+      "native_time_matches": 5,
+      "raw_friendly_proposal_covers_half_of_body_box": 5,
+      "raw_friendly_best_iou": 0.45666666666666667
+    }
+  ],
+  "visible_labels": 28,
+  "box_iou_at_least_half": 0,
+  "raw_friendly_proposal_covers_half_of_body_box": 28,
+  "sam_masks_rerun": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "label_method": "Source-only visual review at 2 FPS and native 4 FPS crops around transitions. The onset lies between an empty sample and a visible entry. Model-assisted review of one recording, with no human verification.",
+  "windows": [[262, 276], [328, 356], [372, 388], [1240, 1275], [1297, 1332], [1655, 1674]],
+  "regression_windows": [[1297, 1332], [1655, 1674]],
+  "champion_announcements": [
+    {"onset": [334.751083, 335.001333], "visible_through": 339.506, "killer": "Xayah", "victim": "Alistar"},
+    {"onset": [334.751083, 335.001333], "visible_through": 339.506, "killer": "Katarina", "victim": "Xayah"},
+    {"onset": [343.009333, 343.259583], "visible_through": 348.014, "killer": "Ahri", "victim": "Talon"},
+    {"onset": [1309.508200, 1310.008700], "visible_through": 1314.513, "killer": "JarvanIV", "victim": "Katarina"},
+    {"onset": [1311.510200, 1311.760450], "visible_through": 1316.515, "killer": "JarvanIV", "victim": "Alistar"},
+    {"onset": [1323.755767, 1324.006017], "visible_through": 1328.511, "killer": "Ahri", "victim": "Talon"},
+    {"onset": [1657.756100, 1658.006350], "visible_through": 1662.761, "killer": "Xayah", "victim": "AurelionSol"},
+    {"onset": [1661.760100, 1662.010350], "visible_through": 1666.515, "killer": "Darius", "victim": "Ahri"},
+    {"onset": [1665.263600, 1665.513850], "visible_through": 1670.002, "killer": "Darius", "victim": "Singed"}
+  ],
+  "non_champion_announcements": [
+    {"onset": [1662.010350, 1662.260600], "visible_through": 1667.015, "killer": "Talon", "target": "tower"}
+  ]
+}

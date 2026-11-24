@@ -156,6 +156,13 @@ class Config:
     @classmethod
     def load(cls, path: Path) -> "Config":
         data = read_json(path)
+        # Assembled Pass 1 bundles resolve their portable paths from the bundle,
+        # independently of the caller's working directory. Legacy runs keep
+        # their existing repository-relative path behavior.
+        if (path.parent / "pass1_manifest.json").exists():
+            for key in ("source_video", "layout_profile", "asset_cache"):
+                if data.get(key) and not Path(data[key]).is_absolute():
+                    data[key] = str((path.parent / data[key]).resolve())
         data["routes"] = [Route(**route) for route in data["routes"]]
         result = cls(**data)
         result.validate()
@@ -310,11 +317,15 @@ class Store:
         manifest = read_json(self.path("manifest.json"))
         if manifest.get("schema_version", 1) >= 2:
             from .intake_profile import load_profile
+            profile = load_profile(config.layout_profile)
+            implementation = ["intake.py", "hybrid_intake.py", "readers.py", "vl_reader.py", "numeric_reader.py", "playback.py", "intake_profile.py", "local_models.py"]
+            if profile.get("inventory"):
+                implementation.extend(["inventory_reader.py", "inventory_references.py", "reference_bundle.py"])
             return digest({"source": manifest["source"]["sha256"], "interval": manifest["interval"],
-                "fps": config.fps, "masks": config.masks, "profile": load_profile(config.layout_profile),
+                "fps": config.fps, "masks": config.masks, "profile": profile,
                 "engine": config.intake_engine,
                 "readers": read_json(self.path("intake_runtime.json")) if self.path("intake_runtime.json").exists() else None,
-                "implementation": implementation_hash(["intake.py", "hybrid_intake.py", "readers.py", "vl_reader.py", "numeric_reader.py", "playback.py", "intake_profile.py", "local_models.py"]),
+                "implementation": implementation_hash(implementation),
                 "schema": SCHEMA})
         observer_config = config.to_dict()
         for key in ("max_questions", "solver_max_frames", "solver_max_pixels"):
@@ -338,7 +349,18 @@ class Store:
         elif stage == "generate-captions":
             extra = {"implementation": implementation_hash(["captions.py"])}
         elif stage == "fuse":
-            extra = {"implementation": implementation_hash(["timeline.py", "normalization.py"])}
+            extra = {"implementation": implementation_hash(["timeline.py", "normalization.py", "inventory_timeline.py"])}
+            if self.path("pass1_manifest.json").exists():
+                assembled = read_json(self.path("pass1_manifest.json"))
+                extra["pass1"] = {"producers": assembled.get("producers", {}),
+                                  "revision": assembled.get("final_revision"),
+                                  "implementation": implementation_hash(["pass1.py", "pass1_timeline.py"])}
+            if self.path("killfeed/active.json").exists():
+                from .killfeed import TIMELINE, active_snapshot, snapshot_dir
+                from .media import file_hash
+                snapshot = active_snapshot(self)
+                timeline = snapshot_dir(self, snapshot) / (TIMELINE + ".jsonl")
+                extra["killfeed"] = {"snapshot": snapshot, "timeline": file_hash(timeline) if timeline.is_file() else None}
         elif stage in {"evaluate", "report"}:
             manifest = read_json(self.path("manifest.json"))
             extra = {"max_frames": config.solver_max_frames, "max_pixels": config.solver_max_pixels,

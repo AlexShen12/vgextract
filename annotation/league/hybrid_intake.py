@@ -14,6 +14,7 @@ from .core import Store, atomic_json, digest, implementation_hash, read_json, ui
 from .intake import (
     decoded_frames,
     evidence_crop,
+    image_hash,
     observation,
     subject,
     verify_readings,
@@ -22,6 +23,8 @@ from .intake import (
     collect,
 )
 from .intake_profile import load_profile, layout_matches
+from .inventory_reader import CARDINAL_SHIFTS, InventoryReader
+from .inventory_references import load_inventory_references, reference_root
 from .local_models import LocalVLRunner, worker_signature, LOCK
 from .playback import PlaybackTracker
 from .vl_reader import VLReader
@@ -41,7 +44,7 @@ DEFERRED = {
 def enabled_fields(profile):
     result = []
     for field in profile["fields"]:
-        if field.get("enabled", True) and field["reader"] != "icon":
+        if field.get("enabled", True) and (field["reader"] != "icon" or field.get("backend") == "inventory"):
             backend = field.get(
                 "backend",
                 (
@@ -50,9 +53,9 @@ def enabled_fields(profile):
                     else "bar" if field["reader"] == "bar" else "tesseract"
                 ),
             )
-            if backend not in {"vl", "bar", "tesseract"}:
+            if backend not in {"vl", "bar", "tesseract", "inventory"}:
                 raise ValueError(
-                    "Production intake supports only VL, Tesseract and direct bars"
+                    "Unsupported production intake backend"
                 )
             if backend == "tesseract" and field["parser"] not in {
                 "clock",
@@ -61,6 +64,8 @@ def enabled_fields(profile):
                 "integer",
                 "level",
                 "kda",
+                "health",
+                "resource",
             }:
                 continue
             result.append({**field, "backend": backend})
@@ -96,6 +101,14 @@ def runtime(store, config):
             else None
         ),
     }
+    if any(f["backend"] == "inventory" for f in fields):
+        version = profile["inventory"]["reference_version"]
+        references = load_inventory_references(reference_root(config.asset_cache, version), version)
+        signature["inventory"] = {"reference_version": version, "catalog_id": digest(references)}
+        if profile["inventory"].get("communitydragon_version"):
+            from .reference_bundle import load_skins, skin_root
+            skins = load_skins(skin_root(config.asset_cache, version, profile["inventory"]["communitydragon_version"]))
+            signature["inventory"]["skin_catalog_id"] = digest(skins)
     prepared = None
     if any(f["backend"] == "vl" for f in fields):
         if not python:
@@ -131,7 +144,7 @@ def preflight(store, config):
     result = {
         "runtime": signature,
         "layout": preview(store, config),
-        "deferred": DEFERRED,
+        "deferred": load_profile(config.layout_profile).get("deferred", DEFERRED),
     }
     if prepared is not None:
         worker = LocalVLRunner(
@@ -251,9 +264,21 @@ class _IntakeReader:
         self.profile, self.signature, self.key = profile, signature, key
         self.worker, self.pool = worker, pool
         self.fields = enabled_fields(profile)
+        from .experimental_resume import reader_signature
+        self.content_signature = reader_signature(Path(__file__).parent)
         self.tracker = PlaybackTracker(manifest["source"]["sha256"], config.fps)
         self.numeric = NumericReader(profile["thresholds"]["number"])
         self.vl = VLReader(worker, store, config.seed) if worker is not None else None
+        self.inventory = None
+        if "inventory" in signature:
+            version = signature["inventory"]["reference_version"]
+            root = reference_root(config.asset_cache, version)
+            catalog = load_inventory_references(root, version)
+            if digest(catalog) != signature["inventory"]["catalog_id"]:
+                raise ValueError("Inventory reference catalog changed during intake setup")
+            self.inventory = InventoryReader(store, root, catalog, profile["inventory"])
+            if signature["inventory"].get("skin_catalog_id") != self.inventory.skin_signature:
+                raise ValueError("Skin catalog changed during intake setup")
 
     def cache_path(self, crop_hash, field):
         backend = field["backend"]
@@ -312,21 +337,53 @@ class _IntakeReader:
     def read_fields(self, image, task, source_id):
         timestamp, layout_valid = task["start"], task["layout_valid"]
         readings, vl_pending, futures, cache_hits = [], [], [], 0
+        inventory_skipped = 0
+        panel_states, frames_by_box = {}, {}
+
+        def masked(box):
+            x1, y1, x2, y2 = box
+            return any(x1 <= right and x2 > left and y1 <= bottom and y2 > top
+                       for left, top, right, bottom in self.config.masks)
+
+        def frame_evidence(route, box, crop=None):
+            key = (route, *box)
+            if key not in frames_by_box:
+                crop_hash, path = evidence_crop(self.store, image.crop(box) if crop is None else crop)
+                frame = {"id": uid("frame", source_id, box, crop_hash), "source_id": source_id,
+                         "time": timestamp, "route": route, "box": box, "path": path}
+                frames_by_box[key] = (frame, crop_hash)
+                task["frames"].append(frame)
+            return frames_by_box[key]
+
+        def offset_box(box, dx, dy):
+            x1, y1, x2, y2 = box
+            return [x1 + dx, y1 + dy, x2 + dx, y2 + dy]
+
+        def shifted_crops(box):
+            for offset in CARDINAL_SHIFTS:
+                shifted = offset_box(box, *offset)
+                x1, y1, x2, y2 = shifted
+                if 0 <= x1 < x2 <= image.width and 0 <= y1 < y2 <= image.height and not masked(shifted):
+                    crop = image.crop(shifted)
+                    yield offset, crop, image_hash(crop)
+
         for field in self.fields:
             self.store.check_stop()
-            crop = image.crop(field["box"])
-            crop_hash, path = evidence_crop(self.store, crop)
-            frame = {
-                "id": uid("frame", source_id, field["box"], crop_hash),
-                "source_id": source_id,
-                "time": timestamp,
-                "route": field["route"],
-                "box": field["box"],
-                "path": path,
-            }
-            task["frames"].append(frame)
-            state = _panel_state(image, self.profile, field, layout_valid)
+            route = field["route"]
+            if route not in panel_states:
+                panel_states[route] = _panel_state(image, self.profile, field, layout_valid)
+            state = panel_states[route]
+            is_inventory = field["backend"] == "inventory"
+            if is_inventory and state == "absent" and any(
+                masked(anchor["box"]) for anchor in self.profile.get("panels", {}).get(route, {}).get("present_anchors", [])
+            ):
+                state = "unknown"
+            box = self.profile["inventory"]["panels"][route] if is_inventory and state != "present" else field["box"]
+            crop = image.crop(box) if state == "present" else None
+            frame, crop_hash = frame_evidence(route, box, crop)
+            path = frame["path"]
             if state != "present":
+                inventory_skipped += is_inventory
                 reading = (
                     unknown("unsupported or occluded layout/panel")
                     if state == "unknown"
@@ -337,7 +394,21 @@ class _IntakeReader:
                         "value": None,
                     }
                 )
-                readings.append((field, reading, frame))
+                readings.append((field, {**reading, "panel_state": state}, frame))
+                continue
+            if is_inventory:
+                if masked(box):
+                    reading = unknown("inventory region intersects a configured occlusion mask")
+                    inventory_skipped += 1
+                else:
+                    reading, hit = self.inventory.read(crop, field, crop_hash)
+                    cache_hits += hit
+                    reading = self.inventory.retry_alignment(reading, field, shifted_crops(box))
+                    if offset := reading.get("reader", {}).get("pixel_shift"):
+                        shifted = offset_box(box, *offset)
+                        frame, _ = frame_evidence(route, shifted)
+                        field = {**field, "box": shifted}
+                readings.append((field, {**reading, "panel_state": state}, frame))
                 continue
             cached = self.cache_path(crop_hash, field)
             if field["backend"] == "vl":
@@ -378,6 +449,16 @@ class _IntakeReader:
                     frame,
                 )
             )
+        portraits = defaultdict(list)
+        for field, reading, _ in readings:
+            if (field["backend"] == "inventory" and field["kind"] == "champion"
+                    and field["route"] == "scoreboard" and reading["acceptance"] == "accepted"):
+                portraits[(field["slot_id"].split(":")[0], reading["value"])].append(reading)
+        for matches in portraits.values():
+            if len(matches) > 1:
+                for reading in matches:
+                    reading.update(unknown("portrait match is duplicated on this team"))
+        task["inventory_skipped"] = inventory_skipped
         return readings, cache_hits
 
     def read(self, sample_time, timestamp, image):
@@ -410,6 +491,7 @@ class _IntakeReader:
             "issues": [],
             "layout_valid": layout_valid,
         }
+        task["experimental_reader_signature"] = self.content_signature
         atomic_json(
             self.store.path("intake-runtimes/" + digest(self.signature) + ".json"), self.signature
         )
@@ -456,8 +538,12 @@ class _IntakeReader:
                 backend=field["backend"],
                 sample_time=sample_time,
             )
+            if field["backend"] == "inventory":
+                row.update(panel_state=reading["panel_state"], inventory_catalog_id=self.inventory.catalog_id)
+                if field["kind"] == "champion":
+                    row.update(skin_id=reading.get("skin_id"), skin_catalog_id=self.inventory.skin_signature)
             task["observations"].append(row)
-            if row["acceptance"] == "unknown":
+            if row["acceptance"] == "unknown" and field["backend"] != "inventory":
                 task["issues"].append(
                     {
                         "id": uid("issue", task_id, field["id"]),
@@ -494,7 +580,7 @@ class _IntakeReader:
         task["metrics"] = {
             "wall_seconds": time.monotonic() - tick,
             "reader_cache_hits": cache_hits,
-            "new_reader_calls": len(self.fields) - cache_hits,
+            "new_reader_calls": len(self.fields) - cache_hits - task.pop("inventory_skipped", 0),
             "visual_tokens": getattr(self.worker, "tokens", {}).get("prompt_tokens", 0)
             - token_start.get("prompt_tokens", 0),
             "output_tokens": getattr(self.worker, "tokens", {}).get(
@@ -577,6 +663,7 @@ def annotate(
     retry_failed=False,
     sample_times=None,
     pilot=False,
+    experimental=False,
 ):
     started = time.monotonic()
     manifest = require_v2(store)
@@ -598,10 +685,16 @@ def annotate(
         for name, data in (("manifest.json", manifest), ("config.json", config.to_dict()),
                            ("intake_runtime.json", signature)):
             atomic_json(store.path(name), data)
-    elif sample_times is None:
+    elif sample_times is None and not experimental:
         _require_release(store, config, profile, signature, key)
     targets, selected = _sampling_targets(manifest, config, sample_times, pilot)
     tasks = _resume_tasks(store, key, targets)
+    reused = {}
+    if experimental:
+        from .experimental_resume import reusable_tasks
+        compatible, reused = reusable_tasks(store, profile, signature, key, targets)
+        tasks = {**compatible, **tasks}
+        atomic_json(store.path("experimental_reuse.json"), {"requested_run_key": key, "tasks": reused})
     worker = runner
     if worker is None and prepared is not None:
         worker = LocalVLRunner(store, config.vl_python or os.environ["LEAGUE_VL_PYTHON"],
@@ -620,10 +713,15 @@ def annotate(
             task = reader.read(sample_time, timestamp, image)
             tasks[task_id] = task
         result = reader.report(tasks, targets, selected, pilot, parent, started)
+        if experimental:
+            result.update(experimental=True, release_accepted=False, compatible_tasks_reused=len(reused),
+                          sampling_mode="experimental")
+            atomic_json(store.path("intake_report.json"), result)
         reported = True
         if not result["operational_passed"]:
             raise ValueError("Processing incomplete; committed evidence retained")
-        stage = "intake-pilot" if pilot else "intake-benchmark-extract" if selected is not None else "annotate"
+        stage = ("intake-pilot" if pilot else "intake-experimental" if experimental else
+                 "intake-benchmark-extract" if selected is not None else "annotate")
         store.commit_stage(stage, key, **result)
         if pilot and not result["runtime_passed"]:
             raise ValueError("Pilot failed the L40S target, memory or four-hour intake budget")

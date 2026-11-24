@@ -7,14 +7,21 @@ adds selected-player scene proposals, adaptive clip manifests, replay linkage an
 independent validation infrastructure. It is experimental: runnable output and
 schema-valid evidence do not establish recognition accuracy or production release.
 
+`caption-pilot` defaults to the `event-v2` arm. It records visible action phases
+under one occurrence ID and links separately grounded type, slot, targeting and
+outcome claims to that ID. `--arm baseline` runs the original packet protocol.
+The occurrence benchmark and Longleaf scripts are described in the
+[event-pilot handoff](league-caption-event-longleaf.md).
+
 ```bash
 # CPU binding/counters plus compatible cached scene requests; never loads a GPU:
 python -B -m annotation.league --offline caption-pilot --start 30 --end 38
 # Explicit pinned local Qwen inference and dense/native inspection:
 python -B -m annotation.league --offline caption-pilot --start 34 --end 38 --infer \
   --icon-references /path/to/ability-icons-16.13.1/manifest.json
-# Source-only reference templates, separate from the existing action benchmark:
-python -B -m annotation.league --offline experiment --suite captions --initialize
+# Source-only occurrence reference templates in a new reference directory:
+python -B -m annotation.league --offline experiment --suite caption-events --initialize \
+  --labels /path/to/new-occurrence-references
 python -B -m annotation.league --offline review --port 8767
 ```
 
@@ -73,6 +80,9 @@ artifacts. Correct upstream proposals, body bindings or counter evidence; genera
 wording stays unreviewed. An exclusive pilot lock prevents concurrent generation
 and review writes. Independent wording/binding/evidence assessments are separate
 artifacts tied to the exact generation key and expire after upstream changes.
+Changing a body region also invalidates scene cues inspected with its previous
+binding. Fresh scene inspection must use the corrected body context; regenerating
+wording alone cannot transfer an old action attribution to a newly selected box.
 
 ### Independent acceptance
 
@@ -129,6 +139,8 @@ this opt-in pilot. GPU execution needs the existing pinned local worker environm
 
 Execution measurements and current acceptance limitations are recorded in
 [the pilot validation report](league-caption-pilot-validation-2026-11-02.md).
+The [November 4 follow-up](league-caption-pilot-validation-2026-11-04.md) records
+the completed crop experiment and its failed independent action assessment.
 
 `python -m annotation.league --run-dir <run> generate-captions` refreshes fusion
 and renders accepted visual evidence without another model request. `run` includes

@@ -8,7 +8,7 @@ import io
 import math
 from pathlib import Path
 
-from .core import digest, read_json
+from .core import digest, finite, read_json
 
 PROFILE_DIR = Path(__file__).with_name("profiles")
 UNSUPPORTED = {
@@ -56,8 +56,11 @@ def validate_profile(profile: dict) -> None:
         check_box(field["box"], profile["size"])
         if field["reader"] not in {"number", "text", "icon", "bar"}:
             raise ValueError("Unsupported field reader")
-        if field.get("backend") not in {None, "vl", "tesseract", "bar"}:
+        if field.get("backend") not in {None, "vl", "tesseract", "bar", "inventory"}:
             raise ValueError("Unsupported field backend")
+    inventory_fields = [field for field in fields if field.get("backend") == "inventory"]
+    if inventory_fields:
+        validate_inventory(profile, inventory_fields)
     if not 2 <= len(profile.get("anchors", [])) <= 10:
         raise ValueError("Profile requires at least two independent panel anchors")
     required = profile.get("required_anchors", len(profile["anchors"]))
@@ -95,6 +98,54 @@ def validate_profile(profile: dict) -> None:
             or not 0 <= limit <= 0.25
         ):
             raise ValueError("Anchor error tolerance must be in [0, .25]")
+
+
+def validate_inventory(profile, fields):
+    from .inventory_references import reference_root
+
+    inventory = profile.get("inventory", {})
+    reference_root(Path(), inventory.get("reference_version"))
+    if inventory.get("communitydragon_version"):
+        from .reference_bundle import versions
+        versions(inventory["reference_version"], inventory["communitydragon_version"])
+    panels, thresholds = inventory.get("panels", {}), inventory.get("thresholds", {})
+    if type(inventory.get("scoreboard_portrait_alignment", False)) is not bool:
+        raise ValueError("Scoreboard portrait alignment must be a boolean")
+    for route in ("selected_hud", "scoreboard"):
+        check_box(panels.get(route), profile["size"])
+        gates = thresholds.get(route, {})
+        if not {"item", "champion"} <= gates.keys():
+            raise ValueError("Inventory requires item and portrait thresholds for each surface")
+        for gate in gates.values():
+            score, margin = gate.get("score"), gate.get("margin")
+            if not finite(score) or not 0 < score <= 1 or not finite(margin) or not 0 <= margin <= 1:
+                raise ValueError("Inventory thresholds require a positive score and a nonnegative margin")
+    background = inventory.get("empty_rgb", [])
+    if len(background) != 3 or any(type(channel) is not int or not 0 <= channel <= 255 for channel in background):
+        raise ValueError("Inventory requires a calibrated empty-slot color")
+    for encoded in inventory.get("hidden_portraits", []):
+        if not base64.b64decode(encoded, validate=True).startswith(b"\x89PNG\r\n\x1a\n"):
+            raise ValueError("Hidden portrait templates must be PNGs")
+    exemplar = inventory.get("selected_portrait")
+    if exemplar:
+        if (exemplar.get("time") not in profile.get("calibration_frames", [])
+                or not profile.get("calibration_source_sha256") or not exemplar.get("id")
+                or len(exemplar.get("evidence", {})) < 3
+                or not base64.b64decode(exemplar["png"], validate=True).startswith(b"\x89PNG\r\n\x1a\n")):
+            raise ValueError("Selected portrait exemplar requires same-source development evidence")
+        for box in exemplar["evidence"].values():
+            check_box(box, profile["size"])
+    rows = {("selected_hud", "selected")} | {("scoreboard", f"{side}:row{i}") for side in ("left", "right") for i in range(1, 6)}
+    expected = {(route, row, f"inventory.{slot}") for route, row in rows for slot in (*range(6), "trinket", "champion")}
+    actual = {(field["route"], field["slot_id"], field["field"]) for field in fields}
+    if actual != expected or len(fields) != len(expected):
+        raise ValueError("Inventory requires a portrait, six items and a trinket for each calibrated row")
+    for field in fields:
+        x1, y1, x2, y2 = field["box"]
+        left, top, right, bottom = panels[field["route"]]
+        kind = "champion" if field["field"] == "inventory.champion" else "item"
+        if field.get("kind") != kind or field["reader"] != "icon" or not (left <= x1 < x2 <= right and top <= y1 < y2 <= bottom):
+            raise ValueError("Inventory crop must be a valid icon region within its panel")
 
 
 def check_box(box, size):

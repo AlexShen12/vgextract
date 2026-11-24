@@ -17,14 +17,15 @@ from .action_icons import AbilityIdentity
 from .action_pipeline import native_review, prepare_inputs
 from .action_v3 import load_profile
 from .caption_scene import CaptionSceneReader, accepted_events, visible_precursor
-from .caption_segments import POLICY, context_key, deduplicate_events, link_repeats, segment_captions
-from .captions import construct_captions
+from .caption_segments import POLICY, context_key, contexts, deduplicate_events, link_repeats, segment_captions
+from .captions import body_signature, construct_captions
 from .core import atomic_json, digest, implementation_hash, read_json, read_rows, uid, write_rows
 from .local_models import LOCK, LocalVLRunner
 from .timeline import fuse_observations
 
 
 COMPONENTS = ["caption_pilot.py", "caption_scene.py", "caption_segments.py", "captions.py", "playback.py",
+              "caption_occurrences.py",
               "action_pipeline.py", "action_body.py", "action_icons.py", "action_events.py", "action_v3.py",
               "action_state.py", "timeline.py", "core.py", "readers.py", "numeric_reader.py", "local_models.py", "media.py"]
 
@@ -90,10 +91,21 @@ def regenerate(root):
     audit = read_json(root/"input-audit.json")
     policy = audit["policy"]
     frames = audit["frames"]
-    body = effective(root, "body_readings")
-    events, omissions = accepted_events(effective(root, "scene_proposals"), frames, body)
+    original_bindings = {r["frame_id"]: body_signature(r) for r in read_rows(root/"body_readings.jsonl")}
+    body = [{**r, "_uncorrected_binding_signature": original_bindings.get(r["frame_id"])}
+            for r in effective(root, "body_readings")]
+    occurrence_arm = audit.get("arm") == "event-v2"
+    if occurrence_arm:
+        from .caption_occurrences import resolve_occurrences
+        occurrences, events, omissions = resolve_occurrences(effective(root, "scene_proposals"), frames, body, audit["source_sha256"])
+        write_rows(root/"scene_occurrences.jsonl", occurrences)
+        credits = [{**r, "experimental": True, "support": "counter_comparison_only", "individual_minion": None}
+                   for r in counter_events(read_rows(root/"counter_readings.jsonl")) if r["kind"] == "creep_credit"]
+        write_rows(root/"creep_credits.jsonl", credits)
+    else:
+        events, omissions = accepted_events(effective(root, "scene_proposals"), frames, body)
     originals = events
-    events, duplicates = deduplicate_events(events)
+    events, duplicates = (events, []) if occurrence_arm else deduplicate_events(events)
     conflicts = {r["record_id"] for r in duplicates}
     weak = [visible_precursor(e, {f["id"]: f["time"] for f in frames}) for e in originals if e["id"] in conflicts]
     if weak:
@@ -140,7 +152,8 @@ def regenerate(root):
             displayed.pop(key, None)
         distinct.append(caption)
     captions = distinct
-    clips = segment_captions(captions, frames, audit["interval"], audit["source_sha256"], policy)
+    clips = segment_captions(captions, frames, audit["interval"], audit["source_sha256"], policy,
+                             occurrences=occurrences if occurrence_arm else ())
     for clip in clips:
         clip["pilot_id"] = root.name
     # Source-time occurrences may live in separate pilot neighborhoods. Compare
@@ -170,6 +183,9 @@ def regenerate(root):
         "key": digest({"audit": audit, "events": events, "observations": observations, "body": body, "clips": clips,
                        "corrections": [read_json(p) for p in sorted((root/"reviews").glob("*.json"))],
                        "implementation": implementation_hash(COMPONENTS)})}
+    if occurrence_arm:
+        summary.update(occurrences=sum(o.get("record_type")=="physical_occurrence" for o in occurrences),
+                       unresolved_candidates=sum(o.get("record_type")=="unresolved_candidate" for o in occurrences))
     atomic_json(root/"caption_coverage.json", summary)
     if (root/"report.json").exists():
         report = read_json(root/"report.json")
@@ -195,6 +211,33 @@ def dense_windows(proposals, frames, policy=POLICY):
         else:
             windows.append({"context": key, "segment_id": key[0], "start": a, "end": b})
     return windows
+
+
+def occurrence_windows(candidates, frames, interval):
+    windows = []
+    for group in contexts(frames, interval):
+        for candidate in sorted(candidates, key=lambda p: p["start"]):
+            key = (candidate["playback_segment_id"], candidate["owner_id"], candidate["owner_epoch"])
+            if key != group["context"] or not group["start"] <= candidate["start"] <= candidate["end"] < group["end"]:
+                continue
+            a, b = max(group["start"], candidate["start"]-2), min(group["end"], candidate["end"]+3)
+            if windows and windows[-1]["context"] == key and windows[-1]["continuity_start"] == group["start"] and a <= windows[-1]["end"]:
+                windows[-1]["end"] = max(b, windows[-1]["end"])
+            else:
+                windows.append({"start": a, "end": b, "context": key, "segment_id": key[0], "continuity_start": group["start"]})
+    return windows
+
+
+def occurrence_native_brackets(candidates, window):
+    brackets = []
+    for row in sorted(candidates, key=lambda r: r["end"]):
+        center = (row["start"]+row["end"])/2
+        a, b = max(window["start"], center-.5), min(window["end"], center+.5)
+        if brackets and a <= brackets[-1]["native_end"] and b-brackets[-1]["native_start"] <= 1:
+            brackets[-1]["native_end"] = max(b, brackets[-1]["native_end"])
+        else:
+            brackets.append({**window, "native_start": a, "native_end": b})
+    return brackets
 
 
 def _cpu_detection(store, config, root, audit, icon):
@@ -240,28 +283,37 @@ def _cpu_detection(store, config, root, audit, icon):
     return identities, body
 
 
-def caption_pilot(store, config, start, end, *, infer=False, action_profile=None, icon_references=None, runner=None):
+def caption_pilot(store, config, start, end, *, infer=False, action_profile=None, icon_references=None, runner=None, arm="event-v2"):
     started = time.monotonic()
     profile = load_profile(action_profile)
+    if arm not in {"baseline", "event-v2"}:
+        raise ValueError("Unknown caption arm")
+    from .caption_occurrences import EVENT_POLICY
+    from .intake_profile import load_profile as anchor_profile
+    policy = {**POLICY, "event_protocol": EVENT_POLICY} if arm == "event-v2" else POLICY
     if [o["id"] for o in profile["owners"]] != ["selected"]:
         raise ValueError("Caption pilot requires a single selected HUD owner")
     reference = Path(icon_references) if icon_references else Path(config.asset_cache)/"manifest.json"
     if icon_references and not reference.exists():
         raise ValueError("Ability icon references do not exist")
     icon = AbilityIdentity(reference) if reference.exists() else None
-    audit = prepare_inputs(store, config, start, end, profile, POLICY, namespace="captions", max_duration=None,
+    audit = prepare_inputs(store, config, start, end, profile, policy, namespace="captions", max_duration=None,
         cache_identity={"implementation": implementation_hash(COMPONENTS), "model": read_json(LOCK)["models"]["intake"],
-                        "icons": icon.signature if icon else None})
+                        "icons": icon.signature if icon else None, "arm": arm,
+                        "anchors": digest(anchor_profile(profile["anchor_profile"]))})
     root = Path(audit["root"])
     with pilot_lock(root):
+        audit["arm"] = arm
+        audit["policy"] = policy
+        atomic_json(root/"input-audit.json", audit)
         return _run(store, config, audit, root, icon, infer, runner, started)
 
 
 def _run(store, config, audit, root, icon, infer, runner, started):
     report = {"schema_version": 1, "id": root.name, "root": str(root), "report": str(root/"report.json"),
               "interval": audit["interval"], "status": "running_experimental", "experimental": True,
-              "production_evidence_modified": False, "quality_metrics": None, "infer": infer, "policy": POLICY,
-              "icon_reference_version": icon.version if icon else None, "requests": []}
+              "production_evidence_modified": False, "quality_metrics": None, "infer": infer, "policy": audit["policy"],
+              "icon_reference_version": icon.version if icon else None, "requests": [], "arm": audit.get("arm", "baseline")}
     atomic_json(root/"report.json", report)
     owned, reader = runner is None, None
     proposals = read_rows(root/"scene_proposals.jsonl")
@@ -272,7 +324,9 @@ def _run(store, config, audit, root, icon, infer, runner, started):
         report["coverage"] = regenerate(root)
         if infer and runner is None:
             runner = LocalVLRunner(store, config.vl_python or os.environ.get("LEAGUE_VL_PYTHON", ""), config.asset_cache, image_limit=8)
-        reader = CaptionSceneReader(store, root, audit["profile"], POLICY, body, identities, runner if infer else None)
+        from .caption_occurrences import OccurrenceSceneReader
+        reader_class = OccurrenceSceneReader if audit.get("arm") == "event-v2" else CaptionSceneReader
+        reader = reader_class(store, root, audit["profile"], audit["policy"], body, identities, runner if infer else None)
         def inspect(frames, stage):
             try:
                 return reader.read(frames, stage)
@@ -284,12 +338,27 @@ def _run(store, config, audit, root, icon, infer, runner, started):
         coarse = inspect([f for f in base if f["scene_sample"] and f["layout_valid"]], "4fps")
         credits = [{**c, "playback_segment_id": c["segment_id"]} for c in counter_events(read_rows(root/"counter_readings.jsonl")) if c["kind"] == "creep_credit"]
         windows = dense_windows(coarse+credits, base)
+        if audit.get("arm") == "event-v2":
+            # Context discovery cannot provide dense evidence. Every selected
+            # window remains within a single continuous source/ownership group.
+            windows = occurrence_windows(coarse+credits, base, audit["interval"])
         resampling = []
         for window in windows:
             dense = [f for f in base if window["start"] <= f["time"] < window["end"] and context_key(f) == window["context"]]
+            if audit.get("arm") == "event-v2":
+                inspect(dense, "context")
             parsed = inspect(dense, "16fps")
             resampling.append({**window, "stage": "16fps", "frame_ids": [f["id"] for f in dense]})
-            confirmed, unresolved = accepted_events(parsed, audit["frames"], body)
+            if audit.get("arm") == "event-v2":
+                from .caption_occurrences import resolve_occurrences
+                current, _, failed = resolve_occurrences(reader.proposals,audit["frames"],body,audit["source_sha256"])
+                unresolved_rows = {r["record_id"] for r in failed}
+                unresolved_rows |= {pid for o in current if o["unresolved"] for pid in o["source_proposal_ids"]}
+                candidates = [p for p in parsed if p["id"] in unresolved_rows]
+                brackets = occurrence_native_brackets(candidates, window)
+            else:
+                brackets = None
+            confirmed, unresolved = accepted_events(parsed, audit["frames"], body) if brackets is None else ([], [])
             # Every incomplete dense impact chain remains eligible for a native bracket.
             unresolved_ids = {o["record_id"] for o in unresolved} | {pid for o in unresolved for pid in o.get("source_proposal_ids", [])}
             candidates = [p for p in parsed if p["id"] in unresolved_ids]
@@ -300,14 +369,16 @@ def _run(store, config, audit, root, icon, infer, runner, started):
                                and (c["playback_segment_id"], c["owner_id"], c["owner_epoch"]) == window["context"]
                                and not any(e["kind"] == "minion_last_hit" and e["start"] <= c["end"]+.5
                                            and e["end"] >= c["start"]-.5 for e in confirmed)]
-            brackets = []
-            for candidate in sorted(candidates, key=lambda p: p["start"]):
+            old_brackets = []
+            for candidate in sorted(candidates if brackets is None else [], key=lambda p: p["start"]):
                 a = max(window["start"], candidate["start"]-POLICY["native_margin"])
                 b = min(window["end"], candidate["end"]+POLICY["native_margin"])
-                if brackets and a <= brackets[-1]["native_end"]:
-                    brackets[-1]["native_end"] = max(b, brackets[-1]["native_end"])
+                if old_brackets and a <= old_brackets[-1]["native_end"]:
+                    old_brackets[-1]["native_end"] = max(b, old_brackets[-1]["native_end"])
                 else:
-                    brackets.append({**window, "native_start": a, "native_end": b})
+                    old_brackets.append({**window, "native_start": a, "native_end": b})
+            if brackets is None:
+                brackets = old_brackets
             for native_window in brackets:
                 native = native_review(store, audit, native_window, config)
                 native_ids = icon.read_frames(native, audit["profile"], "core") if icon else []

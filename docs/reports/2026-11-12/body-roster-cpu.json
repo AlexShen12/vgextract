@@ -1,0 +1,67 @@
+{
+  "source_sha256": "f4f36e1a274617ecbe224eaf7fc3f8375f757acb7a517bcc0ee7780fcd83f240",
+  "status": "experimental",
+  "roster_reviewed": false,
+  "membership": [
+    [
+      "left",
+      "Ahri"
+    ],
+    [
+      "left",
+      "JarvanIV"
+    ],
+    [
+      "left",
+      "Leona"
+    ],
+    [
+      "left",
+      "Singed"
+    ],
+    [
+      "left",
+      "Xayah"
+    ],
+    [
+      "right",
+      "Alistar"
+    ],
+    [
+      "right",
+      "AurelionSol"
+    ],
+    [
+      "right",
+      "Darius"
+    ],
+    [
+      "right",
+      "Katarina"
+    ],
+    [
+      "right",
+      "Talon"
+    ]
+  ],
+  "first_complete_at_seconds": 419.00191666666666,
+  "sample_count": 144,
+  "opening_count": 111,
+  "complete_single_frames": 0,
+  "name_bindings": 0,
+  "timeline_rows": 20,
+  "reference_version": "16.22.1",
+  "communitydragon_version": "16.22",
+  "evidence": {
+    "match-roster.json": "3af382c08f1ecb618b8bed774d90e0fb06421005401b5ef65fe08fa44197aab8",
+    "skim-evidence.json": "cc95b64a7e94fae577f5c0e3d215a884207413bcfcbc62380dda82a7a8965d31",
+    "match_roster_timeline.jsonl": "8f10f2e26babf65297e95c2fe6f7248a991fab81a600e23787187fdefd40c1ae"
+  },
+  "implementation": "8f24ae0f301846f4139615937ec81271497029149fe5dd8454a613e97237c2fc",
+  "checks": {
+    "review_page": 200,
+    "source_range_request": 206,
+    "verified_portrait_crops": 10,
+    "loaded_for_experimental_identity": true
+  }
+}

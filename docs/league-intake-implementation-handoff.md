@@ -1,8 +1,271 @@
-# Current handoff — Midbeast hybrid implementation, 2026-10-27
+# Current handoff — League player actions v3, 2026-10-30
+
+## Scoreboard portrait work — 2026-11-11
+
+The scoreboard portrait candidate scores the center and four one-pixel shifts.
+The focused comparison recovered three visible portraits, raising the inspected
+probe from 17 to 20 accepted rows out of 30. See the
+[scoreboard and body handoff](league-body-recognition-handoff.md) for the remaining
+occlusions, reproducible evidence, and the next implementation phase.
+
+## Source cleanup — 2026-11-02
+
+The local package now executes only v3 actions. Shared frame/HUD helpers remain in
+`action_pipeline.py`; label/scoring helpers remain in `action_benchmark.py`. The
+original action prototype, v2 runners/assistance handling and unused Paddle OCR
+worker/dependency files have been removed. Current CLI and v3 entry points remain;
+review still supports historical v2/v3 results and corrections. Saved artifacts,
+profiles, labels and caches have not been deleted or migrated. Older implementation
+sections below describe history, including files that no longer exist.
+
+Production annotation now separates release checks, sampling/resume, per-frame
+reading and reporting. Crop/audio/event/tracking experiments use separate helpers
+with the same sequential worker lifetime and partial-report behavior. Refactored
+code changes implementation fingerprints and requires normal release/freeze
+revalidation; compatible v3 response caches remain reusable. Fresh benchmark
+labels are v3 directly; forks from older clips clear labels and attestations.
+
+Cleanup validation: **204 repository tests pass with no skips** using the local
+CPU intake/review dependencies. CLI help and whitespace checks pass; v3 scene/HUD
+request schemas match their pre-cleanup versions. Python source decreased from
+10,500 to 9,127 lines. These CPU/mocked checks do not establish model accuracy or
+full-video release acceptance.
+
+## Current implementation and directories
+
+Player binding, CS/gold observations, recall tracking, official ability descriptions
+and independent review/scoring now run inside the existing League annotation
+pipeline. New runs use `action_v3.py`, `action_body.py`, `action_events.py`,
+`action_benchmark_v3.py` and `profiles/midbeast-actions-1080p-v2.json`.
+Artifacts are isolated under `experiments/actions-v3`; no production observations,
+events or questions have been promoted. Q/W/E/R reference matching is the sole
+automated kit identity source. New Qwen prompts/schemas have no identity opinion,
+and receive deterministic local player track IDs and approximate regions.
+
+Continue in these existing directories; the user explicitly rejected creating
+another checkout:
+
+- Local source: `/Users/alex/Desktop/Projects/videogame`.
+- Longleaf source, updated in place:
+  `/work/users/a/l/alshen/league-midbeast-validation/source-20261030-actions-r7`.
+- Existing Longleaf run:
+  `/work/users/a/l/alshen/league-midbeast-validation/run`.
+- Existing Longleaf assets:
+  `/work/users/a/l/alshen/league-midbeast-validation/assets`.
+
+Authenticated SSH uses `unc-cluster` and
+`/private/tmp/league-longleaf-01a16144/control`. All remote writes remain beneath
+`/work/users/a/l/alshen`. No hosted inference, uploaded source video, Git commit
+or PR was introduced. Preserve the existing working-tree edits, including the
+preexisting ingestion bytecode changes.
+
+The version 16.13.1 official Data Dragon catalog completed for all 173 champions,
+with passive/Q/W/E/R names, descriptions, available tooltips, icons, raw responses
+and hashes. It is cached locally at `data/league_assets/abilities/16.13.1` and
+remotely at `assets/abilities/16.13.1`. The footage patch remains unknown and
+mechanics stay disabled. Runtime model/GPU-class/software identity enters inference
+caches; physical GPU UUID remains provenance so equivalent GPUs can resume.
+
+## Review and independent annotation
+
+Start the existing review server with `python -B -m annotation.league review`.
+`http://127.0.0.1:8765/actions` shows synchronized source playback, HP/actor
+overlays, raw counter/recall evidence, resampling, responses and official
+descriptions. Experimental corrections stay isolated.
+
+The user requested both a personal review option and a separate handoff for
+another agent to label without detector outputs. Use
+`http://127.0.0.1:8765/action-labels` for source-only reference annotation and
+`docs/league-actions-labeling-handoff.md` for that separate task. No reference
+labels or corrections were saved during UI verification. All twenty labels are
+still unverified, development choices are unfrozen, and held-out scoring has not
+run. Accuracy metrics remain null; missing-case coverage must be independently
+established. Do not give the labeling agent this implementation-result handoff
+or prediction artifacts.
+
+## Development measurements and current GPU pilot
+
+These are detector outputs on inspected development footage, not accuracy scores:
+
+- Source 30–38 seconds, local experiment `a321b36727b3c06c41e5`: 125/128 frames
+  bound, one aggregate CS increase of 1, displayed gold changes recorded separately.
+  Three Q cooldown-visibility changes remain unresolved, not confirmed activations.
+  CPU detection took 38.00 seconds; preparation plus detection 64.52 seconds;
+  process peak host memory 492,683,264 bytes. No GPU requests.
+- Source 747–759 seconds, experiment `94e617d8815a39baac41`: one observed recall
+  interval 747.630–755.438, `ending_unknown`, including three explicitly uncertain
+  tooltip-occluded frames. CPU detection 65.47 seconds, total 103.67 seconds,
+  process peak host memory 390,676,480 bytes. No completion inferred.
+- Source 448–456 seconds, experiment `574994bb46b279e96b85`: 113/128 frames bound,
+  two unresolved W visibility changes. CPU detection 45.83 seconds, total 72.82
+  seconds. Actual rapid activation coverage is not verified.
+
+The CPU body/farming and recall snapshots were imported into the existing
+Longleaf run as read-only review aliases `e849882bbca11606c4bb` and
+`43a1328dc61025c4a100`; all 128/192 model-input image hashes matched. Alias imports
+preserve both hosts' canonical output when decoder/image-library differences
+produce different image bytes. Never overwrite an active canonical experiment
+with another host's images merely because source/recipe keys match.
+
+Longleaf job **7355970** is the resumed two-clip scene/cast development pilot,
+running on an L40S with the pinned local model. Its script is
+`league-midbeast-validation/artifacts/actions-v3-cast-pilot.py`; aggregate status
+is `run/experiments/actions-v3/cast-pilot.json`, and logs are
+`logs/actions-v3-7355970.{out,err}`. It reuses completed requests from cleanly
+checkpointed job 7353514. Dense overlapping contexts are coalesced, individual
+native brackets preserved, and dense HUD requests target changed-slot brackets.
+Do not change active inference modules on disk mid-run. Await actual completion
+or retain the failure/partial report; do not infer success from allocation time.
+Both development clips are candidates: neither isolated-cast nor rapid-cast
+coverage is established until source annotation confirms it.
+
+Validation before the 2026-11-02 cleanup: **218 repository tests passed**, including independent scoring,
+unresolved-transition accounting, false green/minion/portrait rejection, selection
+and continuity changes, counter fluctuation, recall lifecycle/censoring, invalid
+citations, equivalent-GPU resume, interrupted inference and production isolation.
+The generic workflow and review are implemented. Full pilot accuracy/completion
+still requires independent labels, frozen development choices and resource results
+from completed scene inspection. See `docs/league-champion-action-recognition.md`
+for CLI commands and evidence semantics. Source synchronization proofs live in
+`data/league_midbeast_dev/longleaf-20261030-actions/v3-source-sync.json` and the
+existing remote `artifacts/v3-source-sync.json`.
+
+The CPU-only development draft completed all ten development clips in 618.55
+seconds total (including preparation), with peak host process memory 500,924,416
+bytes and zero GPU calls. Held-out clips were not processed. Its aggregate report
+is `experiments/actions-v3/benchmarks/d25a77a0ef502e74c5cf.json`, and a compact
+resource/output summary is in
+`data/league_midbeast_dev/longleaf-20261030-actions/v3-core-development-summary.json`.
+These outputs and the running GPU pilot are being synchronized by the one-shot
+`sync-v3-evidence.py` helper in that same development-artifact directory. It saves
+progress/host aliases to `v3-evidence-sync.json` and waits for job 7355970 before
+pulling its completed evidence. Its local log is
+`/private/tmp/league-v3-evidence-sync.out`. A stable interrupted GPU checkpoint is
+already available locally as `c6910fc8ca8320e612c5`. Local review can inspect its
+raw scene proposals without treating them as verified labels.
+
+## Earlier v2 implementation history (superseded by v3 above)
 
 **Local implementation is complete enough for GPU integration testing; release and
 rollout are not complete.** Preserve all existing edits. No commit or PR created.
-No production model accuracy or L40S runtime claims are supported yet.
+Experimental L40S measurements are recorded below; production acceptance remains open.
+
+## Champion action implementation and icon identity — 2026-10-30
+
+The new universal action workflow is integrated into `annotation/league`, using
+`action_pipeline.py`, `action_state.py`, `action_icons.py`, `action_benchmark.py`
+and the existing review app's `/actions` view. See
+`docs/league-champion-action-recognition.md` for contracts and commands. The old
+prepare prototype remains intact. No production observations/events/questions
+have been promoted from the action experiment.
+
+The user restored Longleaf authentication and authorized continuing there. Use
+`unc-cluster` through `/private/tmp/league-longleaf-01a16144/control` while it is
+authenticated. All remote writes remain under `/work/users/a/l/alshen`. This
+supersedes the older connection status below.
+
+Latest user steering makes Q/W/E/R ability icons the primary HUD identity signal;
+skin recognition is not required. The generic matcher uses the full versioned
+spell catalog, compares only like slots, requires three agreeing slots with no
+strong contradictory slot, and rechecks every 0.25 seconds. Default experimental
+cosine/margin thresholds are .45/.06. A separate unassisted icon-only Qwen request
+is preserved for comparison. Reference-assisted identity is explicitly labeled
+even inside an unassisted scene experiment. Reference asset version 16.13.1 does
+not establish the recording's patch; mechanics remain disabled.
+
+Actual development findings at source seconds 30–38:
+
+- The first frame's Q is obscured by cooldown. W/E/R independently match Darius.
+- Across 32 reference checks: 31 Darius, one unknown. These are output counts,
+  not benchmark accuracy. The imported snapshot has 207 source frames including
+  native resampling; repeated rows are not independent decisions.
+- Unassisted Qwen portrait-plus-icons returned Riven; icons alone returned
+  Vladimir. A verified five-champion blue-roster subset with portrait references
+  returned Darius. These are single-selection diagnostics, not a full roster eval.
+- Scene requests repeatedly hallucinated Vladimir, invalid body coordinates and
+  attacks without animation evidence. Revalidation retains identity errors for
+  scoring while rejecting unsupported binding/actions; it does not turn wrong
+  identities into hidden abstentions.
+- Snapshot: 18 completed requests, 76,627 input / 20,799 output tokens,
+  2,029.95 cumulative request seconds, peak reported GPU memory 39,691,747,328
+  bytes on NVIDIA L40S. Queue/overlap can contribute to request wall time.
+- Local snapshot and raw model inputs are under
+  `data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/actions-v2/913d33a46f064d1433d7`.
+  Identity findings are also in
+  `data/league_midbeast_dev/longleaf-20261030-actions/identity-findings.json`.
+  Its `partial_snapshot` status is intentional; there are no accepted actions in
+  that snapshot. Review source playback, icon alternatives and raw responses at
+  `http://127.0.0.1:8765/actions` while the local server is running.
+
+GPU job 7300739 processed adaptive scene inspection from
+`source-20261030-actions-r3`; it does not include the latest icon integration.
+After preserving its evidence, SIGTERM was sent to its driver PID 1119400.
+Checkpointed shutdown is confirmed: `Shutdown requested; committed tasks can be
+resumed`. The final driver report retains 23 completed scene/HUD requests
+(124,965 input / 28,871 output tokens, 2,723.78 cumulative request seconds),
+excluding the three separate identity probes. The old driver left its aggregate
+resource field null; those totals were reconstructed from its retained request
+records without altering the original report. Final metadata and original report
+are in `data/league_midbeast_dev/longleaf-20261030-actions/checkpointed-*`.
+The run reached native inspection but is incomplete. Its requests are resumable;
+its one-hour allocation
+does not imply that the exhaustive native stage is complete. Latest component
+diagnostics used `source-20261030-actions-r5` against the existing warm server.
+The final tested code was synced separately to `source-20261030-actions-r7`;
+the older run's checkout was preserved. The remote reference catalog is at
+`league-midbeast-validation/assets/ability-icons-16.13.1/manifest.json`.
+
+The separate 20-clip benchmark exists with unverified labels. Development choices
+have not been frozen and held-out scoring has not run. Independent annotations,
+missing-case coverage, measured transition/binding accuracy and completed resource
+evaluation remain required before calling the full pilot complete. No full-video
+or production acceptance is claimed. All 194 repository tests pass, including
+new temporal, cache/interruption, review isolation and icon-consensus contracts.
+
+Latest user steering proposes matching HUD identity to the uniquely colored
+overhead player health bar. At source 30 seconds, the player bar is green and
+opponent bar red. The four minimap-adjacent portraits are teammates and all have
+green HUD bars, so their color does not individually bind allies. Implement and
+measure the player-bar/neighboring-body tracking cue next; it is documented as
+observed, not already implemented. This can avoid requiring skin recognition for
+the HUD owner's body while preserving independent binding evidence.
+
+## Champion action follow-up — 2026-10-29 (historical)
+
+User requested champion behavior, ability casts and item use within a chosen
+timeframe, and selected the current Midbeast Darius video. Added an isolated
+`action-window` command; see `docs/league-champion-action-recognition.md` for
+the current perception pipeline and new contract. Normal production intake is
+still HUD transcription at1FPS, with no released cast/item-use recognition.
+
+Prepared source seconds30–38 at4FPS with explicit native HUD crop
+`700 930 1225 1080`:32source-PTS frames, five overlapping packets with at most
+eight images each. Actual input PNGs combine a960pixel-wide masked scene and
+same-frame native HUD. Untouched native PNGs, exact prompts/schema, input hashes,
+an unverified independent-label template and report are local under:
+`data/league_runs/midbeast-OLLZBe5-fg4-v2/experiments/actions/4ad3411d06cffff4275c/`.
+
+`--infer` uses the existing pinned local Qwen runner with an opt-in8image limit.
+Default4image intake identity is unchanged. Experimental proposals require actual
+frame citations; cooldown/charge/inventory changes cannot alone establish a cast
+or item use. Actor/ability/item names may remain unknown. No continuous identity
+tracking, semantic deduplication, validated cut handling or complete use counts
+are claimed. Accepted observations/events/questions are untouched.
+
+**No action inference ran and no action accuracy was measured.** Local173tests
+pass, including nine new action contract/isolation tests; real32frame preparation
+and visual inspection of the combined input passed. No commit/PR created.
+
+The previous SSH control socket `/private/tmp/league-longleaf-01a16144/control`
+is now absent (local directory inspection,2026-10-29); no SSH login, reconnect,
+remote write or GPU job was attempted. This supersedes the connection status
+below. Following the standing disconnected-state instruction, save this handoff
+and stop remote work without asking the user to reconnect. Next remote action,
+when an authenticated session already exists, is to transfer the new code to a
+fresh source directory under `/work/users/a/l/alshen`, run the explicit eight-image
+action inference on L40S, and independently review raw candidates against native
+video before developing/scoring labels. The action inputs' GPU resource budget
+has not been tested. All earlier release/benchmark gates remain pending.
 
 ## Live remote validation — 2026-10-28
 

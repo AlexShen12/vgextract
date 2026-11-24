@@ -101,6 +101,7 @@ checkouts were preserved. These are development experiments, not held-out eviden
 | r2 / 7929115 | 34–38 | 968.92 | 9 | 5,918 / 47,050 | 39,786,119,168 | 3 generic attacks plus 3 counter captions |
 | r3 / 7930808 | 34–38 | 875.14 | 13 | 4,943 / 70,424 | 39,695,941,632 | 2 counter captions; one truncated response rejected |
 | r4 / 7933969 | 34–38 | 1,342.33 | 15 | 12,916 / 69,737 | 39,607,861,248 | Native actor-crop prototype: 8 generic attacks plus 2 counter captions; two incomplete responses rejected |
+| r5 / 7935286 | 103.7–107.2 | 1,781.54 | 29 | 15,151 / 151,817 | 39,607,861,248 | Native actor crop with explicit target-localizer instructions: 16 claims, no accepted ability hits or last hits; no incomplete responses |
 
 Compact request-local aliases made responses parseable, but emitted attacks and
 localized targets still require independent review. Mainline validation now rejects
@@ -126,6 +127,13 @@ generic attack, one CS increase), with no target or last-hit assertion. Original
 and corrected reviews are retained as `development-review.json` and
 `development-review-corrected.json` in pilot `33d5dd113378e5b7037d`. This corrected
 development example is explicitly ineligible for benchmark acceptance.
+
+On November 4, the completed r5 run was retrieved with all 314 native/input image
+hashes and the local source MP4 hash verified. Its exact experiment source and
+original remote metadata are preserved separately from mainline code. The current
+repository suite passed **287 tests**, including all 53 caption/pilot tests. See
+[the November 4 follow-up](league-caption-pilot-validation-2026-11-04.md) for the
+independent r5 assessment and the resulting adoption decision.
 
 ## Unsupported and release scope
 

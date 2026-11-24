@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "description": "Candidate sources; titles do not establish gameplay or underlying-match identity. Review during preparation.",
+  "sources": [
+    {"video_id": "oQSY5sSxc20", "provider": "midbeast", "champion": null, "split": "train", "match_id": "pending-oQSY5sSxc20"},
+    {"video_id": "DY3IKUmaEXg", "provider": "midbeast", "champion": "Belveth", "split": "train", "match_id": "pending-DY3IKUmaEXg"},
+    {"video_id": "KrBwrwPci-g", "provider": "midbeast", "champion": null, "split": "validation", "match_id": "pending-KrBwrwPci-g"},
+    {"video_id": "p978saOF8aU", "provider": "domisum", "champion": "Singed", "split": "train", "match_id": "pending-p978saOF8aU"},
+    {"video_id": "-CkasdNqZ00", "provider": "domisum", "champion": "Orianna", "split": "train", "match_id": "pending--CkasdNqZ00"},
+    {"video_id": "Ava9el8fpQA", "provider": "domisum", "champion": "Xayah", "split": "test", "match_id": "pending-Ava9el8fpQA"}
+  ]
+}

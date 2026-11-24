@@ -9,7 +9,7 @@ from pathlib import Path
 
 from .action_pipeline import packets, validate_shape
 from .action_v3 import cache_runtime
-from .captions import EVENT_CRITERIA, event_grounding
+from .captions import EVENT_CRITERIA, body_signature, event_grounding
 from .core import atomic_json, digest, finite, read_json, uid
 from .media import file_hash
 
@@ -68,6 +68,18 @@ def iou(a, b):
 
 
 class CaptionSceneReader:
+    schema = staticmethod(scene_schema)
+    instruction = INSTRUCTION
+
+    def batches(self, frames, stage):
+        return packets(frames)
+
+    def extra_context(self, batch, aliases, tracks, stage):
+        return {}
+
+    def context_region(self, region):
+        return region
+
     def __init__(self, store, root, profile, policy, body, identities, runner=None):
         self.store, self.root, self.profile, self.policy, self.runner = store, Path(root), profile, policy, runner
         self.body = {r["frame_id"]: r for r in body if r["owner_id"] == "selected"}
@@ -92,7 +104,7 @@ class CaptionSceneReader:
     def read(self, frames, stage):
         from PIL import Image, ImageDraw
         proposals = []
-        for batch in packets(frames):
+        for batch in self.batches(frames, stage):
             self.store.check_stop()
             if len(batch) < 2:
                 continue
@@ -102,10 +114,11 @@ class CaptionSceneReader:
             tracks = {track: f"p{i}" for i, track in enumerate(dict.fromkeys(
                 visible[f["id"]].get("actor_track") for f in batch)) if track}
             context = [{"frame_id": aliases[f["id"]], "time": f["time"], "player_track": tracks.get(visible[f["id"]].get("actor_track")),
-                        "actor_region": visible[f["id"]].get("actor_region"),
+                        "actor_region": self.context_region(visible[f["id"]].get("actor_region")),
                         "supplied_kit": self.identities.get(f["id"], {}).get("hud_champion")} for f in batch]
-            prompt = INSTRUCTION+json.dumps({"frames": context, "source_size": self.profile["size"],
-                "scene_box": self.profile["scene_box"], "displayed_scene_width": 960})
+            prompt = self.instruction+json.dumps({"frames": context, "source_size": self.profile["size"],
+                "scene_box": self.profile["scene_box"], "displayed_scene_width": 960,
+                **self.extra_context(batch, aliases, tracks, stage)})
             inputs = []
             for f in batch:
                 bound = self.body.get(f["id"], {})
@@ -126,7 +139,7 @@ class CaptionSceneReader:
                     draw.text((max(0, box[0]), max(20, box[1]-12)), tracks[bound["actor_track"]], fill="yellow")
                 picture.save(path)
                 inputs.append({"frame_id": f["id"], "sha256": file_hash(path), "path": str(path)})
-            recipe = {"schema_version": 1, "stage": stage, "prompt": prompt, "schema": scene_schema(),
+            recipe = {"schema_version": 1, "stage": stage, "prompt": prompt, "schema": self.schema(),
                       "frames": [{k: f[k] for k in ("id", "time", "input_sha256", "segment_id", "owner_epochs")} for f in batch],
                       "images": [{k: x[k] for k in ("frame_id", "sha256")} for x in inputs],
                       "aliases": {"frames": aliases, "tracks": tracks},
@@ -149,7 +162,7 @@ class CaptionSceneReader:
                 for x in inputs:
                     content += [{"type": "text", "text": "frame_id="+aliases[x["frame_id"]]}, {"type": "image_url", "image_url": {
                         "url": "data:image/png;base64,"+base64.b64encode(Path(x["path"]).read_bytes()).decode()}}]
-                response = self.runner.complete([{"role": "user", "content": content}], schema=scene_schema(),
+                response = self.runner.complete([{"role": "user", "content": content}], schema=self.schema(),
                                                 max_tokens=self.policy["output_tokens"], timeout=600)
                 atomic_json(cache, response)
             atomic_json(path, response)
@@ -178,7 +191,7 @@ class CaptionSceneReader:
         if response.get("finish_reason") != "stop":
             raise ValueError("Incomplete caption scene response")
         value = json.loads(response["text"])
-        validate_shape(value, scene_schema())
+        validate_shape(value, self.schema())
         if frame_aliases is not None:
             original = {v: k for k, v in frame_aliases.items()}
             player_tracks = {v: k for k, v in (track_aliases or {}).items()}
@@ -253,7 +266,8 @@ class CaptionSceneReader:
                    "ability": action["slot_id"] if names and action["kind"] in {"cast", "ability_hit"} else None, "start": a["time"], "end": b["time"],
                    "owner_id": "selected", "owner_epoch": a["owner_epochs"]["selected"], "playback_segment_id": a["segment_id"],
                    "sampling_fps": sampling_fps if sampling_fps is not None else round(fps, 5), "evidence_ids": evidence, "request_ids": [request_id],
-                   "actor_binding": {"entity": actor, "binding": action["actor_track"], "frame_ids": evidence},
+                   "actor_binding": {"entity": actor, "binding": action["actor_track"], "frame_ids": evidence,
+                                     "body_signatures": {f: body_signature(self.body.get(f, {})) for f in evidence}},
                    "visual_evidence": [{"criterion": cue["criterion"], "frame_ids": cue["frame_ids"]} for cue in action["evidence"]],
                    "criteria": sorted({cue["criterion"] for cue in action["evidence"]}),
                    "acceptance": "grounded", "experimental": True, "caption_pilot": True, "review_status": "unreviewed"}
@@ -277,6 +291,9 @@ def assemble_fragments(rows):
             if (row["kind"] == "ability_hit" and all(old.get(k) == row.get(k) for k in
                 ("kind", "actor", "target", "ability", "playback_segment_id", "owner_epoch", "sampling_fps"))
                     and old["actor_binding"]["binding"] == row["actor_binding"]["binding"]
+                    and all(old["actor_binding"].get("body_signatures", {}).get(f) == signature
+                            for f, signature in row["actor_binding"].get("body_signatures", {}).items()
+                            if f in old["actor_binding"].get("body_signatures", {}))
                     and link & old_link and not (casts and old_casts and not casts & old_casts)):
                 match = old
                 break
@@ -286,6 +303,8 @@ def assemble_fragments(rows):
         match["start"], match["end"] = min(match["start"], row["start"]), max(match["end"], row["end"])
         match["evidence_ids"] = sorted(set(match["evidence_ids"]+row["evidence_ids"]))
         match["actor_binding"]["frame_ids"] = match["evidence_ids"]
+        match["actor_binding"]["body_signatures"] = {**match["actor_binding"].get("body_signatures", {}),
+                                                     **row["actor_binding"].get("body_signatures", {})}
         for cue in row["visual_evidence"]:
             old = next((c for c in match["visual_evidence"] if c["criterion"] == cue["criterion"]), None)
             if old:

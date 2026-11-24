@@ -1,0 +1,337 @@
+{
+  "video_id": "fFlOTEiQ9x0",
+  "title": "Worlds 2026 Finals \u00b7 GEN vs BLG",
+  "duration": 33090.521,
+  "pilot": [
+    19720,
+    20335
+  ],
+  "language": "en-orig",
+  "phases": [
+    {
+      "start": 19720,
+      "end": 19782,
+      "phase": "draft",
+      "game_id": "game-2"
+    },
+    {
+      "start": 19782,
+      "end": 19815,
+      "phase": "pregame",
+      "game_id": "game-2"
+    },
+    {
+      "start": 19815,
+      "end": 20335,
+      "phase": "game",
+      "game_id": "game-2"
+    }
+  ],
+  "vocabulary": [
+    "draft",
+    "ban",
+    "bans",
+    "pick",
+    "picks",
+    "first pick",
+    "teamfight",
+    "team fight",
+    "lane",
+    "lanes",
+    "lane priority",
+    "minion wave",
+    "wave",
+    "wave clear",
+    "baron",
+    "elder",
+    "dragon",
+    "drake",
+    "herald",
+    "grubs",
+    "inhibitor",
+    "turret",
+    "teleport",
+    "itemization",
+    "backline",
+    "back line",
+    "river",
+    "roam",
+    "ward",
+    "wards",
+    "blast cone",
+    "nexus"
+  ],
+  "templates": [
+    {
+      "name": "live_left_team",
+      "label": "live_gameplay",
+      "image": "live.png",
+      "box": [
+        0.274,
+        0.005,
+        0.333,
+        0.062
+      ],
+      "threshold": 0.87,
+      "reference_vod_time": 17959
+    },
+    {
+      "name": "live_patch",
+      "label": "live_gameplay",
+      "image": "live.png",
+      "box": [
+        0.005,
+        0.757,
+        0.116,
+        0.79
+      ],
+      "threshold": 0.86,
+      "reference_vod_time": 17959
+    },
+    {
+      "name": "live_right_team",
+      "label": "live_gameplay",
+      "image": "live.png",
+      "box": [
+        0.664,
+        0.005,
+        0.733,
+        0.061
+      ],
+      "threshold": 0.87,
+      "reference_vod_time": 17959
+    },
+    {
+      "name": "replay_badge",
+      "label": "replay",
+      "image": "replay.png",
+      "box": [
+        0.072,
+        0.008,
+        0.163,
+        0.072
+      ],
+      "threshold": 0.82,
+      "reference_vod_time": 17996
+    },
+    {
+      "name": "breakdown_badge",
+      "label": "replay",
+      "image": "cisco.png",
+      "box": [
+        0.033,
+        0.007,
+        0.186,
+        0.116
+      ],
+      "threshold": 0.9,
+      "reference_vod_time": 18252
+    },
+    {
+      "name": "priceless_replay_badge",
+      "label": "replay",
+      "image": "priceless.png",
+      "box": [
+        0.08,
+        0.006,
+        0.235,
+        0.097
+      ],
+      "threshold": 0.88,
+      "reference_vod_time": 17233
+    },
+    {
+      "name": "desk_banner",
+      "label": "non_gameplay",
+      "image": "desk.png",
+      "box": [
+        0.3,
+        0.766,
+        0.72,
+        0.988
+      ],
+      "threshold": 0.88,
+      "reference_vod_time": 18200
+    },
+    {
+      "name": "minimap",
+      "label": "gameplay_hud",
+      "image": "live.png",
+      "box": [
+        0.859,
+        0.752,
+        0.993,
+        0.985
+      ],
+      "threshold": 0.72,
+      "reference_vod_time": 17959
+    },
+    {
+      "name": "replay_minimap",
+      "label": "replay_gameplay",
+      "image": "replay.png",
+      "box": [
+        0.872,
+        0.79,
+        0.982,
+        0.96
+      ],
+      "threshold": 0.6,
+      "reference_vod_time": 17996
+    },
+    {
+      "name": "draft_center",
+      "label": "draft",
+      "image": "draft.png",
+      "box": [
+        0.452,
+        0.815,
+        0.542,
+        0.95
+      ],
+      "threshold": 0.84,
+      "reference_vod_time": 15345
+    }
+  ],
+  "objective_compact_region": [
+    0.034,
+    0.022,
+    0.05,
+    0.045
+  ],
+  "hud_fields": [
+    {
+      "id": "game_clock",
+      "field": "game_clock",
+      "reader": "number",
+      "parser": "clock",
+      "boxes": {
+        "live": [
+          0.485,
+          0.067,
+          0.516,
+          0.093
+        ],
+        "breakdown": [
+          0.488,
+          0.063,
+          0.519,
+          0.087
+        ]
+      }
+    },
+    {
+      "id": "blue_kills",
+      "field": "team_kills",
+      "reader": "number",
+      "parser": "integer",
+      "boxes": {
+        "live": [
+          0.467,
+          0.016,
+          0.489,
+          0.054
+        ]
+      }
+    },
+    {
+      "id": "red_kills",
+      "field": "team_kills",
+      "reader": "number",
+      "parser": "integer",
+      "boxes": {
+        "live": [
+          0.511,
+          0.016,
+          0.531,
+          0.054
+        ]
+      }
+    },
+    {
+      "id": "blue_gold",
+      "field": "displayed_gold",
+      "reader": "number",
+      "parser": "gold",
+      "boxes": {
+        "live": [
+          0.42,
+          0.021,
+          0.457,
+          0.054
+        ]
+      }
+    },
+    {
+      "id": "red_gold",
+      "field": "displayed_gold",
+      "reader": "number",
+      "parser": "gold",
+      "boxes": {
+        "live": [
+          0.542,
+          0.021,
+          0.579,
+          0.054
+        ]
+      }
+    },
+    {
+      "id": "objective_timer_1",
+      "field": "objective_timer",
+      "reader": "number",
+      "parser": "timer",
+      "icon_box": [
+        0.008,
+        0.012,
+        0.029,
+        0.049
+      ],
+      "compact": {
+        "icon_only": true
+      },
+      "boxes": {
+        "live": [
+          0.031,
+          0.014,
+          0.057,
+          0.052
+        ]
+      }
+    },
+    {
+      "id": "objective_timer_2",
+      "field": "objective_timer",
+      "reader": "number",
+      "parser": "timer",
+      "icon_box": [
+        0.062,
+        0.012,
+        0.084,
+        0.049
+      ],
+      "compact": {
+        "box": [
+          0.057,
+          0.014,
+          0.084,
+          0.052
+        ],
+        "icon_box": [
+          0.031,
+          0.012,
+          0.054,
+          0.049
+        ]
+      },
+      "boxes": {
+        "live": [
+          0.085,
+          0.014,
+          0.112,
+          0.052
+        ]
+      }
+    }
+  ]
+}
